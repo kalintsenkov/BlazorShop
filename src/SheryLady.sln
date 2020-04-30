@@ -5,11 +5,11 @@ VisualStudioVersion = 16.0.30011.22
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Data", "Data", "{EE11C9E4-7486-4055-B1F0-4CEABF11B84B}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SheryLady.Data", "Data\SheryLady.Data\SheryLady.Data.csproj", "{ACEE929A-9C60-48B3-8B38-84908BC17A65}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SheryLady.Data", "Data\SheryLady.Data\SheryLady.Data.csproj", "{ACEE929A-9C60-48B3-8B38-84908BC17A65}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SheryLady.Data.Models", "Data\SheryLady.Data.Models\SheryLady.Data.Models.csproj", "{7CBDA92A-18BD-4AD9-982D-6660748F4D6F}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SheryLady.Data.Models", "Data\SheryLady.Data.Models\SheryLady.Data.Models.csproj", "{7CBDA92A-18BD-4AD9-982D-6660748F4D6F}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SheryLady.Data.Common", "SheryLady.Data.Common\SheryLady.Data.Common.csproj", "{361F6F87-0D70-443A-8B4A-271525F3A959}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SheryLady.Data.Common", "Data\SheryLady.Data.Common\SheryLady.Data.Common.csproj", "{A44C7507-357F-4733-A3B7-38266B8D760F}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -25,10 +25,10 @@ Global
 		{7CBDA92A-18BD-4AD9-982D-6660748F4D6F}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{7CBDA92A-18BD-4AD9-982D-6660748F4D6F}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{7CBDA92A-18BD-4AD9-982D-6660748F4D6F}.Release|Any CPU.Build.0 = Release|Any CPU
-		{361F6F87-0D70-443A-8B4A-271525F3A959}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{361F6F87-0D70-443A-8B4A-271525F3A959}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{361F6F87-0D70-443A-8B4A-271525F3A959}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{361F6F87-0D70-443A-8B4A-271525F3A959}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A44C7507-357F-4733-A3B7-38266B8D760F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A44C7507-357F-4733-A3B7-38266B8D760F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A44C7507-357F-4733-A3B7-38266B8D760F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A44C7507-357F-4733-A3B7-38266B8D760F}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -36,7 +36,7 @@ Global
 	GlobalSection(NestedProjects) = preSolution
 		{ACEE929A-9C60-48B3-8B38-84908BC17A65} = {EE11C9E4-7486-4055-B1F0-4CEABF11B84B}
 		{7CBDA92A-18BD-4AD9-982D-6660748F4D6F} = {EE11C9E4-7486-4055-B1F0-4CEABF11B84B}
-		{361F6F87-0D70-443A-8B4A-271525F3A959} = {EE11C9E4-7486-4055-B1F0-4CEABF11B84B}
+		{A44C7507-357F-4733-A3B7-38266B8D760F} = {EE11C9E4-7486-4055-B1F0-4CEABF11B84B}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {1286D423-C8CB-4E91-8648-59A21FD3297A}
