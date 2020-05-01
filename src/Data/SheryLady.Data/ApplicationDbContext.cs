@@ -12,10 +12,6 @@
 
     public class ApplicationDbContext : IdentityDbContext<ApplicationUser, ApplicationRole, string>
     {
-        public ApplicationDbContext()
-        {
-        }
-
         public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options)
             : base(options)
         {
@@ -54,14 +50,6 @@
             }
 
             return base.SaveChangesAsync(cancellationToken);
-        }
-
-        protected override void OnConfiguring(DbContextOptionsBuilder builder)
-        {
-            if (!builder.IsConfigured)
-            {
-                builder.UseSqlServer(DataSettings.DefaultConnection);
-            }
         }
 
         protected override void OnModelCreating(ModelBuilder builder)

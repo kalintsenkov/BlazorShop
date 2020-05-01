@@ -4,6 +4,9 @@
     {
         public const int UserFirstNameMaxLength = 50;
         public const int UserLastNameMaxLength = 50;
+        public const int UserUserNameMinLength = 3;
+        public const int UserUserNameMaxLength = 50;
+        public const int UserPasswordMinLength = 6;
         public const int UserProfilePictureMaxLength = 250;
 
         public const int ProductNameMinLength = 3;
