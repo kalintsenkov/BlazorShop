@@ -22,6 +22,7 @@ namespace SheryLady.Web.Server
                 .AddJwtAuthentication(services.GetApplicationSettings(this.Configuration))
                 .AddAutoMapper(typeof(SheryLadyProfile).Assembly)
                 .AddApplicationServices()
+                .AddSwagger()
                 .AddApiControllers();
 
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
@@ -32,6 +33,7 @@ namespace SheryLady.Web.Server
             }
 
             app
+                .UseSwaggerUI()
                 .UseHttpsRedirection()
                 .UseRouting()
                 .UseCors(options => options

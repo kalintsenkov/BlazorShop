@@ -12,6 +12,7 @@
     using Microsoft.Extensions.Configuration;
     using Microsoft.Extensions.DependencyInjection;
     using Microsoft.IdentityModel.Tokens;
+    using Microsoft.OpenApi.Models;
 
     public static class ServiceCollectionExtensions
     {
@@ -20,9 +21,9 @@
             IConfiguration configuration)
         {
             var applicationSettingsSection = configuration.GetSection("ApplicationSettings");
-            
+
             services.Configure<AppSettings>(applicationSettingsSection);
-            
+
             return applicationSettingsSection.Get<AppSettings>();
         }
 
@@ -76,6 +77,18 @@
                 .AddTransient<IUsersService, UsersService>()
                 .AddTransient<IProductsService, ProductsService>()
                 .AddTransient<ICategoriesService, CategoriesService>();
+
+        public static IServiceCollection AddSwagger(this IServiceCollection services)
+            => services.AddSwaggerGen(c =>
+            {
+                c.SwaggerDoc(
+                    "v1",
+                    new OpenApiInfo
+                    {
+                        Title = "My API",
+                        Version = "v1"
+                    });
+            });
 
         public static void AddApiControllers(this IServiceCollection services)
             => services
