@@ -97,6 +97,8 @@
                 .FirstOrDefaultAsync();
 
         private async Task<Product> GetById(int id)
-            => await this.db.Products.FirstOrDefaultAsync(p => p.Id == id);
+            => await this.db
+                .Products
+                .FirstOrDefaultAsync(p => p.Id == id && !p.IsDeleted);
     }
 }
