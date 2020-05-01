@@ -1,5 +1,6 @@
 ﻿namespace SheryLady.Services
 {
+    using System.Collections.Generic;
     using System.Linq;
     using System.Threading.Tasks;
 
@@ -92,9 +93,26 @@
         public async Task<TModel> GetById<TModel>(int id)
             => await this.db
                 .Products
+                .AsNoTracking()
                 .Where(p => p.Id == id && !p.IsDeleted)
                 .ProjectTo<TModel>(this.mapper.ConfigurationProvider)
                 .FirstOrDefaultAsync();
+
+        public async Task<IEnumerable<TModel>> GetAll<TModel>()
+            => await this.db
+                .Products
+                .AsNoTracking()
+                .Where(p => !p.IsDeleted)
+                .ProjectTo<TModel>(this.mapper.ConfigurationProvider)
+                .ToListAsync();
+
+        public async Task<IEnumerable<TModel>> GetAllByCategoryId<TModel>(int categoryId)
+            => await this.db
+                .Products
+                .AsNoTracking()
+                .Where(p => p.CategoryId == categoryId && !p.IsDeleted)
+                .ProjectTo<TModel>(this.mapper.ConfigurationProvider)
+                .ToListAsync();
 
         private async Task<Product> GetById(int id)
             => await this.db

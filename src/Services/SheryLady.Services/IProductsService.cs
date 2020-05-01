@@ -1,5 +1,6 @@
 ﻿namespace SheryLady.Services
 {
+    using System.Collections.Generic;
     using System.Threading.Tasks;
 
     public interface IProductsService
@@ -24,5 +25,9 @@
         Task<bool> Delete(int id);
 
         Task<TModel> GetById<TModel>(int id);
+
+        Task<IEnumerable<TModel>> GetAll<TModel>();
+
+        Task<IEnumerable<TModel>> GetAllByCategoryId<TModel>(int categoryId);
     }
 }
