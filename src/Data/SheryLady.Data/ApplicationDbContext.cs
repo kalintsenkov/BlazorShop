@@ -1,9 +1,14 @@
 ﻿namespace SheryLady.Data
 {
+    using System;
+    using System.Threading;
+    using System.Threading.Tasks;
+
+    using Interfaces;
+    using Models;
+
     using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
     using Microsoft.EntityFrameworkCore;
-
-    using Models;
 
     public class ApplicationDbContext : IdentityDbContext<ApplicationUser, ApplicationRole, string>
     {
@@ -25,6 +30,31 @@
         public DbSet<Order> Orders { get; set; }
 
         public DbSet<OrderProduct> OrdersProducts { get; set; }
+
+        public override Task<int> SaveChangesAsync(CancellationToken cancellationToken = new CancellationToken())
+        {
+            foreach (var entry in this.ChangeTracker.Entries<IAuditInfo>())
+            {
+                _ = entry.State switch
+                {
+                    EntityState.Added => entry.Entity.CreatedOn = DateTime.Now,
+                    EntityState.Modified => entry.Entity.ModifiedOn = DateTime.Now
+                };
+            }
+
+            foreach (var entry in this.ChangeTracker.Entries<IDeletableEntity>())
+            {
+                if (entry.State != EntityState.Deleted)
+                {
+                    continue;
+                }
+
+                entry.Entity.IsDeleted = true;
+                entry.Entity.DeletedOn = DateTime.Now;
+            }
+
+            return base.SaveChangesAsync(cancellationToken);
+        }
 
         protected override void OnConfiguring(DbContextOptionsBuilder builder)
         {
