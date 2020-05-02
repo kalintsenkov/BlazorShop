@@ -10,6 +10,7 @@
 
     using Data;
     using Data.Models;
+    using Models.Categories;
 
     public class CategoriesService : ICategoriesService
     {
@@ -73,20 +74,20 @@
             return true;
         }
 
-        public async Task<TModel> GetById<TModel>(int id)
+        public async Task<CategoriesDetailsServiceModel> Details(int id)
             => await this.db
                 .Categories
                 .AsNoTracking()
                 .Where(c => c.Id == id && !c.IsDeleted)
-                .ProjectTo<TModel>(this.mapper.ConfigurationProvider)
+                .ProjectTo<CategoriesDetailsServiceModel>(this.mapper.ConfigurationProvider)
                 .FirstOrDefaultAsync();
 
-        public async Task<IEnumerable<TModel>> GetAll<TModel>()
+        public async Task<IEnumerable<CategoriesListingServiceModel>> GetAll()
             => await this.db
                 .Categories
                 .AsNoTracking()
                 .Where(c => !c.IsDeleted)
-                .ProjectTo<TModel>(this.mapper.ConfigurationProvider)
+                .ProjectTo<CategoriesListingServiceModel>(this.mapper.ConfigurationProvider)
                 .ToListAsync();
 
         private async Task<Category> GetById(int id)

@@ -2,14 +2,14 @@
 {
     using System.Threading.Tasks;
 
+    using Microsoft.AspNetCore.Identity;
+    using Microsoft.AspNetCore.Mvc;
+    using Microsoft.Extensions.Options;
+
     using Data.Models;
     using Models.Users;
     using Services;
     using Services.Users;
-
-    using Microsoft.AspNetCore.Identity;
-    using Microsoft.AspNetCore.Mvc;
-    using Microsoft.Extensions.Options;
 
     public class UsersController : ApiController
     {
@@ -73,10 +73,7 @@
                 user.UserName,
                 this.appSettings.Secret);
 
-            return new UsersLoginResponseModel
-            {
-                Token = token
-            };
+            return new UsersLoginResponseModel { Token = token };
         }
     }
 }

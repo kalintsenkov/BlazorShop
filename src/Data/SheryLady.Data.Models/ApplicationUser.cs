@@ -4,9 +4,9 @@ namespace SheryLady.Data.Models
     using System;
     using System.Collections.Generic;
 
-    using Interfaces;
-
     using Microsoft.AspNetCore.Identity;
+
+    using Interfaces;
 
     public class ApplicationUser : IdentityUser, IAuditInfo, IDeletableEntity
     {

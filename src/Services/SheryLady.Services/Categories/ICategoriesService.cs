@@ -3,6 +3,8 @@
     using System.Collections.Generic;
     using System.Threading.Tasks;
 
+    using Models.Categories;
+
     public interface ICategoriesService
     {
         Task<int> Create(string name);
@@ -11,8 +13,8 @@
 
         Task<bool> Delete(int id);
 
-        Task<TModel> GetById<TModel>(int id);
+        Task<CategoriesDetailsServiceModel> Details(int id);
 
-        Task<IEnumerable<TModel>> GetAll<TModel>();
+        Task<IEnumerable<CategoriesListingServiceModel>> GetAll();
     }
 }

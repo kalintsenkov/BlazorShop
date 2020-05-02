@@ -1,10 +1,10 @@
 ﻿namespace SheryLady.Web.Server.Infrastructure.Extensions
 {
-    using Data;
-
     using Microsoft.AspNetCore.Builder;
     using Microsoft.EntityFrameworkCore;
     using Microsoft.Extensions.DependencyInjection;
+
+    using Data;
 
     public static class ApplicationBuilderExtensions
     {

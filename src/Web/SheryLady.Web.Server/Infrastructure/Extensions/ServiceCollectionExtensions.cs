@@ -89,7 +89,7 @@
                     "v1",
                     new OpenApiInfo
                     {
-                        Title = "My API",
+                        Title = "My JewelleryShop API",
                         Version = "v1"
                     });
             });

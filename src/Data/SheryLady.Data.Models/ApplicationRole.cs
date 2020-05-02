@@ -3,9 +3,9 @@ namespace SheryLady.Data.Models
 {
     using System;
 
-    using Interfaces;
-
     using Microsoft.AspNetCore.Identity;
+
+    using Interfaces;
 
     public class ApplicationRole : IdentityRole, IAuditInfo, IDeletableEntity
     {

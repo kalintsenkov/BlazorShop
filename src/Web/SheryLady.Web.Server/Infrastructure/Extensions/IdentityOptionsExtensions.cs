@@ -1,8 +1,8 @@
 ﻿namespace SheryLady.Web.Server.Infrastructure.Extensions
 {
-    using static Common.ModelConstants;
-
     using Microsoft.AspNetCore.Identity;
+
+    using static Common.ModelConstants;
 
     public static class IdentityOptionsExtensions
     {
