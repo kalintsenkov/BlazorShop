@@ -2,11 +2,11 @@
 {
     using System.Threading.Tasks;
 
-    using Models.Categories;
-    using Services;
-
     using Microsoft.AspNetCore.Authorization;
     using Microsoft.AspNetCore.Mvc;
+
+    using Models.Categories;
+    using Services.Categories;
 
     [Authorize]
     public class CategoriesController : ApiController

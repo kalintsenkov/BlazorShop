@@ -1,4 +1,4 @@
-﻿namespace SheryLady.Services
+﻿namespace SheryLady.Services.Categories
 {
     using System.Collections.Generic;
     using System.Threading.Tasks;

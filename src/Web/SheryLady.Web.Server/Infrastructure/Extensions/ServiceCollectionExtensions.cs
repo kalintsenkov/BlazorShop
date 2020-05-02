@@ -2,17 +2,20 @@
 {
     using System.Text;
 
-    using Data;
-    using Data.Models;
-    using Filters;
-    using Services;
-
     using Microsoft.AspNetCore.Authentication.JwtBearer;
     using Microsoft.EntityFrameworkCore;
     using Microsoft.Extensions.Configuration;
     using Microsoft.Extensions.DependencyInjection;
     using Microsoft.IdentityModel.Tokens;
     using Microsoft.OpenApi.Models;
+
+    using Data;
+    using Data.Models;
+    using Filters;
+    using Services;
+    using Services.Categories;
+    using Services.Products;
+    using Services.Users;
 
     public static class ServiceCollectionExtensions
     {

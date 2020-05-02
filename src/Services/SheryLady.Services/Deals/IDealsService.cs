@@ -1,4 +1,4 @@
-﻿namespace SheryLady.Services
+﻿namespace SheryLady.Services.Deals
 {
     using System;
     using System.Threading.Tasks;

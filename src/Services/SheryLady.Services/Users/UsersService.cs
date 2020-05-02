@@ -1,4 +1,4 @@
-﻿namespace SheryLady.Services
+﻿namespace SheryLady.Services.Users
 {
     using System;
     using System.IdentityModel.Tokens.Jwt;

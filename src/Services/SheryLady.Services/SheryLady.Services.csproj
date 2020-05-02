@@ -13,6 +13,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\..\Data\SheryLady.Data\SheryLady.Data.csproj" />
+    <ProjectReference Include="..\SheryLady.Services.Models\SheryLady.Services.Models.csproj" />
   </ItemGroup>
 
 </Project>

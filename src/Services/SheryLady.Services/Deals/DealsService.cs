@@ -1,12 +1,12 @@
-﻿namespace SheryLady.Services
+﻿namespace SheryLady.Services.Deals
 {
     using System;
     using System.Threading.Tasks;
 
+    using Microsoft.EntityFrameworkCore;
+
     using Data;
     using Data.Models;
-
-    using Microsoft.EntityFrameworkCore;
 
     public class DealsService : IDealsService
     {

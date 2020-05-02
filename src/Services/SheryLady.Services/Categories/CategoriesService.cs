@@ -1,15 +1,15 @@
-﻿namespace SheryLady.Services
+﻿namespace SheryLady.Services.Categories
 {
     using System.Collections.Generic;
     using System.Linq;
     using System.Threading.Tasks;
 
-    using Data;
-    using Data.Models;
-
     using AutoMapper;
     using AutoMapper.QueryableExtensions;
     using Microsoft.EntityFrameworkCore;
+
+    using Data;
+    using Data.Models;
 
     public class CategoriesService : ICategoriesService
     {
