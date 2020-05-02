@@ -76,7 +76,8 @@
             => services
                 .AddTransient<IUsersService, UsersService>()
                 .AddTransient<IProductsService, ProductsService>()
-                .AddTransient<ICategoriesService, CategoriesService>();
+                .AddTransient<ICategoriesService, CategoriesService>()
+                .AddTransient<IDateTimeProvider, DateTimeProvider>();
 
         public static IServiceCollection AddSwagger(this IServiceCollection services)
             => services.AddSwaggerGen(c =>

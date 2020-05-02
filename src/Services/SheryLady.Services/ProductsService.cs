@@ -15,13 +15,16 @@
     {
         private readonly ApplicationDbContext db;
         private readonly IMapper mapper;
+        private readonly IDateTimeProvider dataProvider;
 
         public ProductsService(
             ApplicationDbContext db,
-            IMapper mapper)
+            IMapper mapper, 
+            IDateTimeProvider dataProvider)
         {
             this.db = db;
             this.mapper = mapper;
+            this.dataProvider = dataProvider;
         }
 
         public async Task<int> Create(
@@ -39,7 +42,8 @@
                 Image = image,
                 Quantity = quantity,
                 Price = price,
-                CategoryId = categoryId
+                CategoryId = categoryId,
+                CreatedOn = this.dataProvider.Now()
             };
 
             await this.db.Products.AddAsync(product);
@@ -69,6 +73,7 @@
             product.Quantity = quantity;
             product.Price = price;
             product.CategoryId = categoryId;
+            product.ModifiedOn = this.dataProvider.Now();
 
             await this.db.SaveChangesAsync();
 
@@ -83,7 +88,8 @@
                 return false;
             }
 
-            this.db.Remove(product);
+            product.IsDeleted = true;
+            product.DeletedOn = this.dataProvider.Now();
 
             await this.db.SaveChangesAsync();
 

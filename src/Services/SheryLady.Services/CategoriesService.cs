@@ -15,20 +15,24 @@
     {
         private readonly ApplicationDbContext db;
         private readonly IMapper mapper;
+        private readonly IDateTimeProvider dateTimeProvider;
 
         public CategoriesService(
             ApplicationDbContext db,
-            IMapper mapper)
+            IMapper mapper, 
+            IDateTimeProvider dateTimeProvider)
         {
             this.db = db;
             this.mapper = mapper;
+            this.dateTimeProvider = dateTimeProvider;
         }
 
         public async Task<int> Create(string name)
         {
             var category = new Category
             {
-                Name = name
+                Name = name,
+                CreatedOn = this.dateTimeProvider.Now()
             };
 
             await this.db.Categories.AddAsync(category);
@@ -46,6 +50,7 @@
             }
 
             category.Name = name;
+            category.ModifiedOn = this.dateTimeProvider.Now();
 
             await this.db.SaveChangesAsync();
 
@@ -60,7 +65,8 @@
                 return false;
             }
 
-            this.db.Remove(category);
+            category.IsDeleted = true;
+            category.DeletedOn = this.dateTimeProvider.Now();
 
             await this.db.SaveChangesAsync();
 

@@ -13,15 +13,18 @@
     public class UsersController : ApiController
     {
         private readonly UserManager<ApplicationUser> userManager;
+        private readonly IDateTimeProvider dateTimeProvider;
         private readonly IUsersService usersService;
         private readonly AppSettings appSettings;
 
         public UsersController(
             UserManager<ApplicationUser> userManager,
+            IDateTimeProvider dateTimeProvider,
             IUsersService usersService,
             IOptions<AppSettings> appSettings)
         {
             this.userManager = userManager;
+            this.dateTimeProvider = dateTimeProvider;
             this.usersService = usersService;
             this.appSettings = appSettings.Value;
         }
@@ -35,7 +38,8 @@
                 FirstName = model.FirstName,
                 LastName = model.LastName,
                 Email = model.Email,
-                UserName = model.UserName
+                UserName = model.UserName,
+                CreatedOn = this.dateTimeProvider.Now()
             };
 
             var result = await this.userManager.CreateAsync(user, model.Password);

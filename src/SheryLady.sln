@@ -21,6 +21,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Web", "Web", "{69A18099-172
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SheryLady.Web.Server", "Web\SheryLady.Web.Server\SheryLady.Web.Server.csproj", "{6A232F1D-7F35-4257-9C43-0391B7A21F5F}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SheryLady.Web.Client", "Web\SheryLady.Web.Client\SheryLady.Web.Client.csproj", "{566A0343-D36C-4A9A-AC26-0C94D47147F2}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -51,6 +53,10 @@ Global
 		{6A232F1D-7F35-4257-9C43-0391B7A21F5F}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{6A232F1D-7F35-4257-9C43-0391B7A21F5F}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{6A232F1D-7F35-4257-9C43-0391B7A21F5F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{566A0343-D36C-4A9A-AC26-0C94D47147F2}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{566A0343-D36C-4A9A-AC26-0C94D47147F2}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{566A0343-D36C-4A9A-AC26-0C94D47147F2}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{566A0343-D36C-4A9A-AC26-0C94D47147F2}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -61,6 +67,7 @@ Global
 		{A44C7507-357F-4733-A3B7-38266B8D760F} = {EE11C9E4-7486-4055-B1F0-4CEABF11B84B}
 		{3D965C54-528A-4918-B0E2-C7772DF42E06} = {443C8B56-3649-47C7-98C3-487D4127D58D}
 		{6A232F1D-7F35-4257-9C43-0391B7A21F5F} = {69A18099-172B-49D8-BCAC-E493A7AC0DAD}
+		{566A0343-D36C-4A9A-AC26-0C94D47147F2} = {69A18099-172B-49D8-BCAC-E493A7AC0DAD}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {1286D423-C8CB-4E91-8648-59A21FD3297A}
