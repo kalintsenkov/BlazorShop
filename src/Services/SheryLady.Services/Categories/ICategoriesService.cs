@@ -7,14 +7,12 @@
 
     public interface ICategoriesService
     {
-        Task<int> Create(string name);
+        Task<int> CreateAsync(string name);
 
-        Task<bool> Update(int id, string name);
+        Task<bool> UpdateAsync(int id, string name);
 
-        Task<bool> Delete(int id);
+        Task<bool> DeleteAsync(int id);
 
-        Task<CategoriesDetailsServiceModel> Details(int id);
-
-        Task<IEnumerable<CategoriesListingServiceModel>> GetAll();
+        Task<IEnumerable<CategoriesListingServiceModel>> GetAllAsync();
     }
 }

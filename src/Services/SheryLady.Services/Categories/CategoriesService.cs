@@ -10,6 +10,7 @@
 
     using Data;
     using Data.Models;
+    using DateTime;
     using Models.Categories;
 
     public class CategoriesService : ICategoriesService
@@ -28,7 +29,7 @@
             this.dateTimeProvider = dateTimeProvider;
         }
 
-        public async Task<int> Create(string name)
+        public async Task<int> CreateAsync(string name)
         {
             var category = new Category
             {
@@ -42,9 +43,9 @@
             return category.Id;
         }
 
-        public async Task<bool> Update(int id, string name)
+        public async Task<bool> UpdateAsync(int id, string name)
         {
-            var category = await this.GetById(id);
+            var category = await this.GetByIdAsync(id);
             if (category == null)
             {
                 return false;
@@ -58,9 +59,9 @@
             return true;
         }
 
-        public async Task<bool> Delete(int id)
+        public async Task<bool> DeleteAsync(int id)
         {
-            var category = await this.GetById(id);
+            var category = await this.GetByIdAsync(id);
             if (category == null)
             {
                 return false;
@@ -74,15 +75,7 @@
             return true;
         }
 
-        public async Task<CategoriesDetailsServiceModel> Details(int id)
-            => await this.db
-                .Categories
-                .AsNoTracking()
-                .Where(c => c.Id == id && !c.IsDeleted)
-                .ProjectTo<CategoriesDetailsServiceModel>(this.mapper.ConfigurationProvider)
-                .FirstOrDefaultAsync();
-
-        public async Task<IEnumerable<CategoriesListingServiceModel>> GetAll()
+        public async Task<IEnumerable<CategoriesListingServiceModel>> GetAllAsync()
             => await this.db
                 .Categories
                 .AsNoTracking()
@@ -90,7 +83,7 @@
                 .ProjectTo<CategoriesListingServiceModel>(this.mapper.ConfigurationProvider)
                 .ToListAsync();
 
-        private async Task<Category> GetById(int id)
+        private async Task<Category> GetByIdAsync(int id)
             => await this.db
                 .Categories
                 .FirstOrDefaultAsync(c => c.Id == id && !c.IsDeleted);

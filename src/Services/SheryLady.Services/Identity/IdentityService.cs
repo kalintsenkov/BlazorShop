@@ -10,6 +10,7 @@
     using Microsoft.IdentityModel.Tokens;
 
     using Data.Models;
+    using DateTime;
 
     public class IdentityService : IIdentityService
     {
@@ -24,7 +25,7 @@
             this.dateTimeProvider = dateTimeProvider;
         }
 
-        public async Task<IdentityResult> Create(
+        public async Task<IdentityResult> CreateAsync(
             string firstName, 
             string lastName, 
             string userName, 

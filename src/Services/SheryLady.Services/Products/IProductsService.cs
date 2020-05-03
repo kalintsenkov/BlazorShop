@@ -2,10 +2,11 @@
 {
     using System.Collections.Generic;
     using System.Threading.Tasks;
+    using Models.Products;
 
     public interface IProductsService
     {
-        Task<int> Create(
+        Task<int> CreateAsync(
             string name, 
             string description, 
             string image, 
@@ -13,7 +14,7 @@
             decimal price, 
             int categoryId);
 
-        Task<bool> Update(
+        Task<bool> UpdateAsync(
             int id,
             string name,
             string description,
@@ -22,12 +23,12 @@
             decimal price,
             int categoryId);
 
-        Task<bool> Delete(int id);
+        Task<bool> DeleteAsync(int id);
 
-        Task<TModel> GetById<TModel>(int id);
+        Task<ProductsDetailsServiceModel> DetailsAsync(int id);
 
-        Task<IEnumerable<TModel>> GetAll<TModel>();
+        Task<IEnumerable<ProductsListingServiceModel>> GetAllAsync();
 
-        Task<IEnumerable<TModel>> GetAllByCategoryId<TModel>(int categoryId);
+        Task<IEnumerable<ProductsListingServiceModel>> GetAllByCategoryIdAsync(int categoryId);
     }
 }

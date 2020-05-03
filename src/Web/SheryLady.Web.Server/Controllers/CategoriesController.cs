@@ -9,6 +9,8 @@
     using Models.Categories;
     using Services.Categories;
     using Services.Models.Categories;
+    using Services.Models.Products;
+    using Services.Products;
 
     using static Infrastructure.WebConstants;
 
@@ -16,22 +18,28 @@
     public class CategoriesController : ApiController
     {
         private readonly ICategoriesService categoriesService;
+        private readonly IProductsService productsService;
 
-        public CategoriesController(ICategoriesService categoriesService) 
-            => this.categoriesService = categoriesService;
+        public CategoriesController(
+            ICategoriesService categoriesService, 
+            IProductsService productsService)
+        {
+            this.categoriesService = categoriesService;
+            this.productsService = productsService;
+        }
 
         [HttpGet]
         public async Task<IEnumerable<CategoriesListingServiceModel>> All()
-            => await this.categoriesService.GetAll();
+            => await this.categoriesService.GetAllAsync();
 
         [HttpGet(RouteId)]
-        public async Task<ActionResult<CategoriesDetailsServiceModel>> Details(int id)
-            => await this.categoriesService.Details(id);
+        public async Task<IEnumerable<ProductsListingServiceModel>> Details(int id)
+            => await this.productsService.GetAllByCategoryIdAsync(id);
 
         [HttpPost]
         public async Task<ActionResult> Create(CategoriesCreateRequestModel model)
         {
-            var id = await this.categoriesService.Create(model.Name);
+            var id = await this.categoriesService.CreateAsync(model.Name);
 
             return this.Created(nameof(this.Create), id);
         }
@@ -39,7 +47,7 @@
         [HttpPut(RouteId)]
         public async Task<ActionResult> Update(CategoriesUpdateRequestModel model)
         {
-            var updated = await this.categoriesService.Update(model.Id, model.Name);
+            var updated = await this.categoriesService.UpdateAsync(model.Id, model.Name);
             if (!updated)
             {
                 return this.BadRequest();
@@ -51,7 +59,7 @@
         [HttpDelete(RouteId)]
         public async Task<ActionResult> Delete(int id)
         {
-            var deleted = await this.categoriesService.Delete(id);
+            var deleted = await this.categoriesService.DeleteAsync(id);
             if (!deleted)
             {
                 return this.BadRequest();

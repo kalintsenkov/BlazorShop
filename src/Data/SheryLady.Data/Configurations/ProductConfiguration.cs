@@ -4,6 +4,7 @@
     using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
     using Models;
+
     using static Common.ModelConstants;
 
     public class ProductConfiguration : IEntityTypeConfiguration<Product>
@@ -21,6 +22,7 @@
 
             product
                 .Property(p => p.Image)
+                .HasMaxLength(ProductImageMaxLength)
                 .IsRequired();
 
             product

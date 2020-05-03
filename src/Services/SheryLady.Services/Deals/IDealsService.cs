@@ -5,10 +5,10 @@
 
     public interface IDealsService
     {
-        Task<int> Start(DateTime startDate, DateTime endDate, decimal discount, int productId);
+        Task<int> StartAsync(DateTime startDate, DateTime endDate, decimal discount, int productId);
 
-        Task<bool> Update(int id, DateTime startDate, DateTime endDate, decimal discount);
+        Task<bool> UpdateAsync(int id, DateTime startDate, DateTime endDate, decimal discount);
 
-        Task<bool> End(int id);
+        Task<bool> EndAsync(int id);
     }
 }

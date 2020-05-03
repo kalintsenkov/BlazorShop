@@ -29,7 +29,7 @@
         [HttpPost(nameof(Register))]
         public async Task<ActionResult> Register(UsersRegisterRequestModel model)
         {
-            var result = await this.identityService.Create(
+            var result = await this.identityService.CreateAsync(
                 model.FirstName, 
                 model.LastName, 
                 model.UserName, 
