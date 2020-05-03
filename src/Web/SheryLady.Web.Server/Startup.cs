@@ -42,11 +42,9 @@ namespace SheryLady.Web.Server
                     .AllowAnyHeader())
                 .UseAuthentication()
                 .UseAuthorization()
-                .UseEndpoints(endpoints =>
-                {
-                    endpoints.MapControllers();
-                })
-                .ApplyMigrations();
+                .UseEndpoints(endpoints => endpoints.MapControllers())
+                .ApplyMigrations()
+                .SeedData();
         }
     }
 }

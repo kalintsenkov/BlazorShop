@@ -12,6 +12,8 @@
     using Data.Models;
     using DateTime;
 
+    using static Common.GlobalConstants;
+
     public class IdentityService : IIdentityService
     {
         private readonly UserManager<ApplicationUser> userManager;
@@ -26,10 +28,10 @@
         }
 
         public async Task<IdentityResult> CreateAsync(
-            string firstName, 
-            string lastName, 
-            string userName, 
-            string email, 
+            string firstName,
+            string lastName,
+            string userName,
+            string email,
             string password)
         {
             var user = new ApplicationUser
@@ -58,9 +60,14 @@
                 }),
                 Expires = DateTime.UtcNow.AddDays(7),
                 SigningCredentials = new SigningCredentials(
-                    new SymmetricSecurityKey(key), 
+                    new SymmetricSecurityKey(key),
                     SecurityAlgorithms.HmacSha256Signature)
             };
+
+            if (userName == AdminRoleName)
+            {
+                tokenDescriptor.Subject.AddClaim(new Claim(ClaimTypes.Role, AdminRoleName));
+            }
 
             var token = tokenHandler.CreateToken(tokenDescriptor);
             var encryptedToken = tokenHandler.WriteToken(token);

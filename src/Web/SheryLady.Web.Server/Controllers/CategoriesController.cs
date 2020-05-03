@@ -12,6 +12,7 @@
     using Services.Models.Products;
     using Services.Products;
 
+    using static Common.GlobalConstants;
     using static Infrastructure.WebConstants;
 
     [Authorize]
@@ -37,6 +38,7 @@
             => await this.productsService.GetAllByCategoryIdAsync(id);
 
         [HttpPost]
+        [Authorize(Roles = AdminRoleName)]
         public async Task<ActionResult> Create(CategoriesCreateRequestModel model)
         {
             var id = await this.categoriesService.CreateAsync(model.Name);
@@ -45,6 +47,7 @@
         }
 
         [HttpPut(RouteId)]
+        [Authorize(Roles = AdminRoleName)]
         public async Task<ActionResult> Update(CategoriesUpdateRequestModel model)
         {
             var updated = await this.categoriesService.UpdateAsync(model.Id, model.Name);
@@ -57,6 +60,7 @@
         }
 
         [HttpDelete(RouteId)]
+        [Authorize(Roles = AdminRoleName)]
         public async Task<ActionResult> Delete(int id)
         {
             var deleted = await this.categoriesService.DeleteAsync(id);
