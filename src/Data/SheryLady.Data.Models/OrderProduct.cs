@@ -2,6 +2,7 @@
 {
     using System;
 
+    using Enums;
     using Interfaces;
 
     public class OrderProduct : IAuditInfo, IDeletableEntity
@@ -13,6 +14,8 @@
         public int ProductId { get; set; }
 
         public Product Product { get; set; }
+
+        public Status Status { get; set; }
 
         public int Quantity { get; set; }
 

@@ -44,7 +44,7 @@
             return this.Created(nameof(this.Create), id);
         }
 
-        [HttpPut(RouteId)]
+        [HttpPut]
         [Authorize(Roles = AdminRoleName)]
         public async Task<ActionResult> Update(ProductsUpdateRequestModel model)
         {
