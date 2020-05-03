@@ -14,8 +14,8 @@
     using Filters;
     using Services;
     using Services.Categories;
+    using Services.Identity;
     using Services.Products;
-    using Services.Users;
 
     public static class ServiceCollectionExtensions
     {
@@ -77,7 +77,7 @@
 
         public static IServiceCollection AddApplicationServices(this IServiceCollection services)
             => services
-                .AddTransient<IUsersService, UsersService>()
+                .AddTransient<IIdentityService, IdentityService>()
                 .AddTransient<IProductsService, ProductsService>()
                 .AddTransient<ICategoriesService, CategoriesService>()
                 .AddTransient<IDateTimeProvider, DateTimeProvider>();
