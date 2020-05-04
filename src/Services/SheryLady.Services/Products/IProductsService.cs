@@ -9,7 +9,7 @@
         Task<int> CreateAsync(
             string name, 
             string description, 
-            string image, 
+            string imageSource, 
             int quantity, 
             decimal price, 
             int categoryId);
@@ -18,7 +18,7 @@
             int id,
             string name,
             string description,
-            string image,
+            string imageSource,
             int quantity,
             decimal price,
             int categoryId);

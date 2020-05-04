@@ -14,7 +14,6 @@
     using Filters;
     using Services.Categories;
     using Services.DateTime;
-    using Services.Deals;
     using Services.Identity;
     using Services.Products;
 
@@ -81,7 +80,6 @@
                 .AddTransient<IIdentityService, IdentityService>()
                 .AddTransient<IProductsService, ProductsService>()
                 .AddTransient<ICategoriesService, CategoriesService>()
-                .AddTransient<IDealsService, DealsService>()
                 .AddTransient<IDateTimeProvider, DateTimeProvider>();
 
         public static IServiceCollection AddSwagger(this IServiceCollection services)

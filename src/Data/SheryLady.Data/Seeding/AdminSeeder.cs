@@ -8,9 +8,8 @@
     using Microsoft.EntityFrameworkCore;
     using Microsoft.Extensions.DependencyInjection;
 
+    using Common;
     using Models;
-
-    using static Common.GlobalConstants;
 
     internal class AdminSeeder : ISeeder
     {
@@ -19,28 +18,28 @@
             var userManager = serviceProvider.GetService<UserManager<ApplicationUser>>();
             var roleManager = serviceProvider.GetService<RoleManager<ApplicationRole>>();
 
-            var isExisting = await userManager.Users.AnyAsync(u => u.UserName == AdminRoleName);
+            var isExisting = await userManager.Users.AnyAsync(u => u.UserName == GlobalConstants.AdminRoleName);
             if (!isExisting)
             {
                 var admin = new ApplicationUser
                 {
-                    FirstName = AdminRoleName,
-                    LastName = AdminRoleName,
-                    UserName = AdminRoleName,
-                    Email = AdminEmail,
+                    FirstName = GlobalConstants.AdminRoleName,
+                    LastName = GlobalConstants.AdminRoleName,
+                    UserName = GlobalConstants.AdminRoleName,
+                    Email = GlobalConstants.AdminEmail,
                     EmailConfirmed = true
                 };
 
-                var result = await userManager.CreateAsync(admin, AdminPassword);
+                var result = await userManager.CreateAsync(admin, GlobalConstants.AdminPassword);
                 if (!result.Succeeded)
                 {
                     throw new Exception(string.Join(Environment.NewLine, result.Errors.Select(e => e.Description)));
                 }
 
-                var isRoleExists = await roleManager.RoleExistsAsync(AdminRoleName);
+                var isRoleExists = await roleManager.RoleExistsAsync(GlobalConstants.AdminRoleName);
                 if (isRoleExists)
                 {
-                    await userManager.AddToRoleAsync(admin, AdminRoleName);
+                    await userManager.AddToRoleAsync(admin, GlobalConstants.AdminRoleName);
                 }
             }
         }

@@ -32,7 +32,7 @@
         public async Task<int> CreateAsync(
             string name,
             string description,
-            string image,
+            string imageSource,
             int quantity,
             decimal price,
             int categoryId)
@@ -41,7 +41,7 @@
             {
                 Name = name,
                 Description = description,
-                Image = image,
+                ImageSource = imageSource,
                 Quantity = quantity,
                 Price = price,
                 CategoryId = categoryId,
@@ -58,7 +58,7 @@
             int id,
             string name,
             string description,
-            string image,
+            string imageSource,
             int quantity,
             decimal price,
             int categoryId)
@@ -71,7 +71,7 @@
 
             product.Name = name;
             product.Description = description;
-            product.Image = image;
+            product.ImageSource = imageSource;
             product.Quantity = quantity;
             product.Price = price;
             product.CategoryId = categoryId;

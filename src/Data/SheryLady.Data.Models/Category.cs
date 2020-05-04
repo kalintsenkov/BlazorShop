@@ -7,6 +7,11 @@
 
     public class Category : IAuditInfo, IDeletableEntity
     {
+        public Category()
+        {
+            this.Products = new HashSet<Product>();
+        }
+
         public int Id { get; set; }
 
         public string Name { get; set; }
@@ -19,6 +24,6 @@
 
         public DateTime? DeletedOn { get; set; }
 
-        public ICollection<Product> Products { get; } = new HashSet<Product>();
+        public ICollection<Product> Products { get; }
     }
 }

@@ -7,13 +7,18 @@
 
     public class Product : IAuditInfo, IDeletableEntity
     {
+        public Product()
+        {
+            this.Orders = new HashSet<OrderProduct>();
+        }
+
         public int Id { get; set; }
 
         public string Name { get; set; }
 
         public string Description { get; set; }
 
-        public string Image { get; set; }
+        public string ImageSource { get; set; }
 
         public int Quantity { get; set; }
 
@@ -31,8 +36,6 @@
 
         public DateTime? DeletedOn { get; set; }
 
-        public ICollection<Deal> Deals { get; } = new HashSet<Deal>();
-
-        public ICollection<OrderProduct> Orders { get; } = new HashSet<OrderProduct>();
+        public ICollection<OrderProduct> Orders { get; }
     }
 }

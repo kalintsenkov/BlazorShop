@@ -14,8 +14,6 @@
 
         public DbSet<Product> Products { get; set; }
 
-        public DbSet<Deal> Deals { get; set; }
-
         public DbSet<Category> Categories { get; set; }
 
         public DbSet<Order> Orders { get; set; }

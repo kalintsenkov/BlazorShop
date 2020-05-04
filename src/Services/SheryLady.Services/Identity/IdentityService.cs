@@ -38,15 +38,15 @@
             {
                 FirstName = firstName,
                 LastName = lastName,
-                Email = userName,
-                UserName = email,
+                Email = email,
+                UserName = userName,
                 CreatedOn = this.dateTimeProvider.Now()
             };
 
             return await this.userManager.CreateAsync(user, password);
         }
 
-        public string GenerateJwtToken(string userId, string userName, string secret)
+        public async Task<string> GenerateJwtToken(string userId, string userName, string secret)
         {
             var tokenHandler = new JwtSecurityTokenHandler();
             var key = Encoding.ASCII.GetBytes(secret);
@@ -64,7 +64,8 @@
                     SecurityAlgorithms.HmacSha256Signature)
             };
 
-            if (userName == AdminRoleName)
+            var isInAdminRole = await IsInAdminRole(userId);
+            if (isInAdminRole)
             {
                 tokenDescriptor.Subject.AddClaim(new Claim(ClaimTypes.Role, AdminRoleName));
             }
@@ -73,6 +74,13 @@
             var encryptedToken = tokenHandler.WriteToken(token);
 
             return encryptedToken;
+        }
+
+        private async Task<bool> IsInAdminRole(string userId)
+        {
+            var user = await this.userManager.FindByIdAsync(userId);
+
+            return await this.userManager.IsInRoleAsync(user, AdminRoleName);
         }
     }
 }

@@ -13,13 +13,15 @@ namespace SheryLady.Data.Models
         public ApplicationUser()
         {
             this.Id = Guid.NewGuid().ToString();
+            this.Orders = new HashSet<Order>();
+            this.Roles = new HashSet<IdentityUserRole<string>>();
+            this.Claims = new HashSet<IdentityUserClaim<string>>();
+            this.Logins = new HashSet<IdentityUserLogin<string>>();
         }
 
         public string FirstName { get; set; }
 
         public string LastName { get; set; }
-
-        public string ProfilePicture { get; set; }
 
         public DateTime CreatedOn { get; set; }
 
@@ -29,12 +31,12 @@ namespace SheryLady.Data.Models
 
         public DateTime? DeletedOn { get; set; }
 
-        public ICollection<Order> Orders { get; } = new HashSet<Order>();
+        public ICollection<Order> Orders { get; }
 
-        public virtual ICollection<IdentityUserRole<string>> Roles { get; } = new HashSet<IdentityUserRole<string>>();
+        public virtual ICollection<IdentityUserRole<string>> Roles { get; }
 
-        public virtual ICollection<IdentityUserClaim<string>> Claims { get; } = new HashSet<IdentityUserClaim<string>>();
+        public virtual ICollection<IdentityUserClaim<string>> Claims { get; }
 
-        public virtual ICollection<IdentityUserLogin<string>> Logins { get; } = new HashSet<IdentityUserLogin<string>>();
+        public virtual ICollection<IdentityUserLogin<string>> Logins { get; }
     }
 }

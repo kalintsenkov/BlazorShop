@@ -21,9 +21,13 @@
                 .HasMaxLength(ProductDescriptionMaxLength);
 
             product
-                .Property(p => p.Image)
+                .Property(p => p.ImageSource)
                 .HasMaxLength(ProductImageMaxLength)
                 .IsRequired();
+
+            product
+                .Property(p => p.Price)
+                .HasColumnType("decimal(18,2)");
 
             product
                 .HasOne(p => p.Category)

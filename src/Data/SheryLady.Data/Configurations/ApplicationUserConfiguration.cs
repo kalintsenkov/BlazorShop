@@ -4,6 +4,7 @@
     using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
     using Models;
+
     using static Common.ModelConstants;
 
     public class ApplicationUserConfiguration : IEntityTypeConfiguration<ApplicationUser>
@@ -19,10 +20,6 @@
                 .Property(u => u.LastName)
                 .HasMaxLength(UserLastNameMaxLength)
                 .IsRequired();
-
-            user
-                .Property(u => u.ProfilePicture)
-                .HasMaxLength(UserProfilePictureMaxLength);
 
             user
                 .HasMany(e => e.Claims)

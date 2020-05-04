@@ -47,7 +47,6 @@
                     AccessFailedCount = table.Column<int>(nullable: false),
                     FirstName = table.Column<string>(maxLength: 50, nullable: false),
                     LastName = table.Column<string>(maxLength: 50, nullable: false),
-                    ProfilePicture = table.Column<string>(maxLength: 250, nullable: true),
                     CreatedOn = table.Column<DateTime>(nullable: false),
                     ModifiedOn = table.Column<DateTime>(nullable: true),
                     IsDeleted = table.Column<bool>(nullable: false),
@@ -189,9 +188,7 @@
                         .Annotation("SqlServer:Identity", "1, 1"),
                     UserId = table.Column<string>(nullable: false),
                     CreatedOn = table.Column<DateTime>(nullable: false),
-                    ModifiedOn = table.Column<DateTime>(nullable: true),
-                    IsDeleted = table.Column<bool>(nullable: false),
-                    DeletedOn = table.Column<DateTime>(nullable: true)
+                    ModifiedOn = table.Column<DateTime>(nullable: true)
                 },
                 constraints: table =>
                 {
@@ -212,9 +209,9 @@
                         .Annotation("SqlServer:Identity", "1, 1"),
                     Name = table.Column<string>(maxLength: 30, nullable: false),
                     Description = table.Column<string>(maxLength: 250, nullable: true),
-                    Image = table.Column<string>(nullable: false),
+                    ImageSource = table.Column<string>(maxLength: 250, nullable: false),
                     Quantity = table.Column<int>(nullable: false),
-                    Price = table.Column<decimal>(nullable: false),
+                    Price = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
                     CategoryId = table.Column<int>(nullable: false),
                     CreatedOn = table.Column<DateTime>(nullable: false),
                     ModifiedOn = table.Column<DateTime>(nullable: true),
@@ -233,32 +230,6 @@
                 });
 
             migrationBuilder.CreateTable(
-                name: "Deals",
-                columns: table => new
-                {
-                    Id = table.Column<int>(nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    StartDate = table.Column<DateTime>(nullable: false),
-                    EndDate = table.Column<DateTime>(nullable: false),
-                    Discount = table.Column<decimal>(nullable: false),
-                    ProductId = table.Column<int>(nullable: false),
-                    CreatedOn = table.Column<DateTime>(nullable: false),
-                    ModifiedOn = table.Column<DateTime>(nullable: true),
-                    IsDeleted = table.Column<bool>(nullable: false),
-                    DeletedOn = table.Column<DateTime>(nullable: true)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Deals", x => x.Id);
-                    table.ForeignKey(
-                        name: "FK_Deals_Products_ProductId",
-                        column: x => x.ProductId,
-                        principalTable: "Products",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
-                });
-
-            migrationBuilder.CreateTable(
                 name: "OrdersProducts",
                 columns: table => new
                 {
@@ -266,9 +237,7 @@
                     ProductId = table.Column<int>(nullable: false),
                     Quantity = table.Column<int>(nullable: false),
                     CreatedOn = table.Column<DateTime>(nullable: false),
-                    ModifiedOn = table.Column<DateTime>(nullable: true),
-                    IsDeleted = table.Column<bool>(nullable: false),
-                    DeletedOn = table.Column<DateTime>(nullable: true)
+                    ModifiedOn = table.Column<DateTime>(nullable: true)
                 },
                 constraints: table =>
                 {
@@ -337,16 +306,6 @@
                 column: "IsDeleted");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Deals_IsDeleted",
-                table: "Deals",
-                column: "IsDeleted");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_Deals_ProductId",
-                table: "Deals",
-                column: "ProductId");
-
-            migrationBuilder.CreateIndex(
                 name: "IX_Orders_UserId",
                 table: "Orders",
                 column: "UserId");
@@ -383,9 +342,6 @@
 
             migrationBuilder.DropTable(
                 name: "AspNetUserTokens");
-
-            migrationBuilder.DropTable(
-                name: "Deals");
 
             migrationBuilder.DropTable(
                 name: "OrdersProducts");

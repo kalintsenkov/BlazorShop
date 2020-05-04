@@ -13,6 +13,6 @@
             string email, 
             string password);
 
-        string GenerateJwtToken(string userId, string userName, string secret);
+        Task<string> GenerateJwtToken(string userId, string userName, string secret);
     }
 }

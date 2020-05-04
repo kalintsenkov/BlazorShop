@@ -4,6 +4,7 @@
     using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
     using Models;
+
     using static Common.ModelConstants;
 
     public class CategoryConfiguration : IEntityTypeConfiguration<Category>

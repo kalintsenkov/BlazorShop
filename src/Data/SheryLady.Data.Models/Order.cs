@@ -5,8 +5,13 @@
 
     using Interfaces;
 
-    public class Order : IAuditInfo, IDeletableEntity
+    public class Order : IAuditInfo
     {
+        public Order()
+        {
+            this.Products = new HashSet<OrderProduct>();
+        }
+
         public int Id { get; set; }
 
         public string UserId { get; set; }
@@ -17,10 +22,6 @@
 
         public DateTime? ModifiedOn { get; set; }
 
-        public bool IsDeleted { get; set; }
-
-        public DateTime? DeletedOn { get; set; }
-
-        public ICollection<OrderProduct> Products { get; } = new HashSet<OrderProduct>();
+        public ICollection<OrderProduct> Products { get; }
     }
 }
