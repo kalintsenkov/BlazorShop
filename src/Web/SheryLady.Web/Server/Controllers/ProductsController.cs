@@ -12,6 +12,7 @@
     using static Common.GlobalConstants;
     using static Infrastructure.WebConstants;
 
+    [Authorize]
     public class ProductsController : ApiController
     {
         private readonly IProductsService productsService;
@@ -23,7 +24,7 @@
         public async Task<IEnumerable<ProductsListingResponseModel>> All()
             => await this.productsService.GetAllAsync();
 
-        [HttpGet(RouteId)]
+        [HttpGet(Id)]
         public async Task<ActionResult<ProductsDetailsResponseModel>> Details(int id)
             => await this.productsService.DetailsAsync(id);
 
@@ -63,7 +64,7 @@
             return this.Ok();
         }
 
-        [HttpDelete(RouteId)]
+        [HttpDelete(Id)]
         [Authorize(Roles = AdminRoleName)]
         public async Task<ActionResult> Delete(int id)
         {

@@ -13,13 +13,11 @@
         {
             user
                 .Property(u => u.FirstName)
-                .HasMaxLength(UserFirstNameMaxLength)
-                .IsRequired();
+                .HasMaxLength(UserFirstNameMaxLength);
 
             user
                 .Property(u => u.LastName)
-                .HasMaxLength(UserLastNameMaxLength)
-                .IsRequired();
+                .HasMaxLength(UserLastNameMaxLength);
 
             user
                 .HasMany(e => e.Claims)

@@ -32,7 +32,7 @@
         public async Task<IEnumerable<CategoriesListingResponseModel>> All()
             => await this.categoriesService.GetAllAsync();
 
-        [HttpGet(RouteId)]
+        [HttpGet(Id)]
         public async Task<IEnumerable<ProductsListingResponseModel>> Details(int id)
             => await this.productsService.GetAllByCategoryIdAsync(id);
 
@@ -58,7 +58,7 @@
             return this.Ok();
         }
 
-        [HttpDelete(RouteId)]
+        [HttpDelete(Id)]
         [Authorize(Roles = AdminRoleName)]
         public async Task<ActionResult> Delete(int id)
         {

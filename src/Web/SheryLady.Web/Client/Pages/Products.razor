@@ -1,5 +1,7 @@
 ﻿@page "/products"
-@inject HttpClient HttpClient
+@inject HttpClient Http
+@inject TokenAuthenticationStateProvider TokenProvider
+@attribute [Authorize]
 
 @if (this.products == null)
 {
@@ -24,6 +26,11 @@ else
 
     protected override async Task OnInitializedAsync()
     {
-        this.products = await this.HttpClient.GetFromJsonAsync<ProductsListingResponseModel[]>("api/products");
+        var token = await TokenProvider.GetTokenAsync();
+        if (token != null)
+        {
+            Http.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
+            this.products = await this.Http.GetFromJsonAsync<ProductsListingResponseModel[]>("api/products");
+        }
     }
 }

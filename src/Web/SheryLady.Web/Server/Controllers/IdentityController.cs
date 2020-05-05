@@ -30,9 +30,7 @@
         public async Task<ActionResult> Register(RegisterRequestModel model)
         {
             var result = await this.identityService.CreateAsync(
-                model.FirstName, 
-                model.LastName, 
-                model.UserName, 
+                model.Username, 
                 model.Email, 
                 model.Password);
 
@@ -47,7 +45,7 @@
         [HttpPost(nameof(Login))]
         public async Task<ActionResult<LoginResponseModel>> Login(LoginRequestModel model)
         {
-            var user = await this.userManager.FindByNameAsync(model.UserName);
+            var user = await this.userManager.FindByNameAsync(model.Username);
             if (user == null)
             {
                 return this.Unauthorized();

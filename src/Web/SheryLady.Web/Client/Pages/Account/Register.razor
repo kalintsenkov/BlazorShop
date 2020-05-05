@@ -1,0 +1,48 @@
+﻿@page "/account/register"
+@inject HttpClient HttpClient
+
+<h1>Register</h1>
+
+<div class="row">
+    <div class="col-sm-9 col-md-7 col-lg-5 my-3">
+        <EditForm Model="model" OnValidSubmit="this.Submit">
+            <DataAnnotationsValidator />
+            <ValidationSummary />
+            <div class="input-group mb-3">
+                <div class="input-group-prepend w-25">
+                    <span class="input-group-text w-100">Username</span>
+                </div>
+                <InputText class="form-control" @bind-Value="model.Username" />
+            </div>
+            <div class="input-group mb-3">
+                <div class="input-group-prepend w-25">
+                    <span class="input-group-text w-100">Email</span>
+                </div>
+                <InputText class="form-control" @bind-Value="model.Email" />
+            </div>
+            <div class="input-group mb-3">
+                <div class="input-group-prepend w-25">
+                    <span class="input-group-text w-100">Password</span>
+                </div>
+                <InputText type="password" class="form-control" @bind-Value="model.Password" />
+            </div>
+            <div class="input-group mb-3">
+                <div class="input-group-prepend w-25">
+                    <span class="input-group-text w-100">Confrim Password</span>
+                </div>
+                <InputText type="password" class="form-control" @bind-Value="model.ConfirmPassword" />
+            </div>
+            <button class="btn btn-lg btn-primary btn-block text-uppercase" type="submit">Register</button>
+        </EditForm>
+    </div>
+</div>
+
+@code {
+
+    readonly RegisterRequestModel model = new RegisterRequestModel();
+
+    private async Task Submit()
+    {
+        await this.HttpClient.PostAsJsonAsync<RegisterRequestModel>("api/identity/register", model);
+    }
+}

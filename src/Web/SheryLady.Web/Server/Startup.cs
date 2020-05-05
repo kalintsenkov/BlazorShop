@@ -43,6 +43,8 @@ namespace SheryLady.Web.Server
                 .UseBlazorFrameworkFiles()
                 .UseStaticFiles()
                 .UseRouting()
+                .UseAuthentication()
+                .UseAuthorization()
                 .UseEndpoints(endpoints =>
                 {
                     endpoints.MapRazorPages();

@@ -2,6 +2,6 @@
 {
     public class WebConstants
     {
-        public const string RouteId = "{id}";
+        public const string Id = "{id}";
     }
 }

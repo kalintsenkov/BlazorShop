@@ -27,17 +27,10 @@
             this.dateTimeProvider = dateTimeProvider;
         }
 
-        public async Task<IdentityResult> CreateAsync(
-            string firstName,
-            string lastName,
-            string userName,
-            string email,
-            string password)
+        public async Task<IdentityResult> CreateAsync(string userName, string email, string password)
         {
             var user = new ApplicationUser
             {
-                FirstName = firstName,
-                LastName = lastName,
                 Email = email,
                 UserName = userName,
                 CreatedOn = this.dateTimeProvider.Now()

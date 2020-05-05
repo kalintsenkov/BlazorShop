@@ -8,22 +8,20 @@
     public class RegisterRequestModel
     {
         [Required]
-        [MaxLength(UserFirstNameMaxLength)]
-        public string FirstName { get; set; }
-
-        [Required]
-        [MaxLength(UserLastNameMaxLength)]
-        public string LastName { get; set; }
-
-        [Required]
         [EmailAddress]
         public string Email { get; set; }
 
         [Required]
         [StringLength(UserUserNameMaxLength, ErrorMessage = StringLengthErrorMessage, MinimumLength = UserUserNameMinLength)]
-        public string UserName { get; set; }
+        public string Username { get; set; }
 
         [Required]
+        [DataType(DataType.Password)]
         public string Password { get; set; }
+
+        [Required]
+        [Compare(nameof(Password))]
+        [DataType(DataType.Password)]
+        public string ConfirmPassword { get; set; }
     }
 }

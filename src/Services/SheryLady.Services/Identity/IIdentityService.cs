@@ -6,12 +6,7 @@
 
     public interface IIdentityService
     {
-        Task<IdentityResult> CreateAsync(
-            string firstName, 
-            string lastName, 
-            string userName, 
-            string email, 
-            string password);
+        Task<IdentityResult> CreateAsync(string userName, string email, string password);
 
         Task<string> GenerateJwtToken(string userId, string userName, string secret);
     }
