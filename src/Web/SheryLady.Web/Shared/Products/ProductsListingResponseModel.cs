@@ -1,6 +1,6 @@
-﻿namespace SheryLady.Services.Models.Products
+﻿namespace SheryLady.Web.Shared.Products
 {
-    public class ProductsListingServiceModel
+    public class ProductsListingResponseModel
     {
         public int Id { get; set; }
 

@@ -3,7 +3,7 @@
     using System.Collections.Generic;
     using System.Threading.Tasks;
 
-    using Models.Categories;
+    using Web.Shared.Categories;
 
     public interface ICategoriesService
     {
@@ -13,6 +13,6 @@
 
         Task<bool> DeleteAsync(int id);
 
-        Task<IEnumerable<CategoriesListingServiceModel>> GetAllAsync();
+        Task<IEnumerable<CategoriesListingResponseModel>> GetAllAsync();
     }
 }

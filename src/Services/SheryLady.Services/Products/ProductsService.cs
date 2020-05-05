@@ -11,7 +11,7 @@
     using Data;
     using Data.Models;
     using DateTime;
-    using Models.Products;
+    using Web.Shared.Products;
 
     public class ProductsService : IProductsService
     {
@@ -98,28 +98,28 @@
             return true;
         }
 
-        public async Task<ProductsDetailsServiceModel> DetailsAsync(int id)
+        public async Task<ProductsDetailsResponseModel> DetailsAsync(int id)
             => await this.db
                 .Products
                 .AsNoTracking()
                 .Where(p => p.Id == id && !p.IsDeleted)
-                .ProjectTo<ProductsDetailsServiceModel>(this.mapper.ConfigurationProvider)
+                .ProjectTo<ProductsDetailsResponseModel>(this.mapper.ConfigurationProvider)
                 .FirstOrDefaultAsync();
 
-        public async Task<IEnumerable<ProductsListingServiceModel>> GetAllAsync()
+        public async Task<IEnumerable<ProductsListingResponseModel>> GetAllAsync()
             => await this.db
                 .Products
                 .AsNoTracking()
                 .Where(p => !p.IsDeleted)
-                .ProjectTo<ProductsListingServiceModel>(this.mapper.ConfigurationProvider)
+                .ProjectTo<ProductsListingResponseModel>(this.mapper.ConfigurationProvider)
                 .ToListAsync();
 
-        public async Task<IEnumerable<ProductsListingServiceModel>> GetAllByCategoryIdAsync(int categoryId)
+        public async Task<IEnumerable<ProductsListingResponseModel>> GetAllByCategoryIdAsync(int categoryId)
             => await this.db
                 .Products
                 .AsNoTracking()
                 .Where(p => p.CategoryId == categoryId && !p.IsDeleted)
-                .ProjectTo<ProductsListingServiceModel>(this.mapper.ConfigurationProvider)
+                .ProjectTo<ProductsListingResponseModel>(this.mapper.ConfigurationProvider)
                 .ToListAsync();
 
         private async Task<Product> GetByIdAsync(int id)

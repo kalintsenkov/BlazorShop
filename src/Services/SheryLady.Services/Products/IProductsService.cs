@@ -2,7 +2,8 @@
 {
     using System.Collections.Generic;
     using System.Threading.Tasks;
-    using Models.Products;
+
+    using Web.Shared.Products;
 
     public interface IProductsService
     {
@@ -25,10 +26,10 @@
 
         Task<bool> DeleteAsync(int id);
 
-        Task<ProductsDetailsServiceModel> DetailsAsync(int id);
+        Task<ProductsDetailsResponseModel> DetailsAsync(int id);
 
-        Task<IEnumerable<ProductsListingServiceModel>> GetAllAsync();
+        Task<IEnumerable<ProductsListingResponseModel>> GetAllAsync();
 
-        Task<IEnumerable<ProductsListingServiceModel>> GetAllByCategoryIdAsync(int categoryId);
+        Task<IEnumerable<ProductsListingResponseModel>> GetAllByCategoryIdAsync(int categoryId);
     }
 }

@@ -11,7 +11,7 @@
     using Data;
     using Data.Models;
     using DateTime;
-    using Models.Categories;
+    using Web.Shared.Categories;
 
     public class CategoriesService : ICategoriesService
     {
@@ -75,12 +75,12 @@
             return true;
         }
 
-        public async Task<IEnumerable<CategoriesListingServiceModel>> GetAllAsync()
+        public async Task<IEnumerable<CategoriesListingResponseModel>> GetAllAsync()
             => await this.db
                 .Categories
                 .AsNoTracking()
                 .Where(c => !c.IsDeleted)
-                .ProjectTo<CategoriesListingServiceModel>(this.mapper.ConfigurationProvider)
+                .ProjectTo<CategoriesListingResponseModel>(this.mapper.ConfigurationProvider)
                 .ToListAsync();
 
         private async Task<Category> GetByIdAsync(int id)

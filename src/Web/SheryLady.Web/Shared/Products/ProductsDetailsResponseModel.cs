@@ -1,6 +1,6 @@
-﻿namespace SheryLady.Services.Models.Products
+﻿namespace SheryLady.Web.Shared.Products
 {
-    public class ProductsDetailsServiceModel : ProductsListingServiceModel
+    public class ProductsDetailsResponseModel : ProductsListingResponseModel
     {
         public string Description { get; set; }
 
