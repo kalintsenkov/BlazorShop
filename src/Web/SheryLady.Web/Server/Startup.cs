@@ -19,11 +19,11 @@ namespace SheryLady.Web.Server
             => services
                 .AddDatabase(this.Configuration)
                 .AddIdentity()
-                .AddJwtAuthentication(services.GetApplicationSettings(this.Configuration))
+                .AddJwtAuthentication(this.Configuration)
                 .AddAutoMapper(typeof(SheryLadyProfile).Assembly)
                 .AddApplicationServices()
                 .AddApiControllers()
-                .AddRazor();
+                .AddRazorPages();
 
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
