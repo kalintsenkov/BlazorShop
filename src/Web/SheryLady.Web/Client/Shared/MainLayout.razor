@@ -7,8 +7,10 @@
 
 <div class="main">
     <AuthorizeView>
-        Logged in as @context.User.Identity.Name
-        <button class="btn btn-sm btn-outline-dark" @onclick="@(() => TokenProvider.SetTokenAsync(null))">Logout</button>
+        <div class="float-md-right">
+            Logged in as @context.User.Identity.Name
+            <button class="btn btn-sm btn-outline-dark" @onclick="@(() => TokenProvider.SetTokenAsync(null))">Logout</button>
+        </div>
     </AuthorizeView>
 
     <div class="content px-4">
