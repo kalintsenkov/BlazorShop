@@ -1,13 +1,15 @@
 ﻿@inherits LayoutComponentBase
+@inject TokenAuthenticationStateProvider TokenProvider
 
 <div class="sidebar">
     <NavMenu />
 </div>
 
 <div class="main">
-    <div class="top-row px-4">
-        <a href="http://blazor.net" target="_blank" class="ml-md-auto">About</a>
-    </div>
+    <AuthorizeView>
+        Logged in as @context.User.Identity.Name
+        <button class="btn btn-sm btn-outline-dark" @onclick="@(() => TokenProvider.SetTokenAsync(null))">Logout</button>
+    </AuthorizeView>
 
     <div class="content px-4">
         @Body

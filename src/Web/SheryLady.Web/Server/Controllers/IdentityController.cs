@@ -4,9 +4,10 @@
 
     using Microsoft.AspNetCore.Identity;
     using Microsoft.AspNetCore.Mvc;
-    using Microsoft.Extensions.Options;
+    using Microsoft.Extensions.Configuration;
 
     using Data.Models;
+    using Infrastructure.Extensions;
     using Services.Identity;
     using Shared.Identity;
 
@@ -14,16 +15,16 @@
     {
         private readonly UserManager<ApplicationUser> userManager;
         private readonly IIdentityService identityService;
-        private readonly AppSettings appSettings;
+        private readonly IConfiguration configuration;
 
         public IdentityController(
             UserManager<ApplicationUser> userManager,
             IIdentityService identityService,
-            IOptions<AppSettings> appSettings)
+            IConfiguration configuration)
         {
             this.userManager = userManager;
             this.identityService = identityService;
-            this.appSettings = appSettings.Value;
+            this.configuration = configuration;
         }
 
         [HttpPost(nameof(Register))]
@@ -60,7 +61,9 @@
             var token = await this.identityService.GenerateJwtToken(
                 user.Id,
                 user.UserName,
-                this.appSettings.Secret);
+                this.configuration.GetJwtKey(),
+                this.configuration.GetJwtIssuer(),
+                this.configuration.GetJwtAudience());
 
             return new LoginResponseModel { Token = token };
         }

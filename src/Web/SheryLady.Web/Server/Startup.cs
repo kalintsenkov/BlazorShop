@@ -19,7 +19,7 @@ namespace SheryLady.Web.Server
             => services
                 .AddDatabase(this.Configuration)
                 .AddIdentity()
-                .AddJwtAuthentication(services.GetApplicationSettings(this.Configuration))
+                .AddJwtAuthentication(this.Configuration)
                 .AddAutoMapper(typeof(SheryLadyProfile).Assembly)
                 .AddApplicationServices()
                 .AddApiControllers()

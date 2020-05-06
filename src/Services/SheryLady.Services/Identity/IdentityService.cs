@@ -1,6 +1,7 @@
 ﻿namespace SheryLady.Services.Identity
 {
     using System;
+    using System.Collections.Generic;
     using System.IdentityModel.Tokens.Jwt;
     using System.Security.Claims;
     using System.Text;
@@ -39,33 +40,30 @@
             return await this.userManager.CreateAsync(user, password);
         }
 
-        public async Task<string> GenerateJwtToken(string userId, string userName, string secret)
+        public async Task<string> GenerateJwtToken(string userId, string userName, string key, string issuer, string audience)
         {
-            var tokenHandler = new JwtSecurityTokenHandler();
-            var key = Encoding.ASCII.GetBytes(secret);
-            var tokenDescriptor = new SecurityTokenDescriptor
+            var securityKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(key));
+            var claims = new List<Claim>
             {
-                Subject = new ClaimsIdentity(new[]
-                {
-                    new Claim(ClaimTypes.NameIdentifier, userId),
-                    new Claim(ClaimTypes.Name, userName)
-                }),
-                Expires = DateTime.UtcNow.AddDays(7),
-                SigningCredentials = new SigningCredentials(
-                    new SymmetricSecurityKey(key),
-                    SecurityAlgorithms.HmacSha256Signature)
+                new Claim(ClaimTypes.NameIdentifier, userId),
+                new Claim(ClaimTypes.Name, userName)
             };
 
             var isInAdminRole = await this.IsInAdminRole(userId);
             if (isInAdminRole)
             {
-                tokenDescriptor.Subject.AddClaim(new Claim(ClaimTypes.Role, AdminRoleName));
+                claims.Add(new Claim(ClaimTypes.Role, AdminRoleName));
             }
 
-            var token = tokenHandler.CreateToken(tokenDescriptor);
-            var encryptedToken = tokenHandler.WriteToken(token);
+            var token = new JwtSecurityToken(
+                issuer,
+                audience,
+                claims,
+                expires: DateTime.UtcNow.AddDays(7),
+                signingCredentials: new SigningCredentials(securityKey, SecurityAlgorithms.HmacSha256));
 
-            return encryptedToken;
+            var tokenHandler = new JwtSecurityTokenHandler();
+            return tokenHandler.WriteToken(token);
         }
 
         private async Task<bool> IsInAdminRole(string userId)

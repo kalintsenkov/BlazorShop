@@ -8,6 +8,6 @@
     {
         Task<IdentityResult> CreateAsync(string userName, string email, string password);
 
-        Task<string> GenerateJwtToken(string userId, string userName, string secret);
+        Task<string> GenerateJwtToken(string userId, string userName, string key, string issuer, string audience);
     }
 }

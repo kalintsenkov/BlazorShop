@@ -18,15 +18,6 @@
 
     public static class ServiceCollectionExtensions
     {
-        public static AppSettings GetApplicationSettings(
-            this IServiceCollection services,
-            IConfiguration configuration)
-        {
-            var applicationSettingsSection = configuration.GetSection("ApplicationSettings");
-            services.Configure<AppSettings>(applicationSettingsSection);
-            return applicationSettingsSection.Get<AppSettings>();
-        }
-
         public static IServiceCollection AddDatabase(
             this IServiceCollection services,
             IConfiguration configuration)
@@ -46,9 +37,11 @@
 
         public static IServiceCollection AddJwtAuthentication(
             this IServiceCollection services,
-            AppSettings appSettings)
+            IConfiguration configuration)
         {
-            var key = Encoding.ASCII.GetBytes(appSettings.Secret);
+            var key = Encoding.UTF8.GetBytes(configuration.GetJwtKey());
+            var issuer = configuration.GetJwtIssuer();
+            var audience = configuration.GetJwtAudience();
 
             services
                 .AddAuthentication(x =>
@@ -62,10 +55,13 @@
                     x.SaveToken = true;
                     x.TokenValidationParameters = new TokenValidationParameters
                     {
+                        ValidateIssuer = true,
+                        ValidateAudience = true,
+                        ValidateLifetime = true,
                         ValidateIssuerSigningKey = true,
-                        IssuerSigningKey = new SymmetricSecurityKey(key),
-                        ValidateIssuer = false,
-                        ValidateAudience = false
+                        ValidIssuer = issuer,
+                        ValidAudience = audience,
+                        IssuerSigningKey = new SymmetricSecurityKey(key)
                     };
                 });
 

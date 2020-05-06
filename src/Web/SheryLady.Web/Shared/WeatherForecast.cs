@@ -1,9 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace SheryLady.Web.Shared
+﻿namespace SheryLady.Web.Shared
 {
+    using System;
+
     public class WeatherForecast
     {
         public DateTime Date { get; set; }

@@ -1,0 +1,48 @@
+﻿@page "/account/login"
+@inject HttpClient Http
+@inject TokenAuthenticationStateProvider AuthStateProvider
+
+<h1>Login</h1>
+@if (loginFailure)
+{
+    <div class="alert alert-danger">Invalid username or password.</div>
+}
+<div class="row">
+    <div class="col-sm-9 col-md-7 col-lg-5 my-3">
+        <EditForm Model="model" OnValidSubmit="Submit">
+            <DataAnnotationsValidator />
+            <ValidationSummary />
+            <div class="input-group mb-3">
+                <div class="input-group-prepend w-25">
+                    <span class="input-group-text w-100">Username</span>
+                </div>
+                <InputText class="form-control" @bind-Value="model.Username" />
+            </div>
+            <div class="input-group mb-3">
+                <div class="input-group-prepend w-25">
+                    <span class="input-group-text w-100">Password</span>
+                </div>
+                <InputText type="password" class="form-control" @bind-Value="model.Password" />
+            </div>
+            <button class="btn btn-lg btn-primary btn-block text-uppercase" type="submit">Login</button>
+        </EditForm>
+    </div>
+</div>
+
+@code {
+    private LoginRequestModel model = new LoginRequestModel();
+    private bool loginFailure;
+
+    private async Task Submit()
+    {
+        var result = await Http.PostAsJsonAsync("api/identity/login", model);
+        var response = await result.Content.ReadFromJsonAsync<LoginResponseModel>();
+        var token = response.Token;
+
+        loginFailure = token == null;
+        if (!loginFailure)
+        {
+            await AuthStateProvider.SetTokenAsync(token);
+        }
+    }
+}
