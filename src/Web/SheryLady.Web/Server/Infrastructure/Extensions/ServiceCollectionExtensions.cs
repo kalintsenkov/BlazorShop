@@ -18,6 +18,15 @@
 
     public static class ServiceCollectionExtensions
     {
+        public static AppSettings GetApplicationSettings(
+            this IServiceCollection services,
+            IConfiguration configuration)
+        {
+            var applicationSettingsSection = configuration.GetSection("ApplicationSettings");
+            services.Configure<AppSettings>(applicationSettingsSection);
+            return applicationSettingsSection.Get<AppSettings>();
+        }
+
         public static IServiceCollection AddDatabase(
             this IServiceCollection services,
             IConfiguration configuration)
@@ -37,29 +46,26 @@
 
         public static IServiceCollection AddJwtAuthentication(
             this IServiceCollection services,
-            IConfiguration configuration)
+            AppSettings appSettings)
         {
+            var key = Encoding.ASCII.GetBytes(appSettings.Secret);
+
             services
-<<<<<<< HEAD
-                .AddAuthentication(options =>
+                .AddAuthentication(x =>
                 {
-                    options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
-                    options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+                    x.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
+                    x.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
                 })
-=======
-                .AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
->>>>>>> 982fce9cf1a4d3081c1e1cac3f8992656647e95e
-                .AddJwtBearer(options =>
+                .AddJwtBearer(x =>
                 {
-                    options.TokenValidationParameters = new TokenValidationParameters
+                    x.RequireHttpsMetadata = false;
+                    x.SaveToken = true;
+                    x.TokenValidationParameters = new TokenValidationParameters
                     {
-                        ValidateIssuer = true,
-                        ValidateAudience = true,
-                        ValidateLifetime = true,
                         ValidateIssuerSigningKey = true,
-                        ValidIssuer = configuration.GetJwtIssuer(),
-                        ValidAudience = configuration.GetJwtAudience(),
-                        IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(configuration.GetJwtKey()))
+                        IssuerSigningKey = new SymmetricSecurityKey(key),
+                        ValidateIssuer = false,
+                        ValidateAudience = false
                     };
                 });
 
@@ -77,8 +83,8 @@
         {
             services
                 .AddControllers(options => options
-                    .Filters
-                    .Add<ModelOrNotFoundActionFilter>());
+                      .Filters
+                      .Add<ModelOrNotFoundActionFilter>());
 
             return services;
         }

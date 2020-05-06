@@ -15,11 +15,11 @@ namespace SheryLady.Web.Server
 
         public IConfiguration Configuration { get; }
 
-        public void ConfigureServices(IServiceCollection services)
+        public void ConfigureServices(IServiceCollection services) 
             => services
                 .AddDatabase(this.Configuration)
                 .AddIdentity()
-                .AddJwtAuthentication(this.Configuration)
+                .AddJwtAuthentication(services.GetApplicationSettings(this.Configuration))
                 .AddAutoMapper(typeof(SheryLadyProfile).Assembly)
                 .AddApplicationServices()
                 .AddApiControllers()

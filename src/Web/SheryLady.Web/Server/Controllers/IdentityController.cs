@@ -4,35 +4,34 @@
 
     using Microsoft.AspNetCore.Identity;
     using Microsoft.AspNetCore.Mvc;
-    using Microsoft.Extensions.Configuration;
+    using Microsoft.Extensions.Options;
 
     using Data.Models;
     using Services.Identity;
     using Shared.Identity;
-    using Infrastructure.Extensions;
 
     public class IdentityController : ApiController
     {
         private readonly UserManager<ApplicationUser> userManager;
         private readonly IIdentityService identityService;
-        private readonly IConfiguration configuration;
+        private readonly AppSettings appSettings;
 
         public IdentityController(
             UserManager<ApplicationUser> userManager,
             IIdentityService identityService,
-            IConfiguration configuration)
+            IOptions<AppSettings> appSettings)
         {
             this.userManager = userManager;
             this.identityService = identityService;
-            this.configuration = configuration;
+            this.appSettings = appSettings.Value;
         }
 
         [HttpPost(nameof(Register))]
         public async Task<ActionResult> Register(RegisterRequestModel model)
         {
             var result = await this.identityService.CreateAsync(
-                model.Username,
-                model.Email,
+                model.Username, 
+                model.Email, 
                 model.Password);
 
             if (result.Succeeded)
@@ -61,9 +60,7 @@
             var token = await this.identityService.GenerateJwtToken(
                 user.Id,
                 user.UserName,
-                this.configuration.GetJwtKey(),
-                this.configuration.GetJwtIssuer(),
-                this.configuration.GetJwtAudience());
+                this.appSettings.Secret);
 
             return new LoginResponseModel { Token = token };
         }
