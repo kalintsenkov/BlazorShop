@@ -18,17 +18,6 @@
 
     public static class ServiceCollectionExtensions
     {
-        public static AppSettings GetApplicationSettings(
-            this IServiceCollection services,
-            IConfiguration configuration)
-        {
-            var applicationSettingsSection = configuration.GetSection("ApplicationSettings");
-
-            services.Configure<AppSettings>(applicationSettingsSection);
-
-            return applicationSettingsSection.Get<AppSettings>();
-        }
-
         public static IServiceCollection AddDatabase(
             this IServiceCollection services,
             IConfiguration configuration)
@@ -48,26 +37,21 @@
 
         public static IServiceCollection AddJwtAuthentication(
             this IServiceCollection services,
-            AppSettings appSettings)
+            IConfiguration configuration)
         {
-            var key = Encoding.ASCII.GetBytes(appSettings.Secret);
-
             services
-                .AddAuthentication(x =>
+                .AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
+                .AddJwtBearer(options =>
                 {
-                    x.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
-                    x.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
-                })
-                .AddJwtBearer(x =>
-                {
-                    x.RequireHttpsMetadata = false;
-                    x.SaveToken = true;
-                    x.TokenValidationParameters = new TokenValidationParameters
+                    options.TokenValidationParameters = new TokenValidationParameters
                     {
+                        ValidateIssuer = true,
+                        ValidateAudience = true,
+                        ValidateLifetime = true,
                         ValidateIssuerSigningKey = true,
-                        IssuerSigningKey = new SymmetricSecurityKey(key),
-                        ValidateIssuer = false,
-                        ValidateAudience = false
+                        ValidIssuer = configuration.GetJwtIssuer(),
+                        ValidAudience = configuration.GetJwtAudience(),
+                        IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(configuration.GetJwtKey()))
                     };
                 });
 
@@ -89,11 +73,6 @@
                     .Add<ModelOrNotFoundActionFilter>());
 
             return services;
-        }
-
-        public static void AddRazor(this IServiceCollection services)
-        {
-            services.AddRazorPages();
         }
     }
 }
