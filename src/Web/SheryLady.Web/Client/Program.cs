@@ -8,6 +8,7 @@ namespace SheryLady.Web.Client
 
     public class Program
     {
+<<<<<<< .mine
         public static async Task Main(string[] args) 
             => await WebAssemblyHostBuilder
                 .CreateDefault(args)
@@ -15,5 +16,14 @@ namespace SheryLady.Web.Client
                 .AddClientServices()
                 .Build()
                 .RunAsync();
+=======
+        public static async Task Main(string[] args) 
+            => await WebAssemblyHostBuilder
+                .CreateDefault(args)
+                .AddAppRootComponents()
+                .AddClientServices()
+                .Build()
+                .RunAsync();
+>>>>>>> .theirs
     }
 }
