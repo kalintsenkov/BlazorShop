@@ -1,13 +1,14 @@
-﻿using SheryLady.Web.Shared;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.Extensions.Logging;
-
-namespace SheryLady.Web.Server.Controllers
+﻿namespace SheryLady.Web.Server.Controllers
 {
+    using System;
+    using System.Collections.Generic;
+    using System.Linq;
+
+    using Microsoft.AspNetCore.Mvc;
+    using Microsoft.Extensions.Logging;
+
+    using Shared;
+
     [ApiController]
     [Route("[controller]")]
     public class WeatherForecastController : ControllerBase

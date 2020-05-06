@@ -14,7 +14,6 @@
     using static Common.GlobalConstants;
     using static Infrastructure.WebConstants;
 
-    [Authorize]
     public class CategoriesController : ApiController
     {
         private readonly ICategoriesService categoriesService;

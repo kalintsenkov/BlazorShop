@@ -12,7 +12,6 @@
     using static Common.GlobalConstants;
     using static Infrastructure.WebConstants;
 
-    [Authorize]
     public class ProductsController : ApiController
     {
         private readonly IProductsService productsService;
