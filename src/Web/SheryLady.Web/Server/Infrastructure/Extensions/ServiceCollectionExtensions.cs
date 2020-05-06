@@ -40,11 +40,15 @@
             IConfiguration configuration)
         {
             services
+<<<<<<< HEAD
                 .AddAuthentication(options =>
                 {
                     options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
                     options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
                 })
+=======
+                .AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
+>>>>>>> 982fce9cf1a4d3081c1e1cac3f8992656647e95e
                 .AddJwtBearer(options =>
                 {
                     options.TokenValidationParameters = new TokenValidationParameters

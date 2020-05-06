@@ -50,6 +50,7 @@
                 new Claim(ClaimTypes.Name, userName)
             };
 
+<<<<<<< HEAD
             //var isInAdminRole = await this.IsInAdminRole(userId);
             //if (isInAdminRole)
             //{
@@ -64,6 +65,22 @@
                 expiresAfter,
                 signingCredentials: new SigningCredentials(securityKey, SecurityAlgorithms.HmacSha256));
 
+=======
+            var isInAdminRole = await this.IsInAdminRole(userId);
+            if (isInAdminRole)
+            {
+                claims.Add(new Claim(ClaimTypes.Role, AdminRoleName));
+            }
+
+            var expiresAfter = DateTime.UtcNow.AddDays(7);
+            var token = new JwtSecurityToken(
+                issuer,
+                audience,
+                claims,
+                expiresAfter,
+                signingCredentials: new SigningCredentials(securityKey, SecurityAlgorithms.HmacSha256));
+
+>>>>>>> 982fce9cf1a4d3081c1e1cac3f8992656647e95e
             var encryptedToken = tokenHandler.WriteToken(token);
 
             return encryptedToken;
