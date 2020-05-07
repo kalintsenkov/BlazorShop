@@ -1,4 +1,4 @@
-﻿namespace SheryLady.Web.Client.Infrastructure
+﻿namespace SheryLady.Web.Client.Infrastructure.Extensions
 {
     using System;
     using System.Net.Http;

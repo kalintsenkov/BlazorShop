@@ -30,7 +30,7 @@
 </div>
 
 @code {
-    private LoginRequestModel model = new LoginRequestModel();
+    private readonly LoginRequestModel model = new LoginRequestModel();
     private bool loginFailure;
 
     private async Task Submit()

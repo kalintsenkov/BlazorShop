@@ -4,7 +4,7 @@ namespace SheryLady.Web.Client
 
     using Microsoft.AspNetCore.Components.WebAssembly.Hosting;
 
-    using Infrastructure;
+    using Infrastructure.Extensions;
 
     public class Program
     {

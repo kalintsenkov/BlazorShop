@@ -41,10 +41,8 @@
                 {
                     return await this.jsRuntime.InvokeAsync<string>("localStorage.getItem", "authToken");
                 }
-                else
-                {
-                    await this.SetTokenAsync(null);
-                }
+
+                await this.SetTokenAsync(null);
             }
 
             return null;
