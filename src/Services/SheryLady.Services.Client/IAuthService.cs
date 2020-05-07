@@ -8,6 +8,8 @@
     {
         Task<bool> LoginAsync(LoginRequestModel model);
 
+        Task RegisterAsync(RegisterRequestModel model);
+
         Task LogoutAsync();
     }
 }

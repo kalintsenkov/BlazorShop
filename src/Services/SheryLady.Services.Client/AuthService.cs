@@ -23,7 +23,7 @@
 
         public async Task<bool> LoginAsync(LoginRequestModel model)
         {
-            var result = await httpClient.PostAsJsonAsync("api/identity/login", model);
+            var result = await this.httpClient.PostAsJsonAsync("api/identity/login", model);
             var response = await result.Content.ReadFromJsonAsync<LoginResponseModel>();
             var token = response.Token;
 
@@ -35,6 +35,9 @@
 
             return false;
         }
+
+        public async Task RegisterAsync(RegisterRequestModel model)
+            => await this.httpClient.PostAsJsonAsync("api/identity/register", model);
 
         public async Task LogoutAsync()
             => await ((TokenAuthenticationStateProvider)this.authenticationProvider).SetTokenAsync(null);

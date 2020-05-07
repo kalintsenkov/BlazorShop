@@ -20,13 +20,13 @@
         {
             if (token == null)
             {
-                await this.jsRuntime.InvokeAsync<object>("localStorage.removeItem", "authToken");
-                await this.jsRuntime.InvokeAsync<object>("localStorage.removeItem", "authTokenExpiry");
+                await this.jsRuntime.RemoveItem("authToken");
+                await this.jsRuntime.RemoveItem("authTokenExpiry");
             }
             else
             {
-                await this.jsRuntime.InvokeAsync<object>("localStorage.setItem", "authToken", token);
-                await this.jsRuntime.InvokeAsync<object>("localStorage.setItem", "authTokenExpiry", DateTime.UtcNow.AddDays(7));
+                await this.jsRuntime.SetItem("authToken", token);
+                await this.jsRuntime.SetItem("authTokenExpiry", DateTime.UtcNow.AddDays(7));
             }
 
             NotifyAuthenticationStateChanged(GetAuthenticationStateAsync());
@@ -34,12 +34,12 @@
 
         public async Task<string> GetTokenAsync()
         {
-            var expiry = await this.jsRuntime.InvokeAsync<object>("localStorage.getItem", "authTokenExpiry");
+            var expiry = await this.jsRuntime.GetItem("authTokenExpiry");
             if (expiry != null)
             {
-                if (DateTime.Parse(expiry.ToString()) > DateTime.Now)
+                if (DateTime.Parse(expiry) > DateTime.Now)
                 {
-                    return await this.jsRuntime.InvokeAsync<string>("localStorage.getItem", "authToken");
+                    return await this.jsRuntime.GetItem("authToken");
                 }
 
                 await this.SetTokenAsync(null);
@@ -48,13 +48,13 @@
             return null;
         }
 
-
         public override async Task<AuthenticationState> GetAuthenticationStateAsync()
         {
             var token = await this.GetTokenAsync();
             var identity = string.IsNullOrEmpty(token)
                 ? new ClaimsIdentity()
                 : new ClaimsIdentity(ParseClaimsFromJwt(token), "jwt");
+
             return new AuthenticationState(new ClaimsPrincipal(identity));
         }
 
@@ -63,6 +63,7 @@
             var payload = jwt.Split('.')[1];
             var jsonBytes = ParseBase64WithoutPadding(payload);
             var keyValuePairs = JsonSerializer.Deserialize<Dictionary<string, object>>(jsonBytes);
+
             return keyValuePairs.Select(kvp => new Claim(kvp.Key, kvp.Value.ToString()));
         }
 
