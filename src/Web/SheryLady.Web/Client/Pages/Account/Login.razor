@@ -1,9 +1,7 @@
 ﻿@page "/account/login"
-@inject HttpClient Http
-@inject TokenAuthenticationStateProvider AuthStateProvider
 
 <h1>Login</h1>
-@if (loginFailure)
+@if (!loginFailure)
 {
     <div class="alert alert-danger">Invalid username or password.</div>
 }
@@ -31,18 +29,7 @@
 
 @code {
     private readonly LoginRequestModel model = new LoginRequestModel();
-    private bool loginFailure;
+    private bool loginFailure = true;
 
-    private async Task Submit()
-    {
-        var result = await Http.PostAsJsonAsync("api/identity/login", model);
-        var response = await result.Content.ReadFromJsonAsync<LoginResponseModel>();
-        var token = response.Token;
-
-        loginFailure = token == null;
-        if (!loginFailure)
-        {
-            await AuthStateProvider.SetTokenAsync(token);
-        }
-    }
+    private async Task Submit() => loginFailure = await this.UsersClient.LoginAsync(model);
 }

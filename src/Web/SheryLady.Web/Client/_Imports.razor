@@ -10,6 +10,7 @@
 @using Microsoft.JSInterop
 @using SheryLady.Common
 @using SheryLady.Web.Client.Infrastructure
+@using SheryLady.Web.Client.Infrastructure.Clients
 @using SheryLady.Web.Client.Infrastructure.Extensions
 @using SheryLady.Web.Client.Pages.Account
 @using SheryLady.Web.Client.Shared
@@ -17,3 +18,6 @@
 @using SheryLady.Web.Shared.Categories
 @using SheryLady.Web.Shared.Identity
 @using SheryLady.Web.Shared.Products
+
+@inject NavigationManager NavigationManager
+@inject IUsersClient UsersClient

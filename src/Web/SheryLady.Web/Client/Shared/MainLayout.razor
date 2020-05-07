@@ -1,5 +1,4 @@
 ﻿@inherits LayoutComponentBase
-@inject TokenAuthenticationStateProvider TokenProvider
 
 <div class="sidebar">
     <NavMenu />
@@ -9,7 +8,7 @@
     <AuthorizeView>
         <div class="float-md-right">
             Logged in as @context.User.Identity.Name
-            <button class="btn btn-sm btn-outline-dark" @onclick="@(() => TokenProvider.SetTokenAsync(null))">Logout</button>
+            <button class="btn btn-sm btn-outline-dark" @onclick="Logout">Logout</button>
         </div>
     </AuthorizeView>
 
@@ -17,3 +16,7 @@
         @Body
     </div>
 </div>
+
+@code {
+    private async Task Logout() => await this.UsersClient.LogoutAsync();
+}
