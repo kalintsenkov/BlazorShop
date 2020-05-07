@@ -31,5 +31,5 @@
     private readonly LoginRequestModel model = new LoginRequestModel();
     private bool loginFailure = true;
 
-    private async Task Submit() => loginFailure = await this.UsersClient.LoginAsync(model);
+    private async Task Submit() => loginFailure = await this.AuthService.LoginAsync(model);
 }

@@ -11,10 +11,10 @@
     using Data;
     using Data.Models;
     using Filters;
-    using Services.Categories;
-    using Services.DateTime;
-    using Services.Identity;
-    using Services.Products;
+    using Services.Server.Categories;
+    using Services.Server.DateTime;
+    using Services.Server.Identity;
+    using Services.Server.Products;
 
     public static class ServiceCollectionExtensions
     {

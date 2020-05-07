@@ -1,4 +1,4 @@
-﻿namespace SheryLady.Services.Identity
+﻿namespace SheryLady.Services.Server.Identity
 {
     using System;
     using System.Collections.Generic;

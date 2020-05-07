@@ -1,10 +1,10 @@
-﻿namespace SheryLady.Web.Client.Infrastructure.Clients
+﻿namespace SheryLady.Services.Client
 {
     using System.Threading.Tasks;
 
     using Web.Shared.Identity;
 
-    public interface IUsersClient
+    public interface IAuthService
     {
         Task<bool> LoginAsync(LoginRequestModel model);
 

@@ -6,8 +6,8 @@
     using Microsoft.AspNetCore.Authorization;
     using Microsoft.AspNetCore.Mvc;
 
-    using Services.Categories;
-    using Services.Products;
+    using Services.Server.Categories;
+    using Services.Server.Products;
     using Shared.Categories;
     using Shared.Products;
 

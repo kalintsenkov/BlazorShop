@@ -1,4 +1,4 @@
-﻿namespace SheryLady.Services.DateTime
+﻿namespace SheryLady.Services.Server.DateTime
 {
     using System;
 

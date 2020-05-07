@@ -8,7 +8,7 @@
 
     using Data.Models;
     using Infrastructure.Extensions;
-    using Services.Identity;
+    using Services.Server.Identity;
     using Shared.Identity;
 
     public class IdentityController : ApiController

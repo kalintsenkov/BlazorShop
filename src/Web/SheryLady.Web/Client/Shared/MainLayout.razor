@@ -18,5 +18,5 @@
 </div>
 
 @code {
-    private async Task Logout() => await this.UsersClient.LogoutAsync();
+    private async Task Logout() => await this.AuthService.LogoutAsync();
 }

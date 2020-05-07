@@ -1,4 +1,4 @@
-﻿namespace SheryLady.Web.Client.Infrastructure
+﻿namespace SheryLady.Services.Client
 {
     using System;
     using System.Collections.Generic;

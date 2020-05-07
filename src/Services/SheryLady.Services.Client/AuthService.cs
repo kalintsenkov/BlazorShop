@@ -1,4 +1,4 @@
-﻿namespace SheryLady.Web.Client.Infrastructure.Clients
+﻿namespace SheryLady.Services.Client
 {
     using System.Net.Http;
     using System.Net.Http.Json;
@@ -8,12 +8,12 @@
 
     using Web.Shared.Identity;
 
-    public class UsersClient : IUsersClient
+    public class AuthService : IAuthService
     {
         private readonly HttpClient httpClient;
         private readonly AuthenticationStateProvider authenticationProvider;
 
-        public UsersClient(
+        public AuthService(
             HttpClient httpClient,
             AuthenticationStateProvider authenticationProvider)
         {
@@ -32,10 +32,8 @@
                 await ((TokenAuthenticationStateProvider)this.authenticationProvider).SetTokenAsync(token);
                 return true;
             }
-            else
-            {
-                return false;
-            }
+
+            return false;
         }
 
         public async Task LogoutAsync()
