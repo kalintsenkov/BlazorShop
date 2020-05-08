@@ -1,0 +1,44 @@
+
+
+/* ================== header main ==================  */
+.header-top-light{
+	.nav-link{ color:$gray-500; 
+		&:hover{ color:$dark; }
+	}
+}
+
+.header-main{position:relative; padding-top:1rem; padding-bottom:1rem;}
+
+.brand-wrap, .navbar-brand { 
+    .logo{margin-right:7px;  max-height:42px; display:inline-block; }
+}
+
+.navbar-main{
+	.nav-link{ font-weight:600; color:#1c1c1c; 
+		&:hover{ color:#666;   }
+	}
+}
+
+
+.widget-header{ display:inline-block; vertical-align: middle; position:relative;
+	a{ color:$body-color;
+		&:hover{
+			color:$primary;
+		}
+	}
+	i{color:$gray-500;}
+	form{min-width:280px;}
+	.title{display:block}
+	.notify{ position:absolute; top:-3px; right:-10px}
+	&:hover{
+		i{color:$primary; }
+	}
+}
+
+
+/* desktop only */
+@media all and (min-width: 768px) {
+
+	
+}
+/* desktop only .end */

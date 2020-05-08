@@ -1,0 +1,7 @@
+﻿<div>
+    <a href="#" @onclick="Submit">Logout</a>
+</div>
+
+@code {
+    private async Task Submit() => await this.AuthService.LogoutAsync();
+}

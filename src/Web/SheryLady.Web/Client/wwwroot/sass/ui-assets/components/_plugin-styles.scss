@@ -1,0 +1,45 @@
+/* ================ OWL SLIDER BANNER ================ */
+
+.slider-banner-owl{
+	.owl-nav .owl-prev, .owl-nav .owl-next {
+	 	  padding:16px 7px;
+		  color: #FFF;
+		  display: inline-block;
+		  background-color: rgba(0, 0, 0, 0.3);
+		  position: absolute;
+		  z-index: 9;
+		  position: absolute; 
+	}
+
+	.owl-nav .owl-prev { left: 0; }
+	.owl-nav .owl-next {  right: 0; }
+
+	.item-slide img {
+		width: 100%;
+		object-fit: cover; 
+ 	}
+}
+
+
+
+.slider-banner-slick{
+	.slick-prev, .slick-next {
+	 	  padding: 18px 7px;
+		  color: #FFF;
+		  display: inline-block;
+		  background-color: rgba(0, 0, 0, 0.3);
+		  position: absolute;
+		  z-index: 9;
+		  position: absolute; 
+		  &:before{ display:none; }
+	}
+
+	.slick-prev { left: 0; }
+	.slick-next {  right: 0; }
+
+	.item-slide img {
+		min-width: 100%;
+		min-height: 100%;
+		object-fit: cover; 
+ 	}
+}

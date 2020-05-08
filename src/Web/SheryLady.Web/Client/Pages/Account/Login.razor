@@ -1,35 +1,50 @@
 ﻿@page "/account/login"
 
-<h1>Login</h1>
-@if (!loginFailure)
-{
-    <div class="alert alert-danger">Invalid username or password.</div>
-}
-<div class="row">
-    <div class="col-sm-9 col-md-7 col-lg-5 my-3">
-        <EditForm Model="model" OnValidSubmit="Submit">
-            <DataAnnotationsValidator />
-            <ValidationSummary />
-            <div class="input-group mb-3">
-                <div class="input-group-prepend w-25">
-                    <span class="input-group-text w-100">Username</span>
+<section class="section-conten padding-y" style="min-height:84vh">
+    <div class="card mx-auto" style="max-width: 380px; margin-top:100px;">
+        <div class="card-body">
+            <h4 class="card-title mb-4">Sign in</h4>
+            <EditForm Model="model" OnValidSubmit="Submit">
+
+                @if (!isLoginSuccessful)
+                {
+                    <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                        Invalid username or password.
+                        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                }
+
+                <DataAnnotationsValidator />
+                <ValidationSummary />
+                <div class="form-group">
+                    <InputText class="form-control" placeholder="Username" type="text" @bind-Value="model.Username" />
                 </div>
-                <InputText class="form-control" @bind-Value="model.Username" />
-            </div>
-            <div class="input-group mb-3">
-                <div class="input-group-prepend w-25">
-                    <span class="input-group-text w-100">Password</span>
+                <div class="form-group">
+                    <InputText class="form-control" placeholder="Password" type="password" @bind-Value="model.Password" />
                 </div>
-                <InputText type="password" class="form-control" @bind-Value="model.Password" />
-            </div>
-            <button class="btn btn-lg btn-primary btn-block text-uppercase" type="submit">Login</button>
-        </EditForm>
+
+                <div class="form-group">
+                    <button type="submit" class="btn btn-primary btn-block"> Login </button>
+                </div>
+            </EditForm>
+        </div>
     </div>
-</div>
+
+    <p class="text-center mt-4">Don't have account? <a href="/account/register">Sign up</a></p>
+</section>
 
 @code {
     private readonly LoginRequestModel model = new LoginRequestModel();
-    private bool loginFailure = true;
+    private bool isLoginSuccessful = true;
 
-    private async Task Submit() => loginFailure = await this.AuthService.LoginAsync(model);
+    private async Task Submit()
+    {
+        this.isLoginSuccessful = await this.AuthService.LoginAsync(model);
+        if (this.isLoginSuccessful)
+        {
+            this.NavigationManager.NavigateTo("/");
+        }
+    }
 }

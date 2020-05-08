@@ -1,22 +1,10 @@
 ﻿@inherits LayoutComponentBase
 
-<div class="sidebar">
-    <NavMenu />
-</div>
+<Header />
+<NavMenu />
 
 <div class="main">
-    <AuthorizeView>
-        <div class="float-md-right">
-            Logged in as @context.User.Identity.Name
-            <button class="btn btn-sm btn-outline-dark" @onclick="Logout">Logout</button>
-        </div>
-    </AuthorizeView>
-
-    <div class="content px-4">
+    <div class="container-fluid">
         @Body
     </div>
 </div>
-
-@code {
-    private async Task Logout() => await this.AuthService.LogoutAsync();
-}
