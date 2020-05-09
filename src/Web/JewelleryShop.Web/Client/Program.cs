@@ -4,7 +4,7 @@ namespace JewelleryShop.Web.Client
 
     using Microsoft.AspNetCore.Components.WebAssembly.Hosting;
 
-    using Infrastructure.Extensions;
+    using Infrastructure;
 
     public class Program
     {
