@@ -6,7 +6,7 @@
     using Microsoft.AspNetCore.Authorization;
     using Microsoft.AspNetCore.Mvc;
 
-    using Services.Server.Products;
+    using Services.Products;
     using Shared.Products;
 
     using static Common.GlobalConstants;

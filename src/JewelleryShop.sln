@@ -23,7 +23,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "JewelleryShop.Web.Client", 
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "JewelleryShop.Web.Shared", "Web\JewelleryShop.Web\Shared\JewelleryShop.Web.Shared.csproj", "{269D0642-F9A6-4CFC-8474-452DCC02FB70}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "JewelleryShop.Services.Server", "Services\JewelleryShop.Services.Server\JewelleryShop.Services.Server.csproj", "{40CDF19E-024A-4408-A425-BAE558506775}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "JewelleryShop.Services", "Services\JewelleryShop.Services\JewelleryShop.Services.csproj", "{A9EE1DC1-629A-45F6-AEC8-19C11E18C59B}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -59,10 +59,10 @@ Global
 		{269D0642-F9A6-4CFC-8474-452DCC02FB70}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{269D0642-F9A6-4CFC-8474-452DCC02FB70}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{269D0642-F9A6-4CFC-8474-452DCC02FB70}.Release|Any CPU.Build.0 = Release|Any CPU
-		{40CDF19E-024A-4408-A425-BAE558506775}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{40CDF19E-024A-4408-A425-BAE558506775}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{40CDF19E-024A-4408-A425-BAE558506775}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{40CDF19E-024A-4408-A425-BAE558506775}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A9EE1DC1-629A-45F6-AEC8-19C11E18C59B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A9EE1DC1-629A-45F6-AEC8-19C11E18C59B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A9EE1DC1-629A-45F6-AEC8-19C11E18C59B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A9EE1DC1-629A-45F6-AEC8-19C11E18C59B}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -74,7 +74,7 @@ Global
 		{EA0A3765-802D-4A41-BDF8-CCEF879CCF1A} = {69A18099-172B-49D8-BCAC-E493A7AC0DAD}
 		{25518577-9E40-4A71-BFFF-62FD2E3EECC4} = {69A18099-172B-49D8-BCAC-E493A7AC0DAD}
 		{269D0642-F9A6-4CFC-8474-452DCC02FB70} = {69A18099-172B-49D8-BCAC-E493A7AC0DAD}
-		{40CDF19E-024A-4408-A425-BAE558506775} = {443C8B56-3649-47C7-98C3-487D4127D58D}
+		{A9EE1DC1-629A-45F6-AEC8-19C11E18C59B} = {443C8B56-3649-47C7-98C3-487D4127D58D}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {1286D423-C8CB-4E91-8648-59A21FD3297A}

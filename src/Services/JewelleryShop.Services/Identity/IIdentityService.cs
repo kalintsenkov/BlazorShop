@@ -1,4 +1,4 @@
-﻿namespace JewelleryShop.Services.Server.Identity
+﻿namespace JewelleryShop.Services.Identity
 {
     using System.Threading.Tasks;
 

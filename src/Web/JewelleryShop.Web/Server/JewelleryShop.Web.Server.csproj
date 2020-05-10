@@ -10,7 +10,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\..\Services\JewelleryShop.Services.Server\JewelleryShop.Services.Server.csproj" />
+    <ProjectReference Include="..\..\..\Services\JewelleryShop.Services\JewelleryShop.Services.csproj" />
     <ProjectReference Include="..\Client\JewelleryShop.Web.Client.csproj" />
     <ProjectReference Include="..\Shared\JewelleryShop.Web.Shared.csproj" />
   </ItemGroup>

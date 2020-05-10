@@ -1,4 +1,4 @@
-﻿namespace JewelleryShop.Services.Server.Categories
+﻿namespace JewelleryShop.Services.Categories
 {
     using System.Collections.Generic;
     using System.Threading.Tasks;

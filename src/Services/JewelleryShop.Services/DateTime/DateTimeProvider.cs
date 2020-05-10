@@ -1,4 +1,4 @@
-﻿namespace JewelleryShop.Services.Server.DateTime
+﻿namespace JewelleryShop.Services.DateTime
 {
     using System;
 

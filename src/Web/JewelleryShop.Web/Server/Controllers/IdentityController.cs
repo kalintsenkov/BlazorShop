@@ -1,13 +1,15 @@
 ﻿namespace JewelleryShop.Web.Server.Controllers
 {
-    using Data.Models;
-    using Infrastructure.Extensions;
+    using System.Threading.Tasks;
+
     using Microsoft.AspNetCore.Identity;
     using Microsoft.AspNetCore.Mvc;
     using Microsoft.Extensions.Configuration;
-    using Services.Server.Identity;
+
+    using Data.Models;
+    using Infrastructure.Extensions;
+    using Services.Identity;
     using Shared.Identity;
-    using System.Threading.Tasks;
 
     public class IdentityController : ApiController
     {
