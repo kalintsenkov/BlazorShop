@@ -1,4 +1,4 @@
-﻿namespace JewelleryShop.Services.Client
+﻿namespace JewelleryShop.Web.Client.Infrastructure
 {
     using System.Net.Http;
     using System.Net.Http.Json;
@@ -8,12 +8,12 @@
 
     using Web.Shared.Identity;
 
-    public class AuthService : IAuthService
+    public class AuthClient : IAuthClient
     {
         private readonly HttpClient httpClient;
         private readonly AuthenticationStateProvider authenticationProvider;
 
-        public AuthService(
+        public AuthClient(
             HttpClient httpClient,
             AuthenticationStateProvider authenticationProvider)
         {

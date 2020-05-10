@@ -1,4 +1,4 @@
-﻿namespace JewelleryShop.Web.Client.Infrastructure
+﻿namespace JewelleryShop.Web.Client.Infrastructure.Extensions
 {
     using System.Security.Claims;
 

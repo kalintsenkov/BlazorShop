@@ -41,7 +41,7 @@
 
     private async Task Submit()
     {
-        this.isLoginSuccessful = await this.AuthService.LoginAsync(model);
+        this.isLoginSuccessful = await this.AuthClient.LoginAsync(model);
         if (this.isLoginSuccessful)
         {
             this.NavigationManager.NavigateTo("/");

@@ -1,4 +1,4 @@
-﻿namespace JewelleryShop.Services.Client
+﻿namespace JewelleryShop.Web.Client.Infrastructure
 {
     using System;
     using System.Collections.Generic;
@@ -9,6 +9,8 @@
 
     using Microsoft.AspNetCore.Components.Authorization;
     using Microsoft.JSInterop;
+
+    using Extensions;
 
     public class TokenAuthenticationStateProvider : AuthenticationStateProvider
     {

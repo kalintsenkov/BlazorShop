@@ -1,10 +1,10 @@
-﻿namespace JewelleryShop.Services.Client
+﻿namespace JewelleryShop.Web.Client.Infrastructure
 {
     using System.Threading.Tasks;
 
     using Web.Shared.Identity;
 
-    public interface IAuthService
+    public interface IAuthClient
     {
         Task<bool> LoginAsync(LoginRequestModel model);
 
