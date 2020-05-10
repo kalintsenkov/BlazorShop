@@ -1,2 +1,2 @@
-# SheryLady-jewellery-shop
-Jewellery shop web application built with ASP.NET Core
+# JewelleryShop
+Simple shop application built with Blazor WebAssembly
