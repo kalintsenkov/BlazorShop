@@ -1,6 +1,5 @@
 namespace JewelleryShop.Web.Server
 {
-    using AutoMapper;
     using Microsoft.AspNetCore.Builder;
     using Microsoft.AspNetCore.Hosting;
     using Microsoft.Extensions.Configuration;
@@ -20,7 +19,6 @@ namespace JewelleryShop.Web.Server
                 .AddDatabase(this.Configuration)
                 .AddIdentity()
                 .AddJwtAuthentication(this.Configuration)
-                .AddAutoMapper(typeof(JewelleryShopProfile).Assembly)
                 .AddApplicationServices()
                 .AddApiControllers()
                 .AddRazorPages();
@@ -39,6 +37,9 @@ namespace JewelleryShop.Web.Server
             }
 
             app
+                .ApplyMigrations()
+                .SeedData()
+                .UseAutoMapper()
                 .UseHttpsRedirection()
                 .UseBlazorFrameworkFiles()
                 .UseStaticFiles()
@@ -50,9 +51,7 @@ namespace JewelleryShop.Web.Server
                     endpoints.MapRazorPages();
                     endpoints.MapControllers();
                     endpoints.MapFallbackToFile("index.html");
-                })
-                .ApplyMigrations()
-                .SeedData();
+                });
         }
     }
 }

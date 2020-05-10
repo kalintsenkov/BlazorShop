@@ -1,14 +1,24 @@
 ﻿namespace JewelleryShop.Web.Server.Infrastructure.Extensions
 {
+    using System.Reflection;
+
     using Microsoft.AspNetCore.Builder;
     using Microsoft.EntityFrameworkCore;
     using Microsoft.Extensions.DependencyInjection;
 
     using Data;
     using Data.Seeding;
+    using Services.Mapping;
+    using Shared.Categories;
 
     public static class ApplicationBuilderExtensions
     {
+        public static IApplicationBuilder UseAutoMapper(this IApplicationBuilder app)
+        {
+            AutoMapperConfig.RegisterMappings(typeof(CategoriesListingResponseModel).GetTypeInfo().Assembly);
+            return app;
+        }
+
         public static IApplicationBuilder ApplyMigrations(this IApplicationBuilder app)
         {
             using var services = app.ApplicationServices.CreateScope();

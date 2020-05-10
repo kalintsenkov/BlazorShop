@@ -25,6 +25,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "JewelleryShop.Web.Shared", 
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "JewelleryShop.Services", "Services\JewelleryShop.Services\JewelleryShop.Services.csproj", "{A9EE1DC1-629A-45F6-AEC8-19C11E18C59B}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "JewelleryShop.Services.Mapping", "Services\JewelleryShop.Services.Mapping\JewelleryShop.Services.Mapping.csproj", "{230C5F24-DFFA-42AD-B220-A78DB2AAEA09}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -63,6 +65,10 @@ Global
 		{A9EE1DC1-629A-45F6-AEC8-19C11E18C59B}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{A9EE1DC1-629A-45F6-AEC8-19C11E18C59B}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{A9EE1DC1-629A-45F6-AEC8-19C11E18C59B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{230C5F24-DFFA-42AD-B220-A78DB2AAEA09}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{230C5F24-DFFA-42AD-B220-A78DB2AAEA09}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{230C5F24-DFFA-42AD-B220-A78DB2AAEA09}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{230C5F24-DFFA-42AD-B220-A78DB2AAEA09}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -75,6 +81,7 @@ Global
 		{25518577-9E40-4A71-BFFF-62FD2E3EECC4} = {69A18099-172B-49D8-BCAC-E493A7AC0DAD}
 		{269D0642-F9A6-4CFC-8474-452DCC02FB70} = {69A18099-172B-49D8-BCAC-E493A7AC0DAD}
 		{A9EE1DC1-629A-45F6-AEC8-19C11E18C59B} = {443C8B56-3649-47C7-98C3-487D4127D58D}
+		{230C5F24-DFFA-42AD-B220-A78DB2AAEA09} = {443C8B56-3649-47C7-98C3-487D4127D58D}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {1286D423-C8CB-4E91-8648-59A21FD3297A}

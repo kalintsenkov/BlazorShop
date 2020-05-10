@@ -1,6 +1,9 @@
 ﻿namespace JewelleryShop.Web.Shared.Products
 {
-    public class ProductsListingResponseModel
+    using Data.Models;
+    using Services.Mapping;
+
+    public class ProductsListingResponseModel : IMapFrom<Product>
     {
         public int Id { get; set; }
 

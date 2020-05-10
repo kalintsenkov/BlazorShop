@@ -9,7 +9,9 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\..\..\Data\JewelleryShop.Data.Models\JewelleryShop.Data.Models.csproj" />
     <ProjectReference Include="..\..\..\JewelleryShop.Common\JewelleryShop.Common.csproj" />
+    <ProjectReference Include="..\..\..\Services\JewelleryShop.Services.Mapping\JewelleryShop.Services.Mapping.csproj" />
   </ItemGroup>
 
 </Project>

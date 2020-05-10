@@ -1,6 +1,9 @@
 ﻿namespace JewelleryShop.Web.Shared.Categories
 {
-    public class CategoriesListingResponseModel
+    using Data.Models;
+    using Services.Mapping;
+
+    public class CategoriesListingResponseModel : IMapFrom<Category>
     {
         public int Id { get; set; }
 

@@ -4,28 +4,24 @@
     using System.Linq;
     using System.Threading.Tasks;
 
-    using AutoMapper;
-    using AutoMapper.QueryableExtensions;
     using Microsoft.EntityFrameworkCore;
 
     using Data;
     using Data.Models;
     using DateTime;
+    using Mapping;
     using Web.Shared.Products;
 
     public class ProductsService : IProductsService
     {
         private readonly ApplicationDbContext db;
-        private readonly IMapper mapper;
         private readonly IDateTimeProvider dataProvider;
 
         public ProductsService(
             ApplicationDbContext db,
-            IMapper mapper, 
             IDateTimeProvider dataProvider)
         {
             this.db = db;
-            this.mapper = mapper;
             this.dataProvider = dataProvider;
         }
 
@@ -103,7 +99,7 @@
                 .Products
                 .AsNoTracking()
                 .Where(p => p.Id == id && !p.IsDeleted)
-                .ProjectTo<ProductsDetailsResponseModel>(this.mapper.ConfigurationProvider)
+                .To<ProductsDetailsResponseModel>()
                 .FirstOrDefaultAsync();
 
         public async Task<IEnumerable<ProductsListingResponseModel>> GetAllAsync()
@@ -111,7 +107,7 @@
                 .Products
                 .AsNoTracking()
                 .Where(p => !p.IsDeleted)
-                .ProjectTo<ProductsListingResponseModel>(this.mapper.ConfigurationProvider)
+                .To<ProductsListingResponseModel>()
                 .ToListAsync();
 
         public async Task<IEnumerable<ProductsListingResponseModel>> GetAllByCategoryIdAsync(int categoryId)
@@ -119,7 +115,7 @@
                 .Products
                 .AsNoTracking()
                 .Where(p => p.CategoryId == categoryId && !p.IsDeleted)
-                .ProjectTo<ProductsListingResponseModel>(this.mapper.ConfigurationProvider)
+                .To<ProductsListingResponseModel>()
                 .ToListAsync();
 
         private async Task<Product> GetByIdAsync(int id)
