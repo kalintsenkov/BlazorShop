@@ -58,7 +58,7 @@
                 return this.Unauthorized();
             }
 
-            var token = await this.identityService.GenerateJwtToken(
+            var token = await this.identityService.GenerateJwtAsync(
                 user.Id,
                 user.UserName,
                 this.configuration.GetJwtKey(),

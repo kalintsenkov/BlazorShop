@@ -6,13 +6,13 @@
 
     public static class JSRuntimeExtensions
     {
-        public static async Task RemoveItem(this IJSRuntime jsRuntime, string item) 
+        public static async Task RemoveAsync(this IJSRuntime jsRuntime, string item) 
             => await jsRuntime.InvokeAsync<object>("localStorage.removeItem", item);
 
-        public static async Task SetItem(this IJSRuntime jsRuntime, string item, object jsonItem) 
-            => await jsRuntime.InvokeAsync<object>("localStorage.setItem", item, jsonItem);
+        public static async Task SetAsync(this IJSRuntime jsRuntime, string item, object value) 
+            => await jsRuntime.InvokeAsync<object>("localStorage.setItem", item, value);
 
-        public static async ValueTask<T> GetItem<T>(this IJSRuntime jsRuntime, T item) 
+        public static async ValueTask<T> GetAsync<T>(this IJSRuntime jsRuntime, T item) 
             => await jsRuntime.InvokeAsync<T>("localStorage.getItem", item);
     }
 }

@@ -40,7 +40,7 @@
             return await this.userManager.CreateAsync(user, password);
         }
 
-        public async Task<string> GenerateJwtToken(string userId, string userName, string key, string issuer, string audience)
+        public async Task<string> GenerateJwtAsync(string userId, string userName, string key, string issuer, string audience)
         {
             var securityKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(key));
             var claims = new List<Claim>

@@ -22,13 +22,13 @@
         {
             if (token == null)
             {
-                await this.jsRuntime.RemoveItem("authToken");
-                await this.jsRuntime.RemoveItem("authTokenExpiry");
+                await this.jsRuntime.RemoveAsync("authToken");
+                await this.jsRuntime.RemoveAsync("authTokenExpiry");
             }
             else
             {
-                await this.jsRuntime.SetItem("authToken", token);
-                await this.jsRuntime.SetItem("authTokenExpiry", DateTime.UtcNow.AddDays(7));
+                await this.jsRuntime.SetAsync("authToken", token);
+                await this.jsRuntime.SetAsync("authTokenExpiry", DateTime.UtcNow.AddDays(7));
             }
 
             NotifyAuthenticationStateChanged(GetAuthenticationStateAsync());
@@ -36,12 +36,12 @@
 
         public async Task<string> GetTokenAsync()
         {
-            var expiry = await this.jsRuntime.GetItem("authTokenExpiry");
+            var expiry = await this.jsRuntime.GetAsync("authTokenExpiry");
             if (expiry != null)
             {
-                if (DateTime.Parse(expiry) > DateTime.Now)
+                if (DateTime.Parse(expiry) > DateTime.UtcNow)
                 {
-                    return await this.jsRuntime.GetItem("authToken");
+                    return await this.jsRuntime.GetAsync("authToken");
                 }
 
                 await this.SetTokenAsync(null);

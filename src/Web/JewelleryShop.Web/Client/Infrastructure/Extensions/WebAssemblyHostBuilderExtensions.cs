@@ -24,6 +24,7 @@
                 .AddScoped<AuthenticationStateProvider>(provider => provider
                     .GetRequiredService<TokenAuthenticationStateProvider>())
                 .AddTransient<IAuthClient, AuthClient>()
+                .AddTransient<IProductsClient, ProductsClient>()
                 .AddTransient(sp => new HttpClient 
                 { 
                     BaseAddress = new Uri(builder.HostEnvironment.BaseAddress) 
