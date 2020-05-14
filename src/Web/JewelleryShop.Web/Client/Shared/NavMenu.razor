@@ -1,37 +1,4 @@
-﻿@*<nav class="navbar navbar-main navbar-expand-lg navbar-light border-bottom">
-        <div class="container">
-            <button class="navbar-toggler" @onclick="ToggleNavMenu" type="button">
-                <span class="navbar-toggler-icon"></span>
-            </button>
-
-            <div class="@NavMenuCssClass navbar-collapse" @onclick="ToggleNavMenu">
-                <ul class="navbar-nav">
-                    <li class="nav-item dropdown">
-                        <a class="nav-link pl-0" data-toggle="dropdown" href="#"><strong> <i class="fa fa-bars"></i> &nbsp; Categories</strong></a>
-                        <div class="dropdown-menu">
-                            <a class="dropdown-item" href="#">Kartichki</a>
-                            <a class="dropdown-item" href="#">Bijuta</a>
-                            <div class="dropdown-divider"></div>
-                            <a class="dropdown-item" href="#">Test 1</a>
-                            <a class="dropdown-item" href="#">Test 2</a>
-                            <a class="dropdown-item" href="#">Test 3</a>
-                        </div>
-                    </li>
-                    <li class="nav-item">
-                        <NavLink class="nav-link" href="counter" Match="NavLinkMatch.All">Counter</NavLink>
-                    </li>
-                    <li class="nav-item">
-                        <NavLink class="nav-link" href="fetchdata" Match="NavLinkMatch.All">Fetch Data</NavLink>
-                    </li>
-                    <li class="nav-item">
-                        <NavLink class="nav-link" href="products" Match="NavLinkMatch.All">Products</NavLink>
-                    </li>
-                </ul>
-            </div>
-        </div>
-    </nav>*@
-
-<header class="nav-type-1">
+﻿<header class="nav-type-1">
 
     <div class="top-bar hidden-sm hidden-xs">
         <div class="container">
@@ -228,15 +195,21 @@
 
                                 <li class="mobile-links">
                                     <ul>
-                                        <li>
-                                            <a href="#">Login</a>
-                                        </li>
-                                        <li>
-                                            <a href="#">Register</a>
-                                        </li>
-                                        <li>
-                                            <a href="#">My Account</a>
-                                        </li>
+                                        <AuthorizeView>
+                                            <Authorized>
+                                                <li>
+                                                    <a href="#">My Account</a>
+                                                </li>
+                                            </Authorized>
+                                            <NotAuthorized>
+                                                <li>
+                                                    <a href="/account/login">Login</a>
+                                                </li>
+                                                <li>
+                                                    <a href="/account/register">Register</a>
+                                                </li>
+                                            </NotAuthorized>
+                                        </AuthorizeView>
                                     </ul>
                                 </li>
 
@@ -249,14 +222,3 @@
         </div>
     </nav>
 </header>
-
-@code {
-    private bool collapseNavMenu = true;
-
-    private string NavMenuCssClass => collapseNavMenu ? "collapse" : null;
-
-    private void ToggleNavMenu()
-    {
-        collapseNavMenu = !collapseNavMenu;
-    }
-}
