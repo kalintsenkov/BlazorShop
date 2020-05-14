@@ -1,0 +1,30 @@
+﻿@page "/products"
+@inject HttpClient Http
+@inject TokenAuthenticationStateProvider TokenProvider
+
+@if (this.products == null)
+{
+    <p><em>Loading...</em></p>
+}
+else
+{
+    foreach (var product in this.products)
+    {
+        <div class="card" style="width: 18rem;">
+            <img class="card-img-top" src=@product.ImageSource alt="image">
+            <div class="card-body">
+                <h5 class="card-title">@product.Name</h5>
+                <p class="card-text">@product.Price</p>
+            </div>
+        </div>
+    }
+}
+
+@code {
+    private ProductsListingResponseModel[] products;
+
+    protected override async Task OnInitializedAsync()
+    {
+        this.products = await this.Http.GetFromJsonAsync<ProductsListingResponseModel[]>("api/products");
+    }
+}

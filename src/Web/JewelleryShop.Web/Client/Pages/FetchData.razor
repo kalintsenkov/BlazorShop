@@ -41,11 +41,11 @@ else
 
     protected override async Task OnInitializedAsync()
     {
-        var token = await TokenProvider.GetTokenAsync();
+        var token = await this.TokenProvider.GetTokenAsync();
         if (token != null)
         {
-            Http.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
-            forecasts = await Http.GetFromJsonAsync<WeatherForecast[]>("WeatherForecast");
+            this.Http.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
+            this.forecasts = await this.Http.GetFromJsonAsync<WeatherForecast[]>("WeatherForecast");
         }
     }
 }
