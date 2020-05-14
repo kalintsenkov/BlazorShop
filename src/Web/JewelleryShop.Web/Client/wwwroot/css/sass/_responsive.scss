@@ -1,0 +1,238 @@
+/*-------------------------------------------------------*/
+/* Responsive Styles
+/*-------------------------------------------------------*/
+
+@media (max-width: 1199px) {
+
+  .rev_slider_wrapper.container {
+    padding: 0;
+  }
+}
+
+
+@media (max-width: 991px) {
+
+  h1 {font-size: 26px; }
+  h2 { font-size: 22px; }
+  h3 { font-size: 20px; }
+  h4 { font-size: 18px; }
+  h5 { font-size: 16px; }
+  h6 { font-size: 14px; }
+  h1,h2,h3,h4,h5,h6 { line-height: 1.2 }
+
+  .section-wrap {
+    padding: 80px 0;
+    background-attachment: scroll !important;
+    background-position: 50% 50% !important;
+  }
+
+  .container-fluid.semi-fluid {
+    padding: 0 30px;
+  }
+
+  .statistic .timer {
+    font-size: 50px;
+  }
+
+  .call-to-action h2 {
+    font-size: 36px;
+  }
+
+  .footer-widgets .row > div {
+    margin-bottom: 60px;
+  }
+
+  .page-title .container {
+    height: 200px;
+  }
+
+  .page-title.style-2 .container {
+    height: 400px !important;
+  }
+
+  .title-text h1 {
+    font-size: 36px;
+    margin-top: 0;
+  }
+
+  .sidebar:not(.left-sidebar) {
+    padding-left: 15px;
+  }
+
+  .heading-row {
+    margin-bottom: 40px;
+  }
+
+  .testimonials .testimonial-text {
+    font-size: 22px;
+    line-height: 36px;
+  }
+
+  #flexslider-hero .flex-control-nav {
+    bottom: 15px;
+  }
+
+  .hero-heading {
+    font-size: 40px;
+
+    &.large {
+      font-size: 65px;
+    }
+  }
+
+  .hero-lines:before {
+    margin-bottom: 4px;
+  }
+
+  .hero-lines:after {
+    margin-top: 13px;
+  }
+
+  .hero-holder .btn span {
+    line-height: 40px;
+  }
+
+  .hero-lines {
+    margin-bottom: 20px;
+  }
+
+  .newsletter-box h5,
+  .call-to-action h5 {
+    margin-right: 0;
+    margin-bottom: 15px;
+  }
+
+  .newsletter-box h5,
+  .newsletter-box form,
+  .newsletter-box form input,
+  .call-to-action h5 {
+    display: block;
+  }
+
+  .newsletter-box form input {
+    margin: 0 auto;
+  }
+
+  .newsletter-box .newsletter-input {
+    float: none;
+    width: 50%;
+    min-width: 260px;
+    margin-bottom: 10px;
+  }
+
+  .ecommerce form #customer_details p {
+    width: 100%;
+  }
+
+  .product-actions li:last-child {
+    margin-left: 0;
+    margin-top: 15px;
+  }
+
+}
+
+
+@media (max-width: 767px) {
+  .container-fluid.semi-fluid {
+    padding: 0 15px;
+  }
+
+  .call-to-action h3 {
+    margin-bottom: 20px;
+  }
+
+  .entry-content {
+    padding-left: 0;
+    border-left: none;
+    margin-top: 30px;
+  }
+
+  .entry-wrap {
+    padding-top: 30px;
+  }
+
+  .service-item-box.arrow-next:after {
+    display: none;
+  }
+
+  .hero-holder.right-align {
+    width: 100%;
+    right: auto;
+  }
+
+  .product-actions li:last-child {
+    margin-top: 0;
+  }
+
+}
+
+
+@media (max-width: 640px) {
+
+  .col-xxs-12 {
+    width: 100%;
+  }
+
+  .col-xxs-6 {
+    width: 50%;
+  }
+
+  .intro-heading {
+    font-size: 25px;
+  }
+
+  .entry .blockquote-style-1 {
+    padding: 40px;
+  }
+
+  .entry .blockquote-style-1 p:before {
+    display: none;
+  }
+
+  .pagination a:first-child {
+    margin-right: 5px;
+    width: 20px;
+  }
+
+  .pagination a:last-child {
+    margin-left: 5px;
+    width: 20px;
+  }
+
+  .pagination a > i {
+    font-size: 20px;
+  }
+
+}
+
+@media (max-width: 540px) {
+
+  .table-wrap {
+    overflow-x: scroll;
+  }
+}
+
+
+@media (max-width: 480px) {
+
+  .page-404 h1 {
+    font-size: 100px;
+  }
+
+  .newsletter .newsletter-form {
+    width: 100%;
+    margin-right: 0;
+  }
+
+  .nav-tabs > li {
+    float: none;
+    width: 100%;
+  }
+}
+
+
+@media (max-width: 454px) {
+  .product-actions li:last-child {
+    margin-top: 15px;
+  }
+}

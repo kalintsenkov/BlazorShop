@@ -2,35 +2,49 @@
 <html>
 
 <head>
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
     <title>SheryLady</title>
+
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <meta name="description" content="">
+
     <base href="/" />
-    <link href="css/bootstrap.css" rel="stylesheet" />
-    <link href="fonts/fontawesome/css/all.min.css" rel="stylesheet" />
-    <link href="css/ui.css" rel="stylesheet" />
-    <link href="css/responsive.css" rel="stylesheet" />
+
+    <!-- Google Fonts -->
+    <link href='https://fonts.googleapis.com/css?family=Maven+Pro:400,700%7CRaleway:300,400,700%7CPlayfair+Display:700' rel='stylesheet'>
+
+    <!-- Css -->
+    <link rel="stylesheet" href="css/bootstrap.min.css" />
+    <link rel="stylesheet" href="css/magnific-popup.css" />
+    <link rel="stylesheet" href="css/font-icons.css" />
+    <link rel="stylesheet" href="css/sliders.css" />
+    <link rel="stylesheet" href="css/style.css" />
+    <link rel="stylesheet" href="css/animate.min.css" />
 </head>
 
 <body>
+
     <app>
-        <div class="loader"></div>
+        <div class="loader-mask">
+            <div class="loader">
+                <div></div>
+                <div></div>
+            </div>
+        </div>
     </app>
 
     <div id="blazor-error-ui">
-        <environment include="Production">
-            An error has occurred. This application may no longer respond until reloaded.
-        </environment>
-        <environment include="Development">
-            An unhandled exception has occurred. See browser dev tools for details.
-        </environment>
+        An error has occurred. This application may no longer respond until reloaded.
         <a href="" class="reload">Reload</a>
         <a class="dismiss">🗙</a>
     </div>
-    <script src="js/jquery-2.0.0.min.js"></script>
-    <script src="js/bootstrap.bundle.min.js"></script>
-    <script src="js/script.js"></script>
+
+    <script type="text/javascript" src="js/jquery.min.js"></script>
+    <script type="text/javascript" src="js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="js/plugins.js"></script>
+    <script type="text/javascript" src="js/scripts.js"></script>
     <script src="_framework/blazor.webassembly.js"></script>
+
 </body>
 
 </html>

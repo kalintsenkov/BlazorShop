@@ -1,9 +1,0 @@
-/* ====================== shopping-cart ==================== */
-.table-shopping-cart{
-  &.table{ 
-    td, th{ padding-left:$card-spacer-x;  padding-right:$card-spacer-x;}
-  }
-
-  .price-wrap{ line-height:1.2; }
-  .price{ font-weight:bold; margin-right:5px; display:block; }
-}

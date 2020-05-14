@@ -1,39 +1,57 @@
 ﻿@page "/account/login"
 @inject NavigationManager NavManager
 
-<section class="section-conten padding-y" style="min-height:84vh">
-    <div class="card mx-auto" style="max-width: 380px; margin-top:100px;">
-        <div class="card-body">
-            <h4 class="card-title mb-4">Sign in</h4>
-            <EditForm Model="model" OnValidSubmit="Submit">
-
-                @if (!isLoginSuccessful)
-                {
-                    <div class="alert alert-danger alert-dismissible fade show" role="alert">
-                        Invalid username or password.
-                        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                            <span aria-hidden="true">&times;</span>
-                        </button>
-                    </div>
-                }
-
-                <DataAnnotationsValidator />
-                <ValidationSummary />
-                <div class="form-group">
-                    <InputText class="form-control" placeholder="Username" type="text" @bind-Value="model.Username" />
-                </div>
-                <div class="form-group">
-                    <InputText class="form-control" placeholder="Password" type="password" @bind-Value="model.Password" />
-                </div>
-
-                <div class="form-group">
-                    <button type="submit" class="btn btn-primary btn-block"> Login </button>
-                </div>
-            </EditForm>
+<section class="page-title text-center">
+    <div class="container relative clearfix">
+        <div class="title-holder">
+            <div class="title-text">
+                <h1 class="uppercase">Login</h1>
+            </div>
         </div>
     </div>
+</section>
 
-    <p class="text-center mt-4">Don't have account? <a href="/account/register">Sign up</a></p>
+<section class="section-wrap login-register pt-0 pb-40">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-4"></div>
+            
+            <div class="col-md-4">
+                <EditForm Model="model" OnValidSubmit="Submit" class="login">
+                    @if (!isLoginSuccessful)
+                    {
+                        <div class="alert alert-danger fade in alert-dismissible" role="alert">
+                            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                <span aria-hidden="true">×</span>
+                            </button>
+                            Invalid username or password.
+                        </div>
+                    }
+
+                    <DataAnnotationsValidator />
+                    <ValidationSummary />
+
+                    <p class="form-row form-row-wide">
+                        <label>
+                            username
+                            <abbr class="required" title="Required">*</abbr>
+                        </label>
+                        <InputText class="form-control" placeholder="Username" type="text" @bind-Value="model.Username" />
+                    </p>
+                    <p class="form-row form-row-wide">
+                        <label>
+                            password
+                            <abbr class="required" title="Required">*</abbr>
+                        </label>
+                        <InputText class="form-control" placeholder="Password" type="password" @bind-Value="model.Password" />
+                    </p>
+                    <button type="submit" class="btn"> Login </button>
+                </EditForm>
+            </div>
+            
+            <div class="col-md-4"></div>
+        </div>
+    </div>
 </section>
 
 @code {

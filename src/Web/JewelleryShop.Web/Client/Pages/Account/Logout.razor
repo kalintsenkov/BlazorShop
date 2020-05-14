@@ -1,6 +1,4 @@
-﻿<div>
-    <a href="/" @onclick="Submit">Logout</a>
-</div>
+﻿<a href="/" @onclick="Submit">Logout</a>
 
 @code {
     private async Task Submit() => await this.AuthClient.LogoutAsync();

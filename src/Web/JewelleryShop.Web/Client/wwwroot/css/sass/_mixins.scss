@@ -1,0 +1,80 @@
+$all: all .3s ease-in-out;
+
+
+@mixin transition($transition...) {
+	-webkit-transition: $transition;
+	-moz-transition: $transition;
+	-ms-transition: $transition;
+	-o-transition: $transition;
+	transition: $transition;
+}
+
+@mixin uppercase {
+	text-transform: uppercase;
+	letter-spacing: 0.1em;
+}
+
+@mixin transform($transform...) {
+	-webkit-transform: $transform;
+	-moz-transform: $transform;
+	-ms-transform: $transform;
+	-o-transform: $transform;
+	transform: $transform;
+}
+
+@mixin border-radius($radius...) {
+  -webkit-border-radius: $radius;
+  border-radius: $radius;
+}
+
+@mixin box-shadow($box-shadow...) {
+  -webkit-box-shadow: $box-shadow;
+	-moz-box-shadow: $box-shadow;
+	-ms-box-shadow: $box-shadow;
+  box-shadow: $box-shadow;
+}
+
+
+@mixin linear-gradient($left, $right){
+  background: $left; /* Old browsers */
+  background: -moz-linear-gradient(left,  $left 0%, $right 100%); /* FF3.6+ */
+  background: -webkit-gradient(linear, left top, right bottom, color-stop(0%,$left), color-stop(100%,$right)); /* Chrome,Safari4+ */
+  background: -webkit-linear-gradient(left,  $left 0%,$right 100%); /* Chrome10+,Safari5.1+ */
+  background: -o-linear-gradient(left,  $left 0%,$right 100%); /* Opera 11.10+ */
+  background: -ms-linear-gradient(left,  $left 0%,$right 100%); /* IE10+ */
+  background: linear-gradient(to right,  $left 0%,$right 100%); /* W3C */
+  filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#ffffff', endColorstr='#000000',GradientType=0 ); /* IE6-9 */
+}
+
+@mixin background-img-cover {
+	-webkit-background-size: cover;
+	-moz-background-size: cover;
+	-o-background-size: cover;
+	background-size: cover;
+	background-position: center center;
+	background-repeat: no-repeat;
+}
+
+@mixin bp-lg {
+	@media only screen and (min-width: 1199px) {
+		@content;
+	}
+}
+
+@mixin bp-md {
+	@media only screen and (min-width: 992px) {
+		@content;
+	}
+}
+
+@mixin bp-sm {
+	@media only screen and (min-width: 768px) {
+		@content;
+	}
+}
+
+@mixin bp-xs {
+	@media only screen and (min-width: 480px) {
+		@content;
+	}
+}

@@ -1,0 +1,218 @@
+
+/*-------------------------------------------------------*/
+/* Typography
+/*-------------------------------------------------------*/
+
+ul {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+h1,h2,h3,h4,h5,h6 {
+  font-family: $heading-font;
+  margin-top: 0;
+  color: $heading-color;
+  font-weight: 400;
+  line-height: 1.2;
+}
+
+h1 { font-size: 30px; }
+h2 { font-size: 26px; }
+h3 { font-size: 24px; }
+h4 { font-size: 22px; }
+h5 { font-size: 18px; }
+h6 { font-size: 16px; }
+
+h1 > a, h2 > a, h3 > a, h4 > a, h5 > a, h6 > a {
+  color: inherit;
+}
+
+h1 small, h2 small, h3 small, h4 small, h5 small, h6 small {
+  color: $heading-color;
+  font-size: 85%;
+}
+
+.section-headings p {
+  margin-bottom: 30px;
+}
+
+.heading {
+  position: relative;
+  margin-bottom: 0;
+}
+
+.heading-row {
+  margin-bottom: 70px;
+}
+
+a {
+  text-decoration: none;
+  color: $main-color;
+  outline: none;
+  @include transition (color .1s ease-in-out);
+
+  &:hover {
+    text-decoration: none;
+    color: $bg-dark;
+    outline: none;
+  }
+
+  &:focus {
+    color: $main-color;
+    text-decoration: none;
+    outline: none;
+  }
+}
+
+b, strong { color: $heading-color; }
+.lead-heading.white strong {
+  color: #fff;
+}
+
+p {
+  font-size: 14px;
+  color: $text-color;
+  font-weight: normal;
+  line-height: 26px;
+}
+
+.list-inline {
+  margin: 0;
+}
+
+
+@media (min-width: 768px) {
+  .lead {
+    font-size: 18px;
+  }
+}
+
+.lead {
+  margin-bottom: 10px;
+  font-size: 18px;
+  font-weight: 400;
+  line-height: 30px;
+}
+
+p.large {
+  font-size: 120%;
+  line-height: 1.8;
+}
+
+blockquote {
+  padding: 0 0 20px;
+  margin: 0;
+  border: none;
+
+  & > p {
+    font-size: 18px;
+    line-height: 28px;
+    font-family: $heading-font;
+    margin-bottom: 5px !important;
+    color: $heading-color;
+    position: relative;
+  }
+
+  & > span {
+    color: $main-color;
+    font-size: 15px;
+  }
+}
+
+.blockquote-style-1 {
+  padding: 40px;
+  background-color: $bg-light;
+
+  span {
+    font-family: $heading-font;
+    color: $main-color;
+  }
+}
+
+.blockquote-style-2 {
+  padding: 40px;
+  border-left: 3px solid $main-color;
+}
+
+.dropcap {
+  font-family: $heading-font;
+}
+
+.dropcap.style-1 {
+  float: left;
+  color: $main-color;
+  font-size: 47px;
+  line-height: 48px;
+  padding-right: 10px;
+}
+
+.dropcap.style-2 {
+  float: left;
+  color: #fff;
+  text-align: center;
+  background-color: $main-color;
+  width: 38px;
+  height: 38px;
+  font-size: 24px;
+  line-height: 38px;
+  margin: 7px 10px 0 0;
+}
+
+.highlight {
+  padding: 3px 5px;
+  color: #fff;
+  background-color: $main-color;
+}
+
+.list li {
+  line-height: 24px;
+
+  & i {
+    line-height: 21px;
+  }
+}
+
+.bullets li,
+.arrows li,
+.checks li,
+.numbers li {
+  margin-bottom: 13px;
+  color: $text-color;
+}
+
+.bullets li {
+  position: relative;
+  padding-left: 15px;
+}
+
+.bullets li:before {
+  content: "\2022";
+  font-size: 20px;
+  color: $heading-color;
+  position: absolute;
+  left: 0;
+}
+
+.arrows i {
+  margin-right: 5px;
+}
+
+.arrows i,
+.checks i {
+  color: $heading-color;
+}
+
+.checks i {
+  font-size: 10px;
+  margin-right: 7px;
+  vertical-align: middle;
+}
+
+ol.numbers {
+  padding-left: 20px;
+}
+
+.section-columns p {
+  margin-bottom: 40px;
+}

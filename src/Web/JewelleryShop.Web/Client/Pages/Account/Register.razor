@@ -1,68 +1,48 @@
 ﻿@page "/account/register"
 
-<section class="section-content padding-y">
-    <div class="card mx-auto" style="max-width:520px; margin-top:40px;">
-        <article class="card-body">
-            <header class="mb-4"><h4 class="card-title">Sign up</h4></header>
-            <form>
-                <div class="form-row">
-                    <div class="col form-group">
-                        <label>First name</label>
-                        <input type="text" class="form-control" placeholder="">
-                    </div>
-                    <div class="col form-group">
-                        <label>Last name</label>
-                        <input type="text" class="form-control" placeholder="">
-                    </div>
-                </div>
-                <div class="form-group">
-                    <label>Email</label>
-                    <input type="email" class="form-control" placeholder="">
-                    <small class="form-text text-muted">We'll never share your email with anyone else.</small>
-                </div>
-                <div class="form-group">
-                    <label class="custom-control custom-radio custom-control-inline">
-                        <input class="custom-control-input" checked="" type="radio" name="gender" value="option1">
-                        <span class="custom-control-label"> Male </span>
-                    </label>
-                    <label class="custom-control custom-radio custom-control-inline">
-                        <input class="custom-control-input" type="radio" name="gender" value="option2">
-                        <span class="custom-control-label"> Female </span>
-                    </label>
-                </div>
-                <div class="form-row">
-                    <div class="form-group col-md-6">
-                        <label>City</label>
-                        <input type="text" class="form-control">
-                    </div>
-                    <div class="form-group col-md-6">
-                        <label>Country</label>
-                        <select id="inputState" class="form-control">
-                            <option> Choose...</option>
-                            <option>Uzbekistan</option>
-                            <option>Russia</option>
-                            <option selected="">United States</option>
-                            <option>India</option>
-                            <option>Afganistan</option>
-                        </select>
-                    </div>
-                </div>
-                <div class="form-row">
-                    <div class="form-group col-md-6">
-                        <label>Create password</label>
-                        <input class="form-control" type="password">
-                    </div>
-                    <div class="form-group col-md-6">
-                        <label>Confirm password</label>
-                        <input class="form-control" type="password">
-                    </div>
-                </div>
-                <div class="form-group">
-                    <button type="submit" class="btn btn-primary btn-block"> Register </button>
-                </div>
-            </form>
-        </article>
+<section class="page-title text-center">
+    <div class="container relative clearfix">
+        <div class="title-holder">
+            <div class="title-text">
+                <h1 class="uppercase">Register</h1>
+            </div>
+        </div>
     </div>
+</section>
 
-    <p class="text-center mt-4">Have an account? <a href="/account/login">Log In</a></p>
+<section class="section-wrap login-register pt-0 pb-40">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-4"></div>
+
+            <div class="col-md-4">
+                <div class="register">
+                    <p class="form-row form-row-wide">
+                        <label>
+                            email
+                            <abbr class="required" title="Required">*</abbr>
+                        </label>
+                        <input type="text" class="input-text" placeholder="Email">
+                    </p>
+                    <p class="form-row form-row-wide">
+                        <label>
+                            username
+                            <abbr class="required" title="Required">*</abbr>
+                        </label>
+                        <input type="text" class="input-text" placeholder="Username">
+                    </p>
+                    <p class="form-row form-row-wide">
+                        <label>
+                            password
+                            <abbr class="required" title="Required">*</abbr>
+                        </label>
+                        <input type="text" class="input-text" placeholder="Password">
+                    </p>
+                    <button type="submit" class="btn"> Register </button>
+                </div>
+            </div>
+
+            <div class="col-md-4"></div>
+        </div>
+    </div>
 </section>
