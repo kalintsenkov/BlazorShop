@@ -2,23 +2,118 @@
 @inject HttpClient Http
 @inject TokenAuthenticationStateProvider TokenProvider
 
-@if (this.products == null)
-{
-    <p><em>Loading...</em></p>
-}
-else
-{
-    foreach (var product in this.products)
-    {
-        <div class="card" style="width: 18rem;">
-            <img class="card-img-top" src=@product.ImageSource alt="image">
-            <div class="card-body">
-                <h5 class="card-title">@product.Name</h5>
-                <p class="card-text">@product.Price</p>
-            </div>
+<section class="section-wrap pt-70 pb-40 catalogue">
+    <div class="container relative">
+        <div class="row">
+
+            @if (this.products == null)
+            {
+                <p><em>Loading...</em></p>
+            }
+            else
+            {
+                <div class="col-md-9 catalogue-col right mb-50">
+
+                    <div class="shop-filter">
+                        <p class="result-count">Showing: 1-12 of @this.products.Count() results</p>
+                    </div>
+
+                    <div class="shop-catalogue grid-view left">
+
+                        <div class="row row-10 items-grid">
+
+                            @foreach (var product in this.products)
+                            {
+                                <div class="col-md-4 col-xs-6">
+                                    <div class="product-item">
+                                        <div class="product-img">
+                                            <a href="#">
+                                                <img src="@product.ImageSource" alt="@product.Name">
+                                            </a>
+                                            <a href="#" class="product-quickview">View</a>
+                                        </div>
+                                        <div class="product-details">
+                                            <h3>
+                                                <a class="product-title" href="shop-single-product.html">@product.Name</a>
+                                            </h3>
+                                            <span class="price">
+                                                @*<del>
+                                                        <span>$388.00</span>
+                                                    </del>*@
+                                                <ins>
+                                                    <span class="ammount">@product.Price лв.</span>
+                                                </ins>
+                                            </span>
+                                        </div>
+                                    </div>
+                                </div>
+                            }
+
+                        </div>
+                    </div>
+
+                    <div class="clear"></div>
+
+                    <div class="pagination-wrap">
+                        <p class="result-count">Showing: 1-12 of @this.products.Count() results</p>
+                        <nav class="pagination right clear">
+                            <a href="#">
+                                <i class="fa fa-angle-left"></i>
+                            </a>
+                            <span class="page-numbers current">
+                                1
+                            </span>
+                            <a href="#">
+                                2
+                            </a>
+                            <a href="#">
+                                3
+                            </a>
+                            <a href="#">
+                                4
+                            </a>
+                            <a href="#">
+                                <i class="fa fa-angle-right"></i>
+                            </a>
+                        </nav>
+                    </div>
+
+                </div>
+            }
+
+            <aside class="col-md-3 sidebar left-sidebar">
+
+                <div class="widget categories">
+                    <h3 class="widget-title uppercase">Categories</h3>
+                    <ul class="list-no-dividers">
+                        <li>
+                            <a href="#">Women</a>
+                        </li>
+                        <li class="active-cat">
+                            <a href="#">Men</a>
+                        </li>
+                        <li>
+                            <a href="#">Accessories</a>
+                        </li>
+                        <li>
+                            <a href="#">Bags</a>
+                        </li>
+                        <li>
+                            <a href="#">Watches</a>
+                        </li>
+                        <li>
+                            <a href="#">Shoes</a>
+                        </li>
+                    </ul>
+                </div>
+
+                <BestSellers />
+
+            </aside>
+
         </div>
-    }
-}
+    </div>
+</section>
 
 @code {
     private ProductsListingResponseModel[] products;
