@@ -5,7 +5,7 @@
     <div class="container relative">
         <div class="row">
 
-            @if (this.products == null)
+            @if (this.categories == null || this.products == null)
             {
                 <p><em>Loading...</em></p>
             }
@@ -42,8 +42,8 @@
                                             </h3>
                                             <span class="price">
                                                 @*<del>
-                                                        <span>$388.00</span>
-                                                    </del>*@
+                                                    <span>$388.00</span>
+                                                </del>*@
                                                 <ins>
                                                     <span class="ammount">@product.Price лв.</span>
                                                 </ins>
@@ -59,7 +59,6 @@
                     <div class="clear"></div>
 
                     <div class="pagination-wrap">
-                        <p class="result-count">Showing: 1-12 of @this.products.Count() results</p>
                         <nav class="pagination right clear">
                             <a href="#">
                                 <i class="fa fa-angle-left"></i>
@@ -74,37 +73,29 @@
                                 3
                             </a>
                             <a href="#">
-                                4
-                            </a>
-                            <a href="#">
                                 <i class="fa fa-angle-right"></i>
                             </a>
                         </nav>
                     </div>
 
                 </div>
+
+                <aside class="col-md-3 sidebar left-sidebar">
+
+                    <div class="widget categories">
+                        <h3 class="widget-title uppercase">Categories</h3>
+                        <ul class="list-no-dividers">
+                            @foreach (var category in this.categories)
+                            {
+                                <li><a href="/cateogries/@category.Id">@category.Name</a></li>
+                            }
+                        </ul>
+                    </div>
+
+                    <BestSellers />
+
+                </aside>
             }
-
-            <aside class="col-md-3 sidebar left-sidebar">
-
-                <div class="widget categories">
-                    <h3 class="widget-title uppercase">Categories</h3>
-                    <ul class="list-no-dividers">
-                        <li>
-                            <a href="#">Аксесоари</a>
-                        </li>
-                        <li class="active-cat">
-                            <a href="#">Картичики</a>
-                        </li>
-                        <li>
-                            <a href="#">Бижута</a>
-                        </li>
-                    </ul>
-                </div>
-
-                <BestSellers />
-
-            </aside>
 
         </div>
     </div>
@@ -112,7 +103,11 @@
 
 @code {
     private ProductsListingResponseModel[] products;
+    private CategoriesListingResponseModel[] categories;
 
     protected override async Task OnInitializedAsync()
-        => this.products = await this.Http.GetFromJsonAsync<ProductsListingResponseModel[]>("api/products");
+    {
+        this.products = await this.Http.GetFromJsonAsync<ProductsListingResponseModel[]>("api/products");
+        this.categories = await this.Http.GetFromJsonAsync<CategoriesListingResponseModel[]>("api/categories");
+    }
 }
