@@ -34,7 +34,7 @@
             var id = await this.productsService.CreateAsync(
                 model.Name,
                 model.Description,
-                model.Image,
+                model.ImageSource,
                 model.Quantity,
                 model.Price,
                 model.CategoryId);
@@ -50,7 +50,7 @@
                 model.Id,
                 model.Name,
                 model.Description,
-                model.Image,
+                model.ImageSource,
                 model.Quantity,
                 model.Price,
                 model.CategoryId);

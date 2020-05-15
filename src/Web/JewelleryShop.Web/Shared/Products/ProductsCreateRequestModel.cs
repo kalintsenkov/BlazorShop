@@ -16,7 +16,7 @@
 
         [Required]
         [MaxLength(ProductImageMaxLength)]
-        public string Image { get; set; }
+        public string ImageSource { get; set; }
         
         [Required]
         [Range(ProductQuantityMinRange, ProductQuantityMaxRange)]
