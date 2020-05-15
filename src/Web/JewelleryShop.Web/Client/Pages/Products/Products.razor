@@ -1,6 +1,5 @@
 ﻿@page "/products"
 @inject HttpClient Http
-@inject TokenAuthenticationStateProvider TokenProvider
 
 <section class="section-wrap pt-70 pb-40 catalogue">
     <div class="container relative">
@@ -16,6 +15,11 @@
 
                     <div class="shop-filter">
                         <p class="result-count">Showing: 1-12 of @this.products.Count() results</p>
+                        <AuthorizeView Roles="@GlobalConstants.AdminRoleName">
+                            <a href="/products/create" class="btn btn-sm btn-color ecommerce-ordering">
+                                <span>Create product</span>
+                            </a>
+                        </AuthorizeView>
                     </div>
 
                     <div class="shop-catalogue grid-view left">
@@ -87,22 +91,13 @@
                     <h3 class="widget-title uppercase">Categories</h3>
                     <ul class="list-no-dividers">
                         <li>
-                            <a href="#">Women</a>
+                            <a href="#">Аксесоари</a>
                         </li>
                         <li class="active-cat">
-                            <a href="#">Men</a>
+                            <a href="#">Картичики</a>
                         </li>
                         <li>
-                            <a href="#">Accessories</a>
-                        </li>
-                        <li>
-                            <a href="#">Bags</a>
-                        </li>
-                        <li>
-                            <a href="#">Watches</a>
-                        </li>
-                        <li>
-                            <a href="#">Shoes</a>
+                            <a href="#">Бижута</a>
                         </li>
                     </ul>
                 </div>
@@ -119,7 +114,5 @@
     private ProductsListingResponseModel[] products;
 
     protected override async Task OnInitializedAsync()
-    {
-        this.products = await this.Http.GetFromJsonAsync<ProductsListingResponseModel[]>("api/products");
-    }
+        => this.products = await this.Http.GetFromJsonAsync<ProductsListingResponseModel[]>("api/products");
 }

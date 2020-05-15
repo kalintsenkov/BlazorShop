@@ -1,0 +1,93 @@
+﻿@page "/products/create"
+@inject HttpClient Http
+@inject NavigationManager NavigationManager
+@inject TokenAuthenticationStateProvider TokenProvider
+@attribute [Authorize(Roles = GlobalConstants.AdminRoleName)]
+
+@if (this.categories == null)
+{
+    <p><em>Loading...</em></p>
+}
+else
+{
+    <section class="page-title text-center">
+        <div class="container relative clearfix">
+            <div class="title-holder">
+                <div class="title-text">
+                    <h1 class="uppercase">Create product</h1>
+                </div>
+            </div>
+        </div>
+    </section>
+    <section class="section-wrap">
+        <div class="container">
+
+            <EditForm Model="model" OnValidSubmit="SubmitAsync" method="post">
+
+                <DataAnnotationsValidator />
+                <ValidationSummary />
+
+                <div class="row">
+                    <div class="col-md-6">
+
+                        <label>Name</label>
+                        <InputText @bind-Value="model.Name" type="text" />
+
+                        <label>Image</label>
+                        <InputText @bind-Value="model.Image" type="url" />
+
+                        <label>Description</label>
+                        <InputTextArea @bind-Value="model.Description" rows="3" />
+
+                    </div>
+
+                    <div class="col-md-6">
+
+                        <label>Category</label>
+                        <select @bind="model.CategoryId">
+                            <option selected value="default">Select an option</option>
+                            @foreach (var category in this.categories)
+                            {
+                                <option value="@category.Id">@category.Name</option>
+                            }
+                        </select>
+
+                        <label>Price</label>
+                        <InputNumber @bind-Value="model.Price" />
+
+                        <label>Quantity</label>
+                        <InputNumber @bind-Value="model.Quantity" />
+                    </div>
+                </div>
+
+                <button type="submit" class="btn btn-lg"> Create </button>
+
+            </EditForm>
+        </div>
+    </section>
+}
+
+@code {
+    private readonly ProductsCreateRequestModel model = new ProductsCreateRequestModel();
+
+    private CategoriesListingResponseModel[] categories;
+
+    protected override async Task OnInitializedAsync()
+    {
+        this.categories = await this.Http.GetFromJsonAsync<CategoriesListingResponseModel[]>("api/categories");
+    }
+
+    private async Task SubmitAsync()
+    {
+        var token = await this.TokenProvider.GetTokenAsync();
+        if (token != null)
+        {
+            this.Http.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
+            var response = await this.Http.PostAsJsonAsync<ProductsCreateRequestModel>("api/products", model);
+            var id = response.Content.ReadFromJsonAsync<int>();
+            // TODO: redirect to product with that id
+            this.NavigationManager.NavigateTo("/products");
+        }
+    }
+
+}
