@@ -1,0 +1,12 @@
+dist: xenial
+addons:
+  snaps:
+  - name: dotnet-sdk
+    confinement: classic
+    channel: latest/beta
+language: csharp
+mono: none
+script:
+  - sudo snap alias dotnet-sdk.dotnet dotnet
+  - dotnet --version
+  - dotnet build src/BlazorShop.sln
