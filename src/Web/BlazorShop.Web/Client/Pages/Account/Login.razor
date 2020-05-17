@@ -1,5 +1,4 @@
 ﻿@page "/account/login"
-@inject NavigationManager NavManager
 
 <section class="page-title text-center">
     <div class="container relative clearfix">
@@ -63,7 +62,7 @@
         isLoginSuccessful = await this.AuthClient.LoginAsync(model);
         if (isLoginSuccessful)
         {
-            this.NavManager.NavigateTo("/");
+            this.NavigationManager.NavigateTo("/");
         }
     }
 }
