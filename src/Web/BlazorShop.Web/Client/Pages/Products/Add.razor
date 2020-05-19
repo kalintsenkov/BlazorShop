@@ -20,7 +20,7 @@ else
     <section class="section-wrap">
         <div class="container">
 
-            <EditForm Model="model" OnValidSubmit="SubmitAsync" method="post">
+            <EditForm Model="model" OnValidSubmit="SubmitAsync">
 
                 <DataAnnotationsValidator />
                 <ValidationSummary />
@@ -43,7 +43,6 @@ else
 
                         <label>Category</label>
                         <select @bind="model.CategoryId">
-                            <option selected value="default">Select an option</option>
                             @foreach (var category in this.categories)
                             {
                                 <option value="@category.Id">@category.Name</option>

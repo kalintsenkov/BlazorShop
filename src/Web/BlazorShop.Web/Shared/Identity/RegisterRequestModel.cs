@@ -20,8 +20,8 @@
         public string Password { get; set; }
 
         [Required]
-        [Compare(nameof(Password))]
         [DataType(DataType.Password)]
+        [Compare(nameof(Password), ErrorMessage = PasswordsDoNotMatchErrorMessage)]
         public string ConfirmPassword { get; set; }
     }
 }

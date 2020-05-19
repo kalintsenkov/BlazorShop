@@ -9,47 +9,65 @@
         </div>
     </div>
 </section>
-
 <section class="section-wrap login-register pt-0 pb-40">
     <div class="container">
         <div class="row">
             <div class="col-md-4"></div>
 
             <div class="col-md-4">
-                <div class="register">
+                <EditForm Model="model" OnValidSubmit="Submit" class="login">
+
+                    <DataAnnotationsValidator />
+                    <ValidationSummary />
+
                     <p class="form-row form-row-wide">
                         <label>
                             email
                             <abbr class="required" title="Required">*</abbr>
                         </label>
-                        <input type="text" class="input-text" placeholder="Email">
+                        <InputText @bind-Value="model.Email" type="email" class="form-control" placeholder="Email" />
                     </p>
+
                     <p class="form-row form-row-wide">
                         <label>
                             username
                             <abbr class="required" title="Required">*</abbr>
                         </label>
-                        <input type="text" class="input-text" placeholder="Username">
+                        <InputText @bind-Value="model.Username" type="text" class="form-control" placeholder="Username" />
                     </p>
+
                     <p class="form-row form-row-wide">
                         <label>
                             password
                             <abbr class="required" title="Required">*</abbr>
                         </label>
-                        <input type="text" class="input-text" placeholder="Password">
+                        <InputText @bind-Value="model.Password" type="password" class="form-control" placeholder="Password" />
                     </p>
+
                     <p class="form-row form-row-wide">
                         <label>
                             confirm password
                             <abbr class="required" title="Required. Should match with password">*</abbr>
                         </label>
-                        <input type="text" class="input-text" placeholder="Confrim Password">
+                        <InputText @bind-Value="model.ConfirmPassword" type="password" class="form-control" placeholder="Confrim Password" />
                     </p>
+
                     <button type="submit" class="btn"> Register </button>
-                </div>
+
+                </EditForm>
             </div>
 
             <div class="col-md-4"></div>
         </div>
     </div>
 </section>
+
+@code {
+    private readonly RegisterRequestModel model = new RegisterRequestModel();
+
+    private async Task Submit()
+    {
+        await this.AuthClient.RegisterAsync(model);
+        this.NavigationManager.NavigateTo("account/login");
+    }
+}
