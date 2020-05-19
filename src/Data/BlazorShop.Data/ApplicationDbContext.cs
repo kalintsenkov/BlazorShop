@@ -20,6 +20,8 @@
 
         public DbSet<OrderProduct> OrdersProducts { get; set; }
 
+        public DbSet<Wishlist> Wishlists { get; set; }
+
         protected override void OnModelCreating(ModelBuilder builder)
         {
             base.OnModelCreating(builder);

@@ -14,6 +14,7 @@ namespace BlazorShop.Data.Models
         {
             this.Id = Guid.NewGuid().ToString();
             this.Orders = new HashSet<Order>();
+            this.Wishlists = new HashSet<Wishlist>();
             this.Roles = new HashSet<IdentityUserRole<string>>();
             this.Claims = new HashSet<IdentityUserClaim<string>>();
             this.Logins = new HashSet<IdentityUserLogin<string>>();
@@ -32,6 +33,8 @@ namespace BlazorShop.Data.Models
         public DateTime? DeletedOn { get; set; }
 
         public ICollection<Order> Orders { get; }
+
+        public ICollection<Wishlist> Wishlists { get; set; }
 
         public virtual ICollection<IdentityUserRole<string>> Roles { get; }
 

@@ -10,6 +10,7 @@
         public Product()
         {
             this.Orders = new HashSet<OrderProduct>();
+            this.Wishlists = new HashSet<Wishlist>();
         }
 
         public int Id { get; set; }
@@ -37,5 +38,7 @@
         public DateTime? DeletedOn { get; set; }
 
         public ICollection<OrderProduct> Orders { get; }
+
+        public ICollection<Wishlist> Wishlists { get; set; }
     }
 }
