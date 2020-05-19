@@ -141,22 +141,14 @@ else
 
                                     <li class="dropdown">
                                         <a href="#">Categories</a>
-                                        <i class="fa fa-angle-down dropdown-trigger"></i>
+                                        <i class="fa fa-angle-down dropdown-toggle" data-toggle="dropdown"></i>
                                         <ul class="dropdown-menu">
-                                            <li>
-                                                <div class="row">
 
-                                                    <div class="col-md-3">
-                                                        <ul class="menu-list">
-                                                            @foreach (var category in this.categories)
-                                                            {
-                                                                <li><a href="/categories/@category.Id">@category.Name</a></li>
-                                                            }
-                                                        </ul>
-                                                    </div>
+                                            @foreach (var category in this.categories)
+                                            {
+                                                <li><a href="/categories/@category.Id">@category.Name</a></li>
+                                            }
 
-                                                </div>
-                                            </li>
                                         </ul>
                                     </li>
 
