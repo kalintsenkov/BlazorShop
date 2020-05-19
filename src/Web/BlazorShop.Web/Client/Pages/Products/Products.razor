@@ -15,12 +15,12 @@
                     <div class="shop-filter">
                         <p class="result-count">Showing: 1-12 of @this.products.Count() results</p>
                         <AuthorizeView Roles="@GlobalConstants.AdminRoleName">
-                            <a href="/products/create" class="btn btn-sm btn-color ecommerce-ordering">
-                                <span>Create product</span>
+                            <a href="/products/add" class="btn btn-sm btn-color ecommerce-ordering">
+                                <span>add product</span>
                             </a>
                         </AuthorizeView>
                     </div>
-
+    
                     <div class="shop-catalogue grid-view left">
 
                         <div class="row row-10 items-grid">
@@ -30,10 +30,10 @@
                                 <div class="col-md-4 col-xs-6">
                                     <div class="product-item">
                                         <div class="product-img">
-                                            <a href="#">
-                                                <img src="@product.ImageSource" alt="@product.Name" style="height: 345px;">
+                                            <a href="/products/@product.Id">
+                                                <img src="@product.ImageSource" alt="@product.Name">
                                             </a>
-                                            <a href="#" class="product-quickview">View</a>
+                                            <a href="/products/@product.Id" class="product-quickview">View</a>
                                         </div>
                                         <div class="product-details">
                                             <h3>
@@ -44,7 +44,7 @@
                                                     <span>$388.00</span>
                                                 </del>*@
                                                 <ins>
-                                                    <span class="ammount">@product.Price лв.</span>
+                                                    <span class="ammount">$@product.Price</span>
                                                 </ins>
                                             </span>
                                         </div>

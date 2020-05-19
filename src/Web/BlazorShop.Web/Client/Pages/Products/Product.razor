@@ -1,0 +1,148 @@
+﻿@page "/products/{Id:int}"
+
+<section class="section-wrap single-product">
+    <div class="container relative">
+
+        @if (this.product == null)
+        {
+            <p><em>Loading...</em></p>
+        }
+        else
+        {
+            <div class="row">
+
+                <div class="col-sm-6 col-xs-12 mb-60">
+
+                    <div class="flickity flickity-slider-wrap mfp-hover" id="gallery-main">
+
+                        <div class="gallery-cell">
+                            <a href="#" class="lightbox-img">
+                                <img src="@product.ImageSource" alt="@product.Name-img" />
+                                <i class="icon arrow_expand"></i>
+                            </a>
+                        </div>
+
+                    </div>
+
+                </div>
+
+                <div class="col-sm-6 col-xs-12 product-description-wrap">
+                    <h1 class="product-title">@this.product.Name</h1>
+                    <span class="price">
+                        <ins>
+                            <span class="ammount">$@this.product.Price</span>
+                        </ins>
+                    </span>
+                    <p class="product-description">@this.product.Description</p>
+
+                    <div class="select-options">
+                        <div class="row row-20">
+                            <div class="col-sm-6">
+                                <select class="color-select">
+                                    <option selected>Select color</option>
+                                    <option value="white">white</option>
+                                    <option value="grey">grey</option>
+                                    <option value="black">black</option>
+                                    <option value="green">green</option>
+                                    <option value="blue">blue</option>
+                                </select>
+                            </div>
+
+                            <div class="col-sm-6">
+                                <select class="size-options">
+                                    <option selected>Select size</option>
+                                    <option value="XS">XS</option>
+                                    <option value="S">S</option>
+                                    <option value="M">M</option>
+                                    <option value="L">L</option>
+                                    <option value="XL">XL</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+
+                    <ul class="product-actions clearfix">
+
+                        <li>
+                            <a href="#" class="btn btn-color btn-lg add-to-cart left"><span>Add to Cart</span></a>
+                        </li>
+                        <li>
+                            <div class="quantity buttons_added">
+                                <input @onclick="DecrementQuantity" type="button" value="-" class="minus" />
+                                <input @bind-value="quantity" type="number" class="input-text qty text" />
+                                <input @onclick="IncrementQuantity" type="button" value="+" class="plus" />
+                            </div>
+                        </li>
+                    </ul>
+
+                    <div class="product_meta">
+                        <span class="sku">Quantity: @this.product.Quantity</span>
+                        <span class="posted_in">
+                            Category: <a href="/categories/@this.product.CategoryId">@this.product.CategoryName</a>
+                        </span>
+                    </div>
+
+                    <div class="socials-share clearfix">
+                        <div class="social-icons rounded">
+                            <a href="#"><i class="fa fa-twitter"></i></a>
+                            <a href="#"><i class="fa fa-facebook"></i></a>
+                            <a href="#"><i class="fa fa-google-plus"></i></a>
+                            <a href="#"><i class="fa fa-linkedin"></i></a>
+                            <a href="#"><i class="fa fa-vimeo"></i></a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="tabs tabs-bb">
+                        <ul class="nav nav-tabs">
+                            <li class="active">
+                                <a href="#tab-description" data-toggle="tab">Description</a>
+                            </li>
+                        </ul>
+
+                        <div class="tab-content">
+
+                            <div class="tab-pane fade in active" id="tab-description">
+                                <p>@this.product.Description</p>
+                            </div>
+
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        }
+
+    </div>
+</section>
+
+@code {
+
+    private int quantity = 1;
+    private ProductsDetailsResponseModel product;
+
+    [Parameter] public int Id { get; set; }
+
+    protected override async Task OnInitializedAsync()
+        => this.product = await this.Http.GetFromJsonAsync<ProductsDetailsResponseModel>($"api/products/{this.Id}");
+
+    private void IncrementQuantity()
+    {
+        if (this.quantity < this.product.Quantity)
+        {
+            this.quantity++;
+        }
+    }
+
+    private void DecrementQuantity()
+    {
+        if (this.quantity > 0)
+        {
+            this.quantity--;
+        }
+    }
+
+}
