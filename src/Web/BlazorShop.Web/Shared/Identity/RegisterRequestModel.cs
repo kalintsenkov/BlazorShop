@@ -16,10 +16,12 @@
         public string Username { get; set; }
 
         [Required]
+        [MinLength(UserPasswordMinLength)]
         [DataType(DataType.Password)]
         public string Password { get; set; }
 
         [Required]
+        [MinLength(UserPasswordMinLength)]
         [DataType(DataType.Password)]
         [Compare(nameof(Password), ErrorMessage = PasswordsDoNotMatchErrorMessage)]
         public string ConfirmPassword { get; set; }

@@ -70,7 +70,7 @@
                         <li>
                             <div class="icon-add-to-wishlist left">
                                 <a href="" @onclick="() => AddToWishlist(product.Id)">
-                                    <i class="icon icon_heart_alt"></i>
+                                    <i class="fa fa-heart"></i>
                                 </a>
                             </div>
                         </li>
@@ -83,6 +83,22 @@
                         </li>
                     </ul>
 
+                    <AuthorizeView Roles="@GlobalConstants.AdminRoleName">
+                        <div class="product_meta">
+                            <div class="icon-add-to-wishlist left">
+                                <a href="">
+                                    <i class="fa fa-pen"></i>
+                                </a>
+                            </div>
+                            &nbsp;
+                            <div class="icon-add-to-wishlist left">
+                                <a href="">
+                                    <i class="fa fa-trash"></i>
+                                </a>
+                            </div>
+                        </div>
+                    </AuthorizeView>
+
                     <div class="product_meta">
                         <span class="sku">Quantity: @this.product.Quantity</span>
                         <span class="posted_in">
@@ -92,11 +108,8 @@
 
                     <div class="socials-share clearfix">
                         <div class="social-icons rounded">
-                            <a href="#"><i class="fa fa-twitter"></i></a>
-                            <a href="#"><i class="fa fa-facebook"></i></a>
-                            <a href="#"><i class="fa fa-google-plus"></i></a>
-                            <a href="#"><i class="fa fa-linkedin"></i></a>
-                            <a href="#"><i class="fa fa-vimeo"></i></a>
+                            <a href="#"><i class="fab fa-facebook-f"></i></a>
+                            <a href="#"><i class="fab fa-instagram"></i></a>
                         </div>
                     </div>
                 </div>
@@ -161,7 +174,7 @@
 
     private void DecrementQuantity()
     {
-        if (this.quantity > 0)
+        if (this.quantity > 1)
         {
             this.quantity--;
         }
