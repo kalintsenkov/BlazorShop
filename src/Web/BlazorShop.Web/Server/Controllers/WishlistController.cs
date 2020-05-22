@@ -24,8 +24,8 @@
         public async Task<IEnumerable<ProductsListingResponseModel>> Get()
             => await this.wishlistService.GetByUserIdAsync(this.User.GetId());
 
-        [HttpPost]
-        public async Task<ActionResult> Add([FromBody] int id)
+        [HttpPost(Id)]
+        public async Task<ActionResult> Add(int id)
         {
             await this.wishlistService.AddProductAsync(id, this.User.GetId());
 
