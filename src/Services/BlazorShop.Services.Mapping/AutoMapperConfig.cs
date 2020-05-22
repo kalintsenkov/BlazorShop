@@ -23,31 +23,31 @@
 
             initialized = true;
 
-            var types = assemblies.SelectMany(a => a.GetExportedTypes()).ToList();
+            var types = assemblies
+                .SelectMany(a => a.GetExportedTypes())
+                .ToList();
 
             var config = new MapperConfigurationExpression();
-            config.CreateProfile(
-                "ReflectionProfile",
-                configuration =>
+            config.CreateProfile("ReflectionProfile", configuration =>
+            {
+                // IMapFrom<>
+                foreach (var map in GetFromMaps(types))
                 {
-                    // IMapFrom<>
-                    foreach (var map in GetFromMaps(types))
-                    {
-                        configuration.CreateMap(map.Source, map.Destination);
-                    }
+                    configuration.CreateMap(map.Source, map.Destination);
+                }
 
-                    // IMapTo<>
-                    foreach (var map in GetToMaps(types))
-                    {
-                        configuration.CreateMap(map.Source, map.Destination);
-                    }
+                // IMapTo<>
+                foreach (var map in GetToMaps(types))
+                {
+                    configuration.CreateMap(map.Source, map.Destination);
+                }
 
-                    // IHaveCustomMappings
-                    foreach (var map in GetCustomMappings(types))
-                    {
-                        map.CreateMappings(configuration);
-                    }
-                });
+                // IHaveCustomMappings
+                foreach (var map in GetCustomMappings(types))
+                {
+                    map.CreateMappings(configuration);
+                }
+            });
 
             MapperInstance = new Mapper(new MapperConfiguration(config));
         }

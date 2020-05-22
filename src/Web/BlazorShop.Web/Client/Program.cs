@@ -1,8 +1,10 @@
 namespace BlazorShop.Web.Client
 {
     using System.Threading.Tasks;
-    using Infrastructure.Extensions;
+
     using Microsoft.AspNetCore.Components.WebAssembly.Hosting;
+
+    using Infrastructure.Extensions;
 
     public class Program
     {
