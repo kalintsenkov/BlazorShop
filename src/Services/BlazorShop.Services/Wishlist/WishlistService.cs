@@ -3,11 +3,13 @@
     using System.Collections.Generic;
     using System.Linq;
     using System.Threading.Tasks;
+
+    using Microsoft.EntityFrameworkCore;
+
     using Data;
     using Data.Models;
     using DateTime;
     using Mapping;
-    using Microsoft.EntityFrameworkCore;
     using Web.Shared.Products;
 
     public class WishlistService : IWishlistService
@@ -23,7 +25,7 @@
             this.dataProvider = dataProvider;
         }
 
-        public async Task AddProductAsync(int productId, string userId)
+        public async Task AddAsync(int productId, string userId)
         {
             var wishlist = await this.GetByProductIdAndUserIdAsync(productId, userId);
             if (wishlist == null)
@@ -47,7 +49,7 @@
             await this.db.SaveChangesAsync();
         }
 
-        public async Task<bool> RemoveProductAsync(int productId, string userId)
+        public async Task<bool> RemoveAsync(int productId, string userId)
         {
             var wishlist = await this.GetByProductIdAndUserIdAsync(productId, userId);
             if (wishlist == null)

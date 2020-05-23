@@ -27,7 +27,7 @@
         [HttpPost(Id)]
         public async Task<ActionResult> Add(int id)
         {
-            await this.wishlistService.AddProductAsync(id, this.User.GetId());
+            await this.wishlistService.AddAsync(id, this.User.GetId());
 
             return this.Ok();
         }
@@ -35,7 +35,7 @@
         [HttpDelete(Id)]
         public async Task<ActionResult> Remove(int id)
         {
-            var removed = await this.wishlistService.RemoveProductAsync(id, this.User.GetId());
+            var removed = await this.wishlistService.RemoveAsync(id, this.User.GetId());
             if (!removed)
             {
                 return this.BadRequest();
