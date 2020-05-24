@@ -22,6 +22,10 @@
 
         public DbSet<Wishlist> Wishlists { get; set; }
 
+        public DbSet<Region> Regions { get; set; }
+
+        public DbSet<City> Cities { get; set; }
+
         protected override void OnModelCreating(ModelBuilder builder)
         {
             base.OnModelCreating(builder);

@@ -19,5 +19,9 @@
 
         public const int CategoryNameMinLength = 3;
         public const int CategoryNameMaxLength = 30;
+
+        public const int CityNameMaxLength = 255;
+
+        public const int RegionNameMaxLength = 255;
     }
 }

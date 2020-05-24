@@ -34,7 +34,7 @@ namespace BlazorShop.Data.Models
 
         public ICollection<Order> Orders { get; }
 
-        public ICollection<Wishlist> Wishlists { get; set; }
+        public ICollection<Wishlist> Wishlists { get; }
 
         public virtual ICollection<IdentityUserRole<string>> Roles { get; }
 

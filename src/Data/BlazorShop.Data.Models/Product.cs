@@ -39,6 +39,6 @@
 
         public ICollection<OrderProduct> Orders { get; }
 
-        public ICollection<Wishlist> Wishlists { get; set; }
+        public ICollection<Wishlist> Wishlists { get; }
     }
 }
