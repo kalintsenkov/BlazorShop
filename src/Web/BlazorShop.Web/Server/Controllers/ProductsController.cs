@@ -39,7 +39,7 @@
                 model.Price,
                 model.CategoryId);
 
-            return this.Created(nameof(this.Create), id);
+            return Created(nameof(this.Create), id);
         }
 
         [HttpPut]
@@ -57,10 +57,10 @@
 
             if (!updated)
             {
-                return this.BadRequest();
+                return BadRequest();
             }
 
-            return this.Ok();
+            return Ok();
         }
 
         [HttpDelete(Id)]
@@ -70,10 +70,10 @@
             var deleted = await this.productsService.DeleteAsync(id);
             if (!deleted)
             {
-                return this.BadRequest();
+                return BadRequest();
             }
 
-            return this.Ok();
+            return Ok();
         }
     }
 }

@@ -29,7 +29,7 @@
         {
             await this.wishlistService.AddAsync(id, this.User.GetId());
 
-            return this.Ok();
+            return Ok();
         }
 
         [HttpDelete(Id)]
@@ -38,10 +38,10 @@
             var removed = await this.wishlistService.RemoveAsync(id, this.User.GetId());
             if (!removed)
             {
-                return this.BadRequest();
+                return BadRequest();
             }
 
-            return this.Ok();
+            return Ok();
         }
     }
 }

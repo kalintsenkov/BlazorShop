@@ -37,10 +37,10 @@
 
             if (result.Succeeded)
             {
-                return this.Ok();
+                return Ok();
             }
 
-            return this.BadRequest(result.Errors);
+            return BadRequest(result.Errors);
         }
 
         [HttpPost(nameof(Login))]
@@ -49,13 +49,13 @@
             var user = await this.userManager.FindByNameAsync(model.Username);
             if (user == null)
             {
-                return this.Unauthorized();
+                return Unauthorized();
             }
 
             var passwordValid = await this.userManager.CheckPasswordAsync(user, model.Password);
             if (!passwordValid)
             {
-                return this.Unauthorized();
+                return Unauthorized();
             }
 
             var token = await this.identityService.GenerateJwtAsync(

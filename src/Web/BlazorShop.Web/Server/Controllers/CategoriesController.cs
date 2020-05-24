@@ -41,7 +41,7 @@
         {
             var id = await this.categoriesService.CreateAsync(model.Name);
 
-            return this.Created(nameof(this.Create), id);
+            return Created(nameof(this.Create), id);
         }
 
         [HttpPut]
@@ -51,10 +51,10 @@
             var updated = await this.categoriesService.UpdateAsync(model.Id, model.Name);
             if (!updated)
             {
-                return this.BadRequest();
+                return BadRequest();
             }
 
-            return this.Ok();
+            return Ok();
         }
 
         [HttpDelete(Id)]
@@ -64,10 +64,10 @@
             var deleted = await this.categoriesService.DeleteAsync(id);
             if (!deleted)
             {
-                return this.BadRequest();
+                return BadRequest();
             }
 
-            return this.Ok();
+            return Ok();
         }
     }
 }
