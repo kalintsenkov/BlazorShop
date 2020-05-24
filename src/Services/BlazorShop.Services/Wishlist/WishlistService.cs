@@ -67,6 +67,7 @@
         public async Task<IEnumerable<ProductsListingResponseModel>> GetByUserIdAsync(string userId)
             => await this.db
                 .Wishlists
+                .AsNoTracking()
                 .Where(w => w.UserId == userId && !w.IsDeleted)
                 .Select(w => w.Product)
                 .To<ProductsListingResponseModel>()
