@@ -1,15 +1,14 @@
 ﻿@page "/products"
 
-<section class="section-wrap pt-70 pb-40 catalogue">
-    <div class="container relative">
-        <div class="row">
-
-            @if (this.categories == null || this.products == null)
-            {
-                <p><em>Loading...</em></p>
-            }
-            else
-            {
+@if (this.categories == null || this.products == null)
+{
+    <p><em>Loading...</em></p>
+}
+else
+{
+    <section class="section-wrap pt-70 pb-40 catalogue">
+        <div class="container relative">
+            <div class="row">
                 <div class="col-md-9 catalogue-col right mb-50">
 
                     <div class="shop-filter">
@@ -20,7 +19,7 @@
                             </a>
                         </AuthorizeView>
                     </div>
-    
+
                     <div class="shop-catalogue grid-view left">
 
                         <div class="row row-10 items-grid">
@@ -41,8 +40,8 @@
                                             </h3>
                                             <span class="price">
                                                 @*<del>
-                                                    <span>$388.00</span>
-                                                </del>*@
+                                                        <span>$388.00</span>
+                                                    </del>*@
                                                 <ins>
                                                     <span class="ammount">$@product.Price</span>
                                                 </ins>
@@ -94,11 +93,11 @@
                     @*<BestSellers />*@
 
                 </aside>
-            }
 
+            </div>
         </div>
-    </div>
-</section>
+    </section>
+}
 
 @code {
     private ProductsListingResponseModel[] products;

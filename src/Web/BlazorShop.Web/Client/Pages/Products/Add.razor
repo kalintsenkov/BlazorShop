@@ -42,12 +42,13 @@ else
                     <div class="col-md-6">
 
                         <label>Category</label>
-                        <select @bind="model.CategoryId">
+                        @*TODO: Validate CategoryId*@
+                        <InputSelectNumber @bind-Value="model.CategoryId">
                             @foreach (var category in this.categories)
                             {
                                 <option value="@category.Id">@category.Name</option>
                             }
-                        </select>
+                        </InputSelectNumber>
 
                         <label>Price</label>
                         <InputNumber @bind-Value="model.Price" />
@@ -82,8 +83,7 @@ else
             this.Http.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
             var response = await this.Http.PostAsJsonAsync<ProductsCreateRequestModel>("api/products", model);
             var id = await response.Content.ReadFromJsonAsync<int>();
-            this.NavigationManager.NavigateTo($"/product/{id}");
+            this.NavigationManager.NavigateTo($"/products/{id}");
         }
     }
-
 }
