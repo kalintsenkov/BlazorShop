@@ -1,0 +1,90 @@
+﻿@page "/products/update/{Id:int}"
+@inject TokenAuthenticationStateProvider TokenProvider
+@attribute [Authorize(Roles = GlobalConstants.AdminRoleName)]
+
+@if (this.categories == null || this.model == null)
+{
+    <p><em>Loading...</em></p>
+}
+else
+{
+    <section class="page-title text-center">
+        <div class="container relative clearfix">
+            <div class="title-holder">
+                <div class="title-text">
+                    <h1 class="uppercase">update product</h1>
+                </div>
+            </div>
+        </div>
+    </section>
+    <section class="section-wrap">
+        <div class="container">
+
+            <EditForm Model="model" OnValidSubmit="SubmitAsync">
+
+                <DataAnnotationsValidator />
+                <ValidationSummary />
+
+                <div class="row">
+                    <div class="col-md-6">
+
+                        <label>Name</label>
+                        <InputText @bind-Value="model.Name" type="text" />
+
+                        <label>Image</label>
+                        <InputText @bind-Value="model.ImageSource" type="url" />
+
+                        <label>Description</label>
+                        <InputTextArea @bind-Value="model.Description" rows="3" />
+
+                    </div>
+
+                    <div class="col-md-6">
+
+                        <label>Category</label>
+                        @*TODO: Validate CategoryId*@
+                        <InputSelectNumber @bind-Value="model.CategoryId">
+                            @foreach (var category in this.categories)
+                                {
+                                <option value="@category.Id">@category.Name</option>
+                                }
+                        </InputSelectNumber>
+
+                        <label>Price</label>
+                        <InputNumber @bind-Value="model.Price" />
+
+                        <label>Quantity</label>
+                        <InputNumber @bind-Value="model.Quantity" />
+                    </div>
+                </div>
+
+                <button type="submit" class="btn btn-lg"> Update </button>
+
+            </EditForm>
+        </div>
+    </section>
+}
+
+@code {
+    private ProductsUpdateRequestModel model;
+    private CategoriesListingResponseModel[] categories;
+
+    [Parameter] public int Id { get; set; }
+
+    protected override async Task OnInitializedAsync()
+    {
+        this.model = await this.Http.GetFromJsonAsync<ProductsUpdateRequestModel>($"api/products/{this.Id}");
+        this.categories = await this.Http.GetFromJsonAsync<CategoriesListingResponseModel[]>("api/categories");
+    }
+
+    private async Task SubmitAsync()
+    {
+        var token = await this.TokenProvider.GetTokenAsync();
+        if (token != null)
+        {
+            this.Http.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
+            await this.Http.PutAsJsonAsync<ProductsUpdateRequestModel>("api/products", model);
+            this.NavigationManager.NavigateTo($"/products/{this.Id}");
+        }
+    }
+}
