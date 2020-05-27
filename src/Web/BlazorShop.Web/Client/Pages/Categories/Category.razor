@@ -1,9 +1,118 @@
 ﻿@page "/categories/{Id:int}"
 
+<section class="section-wrap pt-70 pb-40 catalogue">
+    <div class="container relative">
+        <div class="row">
 
+            @if (this.categories == null || this.products == null)
+            {
+                <p><em>Loading...</em></p>
+            }
+            else
+            {
+                <div class="col-md-9 catalogue-col right mb-50">
+
+                    <div class="shop-filter">
+                        <p class="result-count">Showing: 1-12 of @this.products.Count() results</p>
+                        <AuthorizeView Roles="@GlobalConstants.AdminRoleName">
+                            <a href="/products/add" class="btn btn-sm btn-color ecommerce-ordering">
+                                <span>add product</span>
+                            </a>
+                        </AuthorizeView>
+                    </div>
+
+                    <div class="shop-catalogue grid-view left">
+
+                        <div class="row row-10 items-grid">
+
+                            @foreach (var product in this.products)
+                            {
+                                <div class="col-md-4 col-xs-6">
+                                    <div class="product-item">
+                                        <div class="product-img">
+                                            <a href="/products/@product.Id">
+                                                <img src="@product.ImageSource" alt="@product.Name">
+                                            </a>
+                                            <a href="/products/@product.Id" class="product-quickview">View</a>
+                                        </div>
+                                        <div class="product-details">
+                                            <h3>
+                                                <a class="product-title" href="shop-single-product.html">@product.Name</a>
+                                            </h3>
+                                            <span class="price">
+                                                @*<del>
+                                                        <span>$388.00</span>
+                                                    </del>*@
+                                                <ins>
+                                                    <span class="ammount">$@product.Price</span>
+                                                </ins>
+                                            </span>
+                                        </div>
+                                    </div>
+                                </div>
+                            }
+
+                        </div>
+                    </div>
+
+                    <div class="clear"></div>
+
+                    <div class="pagination-wrap">
+                        <nav class="pagination right clear">
+                            <a href="#">
+                                <i class="fa fa-angle-left"></i>
+                            </a>
+                            <span class="page-numbers current">
+                                1
+                            </span>
+                            <a href="#">
+                                2
+                            </a>
+                            <a href="#">
+                                3
+                            </a>
+                            <a href="#">
+                                <i class="fa fa-angle-right"></i>
+                            </a>
+                        </nav>
+                    </div>
+
+                </div>
+
+                <aside class="col-md-3 sidebar left-sidebar">
+
+                    <div class="widget categories">
+                        <h3 class="widget-title uppercase">Categories</h3>
+                        <ul class="list-no-dividers">
+                            @foreach (var category in this.categories)
+                            {
+                                <li><a href="/categories/@category.Id">@category.Name</a></li>
+                            }
+                        </ul>
+                    </div>
+
+                    @*<BestSellers />*@
+
+                </aside>
+            }
+
+        </div>
+    </div>
+</section>
 
 @code {
     [Parameter] public int Id { get; set; }
 
+    private ProductsListingResponseModel[] products;
+    private CategoriesListingResponseModel[] categories;
 
+    protected override async Task OnParametersSetAsync() => await this.LoadData();
+
+    protected override async Task OnInitializedAsync() => await this.LoadData();
+
+    private async Task LoadData()
+    {
+        this.products = await this.Http.GetFromJsonAsync<ProductsListingResponseModel[]>($"api/categories/{this.Id}");
+        this.categories = await this.Http.GetFromJsonAsync<CategoriesListingResponseModel[]>("api/categories");
+    }
 }
