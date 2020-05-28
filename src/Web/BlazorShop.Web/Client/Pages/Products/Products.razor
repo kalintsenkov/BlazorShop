@@ -26,29 +26,7 @@ else
 
                             @foreach (var product in this.products)
                             {
-                                <div class="col-md-4 col-xs-6">
-                                    <div class="product-item">
-                                        <div class="product-img">
-                                            <a href="/products/@product.Id">
-                                                <img src="@product.ImageSource" alt="@product.Name">
-                                            </a>
-                                            <a href="/products/@product.Id" class="product-quickview">View</a>
-                                        </div>
-                                        <div class="product-details">
-                                            <h3>
-                                                <a class="product-title" href="shop-single-product.html">@product.Name</a>
-                                            </h3>
-                                            <span class="price">
-                                                @*<del>
-                                                        <span>$388.00</span>
-                                                    </del>*@
-                                                <ins>
-                                                    <span class="ammount">$@product.Price</span>
-                                                </ins>
-                                            </span>
-                                        </div>
-                                    </div>
-                                </div>
+                                <ProductCard Product="product"/>
                             }
 
                         </div>
@@ -56,43 +34,11 @@ else
 
                     <div class="clear"></div>
 
-                    <div class="pagination-wrap">
-                        <nav class="pagination right clear">
-                            <a href="#">
-                                <i class="fa fa-angle-left"></i>
-                            </a>
-                            <span class="page-numbers current">
-                                1
-                            </span>
-                            <a href="#">
-                                2
-                            </a>
-                            <a href="#">
-                                3
-                            </a>
-                            <a href="#">
-                                <i class="fa fa-angle-right"></i>
-                            </a>
-                        </nav>
-                    </div>
+                    <Pagination />
 
                 </div>
 
-                <aside class="col-md-3 sidebar left-sidebar">
-
-                    <div class="widget categories">
-                        <h3 class="widget-title uppercase">Categories</h3>
-                        <ul class="list-no-dividers">
-                            @foreach (var category in this.categories)
-                            {
-                                <li><a href="/categories/@category.Id">@category.Name</a></li>
-                            }
-                        </ul>
-                    </div>
-
-                    @*<BestSellers />*@
-
-                </aside>
+                <CategoriesSidebar Categories="categories" />
 
             </div>
         </div>

@@ -1,0 +1,19 @@
+﻿<aside class="col-md-3 sidebar left-sidebar">
+
+    <div class="widget categories">
+        <h3 class="widget-title uppercase">Categories</h3>
+        <ul class="list-no-dividers">
+            @foreach (var category in Categories)
+            {
+                <li><a href="/categories/@category.Id">@category.Name</a></li>
+            }
+        </ul>
+    </div>
+
+    @*<BestSellers />*@
+
+</aside>
+
+@code {
+    [Parameter] public CategoriesListingResponseModel[] Categories { get; set; }
+}

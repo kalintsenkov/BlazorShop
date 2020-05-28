@@ -61,6 +61,11 @@
 
     private bool isLoginSuccessful = true;
 
+    private void ResetAsync()
+    {
+        isLoginSuccessful = !isLoginSuccessful;
+    }
+
     private async Task SubmitAsync()
     {
         isLoginSuccessful = await this.AuthClient.LoginAsync(model);
@@ -68,10 +73,5 @@
         {
             this.NavigationManager.NavigateTo("/");
         }
-    }
-
-    private void ResetAsync()
-    {
-        isLoginSuccessful = !isLoginSuccessful;
     }
 }

@@ -19,8 +19,8 @@
 
             var categories = new List<Category>
             {
-                new Category { Name = "Men's", CreatedOn = DateTime.UtcNow },
-                new Category { Name = "Women's", CreatedOn = DateTime.UtcNow },
+                new Category { Name = "Men", CreatedOn = DateTime.UtcNow },
+                new Category { Name = "Women", CreatedOn = DateTime.UtcNow },
                 new Category { Name = "Kids", CreatedOn = DateTime.UtcNow }
             };
 

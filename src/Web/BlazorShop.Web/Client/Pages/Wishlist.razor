@@ -2,7 +2,7 @@
 @inject TokenAuthenticationStateProvider TokenProvider
 @attribute [Authorize]
 
-@if (this.products == null)
+@if (products == null)
 {
     <p><em>Loading...</em></p>
 }
@@ -33,7 +33,7 @@ else
                             </thead>
                             <tbody>
 
-                                @foreach (var product in this.products)
+                                @foreach (var product in products)
                                 {
                                     <tr class="cart_item">
                                         <td class="product-thumbnail">

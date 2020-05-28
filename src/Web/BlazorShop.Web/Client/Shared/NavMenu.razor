@@ -1,6 +1,6 @@
 ﻿@inject HttpClient Http
 
-@if (this.categories == null)
+@if (categories == null)
 {
     <p><em>Loading...</em></p>
 }
@@ -137,7 +137,7 @@ else
                                     </li>
 
                                     <li>
-                                        <a href="/counter">Counter</a>
+                                        <a href="/wishlist">Wishlist</a>
                                     </li>
 
                                     <li class="dropdown">
@@ -145,7 +145,7 @@ else
                                         <i class="fa fa-angle-down dropdown-toggle" data-toggle="dropdown"></i>
                                         <ul class="dropdown-menu">
 
-                                            @foreach (var category in this.categories)
+                                            @foreach (var category in categories)
                                             {
                                                 <li><a href="/categories/@category.Id">@category.Name</a></li>
                                             }

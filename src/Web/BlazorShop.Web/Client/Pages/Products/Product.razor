@@ -1,15 +1,15 @@
 ﻿@page "/products/{Id:int}"
 @inject TokenAuthenticationStateProvider TokenProvider
 
-<section class="section-wrap single-product">
-    <div class="container relative">
+@if (product == null)
+{
+    <p><em>Loading...</em></p>
+}
+else
+{
+    <section class="section-wrap single-product">
+        <div class="container relative">
 
-        @if (this.product == null)
-        {
-            <p><em>Loading...</em></p>
-        }
-        else
-        {
             <div class="row">
 
                 <div class="col-sm-6 col-xs-12 mb-60">
@@ -28,13 +28,13 @@
                 </div>
 
                 <div class="col-sm-6 col-xs-12 product-description-wrap">
-                    <h1 class="product-title">@this.product.Name</h1>
+                    <h1 class="product-title">@product.Name</h1>
                     <span class="price">
                         <ins>
-                            <span class="ammount">$@this.product.Price</span>
+                            <span class="ammount">$@product.Price</span>
                         </ins>
                     </span>
-                    <p class="product-description">@this.product.Description</p>
+                    <p class="product-description">@product.Description</p>
 
                     <div class="select-options">
                         <div class="row row-20">
@@ -100,9 +100,9 @@
                     </AuthorizeView>
 
                     <div class="product_meta">
-                        <span class="sku">Quantity: @this.product.Quantity</span>
+                        <span class="sku">Quantity: @product.Quantity</span>
                         <span class="posted_in">
-                            Category: <a href="/categories/@this.product.CategoryId">@this.product.CategoryName</a>
+                            Category: <a href="/categories/@product.CategoryId">@product.CategoryName</a>
                         </span>
                     </div>
 
@@ -127,7 +127,7 @@
                         <div class="tab-content">
 
                             <div class="tab-pane fade in active" id="tab-description">
-                                <p>@this.product.Description</p>
+                                <p>@product.Description</p>
                             </div>
 
                         </div>
@@ -135,10 +135,10 @@
                     </div>
                 </div>
             </div>
-        }
 
-    </div>
-</section>
+        </div>
+    </section>
+}
 
 @code {
 

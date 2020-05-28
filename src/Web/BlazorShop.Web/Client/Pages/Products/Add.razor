@@ -2,7 +2,7 @@
 @inject TokenAuthenticationStateProvider TokenProvider
 @attribute [Authorize(Roles = GlobalConstants.AdminRoleName)]
 
-@if (this.categories == null)
+@if (categories == null)
 {
     <p><em>Loading...</em></p>
 }
@@ -44,7 +44,7 @@ else
                         <label>Category</label>
                         @*TODO: Validate CategoryId*@
                         <InputSelectNumber @bind-Value="model.CategoryId">
-                            @foreach (var category in this.categories)
+                            @foreach (var category in categories)
                             {
                                 <option value="@category.Id">@category.Name</option>
                             }
