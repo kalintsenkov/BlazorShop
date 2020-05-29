@@ -45,9 +45,9 @@ else
                         @*TODO: Validate CategoryId*@
                         <InputSelectNumber @bind-Value="model.CategoryId">
                             @foreach (var category in categories)
-                            {
+                                {
                                 <option value="@category.Id">@category.Name</option>
-                            }
+                                }
                         </InputSelectNumber>
 
                         <label>Price</label>
@@ -80,11 +80,10 @@ else
     private async Task SubmitAsync()
     {
         var token = await this.TokenProvider.GetTokenAsync();
-        if (token != null)
-        {
-            this.Http.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
-            await this.Http.PutAsJsonAsync<ProductsUpdateRequestModel>("api/products", model);
-            this.NavigationManager.NavigateTo($"/products/{this.Id}");
-        }
+        this.Http.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
+        
+        await this.Http.PutAsJsonAsync<ProductsUpdateRequestModel>("api/products", model);
+        
+        this.NavigationManager.NavigateTo($"/products/{this.Id}/{model.Name}");
     }
 }

@@ -1,10 +1,10 @@
 ﻿<div class="col-md-4 col-xs-6">
     <div class="product-item">
         <div class="product-img">
-            <a href="/products/@Product.Id">
-                <img src="@Product.ImageSource" alt="@Product.Name">
+            <a href="/products/@Product.Id/@Product.Name">
+                <img src="@Product.ImageSource" alt="@Product.Name" style="width: 400px; height: 300px;">
             </a>
-            <a href="/products/@Product.Id" class="product-quickview">View</a>
+            <a href="/products/@Product.Id/@Product.Name" class="product-quickview">View</a>
         </div>
         <div class="product-details">
             <h3>

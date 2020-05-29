@@ -1,6 +1,6 @@
 ﻿@page "/products"
 
-@if (this.categories == null || this.products == null)
+@if (categories == null || products == null)
 {
     <p><em>Loading...</em></p>
 }
@@ -12,7 +12,7 @@ else
                 <div class="col-md-9 catalogue-col right mb-50">
 
                     <div class="shop-filter">
-                        <p class="result-count">Showing: 1-12 of @this.products.Count() results</p>
+                        <p class="result-count">Showing: 1-12 of @products.Length results</p>
                         <AuthorizeView Roles="@GlobalConstants.AdminRoleName">
                             <a href="/products/add" class="btn btn-sm btn-color ecommerce-ordering">
                                 <span>add product</span>
@@ -26,7 +26,7 @@ else
 
                             @foreach (var product in this.products)
                             {
-                                <ProductCard Product="product"/>
+                                <ProductItem Product="product" />
                             }
 
                         </div>

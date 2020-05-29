@@ -1,4 +1,4 @@
-﻿@page "/products/{Id:int}"
+﻿@page "/products/{Id:int}/{ProductName}"
 @inject TokenAuthenticationStateProvider TokenProvider
 
 @if (product == null)
@@ -146,9 +146,12 @@ else
     private ProductsDetailsResponseModel product;
 
     [Parameter] public int Id { get; set; }
+    [Parameter] public string ProductName { get; set; }
 
     protected override async Task OnInitializedAsync()
-        => this.product = await this.Http.GetFromJsonAsync<ProductsDetailsResponseModel>($"api/products/{this.Id}");
+    {
+        this.product = await this.Http.GetFromJsonAsync<ProductsDetailsResponseModel>($"api/products/{this.Id}");
+    }
 
     private async Task AddToWishlist(int id)
     {
