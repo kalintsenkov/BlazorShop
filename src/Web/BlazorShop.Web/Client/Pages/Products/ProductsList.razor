@@ -1,4 +1,5 @@
 ﻿@page "/products"
+@page "/products/{CategoryId:int}"
 
 @if (categories == null || products == null)
 {
@@ -49,9 +50,17 @@ else
     private ProductsListingResponseModel[] products;
     private CategoriesListingResponseModel[] categories;
 
-    protected override async Task OnInitializedAsync()
+    [Parameter] public int CategoryId { get; set; }
+
+    protected override async Task OnParametersSetAsync() => await this.LoadData();
+
+    protected override async Task OnInitializedAsync() => await this.LoadData();
+
+    private async Task LoadData()
     {
-        this.products = await this.Http.GetFromJsonAsync<ProductsListingResponseModel[]>("api/products");
+        var requestUri = this.CategoryId == 0 ? "api/products" : $"api/categories/{this.CategoryId}";
+
+        this.products = await this.Http.GetFromJsonAsync<ProductsListingResponseModel[]>(requestUri);
         this.categories = await this.Http.GetFromJsonAsync<CategoriesListingResponseModel[]>("api/categories");
     }
 }
