@@ -15,8 +15,8 @@
     {
         private readonly IWishlistService wishlistService;
 
-        public WishlistController(IWishlistService wishlistsService)
-            => this.wishlistService = wishlistsService;
+        public WishlistController(IWishlistService wishlistService)
+            => this.wishlistService = wishlistService;
 
         [HttpGet]
         public async Task<IEnumerable<ProductsListingResponseModel>> Get()
