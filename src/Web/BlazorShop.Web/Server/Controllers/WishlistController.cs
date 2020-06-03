@@ -10,8 +10,6 @@
     using Services.Wishlist;
     using Shared.Products;
 
-    using static Infrastructure.WebConstants;
-
     [Authorize]
     public class WishlistController : ApiController
     {

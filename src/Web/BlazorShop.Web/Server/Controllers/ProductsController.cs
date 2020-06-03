@@ -10,7 +10,6 @@
     using Shared.Products;
 
     using static Common.GlobalConstants;
-    using static Infrastructure.WebConstants;
 
     public class ProductsController : ApiController
     {
