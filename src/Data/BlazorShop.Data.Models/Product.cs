@@ -1,20 +1,11 @@
 ﻿namespace BlazorShop.Data.Models
 {
-    using System;
     using System.Collections.Generic;
 
     using Interfaces;
 
-    public class Product : IAuditInfo, IDeletableEntity
+    public class Product : BaseDeletableModel<int>
     {
-        public Product()
-        {
-            this.Orders = new HashSet<OrderProduct>();
-            this.Wishlists = new HashSet<Wishlist>();
-        }
-
-        public int Id { get; set; }
-
         public string Name { get; set; }
 
         public string Description { get; set; }
@@ -29,16 +20,8 @@
 
         public Category Category { get; set; }
 
-        public DateTime CreatedOn { get; set; }
+        public ICollection<OrderProduct> Orders { get; } = new HashSet<OrderProduct>();
 
-        public DateTime? ModifiedOn { get; set; }
-
-        public bool IsDeleted { get; set; }
-
-        public DateTime? DeletedOn { get; set; }
-
-        public ICollection<OrderProduct> Orders { get; }
-
-        public ICollection<Wishlist> Wishlists { get; }
+        public ICollection<Wishlist> Wishlists { get; } = new HashSet<Wishlist>();
     }
 }

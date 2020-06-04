@@ -1,9 +1,9 @@
 ﻿namespace BlazorShop.Data.Models
 {
-    public class City
-    {
-        public int Id { get; set; }
+    using Interfaces;
 
+    public class City : BaseModel<int>
+    {
         public string Name { get; set; }
 
         public int RegionId { get; set; }

@@ -2,17 +2,12 @@
 {
     using System.Collections.Generic;
 
-    public class Region
+    using Interfaces;
+
+    public class Region : BaseModel<int>
     {
-        public Region()
-        {
-            this.Cities = new HashSet<City>();
-        }
-
-        public int Id { get; set; }
-
         public string Name { get; set; }
 
-        public ICollection<City> Cities { get; }
+        public ICollection<City> Cities { get; } = new HashSet<City>();
     }
 }
