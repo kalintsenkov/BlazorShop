@@ -21,11 +21,11 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BlazorShop.Services", "Serv
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BlazorShop.Services.Mapping", "Services\BlazorShop.Services.Mapping\BlazorShop.Services.Mapping.csproj", "{230C5F24-DFFA-42AD-B220-A78DB2AAEA09}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BlazorShop.Web.Server", "Web\BlazorShop.Web\Server\BlazorShop.Web.Server.csproj", "{DB65A845-54DF-46BE-A3D2-F5649FDD6D4B}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BlazorShop.Web.Server", "Web\BlazorShop.Web.Server\BlazorShop.Web.Server.csproj", "{DB65A845-54DF-46BE-A3D2-F5649FDD6D4B}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BlazorShop.Web.Client", "Web\BlazorShop.Web\Client\BlazorShop.Web.Client.csproj", "{F040A063-ED39-45CA-B7F4-83ADB3BF119E}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BlazorShop.Web.Client", "Web\BlazorShop.Web.Client\BlazorShop.Web.Client.csproj", "{F040A063-ED39-45CA-B7F4-83ADB3BF119E}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BlazorShop.Web.Shared", "Web\BlazorShop.Web\Shared\BlazorShop.Web.Shared.csproj", "{1B121C84-1BAB-4717-AF40-7CBABBEACCFE}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BlazorShop.Web.Shared", "Web\BlazorShop.Web.Shared\BlazorShop.Web.Shared.csproj", "{1B121C84-1BAB-4717-AF40-7CBABBEACCFE}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

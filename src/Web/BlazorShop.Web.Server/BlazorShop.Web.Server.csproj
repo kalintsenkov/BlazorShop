@@ -14,10 +14,9 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\..\Services\BlazorShop.Services\BlazorShop.Services.csproj" />
-    <ProjectReference Include="..\Client\BlazorShop.Web.Client.csproj" />
-    <ProjectReference Include="..\Shared\BlazorShop.Web.Shared.csproj" />
+    <ProjectReference Include="..\..\Services\BlazorShop.Services\BlazorShop.Services.csproj" />
+    <ProjectReference Include="..\BlazorShop.Web.Client\BlazorShop.Web.Client.csproj" />
+    <ProjectReference Include="..\BlazorShop.Web.Shared\BlazorShop.Web.Shared.csproj" />
   </ItemGroup>
-
 
 </Project>
