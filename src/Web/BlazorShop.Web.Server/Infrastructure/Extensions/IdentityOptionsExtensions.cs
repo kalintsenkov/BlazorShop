@@ -2,13 +2,13 @@
 {
     using Microsoft.AspNetCore.Identity;
 
-    using static Common.ModelConstants;
+    using static Common.ModelConstants.User;
 
     public static class IdentityOptionsExtensions
     {
         public static IdentityOptions SetIdentityOptions(this IdentityOptions options)
         {
-            options.Password.RequiredLength = UserPasswordMinLength;
+            options.Password.RequiredLength = MinPasswordLength;
             options.Password.RequireDigit = false;
             options.Password.RequireLowercase = false;
             options.Password.RequireNonAlphanumeric = false;

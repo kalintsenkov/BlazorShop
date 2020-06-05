@@ -3,27 +3,28 @@
     using System.ComponentModel.DataAnnotations;
 
     using static Common.ErrorMessages;
-    using static Common.ModelConstants;
+    using static Common.ModelConstants.Common;
+    using static Common.ModelConstants.Product;
 
     public class ProductsCreateRequestModel
     {
         [Required]
-        [StringLength(ProductNameMaxLength, ErrorMessage = StringLengthErrorMessage, MinimumLength = ProductNameMinLength)]
+        [StringLength(MaxNameLength, ErrorMessage = StringLengthErrorMessage, MinimumLength = MinNameLength)]
         public string Name { get; set; }
 
-        [MaxLength(ProductDescriptionMaxLength)]
+        [MaxLength(MaxDescriptionLength)]
         public string Description { get; set; }
 
         [Required]
-        [MaxLength(ProductImageMaxLength)]
+        [MaxLength(MaxUrlLength)]
         public string ImageSource { get; set; }
         
         [Required]
-        [Range(ProductQuantityMinRange, ProductQuantityMaxRange)]
+        [Range(MinQuantity, MaxQuantity)]
         public int Quantity { get; set; }
 
         [Required]
-        [Range(typeof(decimal), ProductPriceMinRange, ProductPriceMaxRange)]
+        [Range(typeof(decimal), MinPrice, MaxPrice)]
         public decimal Price { get; set; }
 
         [Required]

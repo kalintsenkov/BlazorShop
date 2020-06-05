@@ -5,7 +5,7 @@
 
     using Models;
 
-    using static Common.ModelConstants;
+    using static Common.ModelConstants.Common;
 
     public class ApplicationUserConfiguration : IEntityTypeConfiguration<ApplicationUser>
     {
@@ -13,11 +13,11 @@
         {
             user
                 .Property(u => u.FirstName)
-                .HasMaxLength(UserFirstNameMaxLength);
+                .HasMaxLength(MaxNameLength);
 
             user
                 .Property(u => u.LastName)
-                .HasMaxLength(UserLastNameMaxLength);
+                .HasMaxLength(MaxNameLength);
 
             user
                 .HasMany(e => e.Claims)

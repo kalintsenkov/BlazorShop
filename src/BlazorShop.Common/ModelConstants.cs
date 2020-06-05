@@ -2,26 +2,30 @@
 {
     public class ModelConstants
     {
-        public const int UserFirstNameMaxLength = 50;
-        public const int UserLastNameMaxLength = 50;
-        public const int UserUserNameMinLength = 3;
-        public const int UserUserNameMaxLength = 50;
-        public const int UserPasswordMinLength = 6;
+        public class Common
+        {
+            public const int MinNameLength = 3;
+            public const int MaxNameLength = 50;
+        }
 
-        public const int ProductNameMinLength = 3;
-        public const int ProductNameMaxLength = 30;
-        public const int ProductDescriptionMaxLength = 250;
-        public const int ProductImageMaxLength = 250;
-        public const int ProductQuantityMinRange = 1;
-        public const int ProductQuantityMaxRange = int.MaxValue;
-        public const string ProductPriceMinRange = "0";
-        public const string ProductPriceMaxRange = "79228162514264337593543950335";
+        public class User
+        {
+            public const int MinPasswordLength = 6;
+        }
 
-        public const int CategoryNameMinLength = 3;
-        public const int CategoryNameMaxLength = 30;
+        public class Region
+        {
+            public const int MaxNameLength = 255;
+        }
 
-        public const int CityNameMaxLength = 255;
-
-        public const int RegionNameMaxLength = 255;
+        public class Product
+        {
+            public const int MaxDescriptionLength = 1000;
+            public const int MaxUrlLength = 2048;
+            public const int MinQuantity = 1;
+            public const int MaxQuantity = int.MaxValue;
+            public const string MinPrice = "1";
+            public const string MaxPrice = "100000";
+        }
     }
 }

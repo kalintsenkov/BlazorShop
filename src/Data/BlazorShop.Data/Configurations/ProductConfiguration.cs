@@ -5,7 +5,8 @@
 
     using Models;
 
-    using static Common.ModelConstants;
+    using static Common.ModelConstants.Common;
+    using static Common.ModelConstants.Product;
 
     public class ProductConfiguration : IEntityTypeConfiguration<Product>
     {
@@ -13,16 +14,16 @@
         {
             product
                 .Property(p => p.Name)
-                .HasMaxLength(ProductNameMaxLength)
+                .HasMaxLength(MaxNameLength)
                 .IsRequired();
 
             product
                 .Property(p => p.Description)
-                .HasMaxLength(ProductDescriptionMaxLength);
+                .HasMaxLength(MaxDescriptionLength);
 
             product
                 .Property(p => p.ImageSource)
-                .HasMaxLength(ProductImageMaxLength)
+                .HasMaxLength(MaxUrlLength)
                 .IsRequired();
 
             product

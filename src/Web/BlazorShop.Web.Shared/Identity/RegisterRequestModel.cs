@@ -3,7 +3,8 @@
     using System.ComponentModel.DataAnnotations;
 
     using static Common.ErrorMessages;
-    using static Common.ModelConstants;
+    using static Common.ModelConstants.Common;
+    using static Common.ModelConstants.User;
 
     public class RegisterRequestModel
     {
@@ -12,16 +13,16 @@
         public string Email { get; set; }
 
         [Required]
-        [StringLength(UserUserNameMaxLength, ErrorMessage = StringLengthErrorMessage, MinimumLength = UserUserNameMinLength)]
+        [StringLength(MaxNameLength, ErrorMessage = StringLengthErrorMessage, MinimumLength = MinNameLength)]
         public string Username { get; set; }
 
         [Required]
-        [MinLength(UserPasswordMinLength)]
+        [MinLength(MinPasswordLength)]
         [DataType(DataType.Password)]
         public string Password { get; set; }
 
         [Required]
-        [MinLength(UserPasswordMinLength)]
+        [MinLength(MinPasswordLength)]
         [DataType(DataType.Password)]
         [Compare(nameof(Password), ErrorMessage = PasswordsDoNotMatchErrorMessage)]
         public string ConfirmPassword { get; set; }

@@ -5,7 +5,7 @@
 
     using Models;
 
-    using  static Common.ModelConstants;
+    using  static Common.ModelConstants.Common;
 
     public class CategoryConfiguration : IEntityTypeConfiguration<Category>
     {
@@ -13,7 +13,7 @@
         {
             category
                 .Property(c => c.Name)
-                .HasMaxLength(CategoryNameMaxLength)
+                .HasMaxLength(MaxNameLength)
                 .IsRequired();
 
             category

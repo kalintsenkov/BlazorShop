@@ -5,7 +5,7 @@
 
     using Models;
 
-    using static Common.ModelConstants;
+    using static Common.ModelConstants.Region;
 
     public class CityConfiguration : IEntityTypeConfiguration<City>
     {
@@ -13,7 +13,7 @@
         {
             city
                 .Property(c => c.Name)
-                .HasMaxLength(CityNameMaxLength)
+                .HasMaxLength(MaxNameLength)
                 .IsRequired();
 
             city
