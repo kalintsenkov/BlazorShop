@@ -1,15 +1,21 @@
 ﻿<Animate Animation="Animations.ZoomIn" Duration="TimeSpan.FromSeconds(0.5)">
     <div class="col-md-4 col-xs-6">
         <div class="product-item">
-            <div class="product-img">
+            <div class="product-img" style="height: 300px">
                 <a href="/products/@Product.Id/@Product.Name">
                     <img src="@Product.ImageSource" alt="@Product.Name">
                 </a>
-                <a href="/products/@Product.Id/@Product.Name" class="product-quickview">View</a>
+                <a href="/products/@Product.Id/@Product.Name"
+                   class="product-quickview">
+                    View
+                </a>
             </div>
             <div class="product-details">
                 <h3>
-                    <a class="product-title" href="shop-single-product.html">@Product.Name</a>
+                    <a class="product-title"
+                       href="/products/@Product.Id/@Product.Name">
+                        @Product.Name
+                    </a>
                 </h3>
                 <span class="price">
                     @*<del>
