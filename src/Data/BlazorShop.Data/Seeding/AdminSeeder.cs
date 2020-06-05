@@ -13,24 +13,28 @@
 
     internal class AdminSeeder : ISeeder
     {
+        private const string AdminName = "Admin";
+        private const string AdminEmail = "admin@blazorshop.bg";
+        private const string AdminPassword = "admin123456";
+
         public async Task SeedAsync(ApplicationDbContext dbContext, IServiceProvider serviceProvider)
         {
             var userManager = serviceProvider.GetService<UserManager<ApplicationUser>>();
             var roleManager = serviceProvider.GetService<RoleManager<ApplicationRole>>();
 
-            var isExisting = await userManager.Users.AnyAsync(u => u.UserName == GlobalConstants.AdminRoleName);
+            var isExisting = await userManager.Users.AnyAsync(u => u.UserName == AdminName);
             if (!isExisting)
             {
                 var admin = new ApplicationUser
                 {
-                    FirstName = GlobalConstants.AdminRoleName,
-                    LastName = GlobalConstants.AdminRoleName,
-                    UserName = GlobalConstants.AdminRoleName,
-                    Email = GlobalConstants.AdminEmail,
+                    FirstName = AdminName,
+                    LastName = AdminName,
+                    UserName = AdminName,
+                    Email = AdminEmail,
                     EmailConfirmed = true
                 };
 
-                var result = await userManager.CreateAsync(admin, GlobalConstants.AdminPassword);
+                var result = await userManager.CreateAsync(admin, AdminPassword);
                 if (!result.Succeeded)
                 {
                     throw new Exception(string.Join(Environment.NewLine, result.Errors.Select(e => e.Description)));
