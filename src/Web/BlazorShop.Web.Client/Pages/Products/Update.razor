@@ -4,7 +4,7 @@
 
 @if (categories == null || model == null)
 {
-    <p><em>Loading...</em></p>
+    <LoadingScreen />
 }
 else
 {
@@ -81,9 +81,9 @@ else
     {
         var token = await this.TokenProvider.GetTokenAsync();
         this.Http.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
-        
+
         await this.Http.PutAsJsonAsync<ProductsUpdateRequestModel>("api/products", model);
-        
+
         this.NavigationManager.NavigateTo($"/products/{this.Id}/{model.Name}");
     }
 }
