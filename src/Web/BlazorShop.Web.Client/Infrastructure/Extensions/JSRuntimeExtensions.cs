@@ -4,7 +4,7 @@
 
     using Microsoft.JSInterop;
 
-    public static class JSRuntimeExtensions
+    public static class JsRuntimeExtensions
     {
         public static async Task RemoveAsync(this IJSRuntime jsRuntime, string item) 
             => await jsRuntime.InvokeAsync<object>("localStorage.removeItem", item);

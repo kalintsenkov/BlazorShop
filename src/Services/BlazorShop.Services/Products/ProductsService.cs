@@ -95,26 +95,22 @@
         }
 
         public async Task<ProductsDetailsResponseModel> DetailsAsync(int id)
-            => await this.db
-                .Products
-                .AsNoTracking()
-                .Where(p => p.Id == id && !p.IsDeleted)
+            => await this
+                .All()
+                .Where(p => p.Id == id)
                 .To<ProductsDetailsResponseModel>()
                 .FirstOrDefaultAsync();
 
         public async Task<IEnumerable<ProductsListingResponseModel>> GetAllAsync()
-            => await this.db
-                .Products
-                .AsNoTracking()
-                .Where(p => !p.IsDeleted)
+            => await this
+                .All()
                 .To<ProductsListingResponseModel>()
                 .ToListAsync();
 
         public async Task<IEnumerable<ProductsListingResponseModel>> GetAllByCategoryIdAsync(int categoryId)
-            => await this.db
-                .Products
-                .AsNoTracking()
-                .Where(p => p.CategoryId == categoryId && !p.IsDeleted)
+            => await this
+                .All()
+                .Where(p => p.CategoryId == categoryId)
                 .To<ProductsListingResponseModel>()
                 .ToListAsync();
 
@@ -122,5 +118,11 @@
             => await this.db
                 .Products
                 .FirstOrDefaultAsync(p => p.Id == id && !p.IsDeleted);
+
+        private IQueryable<Product> All()
+            => this.db
+                .Products
+                .AsNoTracking()
+                .Where(p => !p.IsDeleted);
     }
 }
