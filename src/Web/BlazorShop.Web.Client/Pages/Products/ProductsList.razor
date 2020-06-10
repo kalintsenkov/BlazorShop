@@ -27,7 +27,15 @@ else
 
                             @foreach (var product in this.products)
                             {
-                                <ProductItem Product="product" />
+                                <Animate Animation="Animations.ZoomIn" Duration="TimeSpan.FromSeconds(0.5)">
+                                    
+                                    <div class="col-md-4 col-xs-6">
+                                        
+                                        <ProductItem Product="product" />
+                                    
+                                    </div>
+
+                                </Animate>
                             }
 
                         </div>

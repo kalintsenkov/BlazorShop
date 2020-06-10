@@ -1,9 +1,41 @@
 ﻿@page "/"
 
-<Animate Animation="Animations.ZoomIn" Duration="TimeSpan.FromSeconds(0.5)">
-    <div class="text-center">
-        <h1>Hello, world!</h1>
+@if (products == null)
+{
+    <LoadingScreen />
+}
+else
+{
+    <section class="section-wrap new-arrivals pb-40">
+        <div class="container">
 
-        Welcome to your new app.
-    </div>
-</Animate>
+            <div class="row heading-row">
+                <div class="col-md-12 text-center">
+                    <h2 class="heading uppercase"><small>New Arrivals</small></h2>
+                </div>
+            </div>
+
+            <div class="row row-10">
+
+                @foreach (var product in products)
+                {
+                    <div class="col-md-3 col-xs-6">
+
+                        <ProductItem Product="product" />
+
+                    </div>
+                }
+
+            </div>
+        </div>
+    </section>
+}
+
+@code {
+    private ProductsListingResponseModel[] products;
+
+    protected override async Task OnInitializedAsync()
+    {
+        this.products = await this.Http.GetFromJsonAsync<ProductsListingResponseModel[]>("api/products");
+    }
+}

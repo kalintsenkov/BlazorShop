@@ -1,4 +1,4 @@
-﻿namespace BlazorShop.Web.Client.Components
+﻿namespace BlazorShop.Web.Client.Infrastructure
 {
     using Microsoft.AspNetCore.Components.Forms;
 

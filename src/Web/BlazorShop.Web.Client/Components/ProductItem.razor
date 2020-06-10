@@ -1,36 +1,60 @@
-﻿<Animate Animation="Animations.ZoomIn" Duration="TimeSpan.FromSeconds(0.5)">
-    <div class="col-md-4 col-xs-6">
-        <div class="product-item">
-            <div class="product-img" style="height: 300px">
-                <a href="/products/@Product.Id/@Product.Name">
-                    <img src="@Product.ImageSource" alt="@Product.Name">
-                </a>
-                <a href="/products/@Product.Id/@Product.Name"
-                   class="product-quickview">
-                    View
-                </a>
-            </div>
-            <div class="product-details">
-                <h3>
-                    <a class="product-title"
-                       href="/products/@Product.Id/@Product.Name">
-                        @Product.Name
-                    </a>
-                </h3>
-                <span class="price">
-                    @*<del>
-                            TODO: Add out of stock
-                            <span>$388.00</span>
-                    </del>*@
-                    <ins>
-                        <span class="ammount">$@Product.Price</span>
-                    </ins>
-                </span>
-            </div>
+﻿@inject TokenAuthenticationStateProvider TokenProvider
+
+<div class="product-item">
+    <div class="product-img" style="height: 300px">
+        <a href="/products/@Product.Id/@Product.Name">
+            <img src="@Product.ImageSource" alt="@Product.Name">
+        </a>
+        <div class="product-actions">
+            <a @onclick="() => AddToWishlist(Product.Id)"
+               @onclick:preventDefault
+               href="#"
+               class="product-add-to-wishlist"
+               data-toggle="tooltip"
+               data-placement="bottom"
+               title="Add to wishlist">
+                <i class="fa fa-heart"></i>
+            </a>
         </div>
+        <a href="/products/@Product.Id/@Product.Name"
+           class="product-quickview">
+            View
+        </a>
     </div>
-</Animate>
+    <div class="product-details">
+        <h3>
+            <a class="product-title"
+               href="/products/@Product.Id/@Product.Name">
+                @Product.Name
+            </a>
+        </h3>
+        <span class="price">
+            @*<del>
+                    TODO: Add out of stock
+                    <span>$388.00</span>
+            </del>*@
+            <ins>
+                <span class="ammount">$@Product.Price</span>
+            </ins>
+        </span>
+    </div>
+</div>
 
 @code {
     [Parameter] public ProductsListingResponseModel Product { get; set; }
+
+    private async Task AddToWishlist(int id)
+    {
+        var token = await this.TokenProvider.GetTokenAsync();
+
+        if (token != null)
+        {
+            this.Http.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
+            await this.Http.PostAsJsonAsync($"api/wishlist/{id}", id);
+        }
+        else
+        {
+            this.NavigationManager.NavigateTo("account/login");
+        }
+    }
 }
