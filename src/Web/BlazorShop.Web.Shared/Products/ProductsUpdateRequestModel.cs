@@ -2,6 +2,5 @@
 {
     public class ProductsUpdateRequestModel : ProductsCreateRequestModel
     {
-        public int Id { get; set; }
     }
 }

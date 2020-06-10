@@ -41,12 +41,12 @@
             return Created(nameof(this.Create), id);
         }
 
-        [HttpPut]
+        [HttpPut(Id)]
         [Authorize(Roles = AdminRoleName)]
-        public async Task<ActionResult> Update(ProductsUpdateRequestModel model)
+        public async Task<ActionResult> Update(int id, ProductsUpdateRequestModel model)
         {
             var updated = await this.productsService.UpdateAsync(
-                model.Id,
+                id,
                 model.Name,
                 model.Description,
                 model.ImageSource,

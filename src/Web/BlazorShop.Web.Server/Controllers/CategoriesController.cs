@@ -19,7 +19,7 @@
         private readonly IProductsService productsService;
 
         public CategoriesController(
-            ICategoriesService categoriesService, 
+            ICategoriesService categoriesService,
             IProductsService productsService)
         {
             this.categoriesService = categoriesService;
@@ -43,11 +43,11 @@
             return Created(nameof(this.Create), id);
         }
 
-        [HttpPut]
+        [HttpPut(Id)]
         [Authorize(Roles = AdminRoleName)]
-        public async Task<ActionResult> Update(CategoriesUpdateRequestModel model)
+        public async Task<ActionResult> Update(int id, CategoriesUpdateRequestModel model)
         {
-            var updated = await this.categoriesService.UpdateAsync(model.Id, model.Name);
+            var updated = await this.categoriesService.UpdateAsync(id, model.Name);
             if (!updated)
             {
                 return BadRequest();
