@@ -32,8 +32,8 @@
             {
                 wishlist = new Wishlist
                 {
-                    ProductId = productId,
                     UserId = userId,
+                    ProductId = productId,
                     CreatedOn = this.dataProvider.Now()
                 };
 
@@ -65,10 +65,9 @@
         }
 
         public async Task<IEnumerable<ProductsListingResponseModel>> GetByUserIdAsync(string userId)
-            => await this.db
-                .Wishlists
+            => await this
+                .AllByUserId(userId)
                 .AsNoTracking()
-                .Where(w => w.UserId == userId && !w.IsDeleted)
                 .Select(w => w.Product)
                 .To<ProductsListingResponseModel>()
                 .ToListAsync();
@@ -77,5 +76,10 @@
             => await this.db
                 .Wishlists
                 .FirstOrDefaultAsync(w => w.ProductId == productId && w.UserId == userId);
+
+        private IQueryable<Wishlist> AllByUserId(string userId)
+            => this.db
+                .Wishlists
+                .Where(w => w.UserId == userId && !w.IsDeleted);
     }
 }

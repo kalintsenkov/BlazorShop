@@ -28,6 +28,8 @@ namespace BlazorShop.Data.Models
 
         public ICollection<Wishlist> Wishlists { get; } = new HashSet<Wishlist>();
 
+        public ICollection<ShoppingCart> ShoppingCarts { get; set; } = new HashSet<ShoppingCart>();
+
         public virtual ICollection<IdentityUserRole<string>> Roles { get; } = new HashSet<IdentityUserRole<string>>();
 
         public virtual ICollection<IdentityUserClaim<string>> Claims { get; } = new HashSet<IdentityUserClaim<string>>();

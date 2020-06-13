@@ -20,6 +20,8 @@
 
         public DbSet<OrderProduct> OrdersProducts { get; set; }
 
+        public DbSet<ShoppingCart> ShoppingCarts { get; set; }
+
         public DbSet<Wishlist> Wishlists { get; set; }
 
         public DbSet<Region> Regions { get; set; }

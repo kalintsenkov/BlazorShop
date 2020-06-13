@@ -15,6 +15,7 @@
     using Services.DateTime;
     using Services.Identity;
     using Services.Products;
+    using Services.ShoppingCart;
     using Services.Wishlist;
 
     public static class ServiceCollectionExtensions
@@ -75,6 +76,7 @@
                 .AddTransient<IDateTimeProvider, DateTimeProvider>()
                 .AddTransient<IIdentityService, IdentityService>()
                 .AddTransient<IProductsService, ProductsService>()
+                .AddTransient<IShoppingCartService, ShoppingCartService>()
                 .AddTransient<IWishlistService, WishlistService>();
 
         public static IServiceCollection AddApiControllers(this IServiceCollection services)
