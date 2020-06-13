@@ -1,5 +1,4 @@
 ﻿@page "/products/update/{Id:int}"
-@inject TokenAuthenticationStateProvider TokenProvider
 @attribute [Authorize(Roles = GlobalConstants.AdminRoleName)]
 
 @if (categories == null || model == null)

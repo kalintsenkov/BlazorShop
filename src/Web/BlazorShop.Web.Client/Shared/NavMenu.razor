@@ -86,33 +86,9 @@ else
                                     </div>
                                 </div>
 
-                                <div class="nav-cart-wrap hidden-sm hidden-xs">
-                                    <div class="nav-cart right">
-                                        <div class="nav-cart-outer">
-                                            <div class="nav-cart-inner">
-                                                <a href="#" class="nav-cart-icon">0</a>
-                                            </div>
-                                        </div>
-                                        <div class="nav-cart-container">
-
-                                            <div class="nav-cart-summary">
-                                                <span>Cart Subtotal</span>
-                                                <span class="total-price">$0</span>
-                                            </div>
-
-                                            <div class="nav-cart-actions mt-20">
-                                                <a href="shop-cart.html" class="btn btn-md btn-dark"><span>View Cart</span></a>
-                                                <a href="shop-checkout.html" class="btn btn-md btn-color mt-10"><span>Proceed to Checkout</span></a>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="menu-cart-amount right">
-                                        <span>
-                                            Cart /
-                                            <a href="#">$0</a>
-                                        </span>
-                                    </div>
-                                </div>
+                                <AuthorizeView>
+                                    <Cart />
+                                </AuthorizeView>
 
                             </div>
                         </div>

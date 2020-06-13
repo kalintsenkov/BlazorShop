@@ -1,0 +1,76 @@
+﻿@attribute [Authorize]
+
+@if (cartProducts == null)
+{
+    <LoadingScreen />
+}
+else
+{
+    <div class="nav-cart-wrap hidden-sm hidden-xs">
+        <div class="nav-cart right">
+            <div class="nav-cart-outer">
+                <div class="nav-cart-inner">
+                    <a href="#" class="nav-cart-icon">@cartProducts.Length</a>
+                </div>
+            </div>
+            <div class="nav-cart-container">
+                <div class="nav-cart-items">
+
+                    @foreach (var product in cartProducts)
+                    {
+                        <div class="nav-cart-item clearfix">
+                            <div class="nav-cart-img">
+                                <a href="/products/@product.Id/@product.Name">
+                                    <img src="@product.ImageSource" alt="" width="60">
+                                </a>
+                            </div>
+                            <div class="nav-cart-title">
+                                <a href="/products/@product.Id/@product.Name">
+                                    @product.Name
+                                </a>
+                                <div class="nav-cart-price">
+                                    <span>@product.Quantity x</span>
+                                    <span>@product.Price</span>
+                                </div>
+                            </div>
+                            <div class="nav-cart-remove">
+                                <a href="#"><i class="fas fa-times"></i></a>
+                            </div>
+                        </div>
+                    }
+
+                </div>
+
+                <div class="nav-cart-summary">
+                    <span>Cart Subtotal</span>
+                    <span class="total-price">$@this.totalPrice</span>
+                </div>
+
+                <div class="nav-cart-actions mt-20">
+                    <a href="/cart" class="btn btn-md btn-dark"><span>View Cart</span></a>
+                    <a href="/checkout" class="btn btn-md btn-color mt-10"><span>Proceed to Checkout</span></a>
+                </div>
+            </div>
+        </div>
+        <div class="menu-cart-amount right">
+            <span>
+                Cart /
+                <a href="#"> $@this.totalPrice</a>
+            </span>
+        </div>
+    </div>
+}
+
+@code {
+    private decimal totalPrice;
+    private ShoppingCartProductsResponseModel[] cartProducts;
+
+    protected override async Task OnInitializedAsync()
+    {
+        var token = await this.TokenProvider.GetTokenAsync();
+        this.Http.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
+
+        this.cartProducts = await this.Http.GetFromJsonAsync<ShoppingCartProductsResponseModel[]>("api/shoppingcart");
+        this.totalPrice = this.cartProducts.Sum(p => p.Price * p.Quantity);
+    }
+}
