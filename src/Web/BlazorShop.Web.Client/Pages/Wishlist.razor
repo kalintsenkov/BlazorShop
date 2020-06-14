@@ -60,7 +60,7 @@ else
                                         </td>
                                         <td class="product-remove">
                                             <a href=""
-                                               @onclick="() => RemoveAsync(product.Id)"
+                                               @onclick="() => OnRemoveAsync(product.Id)"
                                                @onclick:preventDefault
                                                class="remove"
                                                title="Remove this item">
@@ -89,17 +89,16 @@ else
         var token = await this.TokenProvider.GetTokenAsync();
         this.Http.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
 
-        await this.LoadData();
+        await this.LoadDataAsync();
     }
 
-    private async Task RemoveAsync(int productId)
+    private async Task OnRemoveAsync(int productId)
     {
         await this.Http.DeleteAsync($"api/wishlist/{productId}");
-
-        await this.LoadData();
+        await this.LoadDataAsync();
     }
 
-    private async Task LoadData()
+    private async Task LoadDataAsync()
     {
         this.products = await this.Http.GetFromJsonAsync<ProductsListingResponseModel[]>("api/wishlist");
     }

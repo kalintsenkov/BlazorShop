@@ -18,7 +18,7 @@ else
                         <div class="gallery-cell">
                             <a href="#" class="lightbox-img">
                                 <img src="@product.ImageSource" alt="@product.Name-img" />
-                                <i class="icon arrow_expand"></i>
+                                <i class="fas fa-expand-alt"></i>
                             </a>
                         </div>
 
@@ -76,23 +76,37 @@ else
 
                     <ul class="product-actions clearfix">
 
-                        <li>
-                            <a href="#" class="btn btn-color btn-lg add-to-cart left"><span>Add to Cart</span></a>
-                        </li>
-                        <li>
-                            <div class="icon-add-to-wishlist left">
-                                <a href="" @onclick="() => AddToWishlist(product.Id)" @onclick:preventDefault>
-                                    <i class="fa fa-heart"></i>
-                                </a>
-                            </div>
-                        </li>
-                        <li>
-                            <div class="quantity buttons_added">
-                                <input @onclick="DecrementQuantity" type="button" value="-" class="minus" />
-                                <input @bind-value="quantity" type="number" class="input-text qty text" />
-                                <input @onclick="IncrementQuantity" type="button" value="+" class="plus" />
-                            </div>
-                        </li>
+                        <EditForm Model="model" OnValidSubmit="() => AddToCart(product.Id)">
+
+                            <DataAnnotationsValidator />
+                            <ValidationSummary />
+
+                            <li>
+                                <button type="submit"
+                                        class="btn btn-color btn-lg add-to-cart left"
+                                        style="width: 192.19px; height: 50px; font-size: 15px; padding: 0 38px">
+                                    <span>Add to Cart</span>
+                                </button>
+                            </li>
+                            <li>
+                                <div class="icon-add-to-wishlist left">
+                                    <a href=""
+                                       @onclick="() => AddToWishlist(product.Id)"
+                                       @onclick:preventDefault>
+                                        <i class="fa fa-heart"></i>
+                                    </a>
+                                </div>
+                            </li>
+                            <li>
+                                <div class="quantity buttons_added">
+                                    <input @onclick="DecrementQuantity" type="button" value="-" class="minus" />
+                                    <input @bind-value="model.Quantity" type="number" class="input-text qty text" />
+                                    <input @onclick="IncrementQuantity" type="button" value="+" class="plus" />
+                                </div>
+                            </li>
+
+                        </EditForm>
+
                     </ul>
 
                     <AuthorizeView Roles="@GlobalConstants.AdminRoleName">
@@ -153,7 +167,8 @@ else
 }
 
 @code {
-    private int quantity = 1;
+    private readonly ShoppingCartAddRequestModel model = new ShoppingCartAddRequestModel();
+
     private bool isAdded = false;
     private ProductsDetailsResponseModel product;
 
@@ -181,20 +196,34 @@ else
         }
     }
 
+    private async Task AddToCart(int id)
+    {
+        var token = await this.TokenProvider.GetTokenAsync();
+
+        if (token != null)
+        {
+            this.Http.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
+            await this.Http.PostAsJsonAsync($"api/shoppingcart/{id}", model);
+        }
+        else
+        {
+            this.NavigationManager.NavigateTo("account/login");
+        }
+    }
+
     private void IncrementQuantity()
     {
-        if (this.quantity < this.product.Quantity)
+        if (this.model.Quantity < this.product.Quantity)
         {
-            this.quantity++;
+            this.model.Quantity++;
         }
     }
 
     private void DecrementQuantity()
     {
-        if (this.quantity > 1)
+        if (this.model.Quantity > 1)
         {
-            this.quantity--;
+            this.model.Quantity--;
         }
     }
-
 }

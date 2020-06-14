@@ -34,7 +34,11 @@ else
                                 </div>
                             </div>
                             <div class="nav-cart-remove">
-                                <a href="#"><i class="fas fa-times"></i></a>
+                                <a href="#"
+                                   @onclick="() => OnRemoveAsync(product.Id)"
+                                   @onclick:preventDefault>
+                                    <i class="fas fa-times"></i>
+                                </a>
                             </div>
                         </div>
                     }
@@ -70,6 +74,17 @@ else
         var token = await this.TokenProvider.GetTokenAsync();
         this.Http.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
 
+        await this.LoadDataAsync();
+    }
+
+    private async Task OnRemoveAsync(int productId)
+    {
+        await this.Http.DeleteAsync($"api/shoppingcart/{productId}");
+        await this.LoadDataAsync();
+    }
+
+    private async Task LoadDataAsync()
+    {
         this.cartProducts = await this.Http.GetFromJsonAsync<ShoppingCartProductsResponseModel[]>("api/shoppingcart");
         this.totalPrice = this.cartProducts.Sum(p => p.Price * p.Quantity);
     }
