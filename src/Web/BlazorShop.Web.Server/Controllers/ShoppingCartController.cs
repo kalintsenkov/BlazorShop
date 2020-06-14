@@ -19,7 +19,7 @@
             => this.shoppingCartService = shoppingCartService;
 
         [HttpGet]
-        public async Task<IEnumerable<ShoppingCartProductsResponseModel>> Get()
+        public async Task<IEnumerable<ShoppingCartProductsResponseModel>> All()
             => await this.shoppingCartService.GetByUserIdAsync(this.User.GetId());
 
         [HttpPost(Id)]
