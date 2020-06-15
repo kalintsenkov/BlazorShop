@@ -87,7 +87,12 @@ else
                                 </div>
 
                                 <AuthorizeView>
-                                    <NavCart />
+                                    <Authorized>
+                                        <NavCart />
+                                    </Authorized>
+                                    <NotAuthorized>
+                                        <div class="nav-cart-wrap hidden-sm hidden-xs"></div>
+                                    </NotAuthorized>
                                 </AuthorizeView>
 
                             </div>
