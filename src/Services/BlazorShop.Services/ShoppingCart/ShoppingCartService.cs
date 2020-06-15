@@ -35,8 +35,7 @@
                 CreatedOn = this.dateTimeProvider.Now()
             };
 
-            this.db.ShoppingCarts.Update(shoppingCart);
-
+            await this.db.ShoppingCarts.AddAsync(shoppingCart);
             await this.db.SaveChangesAsync();
         }
 
