@@ -7,5 +7,6 @@
     public abstract class ApiController : ControllerBase
     {
         protected const string Id = "{id}";
+        protected const string Slash = "/";
     }
 }

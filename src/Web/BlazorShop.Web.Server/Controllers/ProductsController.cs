@@ -15,12 +15,16 @@
     {
         private readonly IProductsService productsService;
 
-        public ProductsController(IProductsService productsService) 
+        public ProductsController(IProductsService productsService)
             => this.productsService = productsService;
 
         [HttpGet]
         public async Task<IEnumerable<ProductsListingResponseModel>> All()
             => await this.productsService.GetAllAsync();
+
+        [HttpGet(nameof(ByCategory) + Slash + Id)]
+        public async Task<IEnumerable<ProductsListingResponseModel>> ByCategory(int id)
+            => await this.productsService.GetAllByCategoryIdAsync(id);
 
         [HttpGet(Id)]
         public async Task<ActionResult<ProductsDetailsResponseModel>> Details(int id)

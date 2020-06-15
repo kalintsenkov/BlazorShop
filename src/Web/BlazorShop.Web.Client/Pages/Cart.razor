@@ -1,0 +1,169 @@
+﻿@page "/cart"
+@attribute [Authorize]
+
+@if (this.cartProducts == null)
+{
+    <LoadingScreen />
+}
+else
+{
+    <section class="page-title text-center">
+        <div class="container relative clearfix">
+            <div class="title-holder">
+                <div class="title-text">
+                    <h1 class="uppercase">Shopping Cart</h1>
+                </div>
+            </div>
+        </div>
+    </section>
+    <section class="section-wrap shopping-cart pt-0">
+        <div class="container relative">
+            <div class="row">
+
+                <div class="col-md-12">
+                    <div class="table-wrap mb-30">
+                        <table class="shop_table cart table">
+                            <thead>
+                                <tr>
+                                    <th class="product-name" colspan="2">Product</th>
+                                    <th class="product-price">Price</th>
+                                    <th class="product-quantity">Quantity</th>
+                                    <th class="product-subtotal">Total</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+
+                                @foreach (var product in cartProducts)
+                                {
+                                    <tr class="cart_item">
+                                        <td class="product-thumbnail">
+                                            <a href="/products/@product.Id/@product.Name">
+                                                <img src="@product.ImageSource" alt="" width="87">
+                                            </a>
+                                        </td>
+                                        <td class="product-name">
+                                            <a href="/products/@product.Id/@product.Name">
+                                                @product.Name
+                                            </a>
+                                            <ul>
+                                                <li>Size: XL</li>
+                                                <li>Color: White</li>
+                                            </ul>
+                                        </td>
+                                        <td class="product-price">
+                                            <span class="amount">$@product.Price</span>
+                                        </td>
+                                        <td class="product-quantity">
+                                            <div class="quantity buttons_added">
+                                                <input type="button" value="-" class="minus" />
+                                                <input type="number" value="@product.Quantity" title="Qty" class="input-text qty text" />
+                                                <input type="button" value="+" class="plus" />
+                                            </div>
+                                        </td>
+                                        <td class="product-subtotal">
+                                            <span class="amount">$@(product.Price * product.Quantity)</span>
+                                        </td>
+                                        <td class="product-remove">
+                                            <a href="#"
+                                               class="remove"
+                                               title="Remove this item"
+                                               @onclick="() => OnRemoveAsync(product.Id)"
+                                               @onclick:preventDefault>
+                                                <i class="fas fa-times"></i>
+                                            </a>
+                                        </td>
+                                    </tr>
+                                }
+
+                            </tbody>
+                        </table>
+                    </div>
+
+                    <div class="row mb-50">
+
+                        <div class="col-md-5 col-sm-12"></div>
+
+                        <div class="col-md-7">
+                            <div class="actions right">
+
+                                <input type="submit" name="update_cart" value="Update Cart" class="btn btn-md btn-dark">
+
+                                <div class="wc-proceed-to-checkout">
+                                    <a href="/checkout" class="btn btn-md btn-color">
+                                        <span>proceed to checkout</span>
+                                    </a>
+                                </div>
+
+                            </div>
+                        </div>
+
+                    </div>
+
+                </div>
+            </div>
+
+            <div class="row">
+
+                <div class="col-md-6 shipping-calculator-form"></div>
+
+                <div class="col-md-4 col-md-offset-2">
+                    <div class="cart_totals">
+                        <h2 class="heading relative heading-small uppercase mb-30">Cart Totals</h2>
+
+                        <table class="table shop_table">
+                            <tbody>
+                                <tr class="cart-subtotal">
+                                    <th>Cart Subtotal</th>
+                                    <td>
+                                        <span class="amount">$@this.totalPrice</span>
+                                    </td>
+                                </tr>
+                                <tr class="shipping">
+                                    <th>Shipping</th>
+                                    <td>
+                                        <span>Free Shipping</span>
+                                    </td>
+                                </tr>
+                                <tr class="order-total">
+                                    <th><strong>Order Total</strong></th>
+                                    <td>
+                                        <strong><span class="amount">$@this.totalPrice</span></strong>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+
+                    </div>
+                </div>
+
+            </div>
+
+
+        </div>
+    </section>
+}
+
+@code {
+    private decimal totalPrice;
+    private ShoppingCartProductsResponseModel[] cartProducts;
+
+    protected override async Task OnInitializedAsync()
+    {
+        var token = await this.TokenProvider.GetTokenAsync();
+        this.Http.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
+
+        await this.LoadDataAsync();
+    }
+
+    private async Task OnRemoveAsync(int productId)
+    {
+        await this.Http.DeleteAsync($"api/shoppingcart/{productId}");
+        await this.LoadDataAsync();
+    }
+
+    private async Task LoadDataAsync()
+    {
+        this.cartProducts = await this.Http.GetFromJsonAsync<ShoppingCartProductsResponseModel[]>("api/shoppingcart");
+        this.totalPrice = this.cartProducts.Sum(p => p.Price * p.Quantity);
+    }
+}

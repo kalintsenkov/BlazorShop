@@ -7,32 +7,20 @@
     using Microsoft.AspNetCore.Mvc;
 
     using Services.Categories;
-    using Services.Products;
     using Shared.Categories;
-    using Shared.Products;
 
     using static Common.GlobalConstants;
 
     public class CategoriesController : ApiController
     {
         private readonly ICategoriesService categoriesService;
-        private readonly IProductsService productsService;
 
-        public CategoriesController(
-            ICategoriesService categoriesService,
-            IProductsService productsService)
-        {
-            this.categoriesService = categoriesService;
-            this.productsService = productsService;
-        }
+        public CategoriesController(ICategoriesService categoriesService) 
+            => this.categoriesService = categoriesService;
 
         [HttpGet]
         public async Task<IEnumerable<CategoriesListingResponseModel>> All()
             => await this.categoriesService.GetAllAsync();
-
-        [HttpGet(Id)]
-        public async Task<IEnumerable<ProductsListingResponseModel>> Details(int id)
-            => await this.productsService.GetAllByCategoryIdAsync(id);
 
         [HttpPost]
         [Authorize(Roles = AdminRoleName)]
