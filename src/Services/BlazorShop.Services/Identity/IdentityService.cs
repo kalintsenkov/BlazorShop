@@ -29,8 +29,8 @@
         }
 
         public async Task<IdentityResult> CreateAsync(
-            string userName, 
-            string email, 
+            string userName,
+            string email,
             string password)
         {
             var user = new ApplicationUser
@@ -43,15 +43,25 @@
             return await this.userManager.CreateAsync(user, password);
         }
 
+        public async Task<IdentityResult> ChangePassword(
+            string userId,
+            string password,
+            string newPassword)
+        {
+            var user = await this.userManager.FindByIdAsync(userId);
+
+            return await this.userManager.ChangePasswordAsync(user, password, newPassword);
+        }
+
         public async Task<string> GenerateJwtAsync(
-            string userId, 
-            string userName, 
-            string key, 
-            string issuer, 
+            string userId,
+            string userName,
+            string key,
+            string issuer,
             string audience)
         {
             var securityKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(key));
-            
+
             var claims = new List<Claim>
             {
                 new Claim(ClaimTypes.NameIdentifier, userId),
@@ -70,7 +80,7 @@
                 claims,
                 expires: DateTime.UtcNow.AddDays(7),
                 signingCredentials: new SigningCredentials(
-                    securityKey, 
+                    securityKey,
                     SecurityAlgorithms.HmacSha256));
 
             var tokenHandler = new JwtSecurityTokenHandler();

@@ -2,6 +2,7 @@
 {
     using System.Threading.Tasks;
 
+    using Microsoft.AspNetCore.Authorization;
     using Microsoft.AspNetCore.Identity;
     using Microsoft.AspNetCore.Mvc;
     using Microsoft.Extensions.Configuration;
@@ -66,6 +67,23 @@
                 this.configuration.GetJwtAudience());
 
             return new LoginResponseModel { Token = token };
+        }
+
+        [HttpPost(nameof(ChangePassword))]
+        [Authorize]
+        public async Task<ActionResult> ChangePassword(ChangePasswordRequestModel model)
+        {
+            var result = await this.identityService.ChangePassword(
+                this.User.GetId(),
+                model.Password,
+                model.NewPassword);
+
+            if (result.Succeeded)
+            {
+                return Ok();
+            }
+
+            return BadRequest(result.Errors);
         }
     }
 }

@@ -11,11 +11,16 @@
             string email, 
             string password);
 
-        Task<string> GenerateJwtAsync(
+        Task<IdentityResult> ChangePassword(
             string userId, 
-            string userName, 
-            string key, 
-            string issuer, 
+            string password, 
+            string newPassword);
+
+        Task<string> GenerateJwtAsync(
+            string userId,
+            string userName,
+            string key,
+            string issuer,
             string audience);
     }
 }
