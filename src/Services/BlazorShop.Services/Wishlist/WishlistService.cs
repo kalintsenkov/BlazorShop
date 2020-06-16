@@ -10,23 +10,17 @@
 
     using Data;
     using Data.Models;
-    using DateTime;
     using Web.Shared.Products;
 
     public class WishlistService : IWishlistService
     {
         private readonly ApplicationDbContext db;
         private readonly IMapper mapper;
-        private readonly IDateTimeProvider dataProvider;
 
-        public WishlistService(
-            ApplicationDbContext db,
-            IMapper mapper,
-            IDateTimeProvider dataProvider)
+        public WishlistService(ApplicationDbContext db, IMapper mapper)
         {
             this.db = db;
             this.mapper = mapper;
-            this.dataProvider = dataProvider;
         }
 
         public async Task AddAsync(int productId, string userId)
@@ -37,8 +31,7 @@
                 wishlist = new Wishlist
                 {
                     UserId = userId,
-                    ProductId = productId,
-                    CreatedOn = this.dataProvider.Now()
+                    ProductId = productId
                 };
 
                 await this.db.Wishlists.AddAsync(wishlist);
@@ -47,7 +40,6 @@
             {
                 wishlist.IsDeleted = false;
                 wishlist.DeletedOn = null;
-                wishlist.ModifiedOn = this.dataProvider.Now();
             }
 
             await this.db.SaveChangesAsync();
@@ -61,8 +53,7 @@
                 return false;
             }
 
-            wishlist.IsDeleted = true;
-            wishlist.DeletedOn = this.dataProvider.Now();
+            this.db.Remove(wishlist);
 
             await this.db.SaveChangesAsync();
             return true;

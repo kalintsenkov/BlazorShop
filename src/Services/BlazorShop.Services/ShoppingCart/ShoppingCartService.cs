@@ -10,23 +10,17 @@
 
     using Data;
     using Data.Models;
-    using DateTime;
     using Web.Shared.ShoppingCart;
 
     public class ShoppingCartService : IShoppingCartService
     {
         private readonly ApplicationDbContext db;
         private readonly IMapper mapper;
-        private readonly IDateTimeProvider dateTimeProvider;
 
-        public ShoppingCartService(
-            ApplicationDbContext db, 
-            IMapper mapper,
-            IDateTimeProvider dateTimeProvider)
+        public ShoppingCartService(ApplicationDbContext db, IMapper mapper)
         {
             this.db = db;
             this.mapper = mapper;
-            this.dateTimeProvider = dateTimeProvider;
         }
 
         public async Task AddAsync(int productId, string userId, int quantity)
@@ -35,8 +29,7 @@
             {
                 UserId = userId,
                 ProductId = productId,
-                Quantity = quantity,
-                CreatedOn = this.dateTimeProvider.Now()
+                Quantity = quantity
             };
 
             await this.db.ShoppingCarts.AddAsync(shoppingCart);
@@ -52,7 +45,6 @@
             }
 
             shoppingCart.Quantity = quantity;
-            shoppingCart.ModifiedOn = this.dateTimeProvider.Now();
 
             await this.db.SaveChangesAsync();
 

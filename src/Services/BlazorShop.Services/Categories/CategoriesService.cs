@@ -10,32 +10,22 @@
 
     using Data;
     using Data.Models;
-    using DateTime;
     using Web.Shared.Categories;
 
     public class CategoriesService : ICategoriesService
     {
         private readonly ApplicationDbContext db;
         private readonly IMapper mapper;
-        private readonly IDateTimeProvider dateTimeProvider;
 
-        public CategoriesService(
-            ApplicationDbContext db,
-            IMapper mapper,
-            IDateTimeProvider dateTimeProvider)
+        public CategoriesService(ApplicationDbContext db, IMapper mapper)
         {
             this.db = db;
             this.mapper = mapper;
-            this.dateTimeProvider = dateTimeProvider;
         }
 
         public async Task<int> CreateAsync(string name)
         {
-            var category = new Category
-            {
-                Name = name,
-                CreatedOn = this.dateTimeProvider.Now()
-            };
+            var category = new Category { Name = name };
 
             await this.db.Categories.AddAsync(category);
             await this.db.SaveChangesAsync();
@@ -52,7 +42,6 @@
             }
 
             category.Name = name;
-            category.ModifiedOn = this.dateTimeProvider.Now();
 
             await this.db.SaveChangesAsync();
 
@@ -67,8 +56,7 @@
                 return false;
             }
 
-            category.IsDeleted = true;
-            category.DeletedOn = this.dateTimeProvider.Now();
+            this.db.Remove(category);
 
             await this.db.SaveChangesAsync();
 

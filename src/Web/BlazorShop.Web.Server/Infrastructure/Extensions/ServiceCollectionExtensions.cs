@@ -12,7 +12,6 @@
     using Data.Models;
     using Filters;
     using Services.Categories;
-    using Services.DateTime;
     using Services.Identity;
     using Services.Products;
     using Services.ShoppingCart;
@@ -73,7 +72,6 @@
         public static IServiceCollection AddApplicationServices(this IServiceCollection services)
             => services
                 .AddTransient<ICategoriesService, CategoriesService>()
-                .AddTransient<IDateTimeProvider, DateTimeProvider>()
                 .AddTransient<IIdentityService, IdentityService>()
                 .AddTransient<IProductsService, ProductsService>()
                 .AddTransient<IShoppingCartService, ShoppingCartService>()

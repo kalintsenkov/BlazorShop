@@ -11,22 +11,15 @@
     using Microsoft.IdentityModel.Tokens;
 
     using Data.Models;
-    using DateTime;
 
     using static Common.GlobalConstants;
 
     public class IdentityService : IIdentityService
     {
         private readonly UserManager<ApplicationUser> userManager;
-        private readonly IDateTimeProvider dateTimeProvider;
 
-        public IdentityService(
-            UserManager<ApplicationUser> userManager,
-            IDateTimeProvider dateTimeProvider)
-        {
-            this.userManager = userManager;
-            this.dateTimeProvider = dateTimeProvider;
-        }
+        public IdentityService(UserManager<ApplicationUser> userManager) 
+            => this.userManager = userManager;
 
         public async Task<IdentityResult> CreateAsync(
             string userName,
@@ -36,8 +29,7 @@
             var user = new ApplicationUser
             {
                 Email = email,
-                UserName = userName,
-                CreatedOn = this.dateTimeProvider.Now()
+                UserName = userName
             };
 
             return await this.userManager.CreateAsync(user, password);

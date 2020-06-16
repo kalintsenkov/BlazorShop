@@ -10,23 +10,17 @@
 
     using Data;
     using Data.Models;
-    using DateTime;
     using Web.Shared.Products;
 
     public class ProductsService : IProductsService
     {
         private readonly ApplicationDbContext db;
         private readonly IMapper mapper;
-        private readonly IDateTimeProvider dataProvider;
 
-        public ProductsService(
-            ApplicationDbContext db,
-            IMapper mapper,
-            IDateTimeProvider dataProvider)
+        public ProductsService(ApplicationDbContext db, IMapper mapper)
         {
             this.db = db;
             this.mapper = mapper;
-            this.dataProvider = dataProvider;
         }
 
         public async Task<int> CreateAsync(
@@ -44,8 +38,7 @@
                 ImageSource = imageSource,
                 Quantity = quantity,
                 Price = price,
-                CategoryId = categoryId,
-                CreatedOn = this.dataProvider.Now()
+                CategoryId = categoryId
             };
 
             await this.db.Products.AddAsync(product);
@@ -75,7 +68,6 @@
             product.Quantity = quantity;
             product.Price = price;
             product.CategoryId = categoryId;
-            product.ModifiedOn = this.dataProvider.Now();
 
             await this.db.SaveChangesAsync();
 
@@ -90,8 +82,7 @@
                 return false;
             }
 
-            product.IsDeleted = true;
-            product.DeletedOn = this.dataProvider.Now();
+            this.db.Remove(product);
 
             await this.db.SaveChangesAsync();
 
