@@ -5,7 +5,7 @@
     using Data.Models;
     using Services.Mapping;
 
-    public class ShoppingCartProductsResponseModel : IMapFrom<ShoppingCart>, IHaveCustomMappings
+    public class ShoppingCartProductsResponseModel : IMapExplicitly
     {
         public int Id { get; set; }
 
@@ -17,7 +17,7 @@
 
         public int Quantity { get; set; }
 
-        public void CreateMappings(IProfileExpression mapper)
+        public void RegisterMappings(IProfileExpression mapper)
             => mapper
                 .CreateMap<ShoppingCart, ShoppingCartProductsResponseModel>()
                 .ForMember(m => m.Id, m => m.MapFrom(c => c.Product.Id))

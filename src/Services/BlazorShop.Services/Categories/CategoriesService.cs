@@ -4,24 +4,28 @@
     using System.Linq;
     using System.Threading.Tasks;
 
+    using AutoMapper;
+    using AutoMapper.QueryableExtensions;
     using Microsoft.EntityFrameworkCore;
 
     using Data;
     using Data.Models;
     using DateTime;
-    using Mapping;
     using Web.Shared.Categories;
 
     public class CategoriesService : ICategoriesService
     {
         private readonly ApplicationDbContext db;
+        private readonly IMapper mapper;
         private readonly IDateTimeProvider dateTimeProvider;
 
         public CategoriesService(
             ApplicationDbContext db,
+            IMapper mapper,
             IDateTimeProvider dateTimeProvider)
         {
             this.db = db;
+            this.mapper = mapper;
             this.dateTimeProvider = dateTimeProvider;
         }
 
@@ -76,7 +80,7 @@
                 .Categories
                 .AsNoTracking()
                 .Where(c => !c.IsDeleted)
-                .To<CategoriesListingResponseModel>()
+                .ProjectTo<CategoriesListingResponseModel>(this.mapper.ConfigurationProvider)
                 .ToListAsync();
 
         private async Task<Category> GetByIdAsync(int id)

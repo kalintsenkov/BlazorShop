@@ -4,24 +4,28 @@
     using System.Linq;
     using System.Threading.Tasks;
 
+    using AutoMapper;
+    using AutoMapper.QueryableExtensions;
     using Microsoft.EntityFrameworkCore;
 
     using Data;
     using Data.Models;
     using DateTime;
-    using Mapping;
     using Web.Shared.ShoppingCart;
 
     public class ShoppingCartService : IShoppingCartService
     {
         private readonly ApplicationDbContext db;
+        private readonly IMapper mapper;
         private readonly IDateTimeProvider dateTimeProvider;
 
         public ShoppingCartService(
             ApplicationDbContext db, 
+            IMapper mapper,
             IDateTimeProvider dateTimeProvider)
         {
             this.db = db;
+            this.mapper = mapper;
             this.dateTimeProvider = dateTimeProvider;
         }
 
@@ -74,7 +78,7 @@
             => await this
                 .AllByUserId(userId)
                 .AsNoTracking()
-                .To<ShoppingCartProductsResponseModel>()
+                .ProjectTo<ShoppingCartProductsResponseModel>(this.mapper.ConfigurationProvider)
                 .ToListAsync();
 
         private async Task<ShoppingCart> GetByProductIdAndUserIdAsync(int productId, string userId)

@@ -4,24 +4,28 @@
     using System.Linq;
     using System.Threading.Tasks;
 
+    using AutoMapper;
+    using AutoMapper.QueryableExtensions;
     using Microsoft.EntityFrameworkCore;
 
     using Data;
     using Data.Models;
     using DateTime;
-    using Mapping;
     using Web.Shared.Products;
 
     public class ProductsService : IProductsService
     {
         private readonly ApplicationDbContext db;
+        private readonly IMapper mapper;
         private readonly IDateTimeProvider dataProvider;
 
         public ProductsService(
             ApplicationDbContext db,
+            IMapper mapper,
             IDateTimeProvider dataProvider)
         {
             this.db = db;
+            this.mapper = mapper;
             this.dataProvider = dataProvider;
         }
 
@@ -98,20 +102,20 @@
             => await this
                 .All()
                 .Where(p => p.Id == id)
-                .To<ProductsDetailsResponseModel>()
+                .ProjectTo<ProductsDetailsResponseModel>(this.mapper.ConfigurationProvider)
                 .FirstOrDefaultAsync();
 
         public async Task<IEnumerable<ProductsListingResponseModel>> GetAllAsync()
             => await this
                 .All()
-                .To<ProductsListingResponseModel>()
+                .ProjectTo<ProductsListingResponseModel>(this.mapper.ConfigurationProvider)
                 .ToListAsync();
 
         public async Task<IEnumerable<ProductsListingResponseModel>> GetAllByCategoryIdAsync(int categoryId)
             => await this
                 .All()
                 .Where(p => p.CategoryId == categoryId)
-                .To<ProductsListingResponseModel>()
+                .ProjectTo<ProductsListingResponseModel>(this.mapper.ConfigurationProvider)
                 .ToListAsync();
 
         private async Task<Product> GetByIdAsync(int id)

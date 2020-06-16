@@ -86,6 +86,8 @@
                       .Filters
                       .Add<ModelOrNotFoundActionFilter>());
 
+            services.AddRazorPages();
+
             return services;
         }
     }

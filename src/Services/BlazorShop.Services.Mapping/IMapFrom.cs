@@ -1,6 +1,7 @@
 ﻿namespace BlazorShop.Services.Mapping
 {
-    public interface IMapFrom<T>
+    public interface IMapFrom<TModel>
+        where TModel : class
     {
     }
 }

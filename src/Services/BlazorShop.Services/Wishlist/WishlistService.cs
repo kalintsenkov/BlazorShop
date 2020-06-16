@@ -4,24 +4,28 @@
     using System.Linq;
     using System.Threading.Tasks;
 
+    using AutoMapper;
+    using AutoMapper.QueryableExtensions;
     using Microsoft.EntityFrameworkCore;
 
     using Data;
     using Data.Models;
     using DateTime;
-    using Mapping;
     using Web.Shared.Products;
 
     public class WishlistService : IWishlistService
     {
         private readonly ApplicationDbContext db;
+        private readonly IMapper mapper;
         private readonly IDateTimeProvider dataProvider;
 
         public WishlistService(
             ApplicationDbContext db,
+            IMapper mapper,
             IDateTimeProvider dataProvider)
         {
             this.db = db;
+            this.mapper = mapper;
             this.dataProvider = dataProvider;
         }
 
@@ -69,7 +73,7 @@
                 .AllByUserId(userId)
                 .AsNoTracking()
                 .Select(w => w.Product)
-                .To<ProductsListingResponseModel>()
+                .ProjectTo<ProductsListingResponseModel>(this.mapper.ConfigurationProvider)
                 .ToListAsync();
 
         private async Task<Wishlist> GetByProductIdAndUserIdAsync(int productId, string userId)
