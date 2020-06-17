@@ -2,7 +2,7 @@
 {
     using System;
 
-    using Interfaces;
+    using Contracts;
 
     public class Wishlist : IAuditInfo, IDeletableEntity
     {

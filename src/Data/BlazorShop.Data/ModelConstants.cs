@@ -1,4 +1,4 @@
-﻿namespace BlazorShop.Common
+﻿namespace BlazorShop.Data
 {
     public class ModelConstants
     {

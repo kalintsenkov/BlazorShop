@@ -1,6 +1,6 @@
 ﻿namespace BlazorShop.Data.Models
 {
-    using Interfaces;
+    using Contracts;
 
     public class City : BaseModel<int>
     {

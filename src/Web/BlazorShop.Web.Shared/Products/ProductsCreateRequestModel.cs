@@ -3,8 +3,8 @@
     using System.ComponentModel.DataAnnotations;
 
     using static Common.ErrorMessages;
-    using static Common.ModelConstants.Common;
-    using static Common.ModelConstants.Product;
+    using static Data.ModelConstants.Common;
+    using static Data.ModelConstants.Product;
 
     public class ProductsCreateRequestModel
     {

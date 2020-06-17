@@ -2,7 +2,7 @@
 {
     using Microsoft.AspNetCore.Identity;
 
-    using static Common.ModelConstants.User;
+    using static Data.ModelConstants.User;
 
     public static class IdentityOptionsExtensions
     {

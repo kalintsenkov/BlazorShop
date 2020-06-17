@@ -2,7 +2,7 @@
 {
     using System.Collections.Generic;
 
-    using Interfaces;
+    using Contracts;
 
     public class Region : BaseModel<int>
     {

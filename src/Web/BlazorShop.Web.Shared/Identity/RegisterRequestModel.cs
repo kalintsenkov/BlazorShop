@@ -3,8 +3,8 @@
     using System.ComponentModel.DataAnnotations;
 
     using static Common.ErrorMessages;
-    using static Common.ModelConstants.Common;
-    using static Common.ModelConstants.User;
+    using static Data.ModelConstants.Common;
+    using static Data.ModelConstants.User;
 
     public class RegisterRequestModel
     {

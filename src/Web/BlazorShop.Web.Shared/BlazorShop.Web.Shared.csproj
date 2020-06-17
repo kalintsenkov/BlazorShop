@@ -10,7 +10,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\..\BlazorShop.Common\BlazorShop.Common.csproj" />
-    <ProjectReference Include="..\..\Data\BlazorShop.Data.Models\BlazorShop.Data.Models.csproj" />
+    <ProjectReference Include="..\..\Data\BlazorShop.Data\BlazorShop.Data.csproj" />
     <ProjectReference Include="..\..\Services\BlazorShop.Services.Mapping\BlazorShop.Services.Mapping.csproj" />
   </ItemGroup>
 

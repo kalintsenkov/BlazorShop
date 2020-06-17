@@ -5,8 +5,8 @@
 
     using Models;
 
-    using static Common.ModelConstants.Common;
-    using static Common.ModelConstants.Product;
+    using static ModelConstants.Common;
+    using static ModelConstants.Product;
 
     public class ProductConfiguration : IEntityTypeConfiguration<Product>
     {

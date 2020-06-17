@@ -5,7 +5,7 @@ namespace BlazorShop.Data.Models
 
     using Microsoft.AspNetCore.Identity;
 
-    using Interfaces;
+    using Contracts;
 
     public class ApplicationRole : IdentityRole, IAuditInfo, IDeletableEntity
     {

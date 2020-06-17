@@ -5,7 +5,7 @@
 
     using Models;
 
-    using  static Common.ModelConstants.Common;
+    using  static ModelConstants.Common;
 
     public class CategoryConfiguration : IEntityTypeConfiguration<Category>
     {

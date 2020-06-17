@@ -8,8 +8,9 @@
     using Microsoft.EntityFrameworkCore;
     using Microsoft.Extensions.DependencyInjection;
 
-    using Common;
     using Models;
+
+    using static Common.GlobalConstants;
 
     internal class AdminSeeder : ISeeder
     {
@@ -40,10 +41,10 @@
                     throw new Exception(string.Join(Environment.NewLine, result.Errors.Select(e => e.Description)));
                 }
 
-                var isRoleExists = await roleManager.RoleExistsAsync(GlobalConstants.AdminRoleName);
+                var isRoleExists = await roleManager.RoleExistsAsync(AdminRoleName);
                 if (isRoleExists)
                 {
-                    await userManager.AddToRoleAsync(admin, GlobalConstants.AdminRoleName);
+                    await userManager.AddToRoleAsync(admin, AdminRoleName);
                 }
             }
         }

@@ -8,7 +8,7 @@
     using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
     using Microsoft.EntityFrameworkCore;
 
-    using Interfaces;
+    using Contracts;
     using Models;
 
     public class ApplicationDbContext : IdentityDbContext<ApplicationUser, ApplicationRole, string>
@@ -85,8 +85,8 @@
             {
                 var entity = (IDeletableEntity)entry.Entity;
 
-                entity.DeletedOn = DateTime.UtcNow;
                 entity.IsDeleted = true;
+                entity.DeletedOn = DateTime.UtcNow;
                 entry.State = EntityState.Modified;
             }
         }

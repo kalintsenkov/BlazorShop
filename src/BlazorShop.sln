@@ -9,7 +9,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BlazorShop.Data", "Data\Bla
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BlazorShop.Data.Models", "Data\BlazorShop.Data.Models\BlazorShop.Data.Models.csproj", "{7CBDA92A-18BD-4AD9-982D-6660748F4D6F}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BlazorShop.Data.Interfaces", "Data\BlazorShop.Data.Common\BlazorShop.Data.Interfaces.csproj", "{A44C7507-357F-4733-A3B7-38266B8D760F}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BlazorShop.Data.Contracts", "Data\BlazorShop.Data.Contracts\BlazorShop.Data.Contracts.csproj", "{A44C7507-357F-4733-A3B7-38266B8D760F}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BlazorShop.Common", "BlazorShop.Common\BlazorShop.Common.csproj", "{9256CBDB-81C7-4349-93F0-2F3D927C27B2}"
 EndProject

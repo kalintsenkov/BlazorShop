@@ -48,7 +48,7 @@
                     Quantity = 10,
                     CategoryId = 3,
                     CreatedOn = DateTime.UtcNow
-                },
+                }
             };
 
             await dbContext.Products.AddRangeAsync(products);

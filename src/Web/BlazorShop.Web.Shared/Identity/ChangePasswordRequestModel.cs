@@ -2,7 +2,7 @@
 {
     using System.ComponentModel.DataAnnotations;
 
-    using static Common.ModelConstants.User;
+    using static Data.ModelConstants.User;
 
     public class ChangePasswordRequestModel
     {

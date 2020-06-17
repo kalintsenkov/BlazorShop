@@ -9,7 +9,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\BlazorShop.Data.Common\BlazorShop.Data.Interfaces.csproj" />
+    <ProjectReference Include="..\BlazorShop.Data.Contracts\BlazorShop.Data.Contracts.csproj" />
   </ItemGroup>
 
 </Project>

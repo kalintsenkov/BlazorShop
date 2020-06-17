@@ -1,4 +1,4 @@
-﻿namespace BlazorShop.Data.Interfaces
+﻿namespace BlazorShop.Data.Contracts
 {
     using System;
 

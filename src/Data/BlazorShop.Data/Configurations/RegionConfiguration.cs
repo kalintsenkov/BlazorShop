@@ -5,7 +5,7 @@
 
     using Models;
 
-    using static Common.ModelConstants.Region;
+    using static ModelConstants.Region;
 
     public class RegionConfiguration : IEntityTypeConfiguration<Region>
     {

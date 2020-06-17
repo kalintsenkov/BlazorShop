@@ -2,7 +2,7 @@
 {
     using System.ComponentModel.DataAnnotations;
 
-    using static Common.ModelConstants.Product;
+    using static Data.ModelConstants.Product;
 
     public class ShoppingCartAddRequestModel
     {
