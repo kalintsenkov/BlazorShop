@@ -5,7 +5,6 @@
     using System.Threading.Tasks;
 
     using AutoMapper;
-    using AutoMapper.QueryableExtensions;
     using Microsoft.EntityFrameworkCore;
 
     using Data;
@@ -67,10 +66,10 @@
         }
 
         public async Task<IEnumerable<ShoppingCartProductsResponseModel>> GetByUserIdAsync(string userId)
-            => await this
-                .AllByUserId(userId)
-                .AsNoTracking()
-                .ProjectTo<ShoppingCartProductsResponseModel>(this.mapper.ConfigurationProvider)
+            => await this.mapper
+                .ProjectTo<ShoppingCartProductsResponseModel>(this
+                    .AllByUserId(userId)
+                    .AsNoTracking())
                 .ToListAsync();
 
         private async Task<ShoppingCart> GetByProductIdAndUserIdAsync(int productId, string userId)

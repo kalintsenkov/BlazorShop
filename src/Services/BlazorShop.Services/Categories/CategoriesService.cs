@@ -5,7 +5,6 @@
     using System.Threading.Tasks;
 
     using AutoMapper;
-    using AutoMapper.QueryableExtensions;
     using Microsoft.EntityFrameworkCore;
 
     using Data;
@@ -64,16 +63,20 @@
         }
 
         public async Task<IEnumerable<CategoriesListingResponseModel>> GetAllAsync()
-            => await this.db
-                .Categories
-                .AsNoTracking()
-                .Where(c => !c.IsDeleted)
-                .ProjectTo<CategoriesListingResponseModel>(this.mapper.ConfigurationProvider)
+            => await this.mapper
+                .ProjectTo<CategoriesListingResponseModel>(this
+                    .AllAvailable()
+                    .AsNoTracking())
                 .ToListAsync();
 
         private async Task<Category> GetByIdAsync(int id)
-            => await this.db
+            => await this
+                .AllAvailable()
+                .FirstOrDefaultAsync(c => c.Id == id);
+
+        private IQueryable<Category> AllAvailable()
+            => this.db
                 .Categories
-                .FirstOrDefaultAsync(c => c.Id == id && !c.IsDeleted);
+                .Where(c => !c.IsDeleted);
     }
 }

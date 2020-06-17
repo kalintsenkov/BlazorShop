@@ -5,7 +5,6 @@
     using System.Threading.Tasks;
 
     using AutoMapper;
-    using AutoMapper.QueryableExtensions;
     using Microsoft.EntityFrameworkCore;
 
     using Data;
@@ -56,25 +55,28 @@
             this.db.Remove(wishlist);
 
             await this.db.SaveChangesAsync();
+
             return true;
         }
 
         public async Task<IEnumerable<ProductsListingResponseModel>> GetByUserIdAsync(string userId)
-            => await this
-                .AllByUserId(userId)
-                .AsNoTracking()
-                .Select(w => w.Product)
-                .ProjectTo<ProductsListingResponseModel>(this.mapper.ConfigurationProvider)
+            => await this.mapper
+                .ProjectTo<ProductsListingResponseModel>(this
+                    .AllByUserId(userId)
+                    .AsNoTracking()
+                    .Select(w => w.Product))
                 .ToListAsync();
 
         private async Task<Wishlist> GetByProductIdAndUserIdAsync(int productId, string userId)
-            => await this.db
-                .Wishlists
-                .FirstOrDefaultAsync(w => w.ProductId == productId && w.UserId == userId);
+            => await this
+                .AllByUserId(userId, withDeleted: true)
+                .FirstOrDefaultAsync(w => w.ProductId == productId);
 
-        private IQueryable<Wishlist> AllByUserId(string userId)
-            => this.db
-                .Wishlists
-                .Where(w => w.UserId == userId && !w.IsDeleted);
+        private IQueryable<Wishlist> AllByUserId(string userId, bool withDeleted = false)
+            => withDeleted == true
+                ? this.All().Where(w => w.UserId == userId)
+                : this.All().Where(w => w.UserId == userId && !w.IsDeleted);
+
+        private IQueryable<Wishlist> All() => this.db.Wishlists;
     }
 }

@@ -5,7 +5,6 @@
     using System.Threading.Tasks;
 
     using AutoMapper;
-    using AutoMapper.QueryableExtensions;
     using Microsoft.EntityFrameworkCore;
 
     using Data;
@@ -90,34 +89,36 @@
         }
 
         public async Task<ProductsDetailsResponseModel> DetailsAsync(int id)
-            => await this
-                .All()
-                .Where(p => p.Id == id)
-                .ProjectTo<ProductsDetailsResponseModel>(this.mapper.ConfigurationProvider)
+            => await this.mapper
+                .ProjectTo<ProductsDetailsResponseModel>(this
+                    .AllAvailable()
+                    .AsNoTracking()
+                    .Where(p => p.Id == id))
                 .FirstOrDefaultAsync();
 
         public async Task<IEnumerable<ProductsListingResponseModel>> GetAllAsync()
-            => await this
-                .All()
-                .ProjectTo<ProductsListingResponseModel>(this.mapper.ConfigurationProvider)
+            => await this.mapper
+                .ProjectTo<ProductsListingResponseModel>(this
+                    .AllAvailable()
+                    .AsNoTracking())
                 .ToListAsync();
 
         public async Task<IEnumerable<ProductsListingResponseModel>> GetAllByCategoryIdAsync(int categoryId)
-            => await this
-                .All()
-                .Where(p => p.CategoryId == categoryId)
-                .ProjectTo<ProductsListingResponseModel>(this.mapper.ConfigurationProvider)
+            => await this.mapper
+                .ProjectTo<ProductsListingResponseModel>(this
+                    .AllAvailable()
+                    .AsNoTracking()
+                    .Where(p => p.CategoryId == categoryId))
                 .ToListAsync();
 
         private async Task<Product> GetByIdAsync(int id)
-            => await this.db
-                .Products
-                .FirstOrDefaultAsync(p => p.Id == id && !p.IsDeleted);
+            => await this
+                .AllAvailable()
+                .FirstOrDefaultAsync(p => p.Id == id);
 
-        private IQueryable<Product> All()
+        private IQueryable<Product> AllAvailable()
             => this.db
                 .Products
-                .AsNoTracking()
                 .Where(p => !p.IsDeleted);
     }
 }
