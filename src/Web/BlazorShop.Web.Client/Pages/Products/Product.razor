@@ -1,4 +1,5 @@
 ﻿@page "/products/{Id:int}/{ProductName}"
+@inject IToastService ToastService
 
 @if (product == null)
 {
@@ -27,18 +28,6 @@ else
                 </div>
 
                 <div class="col-sm-6 col-xs-12 product-description-wrap">
-
-                    @if (isAdded)
-                    {
-                        <Animate Animation="Animations.ZoomIn" Duration="TimeSpan.FromSeconds(0.5)">
-                            <div class="alert alert-success fade in alert-dismissible" role="alert">
-                                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                                    <span aria-hidden="true">×</span>
-                                </button>
-                                <strong>Success!</strong> Successfully added @product.Name to your <a href="/wishlist">wishlist</a>.
-                            </div>
-                        </Animate>
-                    }
 
                     <h1 class="product-title">@product.Name</h1>
                     <span class="price">
@@ -136,7 +125,6 @@ else
 }
 
 @code {
-    private bool isAdded = false;
     private ProductsDetailsResponseModel product;
 
     [Parameter] public int Id { get; set; }
@@ -155,7 +143,7 @@ else
         {
             this.Http.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
             await this.Http.PostAsJsonAsync($"api/wishlist/{id}", id);
-            isAdded = true;
+            this.ToastService.ShowSuccess($"Successfully added {product.Name} to your wishlist.", "Success!");
         }
         else
         {
