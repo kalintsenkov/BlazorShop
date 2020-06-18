@@ -1,0 +1,74 @@
+﻿<ul class="product-actions clearfix">
+
+    <EditForm Model="model" OnValidSubmit="() => OnSubmitAsync(ProductId)">
+
+        <DataAnnotationsValidator />
+        <ValidationSummary />
+
+        <li>
+            <button type="submit"
+                    class="btn btn-color btn-lg add-to-cart left"
+                    style="width: 192.19px; height: 50px; font-size: 15px; padding: 0 38px">
+                <span>Add to Cart</span>
+            </button>
+        </li>
+        <li>
+            <div class="icon-add-to-wishlist left">
+                <a href=""
+                   @onclick="OnAddToWishlist"
+                   @onclick:preventDefault>
+                    <i class="fa fa-heart"></i>
+                </a>
+            </div>
+        </li>
+        <li>
+            <div class="quantity buttons_added">
+                <input @onclick="DecrementQuantity" type="button" value="-" class="minus" />
+                <input @bind-value="model.Quantity" type="number" class="input-text qty text" />
+                <input @onclick="IncrementQuantity" type="button" value="+" class="plus" />
+            </div>
+        </li>
+
+    </EditForm>
+
+</ul>
+
+@code {
+    private readonly ShoppingCartAddRequestModel model = new ShoppingCartAddRequestModel();
+
+    [Parameter] public int ProductId { get; set; }
+    [Parameter] public int ProductQuantity { get; set; }
+    [Parameter] public EventCallback OnAddToWishlist { get; set; }
+
+    private async Task OnSubmitAsync(int id)
+    {
+        var token = await this.TokenProvider.GetTokenAsync();
+
+        if (token != null)
+        {
+            this.Http.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
+            await this.Http.PostAsJsonAsync($"api/shoppingcart/{id}", model);
+            this.NavigationManager.NavigateTo("/cart");
+        }
+        else
+        {
+            this.NavigationManager.NavigateTo("account/login");
+        }
+    }
+
+    private void IncrementQuantity()
+    {
+        if (this.model.Quantity < this.ProductQuantity)
+        {
+            this.model.Quantity++;
+        }
+    }
+
+    private void DecrementQuantity()
+    {
+        if (this.model.Quantity > 1)
+        {
+            this.model.Quantity--;
+        }
+    }
+}

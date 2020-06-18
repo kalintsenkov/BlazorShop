@@ -19,9 +19,9 @@
 
             var categories = new List<Category>
             {
-                new Category { Name = "Men", CreatedOn = DateTime.UtcNow },
-                new Category { Name = "Women", CreatedOn = DateTime.UtcNow },
-                new Category { Name = "Kids", CreatedOn = DateTime.UtcNow }
+                new Category { Name = "Men" },
+                new Category { Name = "Women" },
+                new Category { Name = "Kids" }
             };
 
             await dbContext.Categories.AddRangeAsync(categories);
