@@ -11,8 +11,6 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BlazorShop.Data.Models", "D
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BlazorShop.Data.Contracts", "Data\BlazorShop.Data.Contracts\BlazorShop.Data.Contracts.csproj", "{A44C7507-357F-4733-A3B7-38266B8D760F}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BlazorShop.Common", "BlazorShop.Common\BlazorShop.Common.csproj", "{9256CBDB-81C7-4349-93F0-2F3D927C27B2}"
-EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Services", "Services", "{443C8B56-3649-47C7-98C3-487D4127D58D}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Web", "Web", "{69A18099-172B-49D8-BCAC-E493A7AC0DAD}"
@@ -45,10 +43,6 @@ Global
 		{A44C7507-357F-4733-A3B7-38266B8D760F}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{A44C7507-357F-4733-A3B7-38266B8D760F}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{A44C7507-357F-4733-A3B7-38266B8D760F}.Release|Any CPU.Build.0 = Release|Any CPU
-		{9256CBDB-81C7-4349-93F0-2F3D927C27B2}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{9256CBDB-81C7-4349-93F0-2F3D927C27B2}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{9256CBDB-81C7-4349-93F0-2F3D927C27B2}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{9256CBDB-81C7-4349-93F0-2F3D927C27B2}.Release|Any CPU.Build.0 = Release|Any CPU
 		{A9EE1DC1-629A-45F6-AEC8-19C11E18C59B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{A9EE1DC1-629A-45F6-AEC8-19C11E18C59B}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{A9EE1DC1-629A-45F6-AEC8-19C11E18C59B}.Release|Any CPU.ActiveCfg = Release|Any CPU

@@ -1,6 +1,6 @@
-﻿namespace BlazorShop.Common
+﻿namespace BlazorShop.Web.Shared
 {
-    public class GlobalConstants
+    public class WebConstants
     {
         public const string SystemName = "Blazor Shop";
 

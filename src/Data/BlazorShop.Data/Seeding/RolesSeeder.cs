@@ -9,11 +9,10 @@
 
     using Models;
 
-    using static Common.GlobalConstants;
-
-
     internal class RolesSeeder : ISeeder
     {
+        private const string AdminRoleName = "Admin";
+
         public async Task SeedAsync(ApplicationDbContext dbContext, IServiceProvider serviceProvider)
         {
             var roleManager = serviceProvider.GetRequiredService<RoleManager<ApplicationRole>>();

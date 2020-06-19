@@ -9,7 +9,7 @@
     using Services.Products;
     using Shared.Products;
 
-    using static Common.GlobalConstants;
+    using static Shared.WebConstants;
 
     public class ProductsController : ApiController
     {

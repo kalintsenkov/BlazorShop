@@ -14,7 +14,7 @@ else
 
                     <div class="shop-filter">
                         <p class="result-count">Showing: 1-12 of @products.Length results</p>
-                        <AuthorizeView Roles="@GlobalConstants.AdminRoleName">
+                        <AuthorizeView Roles="@WebConstants.AdminRoleName">
                             <a href="/products/add" class="btn btn-sm btn-color ecommerce-ordering">
                                 <span>add product</span>
                             </a>

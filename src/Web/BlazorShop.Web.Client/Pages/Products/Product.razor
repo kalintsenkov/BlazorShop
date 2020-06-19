@@ -67,7 +67,7 @@ else
                                    ProductQuantity="product.Quantity"
                                    OnAddToWishlist="() => AddToWishlistHandler(product.Id)" />
 
-                    <AuthorizeView Roles="@GlobalConstants.AdminRoleName">
+                    <AuthorizeView Roles="@WebConstants.AdminRoleName">
                         <div class="product_meta">
                             <div class="icon-add-to-wishlist left">
                                 <a href="/products/update/@product.Id">

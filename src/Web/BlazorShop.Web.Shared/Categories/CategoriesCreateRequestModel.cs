@@ -2,8 +2,8 @@
 {
     using System.ComponentModel.DataAnnotations;
 
-    using static Common.ErrorMessages;
     using static Data.ModelConstants.Common;
+    using static ErrorMessages;
 
     public class CategoriesCreateRequestModel
     {

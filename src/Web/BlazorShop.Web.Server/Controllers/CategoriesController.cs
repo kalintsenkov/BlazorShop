@@ -9,7 +9,7 @@
     using Services.Categories;
     using Shared.Categories;
 
-    using static Common.GlobalConstants;
+    using static Shared.WebConstants;
 
     public class CategoriesController : ApiController
     {

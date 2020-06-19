@@ -10,13 +10,12 @@
 
     using Models;
 
-    using static Common.GlobalConstants;
-
     internal class AdminSeeder : ISeeder
     {
         private const string AdminName = "Admin";
         private const string AdminEmail = "admin@blazorshop.bg";
         private const string AdminPassword = "admin123456";
+        private const string AdminRoleName = "Admin";
 
         public async Task SeedAsync(ApplicationDbContext dbContext, IServiceProvider serviceProvider)
         {
