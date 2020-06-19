@@ -1,7 +1,7 @@
 ﻿@page "/cart"
 @attribute [Authorize]
 
-@if (this.cartProducts == null)
+@if (cartProducts == null)
 {
     <LoadingScreen />
 }
@@ -115,7 +115,7 @@ else
                                 <tr class="cart-subtotal">
                                     <th>Cart Subtotal</th>
                                     <td>
-                                        <span class="amount">$@this.totalPrice</span>
+                                        <span class="amount">$@totalPrice</span>
                                     </td>
                                 </tr>
                                 <tr class="shipping">
@@ -127,7 +127,7 @@ else
                                 <tr class="order-total">
                                     <th><strong>Order Total</strong></th>
                                     <td>
-                                        <strong><span class="amount">$@this.totalPrice</span></strong>
+                                        <strong><span class="amount">$@totalPrice</span></strong>
                                     </td>
                                 </tr>
                             </tbody>

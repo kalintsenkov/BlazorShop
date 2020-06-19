@@ -1,5 +1,4 @@
 ﻿@page "/products/{Id:int}/{ProductName}"
-@inject IToastService ToastService
 
 @if (product == null)
 {
@@ -64,8 +63,7 @@ else
                     </div>
 
                     <AddToCartForm ProductId="product.Id"
-                                   ProductQuantity="product.Quantity"
-                                   OnAddToWishlist="() => AddToWishlistHandler(product.Id)" />
+                                   ProductQuantity="product.Quantity" />
 
                     <AuthorizeView Roles="@WebConstants.AdminRoleName">
                         <div class="product_meta">
@@ -133,21 +131,5 @@ else
     protected override async Task OnInitializedAsync()
     {
         this.product = await this.Http.GetFromJsonAsync<ProductsDetailsResponseModel>($"api/products/{this.Id}");
-    }
-
-    private async Task AddToWishlistHandler(int id)
-    {
-        var token = await this.TokenProvider.GetTokenAsync();
-
-        if (token != null)
-        {
-            this.Http.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
-            await this.Http.PostAsJsonAsync($"api/wishlist/{id}", id);
-            this.ToastService.ShowSuccess($"Successfully added {product.Name} to your wishlist.", "Success!");
-        }
-        else
-        {
-            this.NavigationManager.NavigateTo("account/login");
-        }
     }
 }

@@ -1,4 +1,6 @@
-﻿<ul class="product-actions clearfix">
+﻿@inject IToastService ToastService
+
+<ul class="product-actions clearfix">
 
     <EditForm Model="model" OnValidSubmit="() => OnSubmitAsync(ProductId)">
 
@@ -15,7 +17,7 @@
         <li>
             <div class="icon-add-to-wishlist left">
                 <a href=""
-                   @onclick="OnAddToWishlist"
+                   @onclick="() => AddToWishlist(ProductId)"
                    @onclick:preventDefault>
                     <i class="fa fa-heart"></i>
                 </a>
@@ -37,8 +39,8 @@
     private readonly ShoppingCartAddRequestModel model = new ShoppingCartAddRequestModel();
 
     [Parameter] public int ProductId { get; set; }
+    [Parameter] public int ProductName { get; set; }
     [Parameter] public int ProductQuantity { get; set; }
-    [Parameter] public EventCallback OnAddToWishlist { get; set; }
 
     private async Task OnSubmitAsync(int id)
     {
@@ -48,7 +50,23 @@
         {
             this.Http.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
             await this.Http.PostAsJsonAsync($"api/shoppingcart/{id}", model);
-            this.NavigationManager.NavigateTo("/cart");
+            this.NavigationManager.NavigateTo("/cart", forceLoad: true);
+        }
+        else
+        {
+            this.NavigationManager.NavigateTo("account/login");
+        }
+    }
+
+    private async Task AddToWishlist(int id)
+    {
+        var token = await this.TokenProvider.GetTokenAsync();
+
+        if (token != null)
+        {
+            this.Http.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
+            await this.Http.PostAsJsonAsync($"api/wishlist/{id}", id);
+            this.ToastService.ShowSuccess($"Successfully added {this.ProductName} to your wishlist.", "Congratulations!");
         }
         else
         {
