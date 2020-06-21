@@ -4,7 +4,7 @@
 
     using Contracts;
 
-    public class Category : BaseDeletableModel<int>
+    public class Category : BaseModel<int>
     {
         public string Name { get; set; }
 

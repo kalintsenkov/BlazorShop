@@ -1,15 +1,23 @@
 ﻿namespace BlazorShop.Data.Models
 {
-    using System.Collections.Generic;
+    using System;
 
     using Contracts;
 
-    public class Order : BaseModel<int>
+    public class Order : IAuditInfo
     {
         public string UserId { get; set; }
 
         public ApplicationUser User { get; set; }
 
-        public ICollection<OrderProduct> Products { get; } = new HashSet<OrderProduct>();
+        public int ProductId { get; set; }
+
+        public Product Product { get; set; }
+
+        public int Quantity { get; set; }
+
+        public DateTime CreatedOn { get; set; }
+
+        public DateTime? ModifiedOn { get; set; }
     }
 }

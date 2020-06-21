@@ -91,7 +91,7 @@
         public async Task<ProductsDetailsResponseModel> DetailsAsync(int id)
             => await this.mapper
                 .ProjectTo<ProductsDetailsResponseModel>(this
-                    .AllAvailable()
+                    .All()
                     .AsNoTracking()
                     .Where(p => p.Id == id))
                 .FirstOrDefaultAsync();
@@ -99,26 +99,24 @@
         public async Task<IEnumerable<ProductsListingResponseModel>> GetAllAsync()
             => await this.mapper
                 .ProjectTo<ProductsListingResponseModel>(this
-                    .AllAvailable()
+                    .All()
                     .AsNoTracking())
                 .ToListAsync();
 
         public async Task<IEnumerable<ProductsListingResponseModel>> GetAllByCategoryIdAsync(int categoryId)
             => await this.mapper
                 .ProjectTo<ProductsListingResponseModel>(this
-                    .AllAvailable()
+                    .All()
                     .AsNoTracking()
                     .Where(p => p.CategoryId == categoryId))
                 .ToListAsync();
 
         private async Task<Product> GetByIdAsync(int id)
             => await this
-                .AllAvailable()
+                .All()
                 .FirstOrDefaultAsync(p => p.Id == id);
 
-        private IQueryable<Product> AllAvailable()
-            => this.db
-                .Products
-                .Where(p => !p.IsDeleted);
+        private IQueryable<Product> All()
+            => this.db.Products;
     }
 }

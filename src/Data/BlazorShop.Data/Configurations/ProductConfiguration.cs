@@ -38,6 +38,9 @@
 
             product
                 .HasIndex(p => p.IsDeleted);
+
+            product
+                .HasQueryFilter(p => !p.IsDeleted);
         }
     }
 }

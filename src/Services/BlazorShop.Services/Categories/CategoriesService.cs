@@ -65,18 +65,16 @@
         public async Task<IEnumerable<CategoriesListingResponseModel>> GetAllAsync()
             => await this.mapper
                 .ProjectTo<CategoriesListingResponseModel>(this
-                    .AllAvailable()
+                    .All()
                     .AsNoTracking())
                 .ToListAsync();
 
         private async Task<Category> GetByIdAsync(int id)
             => await this
-                .AllAvailable()
+                .All()
                 .FirstOrDefaultAsync(c => c.Id == id);
 
-        private IQueryable<Category> AllAvailable()
-            => this.db
-                .Categories
-                .Where(c => !c.IsDeleted);
+        private IQueryable<Category> All()
+            => this.db.Categories;
     }
 }

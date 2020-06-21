@@ -24,8 +24,6 @@
 
         public DbSet<Order> Orders { get; set; }
 
-        public DbSet<OrderProduct> OrdersProducts { get; set; }
-
         public DbSet<ShoppingCart> ShoppingCarts { get; set; }
 
         public DbSet<Wishlist> Wishlists { get; set; }
