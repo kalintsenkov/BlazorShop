@@ -7,15 +7,15 @@
     using Microsoft.AspNetCore.Mvc;
 
     using Infrastructure.Extensions;
-    using Services.Wishlist;
+    using Services.Wishlists;
     using Shared.Products;
 
     [Authorize]
-    public class WishlistController : ApiController
+    public class WishlistsController : ApiController
     {
-        private readonly IWishlistService wishlistService;
+        private readonly IWishlistsService wishlistService;
 
-        public WishlistController(IWishlistService wishlistService)
+        public WishlistsController(IWishlistsService wishlistService)
             => this.wishlistService = wishlistService;
 
         [HttpGet]

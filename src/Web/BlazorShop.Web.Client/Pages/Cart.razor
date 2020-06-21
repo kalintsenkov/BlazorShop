@@ -157,13 +157,13 @@ else
 
     private async Task OnRemoveAsync(int productId)
     {
-        await this.Http.DeleteAsync($"api/shoppingcart/{productId}");
+        await this.Http.DeleteAsync($"api/shoppingcarts/{productId}");
         await this.LoadDataAsync();
     }
 
     private async Task LoadDataAsync()
     {
-        this.cartProducts = await this.Http.GetFromJsonAsync<ShoppingCartProductsResponseModel[]>("api/shoppingcart");
+        this.cartProducts = await this.Http.GetFromJsonAsync<ShoppingCartProductsResponseModel[]>("api/shoppingcarts");
         this.totalPrice = this.cartProducts.Sum(p => p.Price * p.Quantity);
     }
 }

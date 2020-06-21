@@ -49,7 +49,7 @@
         if (token != null)
         {
             this.Http.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
-            await this.Http.PostAsJsonAsync($"api/shoppingcart/{id}", model);
+            await this.Http.PostAsJsonAsync($"api/shoppingcarts/{id}", model);
             this.NavigationManager.NavigateTo("/cart", forceLoad: true);
         }
         else
@@ -65,7 +65,7 @@
         if (token != null)
         {
             this.Http.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
-            await this.Http.PostAsJsonAsync($"api/wishlist/{id}", id);
+            await this.Http.PostAsJsonAsync($"api/wishlists/{id}", id);
             this.ToastService.ShowSuccess($"Successfully added {this.ProductName} to your wishlist.", "Congratulations!");
         }
         else

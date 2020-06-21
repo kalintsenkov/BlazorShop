@@ -1,7 +1,6 @@
 ﻿namespace BlazorShop.Services.Categories
 {
     using System.Collections.Generic;
-    using System.Linq;
     using System.Threading.Tasks;
 
     using AutoMapper;
@@ -11,23 +10,19 @@
     using Data.Models;
     using Web.Shared.Categories;
 
-    public class CategoriesService : ICategoriesService
+    public class CategoriesService : BaseService<Category>, ICategoriesService
     {
-        private readonly ApplicationDbContext db;
-        private readonly IMapper mapper;
-
         public CategoriesService(ApplicationDbContext db, IMapper mapper)
+            : base(db, mapper)
         {
-            this.db = db;
-            this.mapper = mapper;
         }
 
         public async Task<int> CreateAsync(string name)
         {
             var category = new Category { Name = name };
 
-            await this.db.Categories.AddAsync(category);
-            await this.db.SaveChangesAsync();
+            await this.Data.Categories.AddAsync(category);
+            await this.Data.SaveChangesAsync();
 
             return category.Id;
         }
@@ -42,7 +37,7 @@
 
             category.Name = name;
 
-            await this.db.SaveChangesAsync();
+            await this.Data.SaveChangesAsync();
 
             return true;
         }
@@ -55,26 +50,21 @@
                 return false;
             }
 
-            this.db.Remove(category);
+            this.Data.Remove(category);
 
-            await this.db.SaveChangesAsync();
+            await this.Data.SaveChangesAsync();
 
             return true;
         }
 
         public async Task<IEnumerable<CategoriesListingResponseModel>> GetAllAsync()
-            => await this.mapper
-                .ProjectTo<CategoriesListingResponseModel>(this
-                    .All()
-                    .AsNoTracking())
+            => await this.Mapper
+                .ProjectTo<CategoriesListingResponseModel>(this.AllAsNoTracking())
                 .ToListAsync();
 
         private async Task<Category> GetByIdAsync(int id)
             => await this
                 .All()
                 .FirstOrDefaultAsync(c => c.Id == id);
-
-        private IQueryable<Category> All()
-            => this.db.Categories;
     }
 }

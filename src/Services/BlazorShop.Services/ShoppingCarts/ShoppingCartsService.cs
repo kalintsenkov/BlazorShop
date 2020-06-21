@@ -1,4 +1,4 @@
-﻿namespace BlazorShop.Services.ShoppingCart
+﻿namespace BlazorShop.Services.ShoppingCarts
 {
     using System.Collections.Generic;
     using System.Linq;
@@ -9,17 +9,13 @@
 
     using Data;
     using Data.Models;
-    using Web.Shared.ShoppingCart;
+    using Web.Shared.ShoppingCarts;
 
-    public class ShoppingCartService : IShoppingCartService
+    public class ShoppingCartsService : BaseService<ShoppingCart>, IShoppingCartsService
     {
-        private readonly ApplicationDbContext db;
-        private readonly IMapper mapper;
-
-        public ShoppingCartService(ApplicationDbContext db, IMapper mapper)
+        public ShoppingCartsService(ApplicationDbContext db, IMapper mapper)
+            : base(db, mapper)
         {
-            this.db = db;
-            this.mapper = mapper;
         }
 
         public async Task AddAsync(int productId, string userId, int quantity)
@@ -31,8 +27,8 @@
                 Quantity = quantity
             };
 
-            await this.db.ShoppingCarts.AddAsync(shoppingCart);
-            await this.db.SaveChangesAsync();
+            await this.Data.ShoppingCarts.AddAsync(shoppingCart);
+            await this.Data.SaveChangesAsync();
         }
 
         public async Task<bool> UpdateAsync(int productId, string userId, int quantity)
@@ -45,7 +41,7 @@
 
             shoppingCart.Quantity = quantity;
 
-            await this.db.SaveChangesAsync();
+            await this.Data.SaveChangesAsync();
 
             return true;
         }
@@ -58,15 +54,15 @@
                 return false;
             }
 
-            this.db.Remove(shoppingCart);
+            this.Data.Remove(shoppingCart);
 
-            await this.db.SaveChangesAsync();
+            await this.Data.SaveChangesAsync();
 
             return true;
         }
 
         public async Task<IEnumerable<ShoppingCartProductsResponseModel>> GetByUserIdAsync(string userId)
-            => await this.mapper
+            => await this.Mapper
                 .ProjectTo<ShoppingCartProductsResponseModel>(this
                     .AllByUserId(userId)
                     .AsNoTracking())
@@ -78,8 +74,8 @@
                 .FirstOrDefaultAsync(c => c.ProductId == productId);
 
         private IQueryable<ShoppingCart> AllByUserId(string userId)
-            => this.db
-                .ShoppingCarts
+            => this
+                .All()
                 .Where(c => c.UserId == userId);
     }
 }

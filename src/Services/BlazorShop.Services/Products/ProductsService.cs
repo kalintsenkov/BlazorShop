@@ -11,15 +11,11 @@
     using Data.Models;
     using Web.Shared.Products;
 
-    public class ProductsService : IProductsService
+    public class ProductsService : BaseService<Product>, IProductsService
     {
-        private readonly ApplicationDbContext db;
-        private readonly IMapper mapper;
-
         public ProductsService(ApplicationDbContext db, IMapper mapper)
+            : base(db, mapper)
         {
-            this.db = db;
-            this.mapper = mapper;
         }
 
         public async Task<int> CreateAsync(
@@ -40,8 +36,8 @@
                 CategoryId = categoryId
             };
 
-            await this.db.Products.AddAsync(product);
-            await this.db.SaveChangesAsync();
+            await this.Data.Products.AddAsync(product);
+            await this.Data.SaveChangesAsync();
 
             return product.Id;
         }
@@ -68,7 +64,7 @@
             product.Price = price;
             product.CategoryId = categoryId;
 
-            await this.db.SaveChangesAsync();
+            await this.Data.SaveChangesAsync();
 
             return true;
         }
@@ -81,33 +77,29 @@
                 return false;
             }
 
-            this.db.Remove(product);
+            this.Data.Remove(product);
 
-            await this.db.SaveChangesAsync();
+            await this.Data.SaveChangesAsync();
 
             return true;
         }
 
         public async Task<ProductsDetailsResponseModel> DetailsAsync(int id)
-            => await this.mapper
+            => await this.Mapper
                 .ProjectTo<ProductsDetailsResponseModel>(this
-                    .All()
-                    .AsNoTracking()
+                    .AllAsNoTracking()
                     .Where(p => p.Id == id))
                 .FirstOrDefaultAsync();
 
         public async Task<IEnumerable<ProductsListingResponseModel>> GetAllAsync()
-            => await this.mapper
-                .ProjectTo<ProductsListingResponseModel>(this
-                    .All()
-                    .AsNoTracking())
+            => await this.Mapper
+                .ProjectTo<ProductsListingResponseModel>(this.AllAsNoTracking())
                 .ToListAsync();
 
         public async Task<IEnumerable<ProductsListingResponseModel>> GetAllByCategoryIdAsync(int categoryId)
-            => await this.mapper
+            => await this.Mapper
                 .ProjectTo<ProductsListingResponseModel>(this
-                    .All()
-                    .AsNoTracking()
+                    .AllAsNoTracking()
                     .Where(p => p.CategoryId == categoryId))
                 .ToListAsync();
 
@@ -115,8 +107,5 @@
             => await this
                 .All()
                 .FirstOrDefaultAsync(p => p.Id == id);
-
-        private IQueryable<Product> All()
-            => this.db.Products;
     }
 }

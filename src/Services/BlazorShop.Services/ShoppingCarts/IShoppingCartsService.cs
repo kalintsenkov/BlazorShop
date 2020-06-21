@@ -1,11 +1,11 @@
-﻿namespace BlazorShop.Services.ShoppingCart
+﻿namespace BlazorShop.Services.ShoppingCarts
 {
     using System.Collections.Generic;
     using System.Threading.Tasks;
 
-    using Web.Shared.ShoppingCart;
+    using Web.Shared.ShoppingCarts;
 
-    public interface IShoppingCartService
+    public interface IShoppingCartsService
     {
         Task AddAsync(int productId, string userId, int quantity);
 

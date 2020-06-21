@@ -1,4 +1,4 @@
-﻿namespace BlazorShop.Services.Wishlist
+﻿namespace BlazorShop.Services.Wishlists
 {
     using System.Collections.Generic;
     using System.Linq;
@@ -11,15 +11,11 @@
     using Data.Models;
     using Web.Shared.Products;
 
-    public class WishlistService : IWishlistService
+    public class WishlistsService : BaseService<Wishlist>, IWishlistsService
     {
-        private readonly ApplicationDbContext db;
-        private readonly IMapper mapper;
-
-        public WishlistService(ApplicationDbContext db, IMapper mapper)
+        public WishlistsService(ApplicationDbContext db, IMapper mapper)
+            : base(db, mapper)
         {
-            this.db = db;
-            this.mapper = mapper;
         }
 
         public async Task AddAsync(int productId, string userId)
@@ -33,7 +29,7 @@
                     ProductId = productId
                 };
 
-                await this.db.Wishlists.AddAsync(wishlist);
+                await this.Data.Wishlists.AddAsync(wishlist);
             }
             else
             {
@@ -41,7 +37,7 @@
                 wishlist.DeletedOn = null;
             }
 
-            await this.db.SaveChangesAsync();
+            await this.Data.SaveChangesAsync();
         }
 
         public async Task<bool> RemoveAsync(int productId, string userId)
@@ -52,15 +48,15 @@
                 return false;
             }
 
-            this.db.Remove(wishlist);
+            this.Data.Remove(wishlist);
 
-            await this.db.SaveChangesAsync();
+            await this.Data.SaveChangesAsync();
 
             return true;
         }
 
         public async Task<IEnumerable<ProductsListingResponseModel>> GetByUserIdAsync(string userId)
-            => await this.mapper
+            => await this.Mapper
                 .ProjectTo<ProductsListingResponseModel>(this
                     .AllByUserId(userId)
                     .AsNoTracking()
@@ -76,7 +72,5 @@
             => withDeleted == true
                 ? this.All().Where(w => w.UserId == userId)
                 : this.All().Where(w => w.UserId == userId && !w.IsDeleted);
-
-        private IQueryable<Wishlist> All() => this.db.Wishlists;
     }
 }

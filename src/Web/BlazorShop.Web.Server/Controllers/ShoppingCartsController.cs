@@ -7,15 +7,15 @@
     using Microsoft.AspNetCore.Mvc;
 
     using Infrastructure.Extensions;
-    using Services.ShoppingCart;
-    using Shared.ShoppingCart;
+    using Services.ShoppingCarts;
+    using Shared.ShoppingCarts;
 
     [Authorize]
-    public class ShoppingCartController : ApiController
+    public class ShoppingCartsController : ApiController
     {
-        private readonly IShoppingCartService shoppingCartService;
+        private readonly IShoppingCartsService shoppingCartService;
 
-        public ShoppingCartController(IShoppingCartService shoppingCartService)
+        public ShoppingCartsController(IShoppingCartsService shoppingCartService)
             => this.shoppingCartService = shoppingCartService;
 
         [HttpGet]

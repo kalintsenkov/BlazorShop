@@ -48,7 +48,7 @@
         if (token != null)
         {
             this.Http.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
-            await this.Http.PostAsJsonAsync($"api/wishlist/{id}", id);
+            await this.Http.PostAsJsonAsync($"api/wishlists/{id}", id);
         }
         else
         {

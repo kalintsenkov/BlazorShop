@@ -14,8 +14,8 @@
     using Services.Categories;
     using Services.Identity;
     using Services.Products;
-    using Services.ShoppingCart;
-    using Services.Wishlist;
+    using Services.ShoppingCarts;
+    using Services.Wishlists;
 
     public static class ServiceCollectionExtensions
     {
@@ -74,8 +74,8 @@
                 .AddTransient<ICategoriesService, CategoriesService>()
                 .AddTransient<IIdentityService, IdentityService>()
                 .AddTransient<IProductsService, ProductsService>()
-                .AddTransient<IShoppingCartService, ShoppingCartService>()
-                .AddTransient<IWishlistService, WishlistService>();
+                .AddTransient<IShoppingCartsService, ShoppingCartsService>()
+                .AddTransient<IWishlistsService, WishlistsService>();
 
         public static IServiceCollection AddApiControllers(this IServiceCollection services)
         {
