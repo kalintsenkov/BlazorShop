@@ -13,13 +13,12 @@
 
     public class OrdersService : BaseService<Order>, IOrdersService
     {
-
         public OrdersService(ApplicationDbContext data, IMapper mapper)
             : base(data, mapper)
         {
         }
 
-        public async Task PurchaseAsync(string userId)
+        public async Task PurchaseAsync(string userId, int deliveryAddressId)
         {
             await this
                 .Data
@@ -31,7 +30,8 @@
                     {
                         UserId = userId,
                         ProductId = product.ProductId,
-                        Quantity = product.Quantity
+                        Quantity = product.Quantity,
+                        DeliveryAddressId = deliveryAddressId
                     });
                 });
 
