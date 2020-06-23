@@ -19,6 +19,66 @@ namespace BlazorShop.Data.Migrations
                 .HasAnnotation("Relational:MaxIdentifierLength", 128)
                 .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
+            modelBuilder.Entity("BlazorShop.Data.Models.Address", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<string>("City")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(255)")
+                        .HasMaxLength(255);
+
+                    b.Property<string>("Country")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(255)")
+                        .HasMaxLength(255);
+
+                    b.Property<DateTime>("CreatedOn")
+                        .HasColumnType("datetime2");
+
+                    b.Property<DateTime?>("DeletedOn")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("Description")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(1000)")
+                        .HasMaxLength(1000);
+
+                    b.Property<bool>("IsDeleted")
+                        .HasColumnType("bit");
+
+                    b.Property<DateTime?>("ModifiedOn")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("PhoneNumber")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(10)")
+                        .HasMaxLength(10);
+
+                    b.Property<int>("PostalCode")
+                        .HasColumnType("int");
+
+                    b.Property<string>("State")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(255)")
+                        .HasMaxLength(255);
+
+                    b.Property<string>("UserId")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(450)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("IsDeleted");
+
+                    b.HasIndex("UserId");
+
+                    b.ToTable("Addresses");
+                });
+
             modelBuilder.Entity("BlazorShop.Data.Models.ApplicationRole", b =>
                 {
                     b.Property<string>("Id")
@@ -168,34 +228,6 @@ namespace BlazorShop.Data.Migrations
                     b.ToTable("Categories");
                 });
 
-            modelBuilder.Entity("BlazorShop.Data.Models.City", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<DateTime>("CreatedOn")
-                        .HasColumnType("datetime2");
-
-                    b.Property<DateTime?>("ModifiedOn")
-                        .HasColumnType("datetime2");
-
-                    b.Property<string>("Name")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(255)")
-                        .HasMaxLength(255);
-
-                    b.Property<int>("RegionId")
-                        .HasColumnType("int");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("RegionId");
-
-                    b.ToTable("Cities");
-                });
-
             modelBuilder.Entity("BlazorShop.Data.Models.Order", b =>
                 {
                     b.Property<string>("UserId")
@@ -207,6 +239,9 @@ namespace BlazorShop.Data.Migrations
                     b.Property<DateTime>("CreatedOn")
                         .HasColumnType("datetime2");
 
+                    b.Property<int>("DeliveryAddressId")
+                        .HasColumnType("int");
+
                     b.Property<DateTime?>("ModifiedOn")
                         .HasColumnType("datetime2");
 
@@ -214,6 +249,8 @@ namespace BlazorShop.Data.Migrations
                         .HasColumnType("int");
 
                     b.HasKey("UserId", "ProductId");
+
+                    b.HasIndex("DeliveryAddressId");
 
                     b.HasIndex("ProductId");
 
@@ -269,29 +306,6 @@ namespace BlazorShop.Data.Migrations
                     b.HasIndex("IsDeleted");
 
                     b.ToTable("Products");
-                });
-
-            modelBuilder.Entity("BlazorShop.Data.Models.Region", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<DateTime>("CreatedOn")
-                        .HasColumnType("datetime2");
-
-                    b.Property<DateTime?>("ModifiedOn")
-                        .HasColumnType("datetime2");
-
-                    b.Property<string>("Name")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(255)")
-                        .HasMaxLength(255);
-
-                    b.HasKey("Id");
-
-                    b.ToTable("Regions");
                 });
 
             modelBuilder.Entity("BlazorShop.Data.Models.ShoppingCart", b =>
@@ -451,17 +465,23 @@ namespace BlazorShop.Data.Migrations
                     b.ToTable("AspNetUserTokens");
                 });
 
-            modelBuilder.Entity("BlazorShop.Data.Models.City", b =>
+            modelBuilder.Entity("BlazorShop.Data.Models.Address", b =>
                 {
-                    b.HasOne("BlazorShop.Data.Models.Region", "Region")
-                        .WithMany("Cities")
-                        .HasForeignKey("RegionId")
+                    b.HasOne("BlazorShop.Data.Models.ApplicationUser", "User")
+                        .WithMany("Addresses")
+                        .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
                 });
 
             modelBuilder.Entity("BlazorShop.Data.Models.Order", b =>
                 {
+                    b.HasOne("BlazorShop.Data.Models.Address", "DeliveryAddress")
+                        .WithMany("Orders")
+                        .HasForeignKey("DeliveryAddressId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
                     b.HasOne("BlazorShop.Data.Models.Product", "Product")
                         .WithMany("Orders")
                         .HasForeignKey("ProductId")

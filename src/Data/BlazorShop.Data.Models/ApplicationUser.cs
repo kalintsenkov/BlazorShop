@@ -24,16 +24,18 @@ namespace BlazorShop.Data.Models
 
         public DateTime? DeletedOn { get; set; }
 
+        public ICollection<Address> Addresses { get; set; } = new HashSet<Address>();
+
         public ICollection<Order> Orders { get; } = new HashSet<Order>();
 
         public ICollection<Wishlist> Wishlists { get; } = new HashSet<Wishlist>();
 
         public ICollection<ShoppingCart> ShoppingCarts { get; set; } = new HashSet<ShoppingCart>();
 
-        public virtual ICollection<IdentityUserRole<string>> Roles { get; } = new HashSet<IdentityUserRole<string>>();
+        public ICollection<IdentityUserRole<string>> Roles { get; } = new HashSet<IdentityUserRole<string>>();
 
-        public virtual ICollection<IdentityUserClaim<string>> Claims { get; } = new HashSet<IdentityUserClaim<string>>();
+        public ICollection<IdentityUserClaim<string>> Claims { get; } = new HashSet<IdentityUserClaim<string>>();
 
-        public virtual ICollection<IdentityUserLogin<string>> Logins { get; } = new HashSet<IdentityUserLogin<string>>();
+        public ICollection<IdentityUserLogin<string>> Logins { get; } = new HashSet<IdentityUserLogin<string>>();
     }
 }

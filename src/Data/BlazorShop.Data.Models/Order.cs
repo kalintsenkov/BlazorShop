@@ -19,5 +19,9 @@
         public DateTime CreatedOn { get; set; }
 
         public DateTime? ModifiedOn { get; set; }
+
+        public int DeliveryAddressId { get; set; }
+
+        public Address DeliveryAddress { get; set; }
     }
 }

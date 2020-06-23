@@ -73,21 +73,6 @@
                 });
 
             migrationBuilder.CreateTable(
-                name: "Regions",
-                columns: table => new
-                {
-                    Id = table.Column<int>(nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    CreatedOn = table.Column<DateTime>(nullable: false),
-                    ModifiedOn = table.Column<DateTime>(nullable: true),
-                    Name = table.Column<string>(maxLength: 255, nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Regions", x => x.Id);
-                });
-
-            migrationBuilder.CreateTable(
                 name: "AspNetRoleClaims",
                 columns: table => new
                 {
@@ -106,6 +91,35 @@
                         principalTable: "AspNetRoles",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Addresses",
+                columns: table => new
+                {
+                    Id = table.Column<int>(nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    CreatedOn = table.Column<DateTime>(nullable: false),
+                    ModifiedOn = table.Column<DateTime>(nullable: true),
+                    IsDeleted = table.Column<bool>(nullable: false),
+                    DeletedOn = table.Column<DateTime>(nullable: true),
+                    Country = table.Column<string>(maxLength: 255, nullable: false),
+                    State = table.Column<string>(maxLength: 255, nullable: false),
+                    City = table.Column<string>(maxLength: 255, nullable: false),
+                    Description = table.Column<string>(maxLength: 1000, nullable: false),
+                    PostalCode = table.Column<int>(nullable: false),
+                    PhoneNumber = table.Column<string>(maxLength: 10, nullable: false),
+                    UserId = table.Column<string>(nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Addresses", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_Addresses_AspNetUsers_UserId",
+                        column: x => x.UserId,
+                        principalTable: "AspNetUsers",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
                 });
 
             migrationBuilder.CreateTable(
@@ -222,28 +236,6 @@
                 });
 
             migrationBuilder.CreateTable(
-                name: "Cities",
-                columns: table => new
-                {
-                    Id = table.Column<int>(nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    CreatedOn = table.Column<DateTime>(nullable: false),
-                    ModifiedOn = table.Column<DateTime>(nullable: true),
-                    Name = table.Column<string>(maxLength: 255, nullable: false),
-                    RegionId = table.Column<int>(nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Cities", x => x.Id);
-                    table.ForeignKey(
-                        name: "FK_Cities_Regions_RegionId",
-                        column: x => x.RegionId,
-                        principalTable: "Regions",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
-                });
-
-            migrationBuilder.CreateTable(
                 name: "Orders",
                 columns: table => new
                 {
@@ -251,11 +243,18 @@
                     ProductId = table.Column<int>(nullable: false),
                     Quantity = table.Column<int>(nullable: false),
                     CreatedOn = table.Column<DateTime>(nullable: false),
-                    ModifiedOn = table.Column<DateTime>(nullable: true)
+                    ModifiedOn = table.Column<DateTime>(nullable: true),
+                    DeliveryAddressId = table.Column<int>(nullable: false)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Orders", x => new { x.UserId, x.ProductId });
+                    table.ForeignKey(
+                        name: "FK_Orders_Addresses_DeliveryAddressId",
+                        column: x => x.DeliveryAddressId,
+                        principalTable: "Addresses",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
                         name: "FK_Orders_Products_ProductId",
                         column: x => x.ProductId,
@@ -326,6 +325,16 @@
                 });
 
             migrationBuilder.CreateIndex(
+                name: "IX_Addresses_IsDeleted",
+                table: "Addresses",
+                column: "IsDeleted");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Addresses_UserId",
+                table: "Addresses",
+                column: "UserId");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_AspNetRoleClaims_RoleId",
                 table: "AspNetRoleClaims",
                 column: "RoleId");
@@ -370,9 +379,9 @@
                 filter: "[NormalizedUserName] IS NOT NULL");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Cities_RegionId",
-                table: "Cities",
-                column: "RegionId");
+                name: "IX_Orders_DeliveryAddressId",
+                table: "Orders",
+                column: "DeliveryAddressId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Orders_ProductId",
@@ -423,9 +432,6 @@
                 name: "AspNetUserTokens");
 
             migrationBuilder.DropTable(
-                name: "Cities");
-
-            migrationBuilder.DropTable(
                 name: "Orders");
 
             migrationBuilder.DropTable(
@@ -438,7 +444,7 @@
                 name: "AspNetRoles");
 
             migrationBuilder.DropTable(
-                name: "Regions");
+                name: "Addresses");
 
             migrationBuilder.DropTable(
                 name: "Products");

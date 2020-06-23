@@ -18,19 +18,17 @@
         {
         }
 
-        public DbSet<Product> Products { get; set; }
+        public DbSet<Address> Addresses { get; set; }
 
         public DbSet<Category> Categories { get; set; }
 
         public DbSet<Order> Orders { get; set; }
 
+        public DbSet<Product> Products { get; set; }
+
         public DbSet<ShoppingCart> ShoppingCarts { get; set; }
 
         public DbSet<Wishlist> Wishlists { get; set; }
-
-        public DbSet<Region> Regions { get; set; }
-
-        public DbSet<City> Cities { get; set; }
 
         public override Task<int> SaveChangesAsync(CancellationToken cancellationToken = default)
         {

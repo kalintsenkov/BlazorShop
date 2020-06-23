@@ -13,9 +13,13 @@
             public const int MinPasswordLength = 6;
         }
 
-        public class Region
+        public class Address
         {
-            public const int MaxNameLength = 255;
+            public const int MaxCountryLength = 255;
+            public const int MaxCityLength = 255;
+            public const int MaxStateLength = 255;
+            public const int MaxDescriptionLength = 1000;
+            public const int MaxPhoneNumberLength = 10;
         }
 
         public class Product

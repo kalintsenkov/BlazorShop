@@ -44,7 +44,7 @@
                 .HasIndex(u => u.IsDeleted);
 
             user
-                .HasQueryFilter(p => !p.IsDeleted);
+                .HasQueryFilter(u => !u.IsDeleted);
         }
     }
 }
