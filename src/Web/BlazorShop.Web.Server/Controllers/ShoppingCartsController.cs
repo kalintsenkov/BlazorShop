@@ -7,7 +7,7 @@
     using Microsoft.AspNetCore.Mvc;
 
     using Infrastructure.Extensions;
-    using Services.ShoppingCarts;
+    using Services;
     using Shared.ShoppingCarts;
 
     [Authorize]

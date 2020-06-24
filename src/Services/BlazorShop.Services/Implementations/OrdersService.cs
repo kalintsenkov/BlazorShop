@@ -1,4 +1,4 @@
-﻿namespace BlazorShop.Services.Orders
+﻿namespace BlazorShop.Services.Implementations
 {
     using System.Collections.Generic;
     using System.Linq;

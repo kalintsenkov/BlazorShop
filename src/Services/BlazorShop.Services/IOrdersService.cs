@@ -1,4 +1,4 @@
-﻿namespace BlazorShop.Services.Orders
+﻿namespace BlazorShop.Services
 {
     using System.Collections.Generic;
     using System.Threading.Tasks;

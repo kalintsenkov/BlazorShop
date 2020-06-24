@@ -1,4 +1,4 @@
-﻿namespace BlazorShop.Services.Identity
+﻿namespace BlazorShop.Services.Implementations
 {
     using System;
     using System.Collections.Generic;

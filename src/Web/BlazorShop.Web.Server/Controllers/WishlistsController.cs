@@ -7,7 +7,7 @@
     using Microsoft.AspNetCore.Mvc;
 
     using Infrastructure.Extensions;
-    using Services.Wishlists;
+    using Services;
     using Shared.Products;
 
     [Authorize]

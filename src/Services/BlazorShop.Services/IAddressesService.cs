@@ -1,4 +1,4 @@
-﻿namespace BlazorShop.Services.Addresses
+﻿namespace BlazorShop.Services
 {
     using System.Collections.Generic;
     using System.Threading.Tasks;

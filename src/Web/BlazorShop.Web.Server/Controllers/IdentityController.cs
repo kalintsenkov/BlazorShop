@@ -9,7 +9,7 @@
 
     using Data.Models;
     using Infrastructure.Extensions;
-    using Services.Identity;
+    using Services;
     using Shared.Identity;
 
     public class IdentityController : ApiController

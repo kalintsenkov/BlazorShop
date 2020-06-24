@@ -11,11 +11,8 @@
     using Data;
     using Data.Models;
     using Filters;
-    using Services.Categories;
-    using Services.Identity;
-    using Services.Products;
-    using Services.ShoppingCarts;
-    using Services.Wishlists;
+    using Services;
+    using Services.Implementations;
 
     public static class ServiceCollectionExtensions
     {

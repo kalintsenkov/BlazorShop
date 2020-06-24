@@ -39,7 +39,7 @@
     private readonly ShoppingCartAddRequestModel model = new ShoppingCartAddRequestModel();
 
     [Parameter] public int ProductId { get; set; }
-    [Parameter] public int ProductName { get; set; }
+    [Parameter] public string ProductName { get; set; }
     [Parameter] public int ProductQuantity { get; set; }
 
     private async Task OnSubmitAsync(int id)

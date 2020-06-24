@@ -63,8 +63,9 @@ else
                         </div>
                     </div>
 
-                    <AddToCartForm ProductId="product.Id"
-                                   ProductQuantity="product.Quantity" />
+                    <AddToCartForm ProductId="@product.Id"
+                                   ProductName="@product.Name"
+                                   ProductQuantity="@product.Quantity" />
 
                     <AuthorizeView Roles="@WebConstants.AdminRoleName">
                         <div class="product_meta">

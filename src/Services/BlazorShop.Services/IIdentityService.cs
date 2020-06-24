@@ -1,4 +1,4 @@
-﻿namespace BlazorShop.Services.Identity
+﻿namespace BlazorShop.Services
 {
     using System.Threading.Tasks;
 

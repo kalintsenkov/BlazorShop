@@ -7,7 +7,7 @@
     using Microsoft.AspNetCore.Mvc;
 
     using Infrastructure.Extensions;
-    using Services.Addresses;
+    using Services;
     using Shared.Addresses;
 
     [Authorize]
