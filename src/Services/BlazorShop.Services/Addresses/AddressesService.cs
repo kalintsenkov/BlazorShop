@@ -5,10 +5,10 @@
     using System.Threading.Tasks;
 
     using AutoMapper;
+    using Microsoft.EntityFrameworkCore;
 
     using Data;
     using Data.Models;
-    using Microsoft.EntityFrameworkCore;
     using Web.Shared.Addresses;
 
     public class AddressesService : BaseService<Address>, IAddressesService

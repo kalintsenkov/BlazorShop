@@ -1,0 +1,199 @@
+﻿@page "/checkout"
+@attribute [Authorize]
+
+@if (cartProducts == null)
+{
+    <LoadingScreen />
+}
+else
+{
+    <section class="page-title text-center">
+        <div class="container relative clearfix">
+            <div class="title-holder">
+                <div class="title-text">
+                    <h1 class="uppercase">Checkout</h1>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="section-wrap checkout pt-0 pb-50">
+        <div class="container relative">
+            <div class="row">
+
+                <div class="ecommerce col-xs-12">
+
+                    <form name="checkout" class="checkout ecommerce-checkout row">
+
+                        <div class="col-md-8" id="customer_details">
+                            <div>
+                                <h2 class="heading uppercase mb-30">billing address</h2>
+
+                                <p class="form-row form-row-first validate-required ecommerce-invalid ecommerce-invalid-required-field" id="billing_first_name_field">
+                                    <label for="billing_first_name">
+                                        First Name
+                                        <abbr class="required" title="required">*</abbr>
+                                    </label>
+                                    <input type="text" class="input-text" placeholder="First name" name="billing_first_name" id="billing_first_name">
+                                </p>
+
+                                <p class="form-row form-row-last validate-required ecommerce-invalid ecommerce-invalid-required-field" id="billing_last_name_field">
+                                    <label for="billing_last_name">
+                                        Last Name
+                                        <abbr class="required" title="required">*</abbr>
+                                    </label>
+                                    <input type="text" class="input-text" placeholder="Last name" name="billing_last_name" id="billing_last_name">
+                                </p>
+
+                                <p class="form-row form-row-wide address-field update_totals_on_change validate-required ecommerce-validated" id="billing_country_field">
+                                    <label for="billing_country">
+                                        Country
+                                        <abbr class="required" title="required">*</abbr>
+                                    </label>
+                                    <select name="country" id="countryId" class="countries" title="Country *">
+                                        <option value="">Select Country</option>
+                                    </select>
+                                </p>
+
+                                <p class="form-row form-row-wide address-field update_totals_on_change validate-required ecommerce-validated" id="billing_country_field">
+                                    <label for="billing_country">
+                                        State
+                                        <abbr class="required" title="required">*</abbr>
+                                    </label>
+                                    <select name="state" id="stateId" class="states" title="State *">
+                                        <option value="">Select State</option>
+                                    </select>
+                                </p>
+
+                                <p class="form-row form-row-wide address-field update_totals_on_change validate-required ecommerce-validated" id="billing_country_field">
+                                    <label for="billing_country">
+                                        City
+                                        <abbr class="required" title="required">*</abbr>
+                                    </label>
+                                    <select name="city" id="cityId" class="cities" title="City *">
+                                        <option value="">Select City</option>
+                                    </select>
+                                </p>
+
+                                <p class="form-row form-row-wide address-field validate-required ecommerce-invalid ecommerce-invalid-required-field" id="billing_address_1_field">
+                                    <label for="billing_address_1">
+                                        Address
+                                        <abbr class="required" title="required">*</abbr>
+                                    </label>
+                                    <input type="text" class="input-text" placeholder="Street address, apartment, suite, unit etc." name="billing_address_1" id="billing_address_1">
+                                </p>
+
+                                <p class="form-row form-row-wide address-field" id="billing_address_2_field"></p>
+
+                                <p class="form-row form-row-last address-field validate-required validate-postcode ecommerce-invalid ecommerce-invalid-required-field" id="billing_postcode_field" data-o_class="form-row form-row-last address-field validate-required validate-postcode">
+                                    <label for="billing_postcode">
+                                        Postcode
+                                        <abbr class="required" title="required">*</abbr>
+                                    </label>
+                                    <input type="text" class="input-text" placeholder="Postcode" name="billing_postcode" id="billing_postcode">
+                                </p>
+
+                                <p class="form-row form-row-last validate-required validate-phone" id="billing_phone_field">
+                                    <label for="billing_phone">
+                                        Phone
+                                        <abbr class="required" title="required">*</abbr>
+                                    </label>
+                                    <input type="text" class="input-text" placeholder="Phone" name="billing_phone" id="billing_phone">
+                                </p>
+
+                                <div class="clear"></div>
+
+                            </div>
+
+                            <div class="clear"></div>
+
+                        </div>
+
+                        <div class="col-md-4">
+                            <div class="order-review-wrap ecommerce-checkout-review-order" id="order_review">
+                                <h2 class="heading uppercase mb-30">Your Order</h2>
+                                <table class="table shop_table ecommerce-checkout-review-order-table">
+                                    <tbody>
+
+                                        @foreach (var product in cartProducts)
+                                        {
+                                            <tr>
+                                                <th>@product.Name<span class="count"> x @product.Quantity</span></th>
+                                                <td>
+                                                    <span class="amount">$@(product.Price * product.Quantity)</span>
+                                                </td>
+                                            </tr>
+                                        }
+
+                                        <tr class="cart-subtotal">
+                                            <th>Cart Subtotal</th>
+                                            <td>
+                                                <span class="amount">$@totalPrice</span>
+                                            </td>
+                                        </tr>
+
+                                        <tr class="shipping">
+                                            <th>Shipping</th>
+                                            <td>
+                                                <span>Free Shipping</span>
+                                            </td>
+                                        </tr>
+
+                                        <tr class="order-total">
+                                            <th><strong>Order Total</strong></th>
+                                            <td>
+                                                <strong><span class="amount">$@totalPrice</span></strong>
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+
+                                <div id="payment" class="ecommerce-checkout-payment">
+                                    <h2 class="heading uppercase mb-30">payment method</h2>
+                                    <ul class="payment_methods methods">
+
+                                        <li class="payment_method_bacs">
+                                            <input id="payment_method_bacs" type="radio" class="input-radio" name="payment_method" value="bacs" checked="checked">
+                                            <label for="payment_method_bacs">Direct Bank Transfer</label>
+                                            <div class="payment_box payment_method_bacs">
+                                                <p>Make your payment directly into our bank account. Please use your Order ID as the payment reference. Your order wont be shipped until the funds have cleared in our account.</p>
+                                            </div>
+                                        </li>
+
+                                        <li class="payment_method_paypal">
+                                            <input id="payment_method_paypal" type="radio" class="input-radio" name="payment_method" value="paypal">
+                                            <label for="payment_method_paypal">PayPal</label>
+                                            <div class="payment_box payment_method_paypal">
+                                                <p>Pay via PayPal: you can pay with your credit card if you don’t have a PayPal account.</p>
+                                            </div>
+                                        </li>
+
+                                    </ul>
+                                    <div class="form-row place-order">
+                                        <input type="submit" name="ecommerce_checkout_place_order" class="btn btn-lg" id="place_order" value="Place order">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+
+                </div>
+
+            </div>
+        </div>
+    </section>
+}
+
+@code {
+    private decimal totalPrice;
+    private ShoppingCartProductsResponseModel[] cartProducts;
+
+    protected override async Task OnInitializedAsync()
+    {
+        var token = await this.TokenProvider.GetTokenAsync();
+        this.Http.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
+
+        this.cartProducts = await this.Http.GetFromJsonAsync<ShoppingCartProductsResponseModel[]>("api/shoppingcarts");
+        this.totalPrice = this.cartProducts.Sum(p => p.Price * p.Quantity);
+    }
+}

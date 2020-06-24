@@ -1,4 +1,5 @@
 ﻿@page "/products/{Id:int}/{ProductName}"
+@inject IToastService ToastService
 
 @if (product == null)
 {
@@ -74,7 +75,9 @@ else
                             </div>
                             &nbsp;
                             <div class="icon-add-to-wishlist left">
-                                <a href="">
+                                <a href=""
+                                   @onclick:preventDefault
+                                   @onclick="() => OnDeleteAsync()">
                                     <i class="fa fa-trash"></i>
                                 </a>
                             </div>
@@ -131,5 +134,26 @@ else
     protected override async Task OnInitializedAsync()
     {
         this.product = await this.Http.GetFromJsonAsync<ProductsDetailsResponseModel>($"api/products/{this.Id}");
+    }
+
+    private async Task OnDeleteAsync()
+    {
+        var token = await this.TokenProvider.GetTokenAsync();
+
+        if (token != null)
+        {
+            this.Http.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
+
+            var response = await this.Http.DeleteAsync($"api/products/{this.Id}");
+            if (response.IsSuccessStatusCode)
+            {
+                this.NavigationManager.NavigateTo("/products");
+                this.ToastService.ShowSuccess($"Successfully deleted {this.ProductName}!", "Deleted!");
+            }
+        }
+        else
+        {
+            this.NavigationManager.NavigateTo("/account/login");
+        }
     }
 }
