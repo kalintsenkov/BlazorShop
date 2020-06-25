@@ -1,0 +1,32 @@
+﻿@using System.Net.Http
+@using System.Net.Http.Headers
+@using System.Net.Http.Json
+
+@using BlazorAnimate
+@using Blazored.Toast
+@using Blazored.Toast.Services
+@using Microsoft.AspNetCore.Authorization
+@using Microsoft.AspNetCore.Components.Authorization
+@using Microsoft.AspNetCore.Components.Forms
+@using Microsoft.AspNetCore.Components.Routing
+@using Microsoft.AspNetCore.Components.Web
+@using Microsoft.AspNetCore.Components.WebAssembly.Http
+@using Microsoft.JSInterop
+
+@using BlazorShop.Shared
+@using BlazorShop.Shared.Models.Addresses
+@using BlazorShop.Shared.Models.Categories
+@using BlazorShop.Shared.Models.Identity
+@using BlazorShop.Shared.Models.Orders
+@using BlazorShop.Shared.Models.Products
+@using BlazorShop.Shared.Models.ShoppingCarts
+@using BlazorShop.Web.Client.Components
+@using BlazorShop.Web.Client.Infrastructure
+@using BlazorShop.Web.Client.Pages.Account
+@using BlazorShop.Web.Client.Pages.Products
+@using BlazorShop.Web.Client.Shared
+
+@inject NavigationManager NavigationManager
+@inject HttpClient Http
+@inject IAuthClient AuthClient
+@inject TokenAuthenticationStateProvider TokenProvider
