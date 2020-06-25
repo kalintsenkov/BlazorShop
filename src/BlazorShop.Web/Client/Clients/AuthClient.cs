@@ -37,7 +37,7 @@
             return false;
         }
 
-        public async Task RegisterAsync(RegisterRequestModel model)
+        public async Task<HttpResponseMessage> RegisterAsync(RegisterRequestModel model)
             => await this.httpClient.PostAsJsonAsync("api/identity/register", model);
 
         public async Task LogoutAsync()

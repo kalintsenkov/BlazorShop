@@ -1,5 +1,6 @@
 ﻿namespace BlazorShop.Web.Client.Clients
 {
+    using System.Net.Http;
     using System.Threading.Tasks;
 
     using BlazorShop.Shared.Models.Identity;
@@ -8,7 +9,7 @@
     {
         Task<bool> LoginAsync(LoginRequestModel model);
 
-        Task RegisterAsync(RegisterRequestModel model);
+        Task<HttpResponseMessage> RegisterAsync(RegisterRequestModel model);
 
         Task LogoutAsync();
     }

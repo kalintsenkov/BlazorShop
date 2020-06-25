@@ -17,6 +17,7 @@
             <div class="col-md-4">
                 <EditForm Model="model" OnValidSubmit="Submit" class="login">
 
+                    <ServerValidator @ref="serverValidator" />
                     <DataAnnotationsValidator />
                     <ValidationSummary />
 
@@ -64,10 +65,19 @@
 
 @code {
     private readonly RegisterRequestModel model = new RegisterRequestModel();
+    private ServerValidator serverValidator;
 
     private async Task Submit()
     {
-        await this.AuthClient.RegisterAsync(model);
-        this.NavigationManager.NavigateTo("account/login");
+        var response = await this.AuthClient.RegisterAsync(model);
+
+        if (response.IsSuccessStatusCode)
+        {
+            this.NavigationManager.NavigateTo("account/login");
+        }
+        else
+        {
+            await this.serverValidator.Validate(response, model);
+        }
     }
 }
