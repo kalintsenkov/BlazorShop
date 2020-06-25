@@ -79,7 +79,7 @@ else
         var token = await this.TokenProvider.GetTokenAsync();
         this.Http.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
 
-        var response = await this.Http.PostAsJsonAsync<ProductsCreateRequestModel>("api/products", model);
+        var response = await this.Http.PostAsJsonAsync("api/products", model);
         var id = await response.Content.ReadFromJsonAsync<int>();
 
         this.NavigationManager.NavigateTo($"/products/{id}/{model.Name}");

@@ -8,6 +8,7 @@
 
     using Services;
     using Shared.Models.Categories;
+
     using static Shared.WebConstants;
 
     public class CategoriesController : ApiController

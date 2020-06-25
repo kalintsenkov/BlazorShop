@@ -5,7 +5,7 @@
 
     using Models;
 
-    using  static ModelConstants.Common;
+    using static ModelConstants.Common;
 
     public class CategoryConfiguration : IEntityTypeConfiguration<Category>
     {
@@ -15,6 +15,12 @@
                 .Property(c => c.Name)
                 .HasMaxLength(MaxNameLength)
                 .IsRequired();
+
+            category
+                .HasIndex(c => c.IsDeleted);
+
+            category
+                .HasQueryFilter(c => !c.IsDeleted);
         }
     }
 }

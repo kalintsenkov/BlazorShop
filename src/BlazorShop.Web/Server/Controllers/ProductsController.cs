@@ -8,6 +8,7 @@
 
     using Services;
     using Shared.Models.Products;
+
     using static Shared.WebConstants;
 
     public class ProductsController : ApiController

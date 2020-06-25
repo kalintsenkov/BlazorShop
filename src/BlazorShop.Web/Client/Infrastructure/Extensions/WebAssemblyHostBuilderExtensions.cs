@@ -8,6 +8,8 @@
     using Microsoft.AspNetCore.Components.WebAssembly.Hosting;
     using Microsoft.Extensions.DependencyInjection;
 
+    using Clients;
+
     public static class WebAssemblyHostBuilderExtensions
     {
         public static WebAssemblyHostBuilder AddRootComponents(this WebAssemblyHostBuilder builder)
@@ -26,7 +28,7 @@
                 .AddScoped<AuthenticationStateProvider>(provider => provider
                     .GetRequiredService<TokenAuthenticationStateProvider>())
                 .AddTransient<IAuthClient, AuthClient>()
-                .AddTransient(sp => new HttpClient 
+                .AddTransient(sp => new HttpClient
                 {
                     BaseAddress = new Uri(builder.HostEnvironment.BaseAddress)
                 });

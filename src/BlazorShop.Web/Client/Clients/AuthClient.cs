@@ -1,10 +1,13 @@
-﻿namespace BlazorShop.Web.Client.Infrastructure
+﻿namespace BlazorShop.Web.Client.Clients
 {
     using System.Net.Http;
     using System.Net.Http.Json;
     using System.Threading.Tasks;
-    using BlazorShop.Shared.Models.Identity;
+
     using Microsoft.AspNetCore.Components.Authorization;
+
+    using BlazorShop.Shared.Models.Identity;
+    using Infrastructure;
 
     public class AuthClient : IAuthClient
     {
