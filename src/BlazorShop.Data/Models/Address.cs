@@ -14,7 +14,7 @@
 
         public string Description { get; set; }
 
-        public int PostalCode { get; set; }
+        public string PostalCode { get; set; }
 
         public string PhoneNumber { get; set; }
 
@@ -22,6 +22,6 @@
 
         public ApplicationUser User { get; set; }
 
-        public ICollection<Order> Orders { get; set; } = new HashSet<Order>();
+        public ICollection<Order> Orders { get; } = new HashSet<Order>();
     }
 }

@@ -68,8 +68,10 @@
 
         public static IServiceCollection AddApplicationServices(this IServiceCollection services)
             => services
+                .AddTransient<IAddressesService, AddressesService>()
                 .AddTransient<ICategoriesService, CategoriesService>()
                 .AddTransient<IIdentityService, IdentityService>()
+                .AddTransient<IOrdersService, OrdersService>()
                 .AddTransient<IProductsService, ProductsService>()
                 .AddTransient<IShoppingCartsService, ShoppingCartsService>()
                 .AddTransient<IWishlistsService, WishlistsService>();

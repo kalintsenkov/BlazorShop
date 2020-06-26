@@ -14,10 +14,24 @@
 
         [Required]
         [StringLength(
-            MaxNameLength, 
-            ErrorMessage = StringLengthErrorMessage, 
+            MaxNameLength,
+            ErrorMessage = StringLengthErrorMessage,
             MinimumLength = MinNameLength)]
         public string Username { get; set; }
+
+        [Required]
+        [StringLength(
+            MaxNameLength,
+            ErrorMessage = StringLengthErrorMessage,
+            MinimumLength = MinNameLength)]
+        public string FirstName { get; set; }
+
+        [Required]
+        [StringLength(
+            MaxNameLength,
+            ErrorMessage = StringLengthErrorMessage,
+            MinimumLength = MinNameLength)]
+        public string LastName { get; set; }
 
         [Required]
         [MinLength(MinPasswordLength)]

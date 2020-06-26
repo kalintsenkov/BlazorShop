@@ -34,6 +34,8 @@
             var result = await this.identityService.CreateAsync(
                 model.Username, 
                 model.Email, 
+                model.FirstName,
+                model.LastName,
                 model.Password);
 
             if (result.Succeeded)

@@ -39,6 +39,22 @@
 
                     <p class="form-row form-row-wide">
                         <label>
+                            first name
+                            <abbr class="required" title="Required">*</abbr>
+                        </label>
+                        <InputText @bind-Value="model.FirstName" type="text" class="form-control" placeholder="First name" />
+                    </p>
+
+                    <p class="form-row form-row-wide">
+                        <label>
+                            last name
+                            <abbr class="required" title="Required">*</abbr>
+                        </label>
+                        <InputText @bind-Value="model.LastName" type="text" class="form-control" placeholder="Last name" />
+                    </p>
+
+                    <p class="form-row form-row-wide">
+                        <label>
                             password
                             <abbr class="required" title="Required">*</abbr>
                         </label>

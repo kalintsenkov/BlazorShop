@@ -8,7 +8,9 @@
     {
         Task<IdentityResult> CreateAsync(
             string userName, 
-            string email, 
+            string email,
+            string firstName,
+            string lastName,
             string password);
 
         Task<IdentityResult> ChangePassword(

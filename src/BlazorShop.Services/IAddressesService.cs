@@ -12,7 +12,7 @@
             string state,
             string city,
             string description,
-            int postalCode,
+            string postalCode,
             string phoneNumber,
             string userId);
 

@@ -13,19 +13,19 @@
     [Authorize]
     public class WishlistsController : ApiController
     {
-        private readonly IWishlistsService wishlistService;
+        private readonly IWishlistsService wishlistsService;
 
-        public WishlistsController(IWishlistsService wishlistService)
-            => this.wishlistService = wishlistService;
+        public WishlistsController(IWishlistsService wishlistsService)
+            => this.wishlistsService = wishlistsService;
 
         [HttpGet]
         public async Task<IEnumerable<ProductsListingResponseModel>> All()
-            => await this.wishlistService.GetByUserIdAsync(this.User.GetId());
+            => await this.wishlistsService.GetByUserIdAsync(this.User.GetId());
 
         [HttpPost(Id)]
         public async Task<ActionResult> Add(int id)
         {
-            await this.wishlistService.AddAsync(id, this.User.GetId());
+            await this.wishlistsService.AddAsync(id, this.User.GetId());
 
             return Ok();
         }
@@ -33,7 +33,7 @@
         [HttpDelete(Id)]
         public async Task<ActionResult> Remove(int id)
         {
-            var removed = await this.wishlistService.RemoveAsync(id, this.User.GetId());
+            var removed = await this.wishlistsService.RemoveAsync(id, this.User.GetId());
             if (!removed)
             {
                 return BadRequest();

@@ -32,6 +32,11 @@
                 .IsRequired();
 
             address
+                .Property(a => a.PostalCode)
+                .HasMaxLength(MaxPostalCodeLength)
+                .IsRequired();
+
+            address
                 .Property(a => a.PhoneNumber)
                 .HasMaxLength(MaxPhoneNumberLength)
                 .IsRequired();

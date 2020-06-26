@@ -3,7 +3,6 @@
     using System;
 
     public abstract class BaseModel<TKey> : IAuditInfo
-        where TKey : struct
     {
         public TKey Id { get; set; }
 

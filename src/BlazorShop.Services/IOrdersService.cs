@@ -7,7 +7,7 @@
 
     public interface IOrdersService
     {
-        Task PurchaseAsync(string userId, int deliveryAddressId);
+        Task<string> PurchaseAsync(int deliveryAddressId, string userId);
 
         Task<IEnumerable<OrdersListingResponseModel>> GetAllByUserIdAsync(string userId);
     }

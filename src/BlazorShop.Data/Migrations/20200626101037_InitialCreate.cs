@@ -109,7 +109,7 @@
                     State = table.Column<string>(maxLength: 255, nullable: false),
                     City = table.Column<string>(maxLength: 255, nullable: false),
                     Description = table.Column<string>(maxLength: 1000, nullable: false),
-                    PostalCode = table.Column<int>(nullable: false),
+                    PostalCode = table.Column<string>(maxLength: 10, nullable: false),
                     PhoneNumber = table.Column<string>(maxLength: 10, nullable: false),
                     UserId = table.Column<string>(nullable: false)
                 },
@@ -241,26 +241,19 @@
                 name: "Orders",
                 columns: table => new
                 {
-                    UserId = table.Column<string>(nullable: false),
-                    ProductId = table.Column<int>(nullable: false),
-                    Quantity = table.Column<int>(nullable: false),
+                    Id = table.Column<string>(nullable: false),
                     CreatedOn = table.Column<DateTime>(nullable: false),
                     ModifiedOn = table.Column<DateTime>(nullable: true),
+                    UserId = table.Column<string>(nullable: false),
                     DeliveryAddressId = table.Column<int>(nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Orders", x => new { x.UserId, x.ProductId });
+                    table.PrimaryKey("PK_Orders", x => x.Id);
                     table.ForeignKey(
                         name: "FK_Orders_Addresses_DeliveryAddressId",
                         column: x => x.DeliveryAddressId,
                         principalTable: "Addresses",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
-                    table.ForeignKey(
-                        name: "FK_Orders_Products_ProductId",
-                        column: x => x.ProductId,
-                        principalTable: "Products",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
@@ -322,6 +315,31 @@
                         name: "FK_Wishlists_AspNetUsers_UserId",
                         column: x => x.UserId,
                         principalTable: "AspNetUsers",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "OrdersProducts",
+                columns: table => new
+                {
+                    OrderId = table.Column<string>(nullable: false),
+                    ProductId = table.Column<int>(nullable: false),
+                    Quantity = table.Column<int>(nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_OrdersProducts", x => new { x.OrderId, x.ProductId });
+                    table.ForeignKey(
+                        name: "FK_OrdersProducts_Orders_OrderId",
+                        column: x => x.OrderId,
+                        principalTable: "Orders",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
+                    table.ForeignKey(
+                        name: "FK_OrdersProducts_Products_ProductId",
+                        column: x => x.ProductId,
+                        principalTable: "Products",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Restrict);
                 });
@@ -391,8 +409,13 @@
                 column: "DeliveryAddressId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Orders_ProductId",
+                name: "IX_Orders_UserId",
                 table: "Orders",
+                column: "UserId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_OrdersProducts_ProductId",
+                table: "OrdersProducts",
                 column: "ProductId");
 
             migrationBuilder.CreateIndex(
@@ -439,7 +462,7 @@
                 name: "AspNetUserTokens");
 
             migrationBuilder.DropTable(
-                name: "Orders");
+                name: "OrdersProducts");
 
             migrationBuilder.DropTable(
                 name: "ShoppingCarts");
@@ -451,16 +474,19 @@
                 name: "AspNetRoles");
 
             migrationBuilder.DropTable(
-                name: "Addresses");
+                name: "Orders");
 
             migrationBuilder.DropTable(
                 name: "Products");
 
             migrationBuilder.DropTable(
-                name: "AspNetUsers");
+                name: "Addresses");
 
             migrationBuilder.DropTable(
                 name: "Categories");
+
+            migrationBuilder.DropTable(
+                name: "AspNetUsers");
         }
     }
 }

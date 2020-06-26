@@ -24,12 +24,16 @@
         public async Task<IdentityResult> CreateAsync(
             string userName,
             string email,
+            string firstName,
+            string lastName,
             string password)
         {
             var user = new ApplicationUser
             {
                 Email = email,
-                UserName = userName
+                UserName = userName,
+                FirstName = firstName,
+                LastName = lastName
             };
 
             return await this.userManager.CreateAsync(user, password);

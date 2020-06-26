@@ -1,5 +1,6 @@
 ﻿@page "/checkout"
 @attribute [Authorize]
+@inject IToastService ToastService
 
 @if (cartProducts == null)
 {
@@ -23,56 +24,31 @@ else
 
                 <div class="ecommerce col-xs-12">
 
-                    <form name="checkout" class="checkout ecommerce-checkout row">
+                    <EditForm Model="address" OnValidSubmit="SubmitAsync">
 
                         <div class="col-md-8" id="customer_details">
                             <div>
                                 <h2 class="heading uppercase mb-30">billing address</h2>
 
-                                <p class="form-row form-row-first validate-required ecommerce-invalid ecommerce-invalid-required-field" id="billing_first_name_field">
-                                    <label for="billing_first_name">
-                                        First Name
-                                        <abbr class="required" title="required">*</abbr>
-                                    </label>
-                                    <input type="text" class="input-text" placeholder="First name" name="billing_first_name" id="billing_first_name">
+                                <DataAnnotationsValidator />
+                                <ValidationSummary />
+
+                                <p class="form-row form-row-first address-field validate-state" id="billing_state_field" data-o_class="form-row form-row-first address-field validate-state">
+                                    <label for="billing_state">County</label>
+                                    <input @bind-value="address.Country" type="text" class="input-text" placeholder="Country" name="billing_state" id="billing_state" />
                                 </p>
 
-                                <p class="form-row form-row-last validate-required ecommerce-invalid ecommerce-invalid-required-field" id="billing_last_name_field">
-                                    <label for="billing_last_name">
-                                        Last Name
-                                        <abbr class="required" title="required">*</abbr>
-                                    </label>
-                                    <input type="text" class="input-text" placeholder="Last name" name="billing_last_name" id="billing_last_name">
+                                <p class="form-row form-row-first address-field validate-state" id="billing_state_field" data-o_class="form-row form-row-first address-field validate-state">
+                                    <label for="billing_state">State</label>
+                                    <input @bind-value="address.State" type="text" class="input-text" placeholder="State" name="billing_state" id="billing_state" />
                                 </p>
 
-                                <p class="form-row form-row-wide address-field update_totals_on_change validate-required ecommerce-validated" id="billing_country_field">
-                                    <label for="billing_country">
-                                        Country
+                                <p class="form-row form-row-wide address-field validate-required" id="billing_city_field" data-o_class="form-row form-row-wide address-field validate-required">
+                                    <label for="billing_city">
+                                        Town / City
                                         <abbr class="required" title="required">*</abbr>
                                     </label>
-                                    <select name="country" id="countryId" class="countries" title="Country *">
-                                        <option value="">Select Country</option>
-                                    </select>
-                                </p>
-
-                                <p class="form-row form-row-wide address-field update_totals_on_change validate-required ecommerce-validated" id="billing_country_field">
-                                    <label for="billing_country">
-                                        State
-                                        <abbr class="required" title="required">*</abbr>
-                                    </label>
-                                    <select name="state" id="stateId" class="states" title="State *">
-                                        <option value="">Select State</option>
-                                    </select>
-                                </p>
-
-                                <p class="form-row form-row-wide address-field update_totals_on_change validate-required ecommerce-validated" id="billing_country_field">
-                                    <label for="billing_country">
-                                        City
-                                        <abbr class="required" title="required">*</abbr>
-                                    </label>
-                                    <select name="city" id="cityId" class="cities" title="City *">
-                                        <option value="">Select City</option>
-                                    </select>
+                                    <input @bind-value="address.City" type="text" class="input-text" placeholder="Town / City" name="billing_city" id="billing_city" />
                                 </p>
 
                                 <p class="form-row form-row-wide address-field validate-required ecommerce-invalid ecommerce-invalid-required-field" id="billing_address_1_field">
@@ -80,7 +56,7 @@ else
                                         Address
                                         <abbr class="required" title="required">*</abbr>
                                     </label>
-                                    <input type="text" class="input-text" placeholder="Street address, apartment, suite, unit etc." name="billing_address_1" id="billing_address_1">
+                                    <input @bind-value="address.Description" type="text" class="input-text" placeholder="Street address, apartment, suite, unit etc. (optional)" name="billing_address_1" id="billing_address_1" />
                                 </p>
 
                                 <p class="form-row form-row-wide address-field" id="billing_address_2_field"></p>
@@ -90,7 +66,7 @@ else
                                         Postcode
                                         <abbr class="required" title="required">*</abbr>
                                     </label>
-                                    <input type="text" class="input-text" placeholder="Postcode" name="billing_postcode" id="billing_postcode">
+                                    <input @bind-value="address.PostalCode" type="text" class="input-text" placeholder="Postcode" name="billing_postcode" id="billing_postcode" />
                                 </p>
 
                                 <p class="form-row form-row-last validate-required validate-phone" id="billing_phone_field">
@@ -98,7 +74,7 @@ else
                                         Phone
                                         <abbr class="required" title="required">*</abbr>
                                     </label>
-                                    <input type="text" class="input-text" placeholder="Phone" name="billing_phone" id="billing_phone">
+                                    <input @bind-value="address.PhoneNumber" type="text" class="input-text" placeholder="Phone" name="billing_phone" id="billing_phone" />
                                 </p>
 
                                 <div class="clear"></div>
@@ -169,13 +145,15 @@ else
                                         </li>
 
                                     </ul>
+
                                     <div class="form-row place-order">
                                         <input type="submit" name="ecommerce_checkout_place_order" class="btn btn-lg" id="place_order" value="Place order">
                                     </div>
                                 </div>
                             </div>
                         </div>
-                    </form>
+
+                    </EditForm>
 
                 </div>
 
@@ -185,6 +163,8 @@ else
 }
 
 @code {
+    private AddressCreateRequestModel address = new AddressCreateRequestModel();
+
     private decimal totalPrice;
     private ShoppingCartProductsResponseModel[] cartProducts;
 
@@ -195,5 +175,16 @@ else
 
         this.cartProducts = await this.Http.GetFromJsonAsync<ShoppingCartProductsResponseModel[]>("api/shoppingcarts");
         this.totalPrice = this.cartProducts.Sum(p => p.Price * p.Quantity);
+    }
+
+    private async Task SubmitAsync()
+    {
+        var response = await this.Http.PostAsJsonAsync("api/addresses", address);
+        var addressId = await response.Content.ReadFromJsonAsync<int>();
+
+        await this.Http.PostAsJsonAsync("api/orders", addressId);
+
+        this.ToastService.ShowSuccess("Items successfully purchased", "Congratulations");
+        this.NavigationManager.NavigateTo("/products");
     }
 }

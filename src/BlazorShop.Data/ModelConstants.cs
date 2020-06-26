@@ -19,6 +19,7 @@
             public const int MaxCityLength = 255;
             public const int MaxStateLength = 255;
             public const int MaxDescriptionLength = 1000;
+            public const int MaxPostalCodeLength = 10;
             public const int MaxPhoneNumberLength = 10;
         }
 

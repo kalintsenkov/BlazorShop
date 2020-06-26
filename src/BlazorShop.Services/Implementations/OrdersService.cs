@@ -18,24 +18,39 @@
         {
         }
 
-        public async Task PurchaseAsync(string userId, int deliveryAddressId)
+        public async Task<string> PurchaseAsync(int deliveryAddressId, string userId)
         {
-            await this
+            var order = new Order
+            {
+                UserId = userId,
+                DeliveryAddressId = deliveryAddressId
+            };
+
+            await this.Data.AddAsync(order);
+
+            var shoppingCart = await this
                 .Data
                 .ShoppingCarts
                 .Where(sc => sc.UserId == userId)
-                .ForEachAsync(async product =>
+                .ToListAsync();
+
+            foreach (var cart in shoppingCart)
+            {
+                var orderProduct = new OrderProduct
                 {
-                    await this.Data.Orders.AddAsync(new Order
-                    {
-                        UserId = userId,
-                        ProductId = product.ProductId,
-                        Quantity = product.Quantity,
-                        DeliveryAddressId = deliveryAddressId
-                    });
-                });
+                    OrderId = order.Id,
+                    ProductId = cart.ProductId,
+                    Quantity = cart.Quantity
+                };
+
+                await this.Data.AddAsync(orderProduct);
+            }
+
+            this.Data.RemoveRange(shoppingCart);
 
             await this.Data.SaveChangesAsync();
+
+            return order.Id;
         }
 
         public async Task<IEnumerable<OrdersListingResponseModel>> GetAllByUserIdAsync(string userId)
