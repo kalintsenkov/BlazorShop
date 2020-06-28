@@ -21,7 +21,7 @@
         {
             var category = new Category { Name = name };
 
-            await this.Data.Categories.AddAsync(category);
+            await this.Data.AddAsync(category);
             await this.Data.SaveChangesAsync();
 
             return category.Id;

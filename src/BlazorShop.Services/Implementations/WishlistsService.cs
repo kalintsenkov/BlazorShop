@@ -29,7 +29,7 @@
                     ProductId = productId
                 };
 
-                await this.Data.Wishlists.AddAsync(wishlist);
+                await this.Data.AddAsync(wishlist);
             }
             else
             {

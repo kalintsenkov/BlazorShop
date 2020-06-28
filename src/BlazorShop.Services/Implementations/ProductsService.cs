@@ -36,7 +36,7 @@
                 CategoryId = categoryId
             };
 
-            await this.Data.Products.AddAsync(product);
+            await this.Data.AddAsync(product);
             await this.Data.SaveChangesAsync();
 
             return product.Id;

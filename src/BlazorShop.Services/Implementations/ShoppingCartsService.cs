@@ -27,7 +27,7 @@
                 Quantity = quantity
             };
 
-            await this.Data.ShoppingCarts.AddAsync(shoppingCart);
+            await this.Data.AddAsync(shoppingCart);
             await this.Data.SaveChangesAsync();
         }
 

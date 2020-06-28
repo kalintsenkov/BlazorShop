@@ -1,0 +1,6 @@
+﻿{
+  "ConnectionStrings": {
+    "DefaultConnection": "My Fake Connection String"
+  },
+  "AllowedHosts": "*"
+}
