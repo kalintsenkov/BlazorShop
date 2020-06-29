@@ -14,8 +14,19 @@
     using Services;
     using Services.Implementations;
 
+    using static Data.ModelConstants.Identity;
+
     public static class ServiceCollectionExtensions
     {
+        public static ApplicationSettings GetApplicationSettings(
+            this IServiceCollection services,
+            IConfiguration configuration)
+        {
+            var applicationSettingsConfiguration = configuration.GetSection(nameof(ApplicationSettings));
+            services.Configure<ApplicationSettings>(applicationSettingsConfiguration);
+            return applicationSettingsConfiguration.Get<ApplicationSettings>();
+        }
+
         public static IServiceCollection AddDatabase(
             this IServiceCollection services,
             IConfiguration configuration)
@@ -26,8 +37,15 @@
         public static IServiceCollection AddIdentity(this IServiceCollection services)
         {
             services
-                .AddIdentity<ApplicationUser, ApplicationRole>(options => options
-                    .SetIdentityOptions())
+                .AddIdentity<ApplicationUser, ApplicationRole>(options =>
+                {
+                    options.Password.RequiredLength = MinPasswordLength;
+                    options.Password.RequireDigit = false;
+                    options.Password.RequireLowercase = false;
+                    options.Password.RequireNonAlphanumeric = false;
+                    options.Password.RequireUppercase = false;
+                    options.User.RequireUniqueEmail = true;
+                })
                 .AddEntityFrameworkStores<ApplicationDbContext>();
 
             return services;
@@ -35,31 +53,26 @@
 
         public static IServiceCollection AddJwtAuthentication(
             this IServiceCollection services,
-            IConfiguration configuration)
+            ApplicationSettings applicationSettings)
         {
-            var key = Encoding.UTF8.GetBytes(configuration.GetJwtKey());
-            var issuer = configuration.GetJwtIssuer();
-            var audience = configuration.GetJwtAudience();
+            var key = Encoding.ASCII.GetBytes(applicationSettings.Secret);
 
             services
-                .AddAuthentication(x =>
+                .AddAuthentication(authentication =>
                 {
-                    x.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
-                    x.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+                    authentication.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
+                    authentication.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
                 })
-                .AddJwtBearer(x =>
+                .AddJwtBearer(bearer =>
                 {
-                    x.RequireHttpsMetadata = false;
-                    x.SaveToken = true;
-                    x.TokenValidationParameters = new TokenValidationParameters
+                    bearer.RequireHttpsMetadata = false;
+                    bearer.SaveToken = true;
+                    bearer.TokenValidationParameters = new TokenValidationParameters
                     {
-                        ValidateIssuer = true,
-                        ValidateAudience = true,
-                        ValidateLifetime = true,
                         ValidateIssuerSigningKey = true,
-                        ValidIssuer = issuer,
-                        ValidAudience = audience,
-                        IssuerSigningKey = new SymmetricSecurityKey(key)
+                        IssuerSigningKey = new SymmetricSecurityKey(key),
+                        ValidateIssuer = false,
+                        ValidateAudience = false
                     };
                 });
 

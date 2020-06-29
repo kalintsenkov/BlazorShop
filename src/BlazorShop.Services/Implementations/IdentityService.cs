@@ -18,45 +18,12 @@
     {
         private readonly UserManager<ApplicationUser> userManager;
 
-        public IdentityService(UserManager<ApplicationUser> userManager) 
+        public IdentityService(UserManager<ApplicationUser> userManager)
             => this.userManager = userManager;
 
-        public async Task<IdentityResult> CreateAsync(
-            string userName,
-            string email,
-            string firstName,
-            string lastName,
-            string password)
+        public async Task<string> GenerateJwtAsync(string userId, string userName, string secret)
         {
-            var user = new ApplicationUser
-            {
-                Email = email,
-                UserName = userName,
-                FirstName = firstName,
-                LastName = lastName
-            };
-
-            return await this.userManager.CreateAsync(user, password);
-        }
-
-        public async Task<IdentityResult> ChangePassword(
-            string userId,
-            string password,
-            string newPassword)
-        {
-            var user = await this.userManager.FindByIdAsync(userId);
-
-            return await this.userManager.ChangePasswordAsync(user, password, newPassword);
-        }
-
-        public async Task<string> GenerateJwtAsync(
-            string userId,
-            string userName,
-            string key,
-            string issuer,
-            string audience)
-        {
-            var securityKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(key));
+            var securityKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(secret));
 
             var claims = new List<Claim>
             {
@@ -64,30 +31,21 @@
                 new Claim(ClaimTypes.Name, userName)
             };
 
-            var isInAdminRole = await this.IsInAdminRole(userId);
-            if (isInAdminRole)
+            var user = await this.userManager.FindByIdAsync(userId);
+
+            var isAdministrator = await this.userManager.IsInRoleAsync(user, AdminRoleName);
+            if (isAdministrator)
             {
                 claims.Add(new Claim(ClaimTypes.Role, AdminRoleName));
             }
 
             var token = new JwtSecurityToken(
-                issuer,
-                audience,
-                claims,
+                claims: claims,
                 expires: DateTime.UtcNow.AddDays(7),
-                signingCredentials: new SigningCredentials(
-                    securityKey,
-                    SecurityAlgorithms.HmacSha256));
+                signingCredentials: new SigningCredentials(securityKey, SecurityAlgorithms.HmacSha256));
 
             var tokenHandler = new JwtSecurityTokenHandler();
             return tokenHandler.WriteToken(token);
-        }
-
-        private async Task<bool> IsInAdminRole(string userId)
-        {
-            var user = await this.userManager.FindByIdAsync(userId);
-
-            return await this.userManager.IsInRoleAsync(user, AdminRoleName);
         }
     }
 }

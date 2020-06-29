@@ -19,7 +19,7 @@ namespace BlazorShop.Web.Server
             => services
                 .AddDatabase(this.Configuration)
                 .AddIdentity()
-                .AddJwtAuthentication(this.Configuration)
+                .AddJwtAuthentication(services.GetApplicationSettings(this.Configuration))
                 .AddAutoMapper(this.GetType())
                 .AddApplicationServices()
                 .AddApiControllers();
