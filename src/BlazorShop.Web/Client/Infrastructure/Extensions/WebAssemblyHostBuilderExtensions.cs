@@ -25,8 +25,7 @@
                 .AddAuthorizationCore()
                 .AddBlazoredToast()
                 .AddScoped<TokenAuthenticationStateProvider>()
-                .AddScoped<AuthenticationStateProvider>(provider => provider
-                    .GetRequiredService<TokenAuthenticationStateProvider>())
+                .AddScoped<AuthenticationStateProvider, TokenAuthenticationStateProvider>()
                 .AddTransient<IAuthClient, AuthClient>()
                 .AddTransient(sp => new HttpClient
                 {

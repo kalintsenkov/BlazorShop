@@ -18,7 +18,7 @@
         {
         }
 
-        public async Task AddAsync(int productId, string userId, int quantity)
+        public async Task AddAsync(int productId, int quantity, string userId)
         {
             var shoppingCart = new ShoppingCart
             {
@@ -31,7 +31,7 @@
             await this.Data.SaveChangesAsync();
         }
 
-        public async Task<bool> UpdateAsync(int productId, string userId, int quantity)
+        public async Task<bool> UpdateAsync(int productId, int quantity, string userId)
         {
             var shoppingCart = await this.GetByProductIdAndUserIdAsync(productId, userId);
             if (shoppingCart == null)

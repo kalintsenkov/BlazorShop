@@ -23,20 +23,20 @@
             => await this.shoppingCartService.GetByUserIdAsync(this.User.GetId());
 
         [HttpPost(Id)]
-        public async Task<ActionResult> Add(int id, ShoppingCartRequestModel request)
+        public async Task<ActionResult> Add(int id, ShoppingCartRequestModel model)
         {
-            await this.shoppingCartService.AddAsync(id, this.User.GetId(), request.Quantity);
+            await this.shoppingCartService.AddAsync(id, model.Quantity, this.User.GetId());
 
             return Ok();
         }
 
         [HttpPut(Id)]
-        public async Task<ActionResult> Update(int id, ShoppingCartRequestModel request)
+        public async Task<ActionResult> Update(int id, ShoppingCartRequestModel model)
         {
             var updated = await this.shoppingCartService.UpdateAsync(
-                id, 
-                this.User.GetId(), 
-                request.Quantity);
+                id,
+                model.Quantity,
+                this.User.GetId());
 
             if (!updated)
             {
