@@ -3,7 +3,7 @@
     using Data.Models;
     using Mapping;
 
-    public class ProductsListingResponseModel : IMapFrom<Product>
+    public class ProductListingResponseModel : IMapFrom<Product>
     {
         public int Id { get; set; }
 

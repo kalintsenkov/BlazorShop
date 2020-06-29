@@ -1,6 +1,6 @@
 ﻿namespace BlazorShop.Shared.Models.Products
 {
-    public class ProductsDetailsResponseModel : ProductsListingResponseModel
+    public class ProductDetailsResponseModel : ProductListingResponseModel
     {
         public string Description { get; set; }
 

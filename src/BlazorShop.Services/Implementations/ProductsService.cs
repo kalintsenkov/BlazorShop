@@ -84,21 +84,21 @@
             return true;
         }
 
-        public async Task<ProductsDetailsResponseModel> DetailsAsync(int id)
+        public async Task<ProductDetailsResponseModel> DetailsAsync(int id)
             => await this.Mapper
-                .ProjectTo<ProductsDetailsResponseModel>(this
+                .ProjectTo<ProductDetailsResponseModel>(this
                     .AllAsNoTracking()
                     .Where(p => p.Id == id))
                 .FirstOrDefaultAsync();
 
-        public async Task<IEnumerable<ProductsListingResponseModel>> GetAllAsync()
+        public async Task<IEnumerable<ProductListingResponseModel>> GetAllAsync()
             => await this.Mapper
-                .ProjectTo<ProductsListingResponseModel>(this.AllAsNoTracking())
+                .ProjectTo<ProductListingResponseModel>(this.AllAsNoTracking())
                 .ToListAsync();
 
-        public async Task<IEnumerable<ProductsListingResponseModel>> GetAllByCategoryIdAsync(int categoryId)
+        public async Task<IEnumerable<ProductListingResponseModel>> GetAllByCategoryIdAsync(int categoryId)
             => await this.Mapper
-                .ProjectTo<ProductsListingResponseModel>(this
+                .ProjectTo<ProductListingResponseModel>(this
                     .AllAsNoTracking()
                     .Where(p => p.CategoryId == categoryId))
                 .ToListAsync();

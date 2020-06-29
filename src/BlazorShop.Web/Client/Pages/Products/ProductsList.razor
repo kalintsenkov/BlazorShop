@@ -55,8 +55,8 @@ else
 }
 
 @code {
-    private ProductsListingResponseModel[] products;
-    private CategoriesListingResponseModel[] categories;
+    private ProductListingResponseModel[] products;
+    private CategoryListingResponseModel[] categories;
 
     [Parameter] public int CategoryId { get; set; }
 
@@ -68,7 +68,7 @@ else
     {
         var requestUri = this.CategoryId == 0 ? "api/products" : $"api/products/ByCategory/{this.CategoryId}";
 
-        this.products = await this.Http.GetFromJsonAsync<ProductsListingResponseModel[]>(requestUri);
-        this.categories = await this.Http.GetFromJsonAsync<CategoriesListingResponseModel[]>("api/categories");
+        this.products = await this.Http.GetFromJsonAsync<ProductListingResponseModel[]>(requestUri);
+        this.categories = await this.Http.GetFromJsonAsync<CategoryListingResponseModel[]>("api/categories");
     }
 }

@@ -53,9 +53,9 @@
             return order.Id;
         }
 
-        public async Task<IEnumerable<OrdersListingResponseModel>> GetAllByUserIdAsync(string userId)
+        public async Task<IEnumerable<OrderListingResponseModel>> GetAllByUserIdAsync(string userId)
             => await this.Mapper
-                .ProjectTo<OrdersListingResponseModel>(this
+                .ProjectTo<OrderListingResponseModel>(this
                     .AllAsNoTracking()
                     .Where(o => o.UserId == userId))
                 .ToListAsync();

@@ -26,10 +26,10 @@
 
         Task<bool> DeleteAsync(int id);
 
-        Task<ProductsDetailsResponseModel> DetailsAsync(int id);
+        Task<ProductDetailsResponseModel> DetailsAsync(int id);
 
-        Task<IEnumerable<ProductsListingResponseModel>> GetAllAsync();
+        Task<IEnumerable<ProductListingResponseModel>> GetAllAsync();
 
-        Task<IEnumerable<ProductsListingResponseModel>> GetAllByCategoryIdAsync(int categoryId);
+        Task<IEnumerable<ProductListingResponseModel>> GetAllByCategoryIdAsync(int categoryId);
     }
 }

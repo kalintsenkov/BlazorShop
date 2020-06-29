@@ -65,15 +65,15 @@ else
 }
 
 @code {
-    private ProductsUpdateRequestModel model;
-    private CategoriesListingResponseModel[] categories;
+    private ProductRequestModel model;
+    private CategoryListingResponseModel[] categories;
 
     [Parameter] public int Id { get; set; }
 
     protected override async Task OnInitializedAsync()
     {
-        this.model = await this.Http.GetFromJsonAsync<ProductsUpdateRequestModel>($"api/products/{this.Id}");
-        this.categories = await this.Http.GetFromJsonAsync<CategoriesListingResponseModel[]>("api/categories");
+        this.model = await this.Http.GetFromJsonAsync<ProductRequestModel>($"api/products/{this.Id}");
+        this.categories = await this.Http.GetFromJsonAsync<CategoryListingResponseModel[]>("api/categories");
     }
 
     private async Task SubmitAsync()
@@ -81,7 +81,7 @@ else
         var token = await this.TokenProvider.GetTokenAsync();
         this.Http.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
 
-        await this.Http.PutAsJsonAsync<ProductsUpdateRequestModel>($"api/products/{this.Id}", model);
+        await this.Http.PutAsJsonAsync<ProductRequestModel>($"api/products/{this.Id}", model);
 
         this.NavigationManager.NavigateTo($"/products/{this.Id}/{model.Name}");
     }

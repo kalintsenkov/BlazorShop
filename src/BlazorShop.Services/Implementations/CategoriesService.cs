@@ -57,9 +57,9 @@
             return true;
         }
 
-        public async Task<IEnumerable<CategoriesListingResponseModel>> GetAllAsync()
+        public async Task<IEnumerable<CategoryListingResponseModel>> GetAllAsync()
             => await this.Mapper
-                .ProjectTo<CategoriesListingResponseModel>(this.AllAsNoTracking())
+                .ProjectTo<CategoryListingResponseModel>(this.AllAsNoTracking())
                 .ToListAsync();
 
         private async Task<Category> GetByIdAsync(int id)

@@ -19,7 +19,7 @@
             => this.wishlistsService = wishlistsService;
 
         [HttpGet]
-        public async Task<IEnumerable<ProductsListingResponseModel>> All()
+        public async Task<IEnumerable<ProductListingResponseModel>> All()
             => await this.wishlistsService.GetByUserIdAsync(this.User.GetId());
 
         [HttpPost(Id)]

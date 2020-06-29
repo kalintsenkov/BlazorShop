@@ -19,12 +19,12 @@
             => this.categoriesService = categoriesService;
 
         [HttpGet]
-        public async Task<IEnumerable<CategoriesListingResponseModel>> All()
+        public async Task<IEnumerable<CategoryListingResponseModel>> All()
             => await this.categoriesService.GetAllAsync();
 
         [HttpPost]
         [Authorize(Roles = AdminRoleName)]
-        public async Task<ActionResult> Create(CategoriesCreateRequestModel model)
+        public async Task<ActionResult> Create(CategoryRequestModel model)
         {
             var id = await this.categoriesService.CreateAsync(model.Name);
 
@@ -33,7 +33,7 @@
 
         [HttpPut(Id)]
         [Authorize(Roles = AdminRoleName)]
-        public async Task<ActionResult> Update(int id, CategoriesUpdateRequestModel model)
+        public async Task<ActionResult> Update(int id, CategoryRequestModel model)
         {
             var updated = await this.categoriesService.UpdateAsync(id, model.Name);
             if (!updated)

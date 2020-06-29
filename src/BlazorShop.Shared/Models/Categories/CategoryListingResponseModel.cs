@@ -3,7 +3,7 @@
     using Data.Models;
     using Mapping;
 
-    public class CategoriesListingResponseModel : IMapFrom<Category>
+    public class CategoryListingResponseModel : IMapFrom<Category>
     {
         public int Id { get; set; }
 

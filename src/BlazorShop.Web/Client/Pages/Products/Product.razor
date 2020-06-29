@@ -127,14 +127,14 @@ else
 }
 
 @code {
-    private ProductsDetailsResponseModel product;
+    private ProductDetailsResponseModel product;
 
     [Parameter] public int Id { get; set; }
     [Parameter] public string ProductName { get; set; }
 
     protected override async Task OnInitializedAsync()
     {
-        this.product = await this.Http.GetFromJsonAsync<ProductsDetailsResponseModel>($"api/products/{this.Id}");
+        this.product = await this.Http.GetFromJsonAsync<ProductDetailsResponseModel>($"api/products/{this.Id}");
     }
 
     private async Task OnDeleteAsync()

@@ -55,9 +55,9 @@
             return true;
         }
 
-        public async Task<IEnumerable<ProductsListingResponseModel>> GetByUserIdAsync(string userId)
+        public async Task<IEnumerable<ProductListingResponseModel>> GetByUserIdAsync(string userId)
             => await this.Mapper
-                .ProjectTo<ProductsListingResponseModel>(this
+                .ProjectTo<ProductListingResponseModel>(this
                     .AllByUserId(userId)
                     .AsNoTracking()
                     .Select(w => w.Product))

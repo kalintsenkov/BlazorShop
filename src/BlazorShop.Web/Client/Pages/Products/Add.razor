@@ -65,13 +65,13 @@ else
 }
 
 @code {
-    private readonly ProductsCreateRequestModel model = new ProductsCreateRequestModel();
+    private readonly ProductRequestModel model = new ProductRequestModel();
 
-    private CategoriesListingResponseModel[] categories;
+    private CategoryListingResponseModel[] categories;
 
     protected override async Task OnInitializedAsync()
     {
-        this.categories = await this.Http.GetFromJsonAsync<CategoriesListingResponseModel[]>("api/categories");
+        this.categories = await this.Http.GetFromJsonAsync<CategoryListingResponseModel[]>("api/categories");
     }
 
     private async Task SubmitAsync()

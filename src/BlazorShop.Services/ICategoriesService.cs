@@ -13,6 +13,6 @@
 
         Task<bool> DeleteAsync(int id);
 
-        Task<IEnumerable<CategoriesListingResponseModel>> GetAllAsync();
+        Task<IEnumerable<CategoryListingResponseModel>> GetAllAsync();
     }
 }

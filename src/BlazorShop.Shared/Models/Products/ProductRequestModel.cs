@@ -6,7 +6,7 @@
     using static Data.ModelConstants.Common;
     using static Data.ModelConstants.Product;
 
-    public class ProductsCreateRequestModel
+    public class ProductRequestModel
     {
         [Required]
         [StringLength(

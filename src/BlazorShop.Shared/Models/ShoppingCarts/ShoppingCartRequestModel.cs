@@ -4,7 +4,7 @@
 
     using static Data.ModelConstants.Product;
 
-    public class ShoppingCartAddRequestModel
+    public class ShoppingCartRequestModel
     {
         [Range(MinQuantity, MaxQuantity)]
         public int Quantity { get; set; } = MinQuantity;

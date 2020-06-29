@@ -19,20 +19,20 @@
             => this.productsService = productsService;
 
         [HttpGet]
-        public async Task<IEnumerable<ProductsListingResponseModel>> All()
+        public async Task<IEnumerable<ProductListingResponseModel>> All()
             => await this.productsService.GetAllAsync();
 
         [HttpGet(nameof(ByCategory) + Slash + Id)]
-        public async Task<IEnumerable<ProductsListingResponseModel>> ByCategory(int id)
+        public async Task<IEnumerable<ProductListingResponseModel>> ByCategory(int id)
             => await this.productsService.GetAllByCategoryIdAsync(id);
 
         [HttpGet(Id)]
-        public async Task<ActionResult<ProductsDetailsResponseModel>> Details(int id)
+        public async Task<ActionResult<ProductDetailsResponseModel>> Details(int id)
             => await this.productsService.DetailsAsync(id);
 
         [HttpPost]
         [Authorize(Roles = AdminRoleName)]
-        public async Task<ActionResult> Create(ProductsCreateRequestModel model)
+        public async Task<ActionResult> Create(ProductRequestModel model)
         {
             var id = await this.productsService.CreateAsync(
                 model.Name,
@@ -47,7 +47,7 @@
 
         [HttpPut(Id)]
         [Authorize(Roles = AdminRoleName)]
-        public async Task<ActionResult> Update(int id, ProductsUpdateRequestModel model)
+        public async Task<ActionResult> Update(int id, ProductRequestModel model)
         {
             var updated = await this.productsService.UpdateAsync(
                 id,

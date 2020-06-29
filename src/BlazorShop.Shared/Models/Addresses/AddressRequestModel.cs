@@ -4,7 +4,7 @@
 
     using static Data.ModelConstants.Address;
 
-    public class AddressCreateRequestModel
+    public class AddressRequestModel
     {
         [Required]
         [MaxLength(MaxCountryLength)]

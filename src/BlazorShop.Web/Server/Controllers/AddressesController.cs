@@ -23,7 +23,7 @@
             => await this.addressesService.GetAllByUserIdAsync(this.User.GetId());
 
         [HttpPost]
-        public async Task<ActionResult> Create(AddressCreateRequestModel model)
+        public async Task<ActionResult> Create(AddressRequestModel model)
         {
             var id = await this.addressesService.CreateAsync(
                 model.Country,

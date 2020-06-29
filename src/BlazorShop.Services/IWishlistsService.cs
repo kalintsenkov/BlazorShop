@@ -11,6 +11,6 @@
 
         Task<bool> RemoveAsync(int productId, string userId);
 
-        Task<IEnumerable<ProductsListingResponseModel>> GetByUserIdAsync(string userId);
+        Task<IEnumerable<ProductListingResponseModel>> GetByUserIdAsync(string userId);
     }
 }

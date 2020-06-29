@@ -1,6 +1,6 @@
 ﻿namespace BlazorShop.Shared.Models.Orders
 {
-    public class OrdersListingResponseModel
+    public class OrderListingResponseModel
     {
         // TODO
     }
