@@ -22,6 +22,10 @@
         public async Task<IEnumerable<OrderListingResponseModel>> All()
             => await this.ordersService.GetAllByUserIdAsync(this.User.GetId());
 
+        [HttpGet]
+        public async Task<ActionResult<OrderDetailsResponseModel>> Details(string id)
+            => await this.ordersService.DetailsAsync(id);
+
         [HttpPost]
         public async Task<ActionResult> Purchase([FromBody] int addressId)
         {

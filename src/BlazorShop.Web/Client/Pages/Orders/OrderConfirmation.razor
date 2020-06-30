@@ -1,0 +1,32 @@
+﻿@page "/order/{Id}"
+
+<section class="page-title text-center">
+    <div class="container relative clearfix">
+        <div class="title-holder">
+            <div class="title-text">
+                <h1 class="uppercase">Thank you for your order</h1>
+            </div>
+        </div>
+    </div>
+</section>
+<section class="section-wrap">
+    <div class="container">
+        <div class="alert alert-success text-center" role="alert">
+            <h1><i class="far fa-check-circle"></i></h1> <br />
+            <h6>{User.Name}, thank you for your order!</h6> <br />
+            <h6>We`ve received your order and will contact you as soon as your package is shipped. You can find your purchase information below.</h6>
+        </div>
+
+        <div class="title-holder text-center">
+            <div class="title-text">
+                <h1>Order Summary</h1>
+            </div>
+        </div>
+
+        <p>Order ID: @Id</p>
+    </div>
+</section>
+
+@code {
+    [Parameter] public string Id { get; set; }
+}

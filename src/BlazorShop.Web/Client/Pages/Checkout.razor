@@ -179,12 +179,12 @@ else
 
     private async Task SubmitAsync()
     {
-        var response = await this.Http.PostAsJsonAsync("api/addresses", address);
-        var addressId = await response.Content.ReadFromJsonAsync<int>();
+        var addressResponse = await this.Http.PostAsJsonAsync("api/addresses", address);
+        var addressId = await addressResponse.Content.ReadFromJsonAsync<int>();
 
-        await this.Http.PostAsJsonAsync("api/orders", addressId);
+        var orderResponse = await this.Http.PostAsJsonAsync("api/orders", addressId);
+        var orderId = await orderResponse.Content.ReadAsStringAsync();
 
-        this.ToastService.ShowSuccess("Items successfully purchased", "Congratulations");
-        this.NavigationManager.NavigateTo("/products");
+        this.NavigationManager.NavigateTo($"/order/{orderId}");
     }
 }
