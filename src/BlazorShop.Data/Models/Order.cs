@@ -7,7 +7,7 @@
 
     public class Order : BaseModel<string>
     {
-        public string Id { get; set; } = Guid.NewGuid().ToString();
+        public override string Id { get; set; } = Guid.NewGuid().ToString();
 
         public string UserId { get; set; }
 
