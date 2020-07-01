@@ -1,4 +1,5 @@
 ﻿@page "/account/register"
+@inject IToastService ToastService
 
 <section class="page-title text-center">
     <div class="container relative clearfix">
@@ -90,6 +91,7 @@
         if (response.IsSuccessStatusCode)
         {
             this.NavigationManager.NavigateTo("account/login");
+            this.ToastService.ShowSuccess("You have been successfully registered. Please login.");
         }
         else
         {

@@ -22,7 +22,7 @@
         public async Task<IEnumerable<OrderListingResponseModel>> All()
             => await this.ordersService.GetAllByUserIdAsync(this.User.GetId());
 
-        [HttpGet]
+        [HttpGet(Id)]
         public async Task<ActionResult<OrderDetailsResponseModel>> Details(string id)
             => await this.ordersService.DetailsAsync(id);
 

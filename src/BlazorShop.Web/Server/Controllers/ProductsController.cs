@@ -22,13 +22,13 @@
         public async Task<IEnumerable<ProductListingResponseModel>> All()
             => await this.productsService.GetAllAsync();
 
-        [HttpGet(nameof(ByCategory) + Slash + Id)]
-        public async Task<IEnumerable<ProductListingResponseModel>> ByCategory(int id)
-            => await this.productsService.GetAllByCategoryIdAsync(id);
-
         [HttpGet(Id)]
         public async Task<ActionResult<ProductDetailsResponseModel>> Details(int id)
             => await this.productsService.DetailsAsync(id);
+
+        [HttpGet(nameof(ByCategory) + Slash + Id)]
+        public async Task<IEnumerable<ProductListingResponseModel>> ByCategory(int id)
+            => await this.productsService.GetAllByCategoryIdAsync(id);
 
         [HttpPost]
         [Authorize(Roles = AdminRoleName)]

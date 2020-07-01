@@ -1,5 +1,12 @@
-﻿<a href="/" @onclick="Submit">Logout</a>
+﻿@inject IToastService ToastService
+
+<a href="/" @onclick="Submit">Logout</a>
 
 @code {
-    private async Task Submit() => await this.AuthClient.LogoutAsync();
+    private async Task Submit()
+    {
+        await this.AuthClient.LogoutAsync();
+
+        this.ToastService.ShowSuccess("You have been successfully logged out!");
+    }
 }

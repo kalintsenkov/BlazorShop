@@ -5,7 +5,7 @@
     using Data.Models;
     using Mapping;
 
-    public class ShoppingCartProductsResponseModel : IMapExplicitly
+    public class ShoppingCartProductsResponseModel : IMapFrom<ShoppingCart>, IMapExplicitly
     {
         public int Id { get; set; }
 
