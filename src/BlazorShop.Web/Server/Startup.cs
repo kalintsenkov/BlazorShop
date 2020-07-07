@@ -1,5 +1,7 @@
 namespace BlazorShop.Web.Server
 {
+    using System.Reflection;
+
     using AutoMapper;
     using Microsoft.AspNetCore.Builder;
     using Microsoft.AspNetCore.Hosting;
@@ -20,7 +22,7 @@ namespace BlazorShop.Web.Server
                 .AddDatabase(this.Configuration)
                 .AddIdentity()
                 .AddJwtAuthentication(services.GetApplicationSettings(this.Configuration))
-                .AddAutoMapper(this.GetType())
+                .AddAutoMapper(Assembly.GetExecutingAssembly())
                 .AddApplicationServices()
                 .AddApiControllers();
 
