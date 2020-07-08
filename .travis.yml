@@ -1,12 +1,19 @@
-dist: xenial
-addons:
-  snaps:
-  - name: dotnet-sdk
-    confinement: classic
-    channel: latest/beta
 language: csharp
 mono: none
+group: travis_latest
+sudo: required
+dotnet: 3.1
+solution: src/BlazorShop.sln
+env:
+  global:
+    - DOTNET_CLI_TELEMETRY_OPTOUT: 1
+    - DOTNET_SKIP_FIRST_TIME_EXPERIENCE: 1
+    - NET_CORE_VERSION: netcoreapp3.1
+matrix:
+  fast_finish: true
+  include:
+    - os: linux
+      dist: xenial
 script:
-  - sudo snap alias dotnet-sdk.dotnet dotnet
-  - dotnet --version
-  - dotnet build src/BlazorShop.sln
+  - dotnet build src/BlazorShop.sln --configuration Release --framework "$NET_CORE_VERSION"
+  - dotnet test src/BlazorShop.Tests/BlazorShop.Tests.csproj --configuration Release --framework "$NET_CORE_VERSION"
