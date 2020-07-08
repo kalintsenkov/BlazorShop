@@ -22,6 +22,7 @@
         [MaxLength(MaxDescriptionLength)]
         public string Description { get; set; }
 
+        [Required]
         public string PostalCode { get; set; }
 
         [Required]

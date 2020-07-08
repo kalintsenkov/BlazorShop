@@ -37,7 +37,7 @@
             return Created(nameof(this.Create), id);
         }
 
-        [HttpDelete]
+        [HttpDelete(Id)]
         public async Task<ActionResult> Delete(int id)
         {
             var deleted = await this.addressesService.DeleteAsync(id);
