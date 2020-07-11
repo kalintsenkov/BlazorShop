@@ -1,4 +1,4 @@
-﻿namespace BlazorShop.Services.Implementations
+﻿namespace BlazorShop.Services.ShoppingCart
 {
     using System.Collections.Generic;
     using System.Linq;
@@ -11,9 +11,9 @@
     using Data.Models;
     using Shared.Models.ShoppingCarts;
 
-    public class ShoppingCartsService : BaseService<ShoppingCart>, IShoppingCartsService
+    public class ShoppingCartService : BaseService<ShoppingCart>, IShoppingCartService
     {
-        public ShoppingCartsService(ApplicationDbContext db, IMapper mapper)
+        public ShoppingCartService(ApplicationDbContext db, IMapper mapper)
             : base(db, mapper)
         {
         }

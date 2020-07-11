@@ -6,7 +6,7 @@
     using Microsoft.AspNetCore.Authorization;
     using Microsoft.AspNetCore.Mvc;
 
-    using Services;
+    using Services.Categories;
     using Shared.Models.Categories;
 
     using static Shared.Constants;

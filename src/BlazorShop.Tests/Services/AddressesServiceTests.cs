@@ -9,9 +9,8 @@
     using Shouldly;
     using Xunit;
 
-    using BlazorShop.Services.Implementations;
     using BlazorShop.Data.Models;
-    using BlazorShop.Services;
+    using BlazorShop.Services.Addresses;
     using Data;
     using Shared.Models.Addresses;
 

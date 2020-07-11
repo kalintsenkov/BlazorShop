@@ -6,7 +6,7 @@
     using Microsoft.AspNetCore.Authorization;
     using Microsoft.AspNetCore.Mvc;
 
-    using Services;
+    using Services.Products;
     using Shared.Models.Products;
 
     using static Shared.Constants;
@@ -26,7 +26,7 @@
         public async Task<ActionResult<ProductDetailsResponseModel>> Details(int id)
             => await this.productsService.DetailsAsync(id);
 
-        [HttpGet(nameof(ByCategory) + Slash + Id)]
+        [HttpGet(nameof(ByCategory) + PathSeparator + Id)]
         public async Task<IEnumerable<ProductListingResponseModel>> ByCategory(int id)
             => await this.productsService.GetAllByCategoryIdAsync(id);
 

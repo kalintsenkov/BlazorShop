@@ -1,4 +1,4 @@
-﻿namespace BlazorShop.Services.Implementations
+﻿namespace BlazorShop.Services.Categories
 {
     using System.Collections.Generic;
     using System.Threading.Tasks;

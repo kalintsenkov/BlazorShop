@@ -11,8 +11,13 @@
     using Data;
     using Data.Models;
     using Filters;
-    using Services;
-    using Services.Implementations;
+    using Services.Addresses;
+    using Services.Categories;
+    using Services.Identity;
+    using Services.Orders;
+    using Services.Products;
+    using Services.ShoppingCart;
+    using Services.Wishlist;
 
     using static Data.ModelConstants.Identity;
 
@@ -86,8 +91,8 @@
                 .AddTransient<IIdentityService, IdentityService>()
                 .AddTransient<IOrdersService, OrdersService>()
                 .AddTransient<IProductsService, ProductsService>()
-                .AddTransient<IShoppingCartsService, ShoppingCartsService>()
-                .AddTransient<IWishlistsService, WishlistsService>();
+                .AddTransient<IShoppingCartService, ShoppingCartService>()
+                .AddTransient<IWishlistService, WishlistService>();
 
         public static IServiceCollection AddApiControllers(this IServiceCollection services)
         {

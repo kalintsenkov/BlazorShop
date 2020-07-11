@@ -1,11 +1,11 @@
-﻿namespace BlazorShop.Services
+﻿namespace BlazorShop.Services.Wishlist
 {
     using System.Collections.Generic;
     using System.Threading.Tasks;
 
     using Shared.Models.Products;
 
-    public interface IWishlistsService
+    public interface IWishlistService
     {
         Task AddAsync(int productId, string userId);
 

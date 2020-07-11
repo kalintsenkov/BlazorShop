@@ -7,7 +7,7 @@
     using Microsoft.AspNetCore.Mvc;
 
     using Infrastructure.Extensions;
-    using Services;
+    using Services.Orders;
     using Shared.Models.Orders;
 
     [Authorize]
