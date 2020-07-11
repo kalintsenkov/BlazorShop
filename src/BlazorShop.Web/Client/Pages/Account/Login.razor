@@ -17,13 +17,14 @@
             
             <div class="col-md-4">
                 <EditForm Model="model" OnValidSubmit="SubmitAsync" class="login">
-                    @if (!isLoginSuccessful)
+                    
+                    @if (showError)
                     {
                         <div class="alert alert-danger fade in alert-dismissible" role="alert">
-                            <button @onclick="ResetAsync" type="button" class="close" data-dismiss="alert" aria-label="Close">
+                            <button @onclick="Reset" type="button" class="close" data-dismiss="alert" aria-label="Close">
                                 <span aria-hidden="true">×</span>
                             </button>
-                            Invalid username or password.
+                            @error
                         </div>
                     }
 
@@ -59,19 +60,26 @@
 @code {
     private readonly LoginRequestModel model = new LoginRequestModel();
 
-    private bool isLoginSuccessful = true;
+    private bool showError;
+    private string error = string.Empty;
 
-    private void ResetAsync()
+    private void Reset()
     {
-        isLoginSuccessful = !isLoginSuccessful;
+        showError = !showError;
     }
 
     private async Task SubmitAsync()
     {
-        isLoginSuccessful = await this.AuthClient.LoginAsync(model);
-        if (isLoginSuccessful)
+        var result = await this.AuthService.Login(model);
+
+        if (result.Successful)
         {
             this.NavigationManager.NavigateTo("/");
+        }
+        else
+        {
+            error = result.Error;
+            showError = true;
         }
     }
 }

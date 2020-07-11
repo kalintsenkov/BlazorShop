@@ -13,7 +13,7 @@
     <div class="container">
         <div class="alert alert-success text-center" role="alert">
             <h1><i class="far fa-check-circle"></i></h1> <br />
-            <h6>{User.Name}, thank you for your order!</h6> <br />
+            <h6>@UserName, thank you for your order!</h6> <br />
             <h6>We`ve received your order and will contact you as soon as your package is shipped. You can find your purchase information below.</h6>
         </div>
 
@@ -28,5 +28,13 @@
 </section>
 
 @code {
+    private string UserName = string.Empty;
+
     [Parameter] public string Id { get; set; }
+
+    protected override async Task OnInitializedAsync()
+    {
+        var state = await this.AuthState.GetAuthenticationStateAsync();
+        this.UserName = state.User.Identity.Name;
+    }
 }

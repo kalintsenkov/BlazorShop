@@ -5,7 +5,7 @@
 @code {
     private async Task Submit()
     {
-        await this.AuthClient.LogoutAsync();
+        await this.AuthService.Logout();
 
         this.ToastService.ShowSuccess("You have been successfully logged out!");
     }

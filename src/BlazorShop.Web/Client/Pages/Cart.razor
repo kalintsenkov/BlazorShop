@@ -149,7 +149,7 @@ else
 
     protected override async Task OnInitializedAsync()
     {
-        var token = await this.TokenProvider.GetTokenAsync();
+        var token = await this.LocalStorage.GetItemAsync<string>("authToken");
         this.Http.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
 
         await this.LoadDataAsync();

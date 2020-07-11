@@ -1,5 +1,6 @@
 ﻿namespace BlazorShop.Web.Server.Controllers
 {
+    using System.Linq;
     using System.Threading.Tasks;
 
     using Microsoft.AspNetCore.Authorization;
@@ -29,7 +30,7 @@
         }
 
         [HttpPost(nameof(Register))]
-        public async Task<ActionResult> Register(RegisterRequestModel model)
+        public async Task<ActionResult<RegisterResponseModel>> Register(RegisterRequestModel model)
         {
             var user = new ApplicationUser
             {
@@ -43,10 +44,12 @@
 
             if (result.Succeeded)
             {
-                return Ok();
+                return new RegisterResponseModel { Successful = true };
             }
 
-            return BadRequest(result.Errors);
+            var errors = result.Errors.Select(x => x.Description);
+
+            return new RegisterResponseModel { Successful = false, Errors = errors };
         }
 
         [HttpPost(nameof(Login))]
@@ -55,13 +58,13 @@
             var user = await this.userManager.FindByNameAsync(model.Username);
             if (user == null)
             {
-                return Unauthorized();
+                return Unauthorized(new LoginResponseModel { Successful = false, Error = "Invalid username or password." });
             }
 
             var passwordValid = await this.userManager.CheckPasswordAsync(user, model.Password);
             if (!passwordValid)
             {
-                return Unauthorized();
+                return Unauthorized(new LoginResponseModel { Successful = false, Error = "Invalid username or password." });
             }
 
             var token = await this.identityService.GenerateJwtAsync(
@@ -69,7 +72,7 @@
                 user.UserName,
                 this.appSettings.Secret);
 
-            return new LoginResponseModel { Token = token };
+            return new LoginResponseModel { Successful = true, Token = token };
         }
 
         [HttpPost(nameof(ChangePassword))]

@@ -17,8 +17,22 @@
 
             <div class="col-md-4">
                 <EditForm Model="model" OnValidSubmit="Submit" class="login">
+                    
+                    @if (showErrors)
+                    {
+                        <div class="alert alert-danger fade in alert-dismissible" role="alert">
+                            <button @onclick="Reset" type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                <span aria-hidden="true">×</span>
+                            </button>
+                            
+                            @foreach (var error in errors)
+                            {
+                                <p>@error</p>
+                            }
 
-                    <ServerValidator @ref="serverValidator" />
+                        </div>
+                    }
+
                     <DataAnnotationsValidator />
                     <ValidationSummary />
 
@@ -82,20 +96,30 @@
 
 @code {
     private readonly RegisterRequestModel model = new RegisterRequestModel();
-    private ServerValidator serverValidator;
+
+    private bool showErrors;
+    private IEnumerable<string> errors;
+
+    private void Reset()
+    {
+        showErrors = !showErrors;
+    }
 
     private async Task Submit()
     {
-        var response = await this.AuthClient.RegisterAsync(model);
+        showErrors = false;
 
-        if (response.IsSuccessStatusCode)
+        var result = await this.AuthService.Register(model);
+
+        if (result.Successful)
         {
             this.NavigationManager.NavigateTo("account/login");
-            this.ToastService.ShowSuccess("You have been successfully registered. Please login.");
+            this.ToastService.ShowSuccess("You have been successfully registered.\nPlease login.");
         }
         else
         {
-            await this.serverValidator.Validate(response, model);
+            errors = result.Errors;
+            showErrors = true;
         }
     }
 }

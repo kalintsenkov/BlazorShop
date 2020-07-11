@@ -1,4 +1,6 @@
-﻿<div class="product-item">
+﻿@inject ILocalStorageService LocalStorage
+
+<div class="product-item">
     <div class="product-img" style="height: 300px">
         <a href="/products/@Product.Id/@Product.Name">
             <img src="@Product.ImageSource" alt="@Product.Name">
@@ -28,9 +30,9 @@
         </h3>
         <span class="price">
             @*<del>
-                    TODO: Add out of stock
-                    <span>$388.00</span>
-            </del>*@
+                        TODO: Add out of stock
+                        <span>$388.00</span>
+                </del>*@
             <ins>
                 <span class="ammount">$@Product.Price</span>
             </ins>
@@ -41,18 +43,14 @@
 @code {
     [Parameter] public ProductListingResponseModel Product { get; set; }
 
+    protected override async Task OnInitializedAsync()
+    {
+        var token = await this.LocalStorage.GetItemAsync<string>("authToken");
+        this.Http.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
+    }
+
     private async Task AddToWishlist(int id)
     {
-        var token = await this.TokenProvider.GetTokenAsync();
-
-        if (token != null)
-        {
-            this.Http.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
-            await this.Http.PostAsJsonAsync($"api/wishlists/{id}", id);
-        }
-        else
-        {
-            this.NavigationManager.NavigateTo("account/login");
-        }
+        await this.Http.PostAsJsonAsync($"api/wishlists/{id}", id);
     }
 }

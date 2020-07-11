@@ -139,22 +139,15 @@ else
 
     private async Task OnDeleteAsync()
     {
-        var token = await this.TokenProvider.GetTokenAsync();
+        var token = await this.LocalStorage.GetItemAsync<string>("authToken");
+        this.Http.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
 
-        if (token != null)
-        {
-            this.Http.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
+        var response = await this.Http.DeleteAsync($"api/products/{this.Id}");
 
-            var response = await this.Http.DeleteAsync($"api/products/{this.Id}");
-            if (response.IsSuccessStatusCode)
-            {
-                this.NavigationManager.NavigateTo("/products");
-                this.ToastService.ShowSuccess($"Successfully deleted {this.ProductName}!", "Deleted!");
-            }
-        }
-        else
+        if (response.IsSuccessStatusCode)
         {
-            this.NavigationManager.NavigateTo("/account/login");
+            this.NavigationManager.NavigateTo("/products");
+            this.ToastService.ShowSuccess($"Successfully deleted {this.ProductName}!", "Deleted!");
         }
     }
 }
