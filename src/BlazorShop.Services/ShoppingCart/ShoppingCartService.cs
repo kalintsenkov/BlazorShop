@@ -9,7 +9,7 @@
 
     using Data;
     using Data.Models;
-    using Shared.Models.ShoppingCarts;
+    using Models.ShoppingCarts;
 
     public class ShoppingCartService : BaseService<ShoppingCart>, IShoppingCartService
     {

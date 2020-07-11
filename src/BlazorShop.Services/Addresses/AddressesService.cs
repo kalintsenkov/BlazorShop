@@ -9,7 +9,7 @@
 
     using Data;
     using Data.Models;
-    using Shared.Models.Addresses;
+    using Models.Addresses;
 
     public class AddressesService : BaseService<Address>, IAddressesService
     {

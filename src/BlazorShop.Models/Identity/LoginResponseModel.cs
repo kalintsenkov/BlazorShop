@@ -1,4 +1,4 @@
-﻿namespace BlazorShop.Shared.Models.Identity
+﻿namespace BlazorShop.Models.Identity
 {
     public class LoginResponseModel
     {

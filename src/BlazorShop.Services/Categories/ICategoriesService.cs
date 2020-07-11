@@ -3,7 +3,7 @@
     using System.Collections.Generic;
     using System.Threading.Tasks;
 
-    using Shared.Models.Categories;
+    using Models.Categories;
 
     public interface ICategoriesService
     {

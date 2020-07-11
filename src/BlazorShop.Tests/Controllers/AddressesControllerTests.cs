@@ -8,7 +8,7 @@
     using Xunit;
 
     using Data;
-    using Shared.Models.Addresses;
+    using Models.Addresses;
     using Web.Server.Controllers;
 
     public class AddressesControllerTests

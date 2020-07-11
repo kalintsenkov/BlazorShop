@@ -9,7 +9,7 @@
 
     using Data;
     using Data.Models;
-    using Shared.Models.Orders;
+    using Models.Orders;
 
     public class OrdersService : BaseService<Order>, IOrdersService
     {

@@ -3,7 +3,7 @@
     using System.Collections.Generic;
     using System.Threading.Tasks;
 
-    using Shared.Models.Addresses;
+    using Models.Addresses;
 
     public interface IAddressesService
     {

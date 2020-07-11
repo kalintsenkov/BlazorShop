@@ -5,7 +5,7 @@
 
     using Models;
 
-    public class OrderProductConfiguration : IEntityTypeConfiguration<OrderProduct>
+    internal class OrderProductConfiguration : IEntityTypeConfiguration<OrderProduct>
     {
         public void Configure(EntityTypeBuilder<OrderProduct> orderProduct)
         {

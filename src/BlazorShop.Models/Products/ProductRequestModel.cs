@@ -1,4 +1,4 @@
-﻿namespace BlazorShop.Shared.Models.Products
+﻿namespace BlazorShop.Models.Products
 {
     using System.ComponentModel.DataAnnotations;
 

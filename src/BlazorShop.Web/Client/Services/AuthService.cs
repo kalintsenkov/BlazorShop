@@ -10,8 +10,8 @@
     using Blazored.LocalStorage;
     using Microsoft.AspNetCore.Components.Authorization;
 
-    using BlazorShop.Shared.Models.Identity;
     using Infrastructure;
+    using Models.Identity;
 
     public class AuthService : IAuthService
     {

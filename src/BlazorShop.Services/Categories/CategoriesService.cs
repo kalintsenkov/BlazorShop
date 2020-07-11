@@ -8,7 +8,7 @@
 
     using Data;
     using Data.Models;
-    using Shared.Models.Categories;
+    using Models.Categories;
 
     public class CategoriesService : BaseService<Category>, ICategoriesService
     {

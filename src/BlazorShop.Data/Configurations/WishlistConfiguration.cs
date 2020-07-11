@@ -5,7 +5,7 @@
 
     using Models;
 
-    public class WishlistConfiguration : IEntityTypeConfiguration<Wishlist>
+    internal class WishlistConfiguration : IEntityTypeConfiguration<Wishlist>
     {
         public void Configure(EntityTypeBuilder<Wishlist> wishlist)
         {

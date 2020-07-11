@@ -1,7 +1,6 @@
-﻿namespace BlazorShop.Shared.Models.Products
+﻿namespace BlazorShop.Models.Products
 {
     using Data.Models;
-    using Mapping;
 
     public class ProductListingResponseModel : IMapFrom<Product>
     {

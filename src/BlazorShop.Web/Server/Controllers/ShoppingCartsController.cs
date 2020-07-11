@@ -8,7 +8,7 @@
 
     using Infrastructure.Extensions;
     using Services.ShoppingCart;
-    using Shared.Models.ShoppingCarts;
+    using Models.ShoppingCarts;
 
     [Authorize]
     public class ShoppingCartsController : ApiController

@@ -7,9 +7,9 @@
     using Microsoft.AspNetCore.Mvc;
 
     using Services.Products;
-    using Shared.Models.Products;
+    using Models.Products;
 
-    using static Shared.Constants;
+    using static Common.Constants;
 
     public class ProductsController : ApiController
     {
@@ -31,7 +31,7 @@
             => await this.productsService.GetAllByCategoryIdAsync(id);
 
         [HttpPost]
-        [Authorize(Roles = AdminRoleName)]
+        [Authorize(Roles = AdministratorRole)]
         public async Task<ActionResult> Create(ProductRequestModel model)
         {
             var id = await this.productsService.CreateAsync(
@@ -46,7 +46,7 @@
         }
 
         [HttpPut(Id)]
-        [Authorize(Roles = AdminRoleName)]
+        [Authorize(Roles = AdministratorRole)]
         public async Task<ActionResult> Update(int id, ProductRequestModel model)
         {
             var updated = await this.productsService.UpdateAsync(
@@ -67,7 +67,7 @@
         }
 
         [HttpDelete(Id)]
-        [Authorize(Roles = AdminRoleName)]
+        [Authorize(Roles = AdministratorRole)]
         public async Task<ActionResult> Delete(int id)
         {
             var deleted = await this.productsService.DeleteAsync(id);

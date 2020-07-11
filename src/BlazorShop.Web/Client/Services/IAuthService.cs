@@ -2,7 +2,7 @@
 {
     using System.Threading.Tasks;
 
-    using BlazorShop.Shared.Models.Identity;
+    using Models.Identity;
 
     public interface IAuthService
     {

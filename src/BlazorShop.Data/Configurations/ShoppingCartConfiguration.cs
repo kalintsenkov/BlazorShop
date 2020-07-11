@@ -5,7 +5,7 @@
 
     using Models;
 
-    public class ShoppingCartConfiguration : IEntityTypeConfiguration<ShoppingCart>
+    internal class ShoppingCartConfiguration : IEntityTypeConfiguration<ShoppingCart>
     {
         public void Configure(EntityTypeBuilder<ShoppingCart> shoppingCart)
         {

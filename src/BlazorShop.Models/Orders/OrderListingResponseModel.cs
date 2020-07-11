@@ -1,13 +1,12 @@
-﻿namespace BlazorShop.Shared.Models.Orders
+﻿namespace BlazorShop.Models.Orders
 {
     using System.Globalization;
 
     using AutoMapper;
 
     using Data.Models;
-    using Mapping;
 
-    public class OrderListingResponseModel : IMapFrom<Order>, IMapExplicitly
+    public class OrderListingResponseModel : IMapFrom<Order>
     {
         public string Id { get; set; }
 
@@ -15,7 +14,7 @@
 
         public int ProductsCount { get; set; }
 
-        public virtual void RegisterMappings(IProfileExpression profile)
+        public virtual void Mapping(Profile profile)
             => profile
                 .CreateMap<Order, OrderListingResponseModel>()
                 .ForMember(m => m.CreatedOn, m => m

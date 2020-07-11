@@ -1,7 +1,6 @@
-﻿namespace BlazorShop.Shared.Models.Addresses
+﻿namespace BlazorShop.Models.Addresses
 {
     using Data.Models;
-    using Mapping;
 
     public class AddressListingResponseModel : IMapFrom<Address>
     {

@@ -11,8 +11,8 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\BlazorShop.Data\BlazorShop.Data.csproj" />
-    <ProjectReference Include="..\BlazorShop.Shared\BlazorShop.Shared.csproj" />
+    <ProjectReference Include="..\BlazorShop.Common\BlazorShop.Common.csproj" />
+    <ProjectReference Include="..\BlazorShop.Models\BlazorShop.Models.csproj" />
   </ItemGroup>
 
 </Project>

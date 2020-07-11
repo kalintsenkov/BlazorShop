@@ -1,11 +1,10 @@
-﻿namespace BlazorShop.Shared.Models.ShoppingCarts
+﻿namespace BlazorShop.Models.ShoppingCarts
 {
     using AutoMapper;
 
     using Data.Models;
-    using Mapping;
 
-    public class ShoppingCartProductsResponseModel : IMapFrom<ShoppingCart>, IMapExplicitly
+    public class ShoppingCartProductsResponseModel : IMapFrom<ShoppingCart>
     {
         public int Id { get; set; }
 
@@ -17,7 +16,7 @@
 
         public int Quantity { get; set; }
 
-        public void RegisterMappings(IProfileExpression mapper)
+        public void Mapping(Profile mapper)
             => mapper
                 .CreateMap<ShoppingCart, ShoppingCartProductsResponseModel>()
                 .ForMember(m => m.Id, m => m.MapFrom(c => c.Product.Id))

@@ -9,7 +9,7 @@
 
     using Data;
     using Data.Models;
-    using Shared.Models.Products;
+    using Models.Products;
 
     public class WishlistService : BaseService<Wishlist>, IWishlistService
     {

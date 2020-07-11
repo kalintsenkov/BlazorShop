@@ -1,4 +1,4 @@
-﻿namespace BlazorShop.Shared.Models.Categories
+﻿namespace BlazorShop.Models.Categories
 {
     using System.ComponentModel.DataAnnotations;
 

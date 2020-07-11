@@ -1,5 +1,6 @@
 ﻿namespace BlazorShop.Web.Server.Controllers
 {
+    using Services.Identity;
     using System.Linq;
     using System.Threading.Tasks;
 
@@ -10,8 +11,7 @@
 
     using Data.Models;
     using Infrastructure.Extensions;
-    using Services.Identity;
-    using Shared.Models.Identity;
+    using Models.Identity;
 
     public class IdentityController : ApiController
     {

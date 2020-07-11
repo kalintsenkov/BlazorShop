@@ -67,7 +67,7 @@ else
                                    ProductName="@product.Name"
                                    ProductQuantity="@product.Quantity" />
 
-                    <AuthorizeView Roles="@Constants.AdminRoleName">
+                    <AuthorizeView Roles="@Constants.AdministratorRole">
                         <div class="product_meta">
                             <div class="icon-add-to-wishlist left">
                                 <a href="/products/update/@product.Id">

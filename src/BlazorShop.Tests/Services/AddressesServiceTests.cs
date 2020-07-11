@@ -12,7 +12,7 @@
     using BlazorShop.Data.Models;
     using BlazorShop.Services.Addresses;
     using Data;
-    using Shared.Models.Addresses;
+    using Models.Addresses;
 
     public class AddressesServiceTests : SetupFixture
     {

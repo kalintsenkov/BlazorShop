@@ -3,7 +3,7 @@
     using System.Collections.Generic;
     using System.Threading.Tasks;
 
-    using Shared.Models.Orders;
+    using Models.Orders;
 
     public interface IOrdersService
     {

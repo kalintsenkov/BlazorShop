@@ -6,7 +6,7 @@
     using Microsoft.EntityFrameworkCore;
 
     using BlazorShop.Data;
-    using Web.Server.Infrastructure.Extensions;
+    using Web.Server.Infrastructure;
 
     public abstract class SetupFixture : IDisposable
     {
@@ -33,7 +33,7 @@
 
         private static IMapper InitializeAutoMapper()
         {
-            var profile = new ConventionalMappingProfile();
+            var profile = new MappingProfile();
             var configuration = new MapperConfiguration(cfg => cfg.AddProfile(profile));
 
             return new Mapper(configuration);

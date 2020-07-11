@@ -1,4 +1,4 @@
-﻿namespace BlazorShop.Shared.Models.Orders
+﻿namespace BlazorShop.Models.Orders
 {
     using System.Collections.Generic;
 
@@ -11,7 +11,7 @@
     {
         public IEnumerable<ProductListingResponseModel> Products { get; set; }
 
-        public override void RegisterMappings(IProfileExpression profile) 
+        public override void Mapping(Profile profile) 
             => profile
                 .CreateMap<OrderProduct, ProductListingResponseModel>()
                 .ForMember(m => m.Id, m => m.MapFrom(op => op.Product.Id))

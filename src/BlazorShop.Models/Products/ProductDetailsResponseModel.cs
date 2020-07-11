@@ -1,4 +1,4 @@
-﻿namespace BlazorShop.Shared.Models.Products
+﻿namespace BlazorShop.Models.Products
 {
     public class ProductDetailsResponseModel : ProductListingResponseModel
     {

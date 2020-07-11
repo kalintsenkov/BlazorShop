@@ -1,7 +1,6 @@
-﻿namespace BlazorShop.Shared.Models.Categories
+﻿namespace BlazorShop.Models.Categories
 {
     using Data.Models;
-    using Mapping;
 
     public class CategoryListingResponseModel : IMapFrom<Category>
     {

@@ -8,7 +8,7 @@
     using static ModelConstants.Common;
     using static ModelConstants.Product;
 
-    public class ProductConfiguration : IEntityTypeConfiguration<Product>
+    internal class ProductConfiguration : IEntityTypeConfiguration<Product>
     {
         public void Configure(EntityTypeBuilder<Product> product)
         {

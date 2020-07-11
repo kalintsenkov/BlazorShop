@@ -8,7 +8,7 @@
 
     using Infrastructure.Extensions;
     using Services.Addresses;
-    using Shared.Models.Addresses;
+    using Models.Addresses;
 
     [Authorize]
     public class AddressesController : ApiController

@@ -7,9 +7,9 @@
     using Microsoft.AspNetCore.Mvc;
 
     using Services.Categories;
-    using Shared.Models.Categories;
+    using Models.Categories;
 
-    using static Shared.Constants;
+    using static Common.Constants;
 
     public class CategoriesController : ApiController
     {
@@ -23,7 +23,7 @@
             => await this.categoriesService.GetAllAsync();
 
         [HttpPost]
-        [Authorize(Roles = AdminRoleName)]
+        [Authorize(Roles = AdministratorRole)]
         public async Task<ActionResult> Create(CategoryRequestModel model)
         {
             var id = await this.categoriesService.CreateAsync(model.Name);
@@ -32,7 +32,7 @@
         }
 
         [HttpPut(Id)]
-        [Authorize(Roles = AdminRoleName)]
+        [Authorize(Roles = AdministratorRole)]
         public async Task<ActionResult> Update(int id, CategoryRequestModel model)
         {
             var updated = await this.categoriesService.UpdateAsync(id, model.Name);
@@ -45,7 +45,7 @@
         }
 
         [HttpDelete(Id)]
-        [Authorize(Roles = AdminRoleName)]
+        [Authorize(Roles = AdministratorRole)]
         public async Task<ActionResult> Delete(int id)
         {
             var deleted = await this.categoriesService.DeleteAsync(id);

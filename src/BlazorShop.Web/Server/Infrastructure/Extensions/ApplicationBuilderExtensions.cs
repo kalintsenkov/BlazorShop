@@ -13,7 +13,7 @@
     using Data;
     using Data.Models;
 
-    using static Shared.Constants;
+    using static Common.Constants;
 
     public static class ApplicationBuilderExtensions
     {
@@ -56,13 +56,13 @@
             await dbContext.Database.MigrateAsync();
 
             var roleManager = services.GetService<RoleManager<ApplicationRole>>();
-            var existingRole = await roleManager.FindByNameAsync(AdminRoleName);
+            var existingRole = await roleManager.FindByNameAsync(AdministratorRole);
             if (existingRole != null)
             {
                 return app;
             }
 
-            var adminRole = new ApplicationRole(AdminRoleName);
+            var adminRole = new ApplicationRole(AdministratorRole);
 
             await roleManager.CreateAsync(adminRole);
 
@@ -76,7 +76,7 @@
             var userManager = services.GetService<UserManager<ApplicationUser>>();
 
             await userManager.CreateAsync(adminUser, "admin123456");
-            await userManager.AddToRoleAsync(adminUser, AdminRoleName);
+            await userManager.AddToRoleAsync(adminUser, AdministratorRole);
 
             if (await dbContext.Categories.AnyAsync())
             {

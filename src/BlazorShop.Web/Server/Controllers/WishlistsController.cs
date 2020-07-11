@@ -8,7 +8,7 @@
 
     using Infrastructure.Extensions;
     using Services.Wishlist;
-    using Shared.Models.Products;
+    using Models.Products;
 
     [Authorize]
     public class WishlistsController : ApiController

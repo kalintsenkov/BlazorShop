@@ -3,7 +3,7 @@
     using System.Collections.Generic;
     using System.Threading.Tasks;
 
-    using Shared.Models.Products;
+    using Models.Products;
 
     public interface IWishlistService
     {

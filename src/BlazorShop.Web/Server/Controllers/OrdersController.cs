@@ -8,7 +8,7 @@
 
     using Infrastructure.Extensions;
     using Services.Orders;
-    using Shared.Models.Orders;
+    using Models.Orders;
 
     [Authorize]
     public class OrdersController : ApiController

@@ -1,5 +1,5 @@
 ﻿@page "/products/update/{Id:int}"
-@attribute [Authorize(Roles = Constants.AdminRoleName)]
+@attribute [Authorize(Roles = Constants.AdministratorRole)]
 
 @if (categories == null || model == null)
 {

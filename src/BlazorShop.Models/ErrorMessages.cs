@@ -1,4 +1,4 @@
-﻿namespace BlazorShop.Shared.Models
+﻿namespace BlazorShop.Models
 {
     internal class ErrorMessages
     {

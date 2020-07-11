@@ -7,7 +7,7 @@
 
     using static ModelConstants.Address;
 
-    public class AddressConfiguration : IEntityTypeConfiguration<Address>
+    internal class AddressConfiguration : IEntityTypeConfiguration<Address>
     {
         public void Configure(EntityTypeBuilder<Address> address)
         {

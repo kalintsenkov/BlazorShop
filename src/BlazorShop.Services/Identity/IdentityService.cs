@@ -12,7 +12,7 @@
 
     using Data.Models;
 
-    using static Shared.Constants;
+    using static Common.Constants;
 
     public class IdentityService : IIdentityService
     {
@@ -33,10 +33,10 @@
 
             var user = await this.userManager.FindByIdAsync(userId);
 
-            var isAdministrator = await this.userManager.IsInRoleAsync(user, AdminRoleName);
+            var isAdministrator = await this.userManager.IsInRoleAsync(user, AdministratorRole);
             if (isAdministrator)
             {
-                claims.Add(new Claim(ClaimTypes.Role, AdminRoleName));
+                claims.Add(new Claim(ClaimTypes.Role, AdministratorRole));
             }
 
             var token = new JwtSecurityToken(

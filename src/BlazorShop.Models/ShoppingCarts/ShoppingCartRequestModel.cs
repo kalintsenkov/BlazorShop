@@ -1,4 +1,4 @@
-﻿namespace BlazorShop.Shared.Models.ShoppingCarts
+﻿namespace BlazorShop.Models.ShoppingCarts
 {
     using System.ComponentModel.DataAnnotations;
 
