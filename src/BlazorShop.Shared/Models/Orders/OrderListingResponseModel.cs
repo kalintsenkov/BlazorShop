@@ -1,5 +1,7 @@
 ﻿namespace BlazorShop.Shared.Models.Orders
 {
+    using System.Globalization;
+
     using AutoMapper;
 
     using Data.Models;
@@ -16,6 +18,7 @@
         public virtual void RegisterMappings(IProfileExpression profile)
             => profile
                 .CreateMap<Order, OrderListingResponseModel>()
-                .ForMember(m => m.CreatedOn, m => m.MapFrom(o => o.CreatedOn.ToString()));
+                .ForMember(m => m.CreatedOn, m => m
+                    .MapFrom(o => o.CreatedOn.ToString(CultureInfo.InvariantCulture)));
     }
 }

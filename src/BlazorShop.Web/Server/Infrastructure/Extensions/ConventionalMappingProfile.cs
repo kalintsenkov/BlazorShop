@@ -6,10 +6,10 @@
     using AutoMapper;
     using Shared.Mapping;
 
+    using static Shared.Constants;
+
     public class ConventionalMappingProfile : Profile
     {
-        private const string ProjectName = "BlazorShop";
-
         public ConventionalMappingProfile()
         {
             var mapFromType = typeof(IMapFrom<>);
@@ -19,7 +19,7 @@
             var modelRegistrations = AppDomain
                 .CurrentDomain
                 .GetAssemblies()
-                .Where(a => a.GetName().Name.StartsWith(ProjectName))
+                .Where(a => a.GetName().Name.StartsWith(SystemName))
                 .SelectMany(a => a.GetExportedTypes())
                 .Where(t => t.IsClass && !t.IsAbstract)
                 .Select(t => new

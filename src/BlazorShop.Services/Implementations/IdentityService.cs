@@ -12,7 +12,7 @@
 
     using Data.Models;
 
-    using static Shared.WebConstants;
+    using static Shared.Constants;
 
     public class IdentityService : IIdentityService
     {

@@ -7,8 +7,8 @@
 
     using Data;
 
-    public abstract class BaseService<TModel>
-        where TModel : class
+    public abstract class BaseService<TEntity>
+        where TEntity : class
     {
         protected BaseService(ApplicationDbContext data, IMapper mapper)
         {
@@ -20,8 +20,8 @@
 
         protected IMapper Mapper { get; }
 
-        protected IQueryable<TModel> All() => this.Data.Set<TModel>();
+        protected IQueryable<TEntity> All() => this.Data.Set<TEntity>();
 
-        protected IQueryable<TModel> AllAsNoTracking() => this.All().AsNoTracking();
+        protected IQueryable<TEntity> AllAsNoTracking() => this.All().AsNoTracking();
     }
 }

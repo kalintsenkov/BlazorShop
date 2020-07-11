@@ -1,8 +1,8 @@
 ﻿namespace BlazorShop.Shared
 {
-    public class WebConstants
+    public class Constants
     {
-        public const string SystemName = "Blazor Shop";
+        public const string SystemName = "BlazorShop";
 
         public const string AdminRoleName = "Admin";
     }

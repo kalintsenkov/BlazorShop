@@ -12,7 +12,8 @@
 
     using Data;
     using Data.Models;
-    using Shared;
+
+    using static Shared.Constants;
 
     public static class ApplicationBuilderExtensions
     {
@@ -55,13 +56,13 @@
             await dbContext.Database.MigrateAsync();
 
             var roleManager = services.GetService<RoleManager<ApplicationRole>>();
-            var existingRole = await roleManager.FindByNameAsync(WebConstants.AdminRoleName);
+            var existingRole = await roleManager.FindByNameAsync(AdminRoleName);
             if (existingRole != null)
             {
                 return app;
             }
 
-            var adminRole = new ApplicationRole(WebConstants.AdminRoleName);
+            var adminRole = new ApplicationRole(AdminRoleName);
 
             await roleManager.CreateAsync(adminRole);
 
@@ -75,7 +76,7 @@
             var userManager = services.GetService<UserManager<ApplicationUser>>();
 
             await userManager.CreateAsync(adminUser, "admin123456");
-            await userManager.AddToRoleAsync(adminUser, WebConstants.AdminRoleName);
+            await userManager.AddToRoleAsync(adminUser, AdminRoleName);
 
             if (await dbContext.Categories.AnyAsync())
             {
