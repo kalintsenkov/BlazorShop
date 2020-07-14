@@ -1,5 +1,6 @@
 ﻿namespace BlazorShop.Models.Addresses
 {
+    using Common.Mapping;
     using Data.Models;
 
     public class AddressListingResponseModel : IMapFrom<Address>

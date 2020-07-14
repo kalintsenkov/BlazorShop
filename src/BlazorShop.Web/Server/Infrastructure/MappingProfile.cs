@@ -4,7 +4,7 @@
     using System.Linq;
 
     using AutoMapper;
-    using Models;
+    using Common.Mapping;
 
     using static Common.Constants;
 
@@ -12,27 +12,40 @@
     {
         public MappingProfile()
         {
-            var types = AppDomain
+            var mapFromType = typeof(IMapFrom<>);
+            var explicitMapType = typeof(IMapExplicitly);
+
+            var modelRegistrations = AppDomain
                 .CurrentDomain
                 .GetAssemblies()
-                .Where(a => a.GetName().Name.StartsWith(SystemName))
+                .Where(a => a.GetName().Name.StartsWith(ProjectName))
                 .SelectMany(a => a.GetExportedTypes())
-                .Where(t => t
-                    .GetInterfaces()
-                    .Any(i => i.IsGenericType && i.GetGenericTypeDefinition() == typeof(IMapFrom<>)))
-                .ToList();
+                .Where(t => t.IsClass && !t.IsAbstract)
+                .Select(t => new
+                {
+                    Type = t,
+                    MapFrom = this.GetMappingModel(t, mapFromType),
+                    ExplicitMap = t.GetInterfaces()
+                        .Where(i => i == explicitMapType)
+                        .Select(i => (IMapExplicitly)Activator.CreateInstance(t))
+                        .FirstOrDefault()
+                });
 
-            foreach (var type in types)
+            foreach (var modelRegistration in modelRegistrations)
             {
-                var instance = Activator.CreateInstance(type);
+                if (modelRegistration.MapFrom != null)
+                {
+                    this.CreateMap(modelRegistration.MapFrom, modelRegistration.Type);
+                }
 
-                const string mappingMethodName = "Mapping";
-
-                var methodInfo = type.GetMethod(mappingMethodName)
-                                 ?? type.GetInterface("IMapFrom`1")?.GetMethod(mappingMethodName);
-
-                methodInfo?.Invoke(instance, new object[] { this });
+                modelRegistration.ExplicitMap?.RegisterMappings(this);
             }
         }
+
+        private Type GetMappingModel(Type type, Type mappingInterface)
+            => type.GetInterfaces()
+                .FirstOrDefault(i => i.IsGenericType && i.GetGenericTypeDefinition() == mappingInterface)
+                ?.GetGenericArguments()
+                .First();
     }
 }

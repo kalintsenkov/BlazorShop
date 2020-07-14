@@ -5,11 +5,11 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="AutoMapper" Version="10.0.0" />
     <PackageReference Include="System.ComponentModel.Annotations" Version="4.7.0" />
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\BlazorShop.Common\BlazorShop.Common.csproj" />
     <ProjectReference Include="..\BlazorShop.Data\BlazorShop.Data.csproj" />
   </ItemGroup>
 

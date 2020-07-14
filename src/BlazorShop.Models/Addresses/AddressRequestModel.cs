@@ -1,6 +1,7 @@
 ﻿namespace BlazorShop.Models.Addresses
 {
     using System.ComponentModel.DataAnnotations;
+
     using static Data.ModelConstants.Address;
 
     public class AddressRequestModel

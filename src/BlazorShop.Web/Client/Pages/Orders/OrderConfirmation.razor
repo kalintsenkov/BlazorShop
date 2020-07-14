@@ -1,40 +1,100 @@
 ﻿@page "/order/{Id}"
+@attribute [Authorize]
 
-<section class="page-title text-center">
-    <div class="container relative clearfix">
-        <div class="title-holder">
-            <div class="title-text">
-                <h1 class="uppercase">Thank you for your order</h1>
+@if (order == null)
+{
+    <LoadingScreen />
+}
+else
+{
+    <section class="page-title text-center">
+        <div class="container relative clearfix">
+            <div class="title-holder">
+                <div class="title-text">
+                    <h1 class="uppercase">Thank you for your order</h1>
+                </div>
             </div>
         </div>
-    </div>
-</section>
-<section class="section-wrap">
-    <div class="container">
-        <div class="alert alert-success text-center" role="alert">
-            <h1><i class="far fa-check-circle"></i></h1> <br />
-            <h6>@UserName, thank you for your order!</h6> <br />
-            <h6>We`ve received your order and will contact you as soon as your package is shipped. You can find your purchase information below.</h6>
-        </div>
+    </section>
+    <section class="section-wrap">
+        <div class="container relative">
+            <div class="alert alert-success text-center" role="alert">
+                <h1><i class="far fa-check-circle"></i></h1> <br />
+                <h6>@order.UserFirstName @order.UserLastName, thank you for your order!</h6> <br />
+                <h6>We`ve received your order and will contact you as soon as your package is shipped. You can find your purchase information below.</h6>
+            </div>
 
-        <div class="title-holder text-center">
-            <div class="title-text">
-                <h1>Order Summary</h1>
+            <div class="title-holder text-center">
+                <div class="title-text">
+                    <h1>Order Summary</h1>
+                </div>
+            </div>
+
+            <p>Order ID: @Id</p>
+
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="table-wrap mb-30">
+                        <table class="shop_table cart table">
+                            <thead>
+                                <tr>
+                                    <th class="product-name" colspan="2">Product</th>
+                                    <th class="product-price">Price</th>
+                                    <th class="product-quantity">Quantity</th>
+                                    <th class="product-subtotal">Total</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+
+                                @foreach (var product in order.Products)
+                                {
+                                    <tr class="cart_item">
+                                        <td class="product-thumbnail">
+                                            <a href="/products/@product.Id/@product.Name">
+                                                <img src="@product.ImageSource" alt="" width="87">
+                                            </a>
+                                        </td>
+                                        <td class="product-name">
+                                            <a href="/products/@product.Id/@product.Name">
+                                                @product.Name
+                                            </a>
+                                            <ul>
+                                                <li>Size: XL</li>
+                                                <li>Color: White</li>
+                                            </ul>
+                                        </td>
+                                        <td class="product-price">
+                                            <span class="amount">$@product.Price</span>
+                                        </td>
+                                        <td class="product-quantity">
+                                            <span class="amount">@product.Quantity</span>
+                                        </td>
+                                        <td class="product-subtotal">
+                                            <span class="amount">$@(product.Price * product.Quantity)</span>
+                                        </td>
+                                        <td class="product-remove"></td>
+                                    </tr>
+                                }
+
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
             </div>
         </div>
-
-        <p>Order ID: @Id</p>
-    </div>
-</section>
+    </section>
+}
 
 @code {
-    private string UserName = string.Empty;
+    private OrderDetailsResponseModel order;
 
     [Parameter] public string Id { get; set; }
 
     protected override async Task OnInitializedAsync()
     {
-        var state = await this.AuthState.GetAuthenticationStateAsync();
-        this.UserName = state.User.Identity.Name;
+        var token = await this.LocalStorage.GetItemAsync<string>("authToken");
+        this.Http.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
+
+        this.order = await this.Http.GetFromJsonAsync<OrderDetailsResponseModel>($"api/orders/{this.Id}");
     }
 }

@@ -2,9 +2,10 @@
 {
     using AutoMapper;
 
+    using Common.Mapping;
     using Data.Models;
 
-    public class ShoppingCartProductsResponseModel : IMapFrom<ShoppingCart>
+    public class ShoppingCartProductsResponseModel : IMapFrom<ShoppingCart>, IMapExplicitly
     {
         public int Id { get; set; }
 
@@ -16,8 +17,8 @@
 
         public int Quantity { get; set; }
 
-        public void Mapping(Profile mapper)
-            => mapper
+        public void RegisterMappings(IProfileExpression profile)
+            => profile
                 .CreateMap<ShoppingCart, ShoppingCartProductsResponseModel>()
                 .ForMember(m => m.Id, m => m.MapFrom(c => c.Product.Id))
                 .ForMember(m => m.Name, m => m.MapFrom(c => c.Product.Name))
