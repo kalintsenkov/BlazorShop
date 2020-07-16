@@ -3,7 +3,6 @@
     using System.Net.Http;
     using System.Net.Http.Headers;
     using System.Net.Http.Json;
-    using System.Text;
     using System.Text.Json;
     using System.Threading.Tasks;
 
@@ -11,6 +10,7 @@
     using Microsoft.AspNetCore.Components.Authorization;
 
     using Infrastructure;
+    using Models;
     using Models.Identity;
 
     public class AuthService : IAuthService
@@ -29,41 +29,44 @@
             this.authenticationStateProvider = authenticationStateProvider;
         }
 
-        public async Task<RegisterResponseModel> Register(RegisterRequestModel model)
+        public async Task<Result> Register(RegisterRequestModel model)
         {
             var response = await this.httpClient.PostAsJsonAsync("api/identity/register", model);
-            var result = await response.Content.ReadFromJsonAsync<RegisterResponseModel>();
 
-            return result;
+            var errors = await response.Content.ReadFromJsonAsync<string[]>();
+
+            return response.IsSuccessStatusCode
+                ? Result.Success
+                : Result.Failure(errors);
         }
 
-        public async Task<LoginResponseModel> Login(LoginRequestModel model)
+        public async Task<Result> Login(LoginRequestModel model)
         {
-            var loginAsJson = JsonSerializer.Serialize(model);
+            var response = await this.httpClient.PostAsJsonAsync("api/identity/login", model);
 
-            var content = new StringContent(loginAsJson, Encoding.UTF8, "application/json");
+            if (!response.IsSuccessStatusCode)
+            {
+                var errors = await response.Content.ReadFromJsonAsync<string[]>();
 
-            var response = await this.httpClient.PostAsync("api/identity/login", content);
+                return Result.Failure(errors);
+            }
 
-            var json = await response.Content.ReadAsStringAsync();
+            var responseAsString = await response.Content.ReadAsStringAsync();
 
-            var loginResult = JsonSerializer.Deserialize<LoginResponseModel>(json, new JsonSerializerOptions
+            var responseObject = JsonSerializer.Deserialize<LoginResponseModel>(responseAsString, new JsonSerializerOptions
             {
                 PropertyNameCaseInsensitive = true
             });
 
-            if (!response.IsSuccessStatusCode)
-            {
-                return loginResult;
-            }
+            var token = responseObject.Token;
 
-            await this.localStorage.SetItemAsync("authToken", loginResult.Token);
+            await this.localStorage.SetItemAsync("authToken", token);
 
             ((ApiAuthenticationStateProvider)this.authenticationStateProvider).MarkUserAsAuthenticated(model.Username);
 
-            this.httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", loginResult.Token);
+            this.httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
 
-            return loginResult;
+            return Result.Success;
         }
 
         public async Task Logout()

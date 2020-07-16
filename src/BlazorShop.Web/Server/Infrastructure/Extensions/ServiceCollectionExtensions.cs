@@ -11,6 +11,7 @@
     using Data;
     using Data.Models;
     using Filters;
+    using Models;
     using Services.Addresses;
     using Services.Categories;
     using Services.Identity;
@@ -89,6 +90,7 @@
                 .AddTransient<IAddressesService, AddressesService>()
                 .AddTransient<ICategoriesService, CategoriesService>()
                 .AddTransient<IIdentityService, IdentityService>()
+                .AddTransient<IJwtGeneratorService, JwtGeneratorService>()
                 .AddTransient<IOrdersService, OrdersService>()
                 .AddTransient<IProductsService, ProductsService>()
                 .AddTransient<IShoppingCartService, ShoppingCartService>()

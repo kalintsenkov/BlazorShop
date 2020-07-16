@@ -2,13 +2,14 @@
 {
     using System.Threading.Tasks;
 
+    using Models;
     using Models.Identity;
 
     public interface IAuthService
     {
-        Task<LoginResponseModel> Login(LoginRequestModel model);
+        Task<Result> Register(RegisterRequestModel model);
 
-        Task<RegisterResponseModel> Register(RegisterRequestModel model);
+        Task<Result> Login(LoginRequestModel model);
 
         Task Logout();
     }

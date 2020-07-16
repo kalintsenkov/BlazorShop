@@ -1,0 +1,27 @@
+﻿@if (this.Errors != null)
+{
+    if (this.ShowErrors)
+    {
+        foreach (var error in this.Errors)
+        {
+            <div class="alert alert-danger fade in alert-dismissible" role="alert">
+                <button @onclick="Reset" type="button" class="close" data-dismiss="alert" aria-label="Close">
+                    <span aria-hidden="true">×</span>
+                </button>
+
+                <p>@error</p>
+
+            </div>
+        }
+    }
+}
+
+@code {
+    [Parameter]
+    public bool ShowErrors { get; set; }
+
+    [Parameter]
+    public IEnumerable<string> Errors { get; set; }
+
+    private void Reset() => this.ShowErrors = !ShowErrors;
+}

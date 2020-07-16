@@ -2,8 +2,16 @@
 {
     using System.Threading.Tasks;
 
+    using Data.Models;
+    using Models;
+    using Models.Identity;
+
     public interface IIdentityService
     {
-        Task<string> GenerateJwtAsync(string userId, string userName, string secret);
+        Task<Result<ApplicationUser>> RegisterAsync(RegisterRequestModel model);
+
+        Task<Result<LoginResponseModel>> LoginAsync(LoginRequestModel model);
+
+        Task<Result> ChangePasswordAsync(ChangePasswordRequestModel model);
     }
 }

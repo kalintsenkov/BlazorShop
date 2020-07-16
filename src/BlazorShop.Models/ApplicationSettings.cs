@@ -1,4 +1,4 @@
-﻿namespace BlazorShop.Web.Server
+﻿namespace BlazorShop.Models
 {
     public class ApplicationSettings
     {

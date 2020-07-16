@@ -1,51 +1,85 @@
 ﻿namespace BlazorShop.Services.Identity
 {
-    using System;
-    using System.Collections.Generic;
-    using System.IdentityModel.Tokens.Jwt;
-    using System.Security.Claims;
-    using System.Text;
+    using System.Linq;
     using System.Threading.Tasks;
 
     using Microsoft.AspNetCore.Identity;
-    using Microsoft.IdentityModel.Tokens;
 
     using Data.Models;
-
-    using static Common.Constants;
+    using Models;
+    using Models.Identity;
 
     public class IdentityService : IIdentityService
     {
+        private const string InvalidErrorMessage = "Invalid username or password.";
+
         private readonly UserManager<ApplicationUser> userManager;
+        private readonly IJwtGeneratorService jwtGenerator;
 
-        public IdentityService(UserManager<ApplicationUser> userManager)
-            => this.userManager = userManager;
-
-        public async Task<string> GenerateJwtAsync(string userId, string userName, string secret)
+        public IdentityService(
+            UserManager<ApplicationUser> userManager,
+            IJwtGeneratorService jwtGenerator)
         {
-            var securityKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(secret));
+            this.userManager = userManager;
+            this.jwtGenerator = jwtGenerator;
+        }
 
-            var claims = new List<Claim>
+        public async Task<Result<ApplicationUser>> RegisterAsync(RegisterRequestModel model)
+        {
+            var user = new ApplicationUser
             {
-                new Claim(ClaimTypes.NameIdentifier, userId),
-                new Claim(ClaimTypes.Name, userName)
+                Email = model.Email,
+                UserName = model.Username,
+                FirstName = model.FirstName,
+                LastName = model.LastName
             };
 
-            var user = await this.userManager.FindByIdAsync(userId);
+            var identityResult = await this.userManager.CreateAsync(user, model.Password);
 
-            var isAdministrator = await this.userManager.IsInRoleAsync(user, AdministratorRole);
-            if (isAdministrator)
+            var errors = identityResult.Errors.Select(e => e.Description);
+
+            return identityResult.Succeeded
+                ? Result<ApplicationUser>.SuccessWith(user)
+                : Result<ApplicationUser>.Failure(errors);
+        }
+
+        public async Task<Result<LoginResponseModel>> LoginAsync(LoginRequestModel model)
+        {
+            var user = await this.userManager.FindByNameAsync(model.Username);
+            if (user == null)
             {
-                claims.Add(new Claim(ClaimTypes.Role, AdministratorRole));
+                return InvalidErrorMessage;
             }
 
-            var token = new JwtSecurityToken(
-                claims: claims,
-                expires: DateTime.UtcNow.AddDays(7),
-                signingCredentials: new SigningCredentials(securityKey, SecurityAlgorithms.HmacSha256));
+            var passwordValid = await this.userManager.CheckPasswordAsync(user, model.Password);
+            if (!passwordValid)
+            {
+                return InvalidErrorMessage;
+            }
 
-            var tokenHandler = new JwtSecurityTokenHandler();
-            return tokenHandler.WriteToken(token);
+            var token = await this.jwtGenerator.GenerateJwtAsync(user);
+
+            return new LoginResponseModel { Token = token };
+        }
+
+        public async Task<Result> ChangePasswordAsync(ChangePasswordRequestModel model)
+        {
+            var user = await this.userManager.FindByIdAsync(model.UserId);
+            if (user == null)
+            {
+                return InvalidErrorMessage;
+            }
+
+            var identityResult = await this.userManager.ChangePasswordAsync(
+                user,
+                model.Password,
+                model.NewPassword);
+
+            var errors = identityResult.Errors.Select(e => e.Description);
+
+            return identityResult.Succeeded
+                ? Result.Success
+                : Result.Failure(errors);
         }
     }
 }
