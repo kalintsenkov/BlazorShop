@@ -6,7 +6,6 @@
     using Microsoft.AspNetCore.Mvc;
 
     using Infrastructure.Extensions;
-    using Models;
     using Models.Identity;
     using Services.Identity;
 
@@ -19,29 +18,17 @@
 
         [HttpPost(nameof(Register))]
         public async Task<ActionResult> Register(RegisterRequestModel model)
-        {
-            var result = await this.identityService.RegisterAsync(model);
-
-            if (!result.Succeeded)
-            {
-                return BadRequest(result.Errors);
-            }
-
-            return Ok();
-        }
+            => await this
+                .identityService
+                .RegisterAsync(model)
+                .ToActionResult();
 
         [HttpPost(nameof(Login))]
         public async Task<ActionResult<LoginResponseModel>> Login(LoginRequestModel model)
-        {
-            var result = await this.identityService.LoginAsync(model);
-
-            if (!result.Succeeded)
-            {
-                return BadRequest(result.Errors);
-            }
-
-            return result.Data;
-        }
+            => await this
+                .identityService
+                .LoginAsync(model)
+                .ToActionResult();
 
         [HttpPut(nameof(ChangePassword))]
         [Authorize]

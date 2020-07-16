@@ -24,7 +24,7 @@
             this.jwtGenerator = jwtGenerator;
         }
 
-        public async Task<Result<ApplicationUser>> RegisterAsync(RegisterRequestModel model)
+        public async Task<Result> RegisterAsync(RegisterRequestModel model)
         {
             var user = new ApplicationUser
             {
@@ -39,8 +39,8 @@
             var errors = identityResult.Errors.Select(e => e.Description);
 
             return identityResult.Succeeded
-                ? Result<ApplicationUser>.SuccessWith(user)
-                : Result<ApplicationUser>.Failure(errors);
+                ? Result.Success
+                : Result.Failure(errors);
         }
 
         public async Task<Result<LoginResponseModel>> LoginAsync(LoginRequestModel model)
