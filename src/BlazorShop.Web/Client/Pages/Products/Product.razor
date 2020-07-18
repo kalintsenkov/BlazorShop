@@ -1,5 +1,6 @@
 ﻿@page "/products/{Id:int}/{ProductName}"
 @inject IToastService ToastService
+@inject IJSRuntime JsRuntime
 
 @if (product == null)
 {
@@ -142,12 +143,17 @@ else
         var token = await this.LocalStorage.GetItemAsync<string>("authToken");
         this.Http.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
 
-        var response = await this.Http.DeleteAsync($"api/products/{this.Id}");
+        bool confirmed = await this.JsRuntime.InvokeAsync<bool>("confirm", "Are you sure you want to delete this item?");
 
-        if (response.IsSuccessStatusCode)
+        if (confirmed)
         {
-            this.NavigationManager.NavigateTo("/products");
-            this.ToastService.ShowSuccess($"Successfully deleted {this.ProductName}!", "Deleted!");
+            var response = await this.Http.DeleteAsync($"api/products/{this.Id}");
+
+            if (response.IsSuccessStatusCode)
+            {
+                this.NavigationManager.NavigateTo("/products");
+                this.ToastService.ShowSuccess($"Successfully deleted {this.ProductName}!", "Deleted!");
+            }
         }
     }
 }
