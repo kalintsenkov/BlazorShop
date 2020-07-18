@@ -1,6 +1,7 @@
 ﻿namespace BlazorShop.Services.Categories
 {
     using System.Collections.Generic;
+    using System.Linq;
     using System.Threading.Tasks;
 
     using AutoMapper;
@@ -9,6 +10,7 @@
     using Data;
     using Data.Models;
     using Models.Categories;
+    using Models.Products;
 
     public class CategoriesService : BaseService<Category>, ICategoriesService
     {
@@ -56,6 +58,14 @@
 
             return true;
         }
+
+        public async Task<IEnumerable<ProductListingResponseModel>> DetailsAsync(int id)
+            => await this.Mapper
+                .ProjectTo<ProductListingResponseModel>(this
+                    .AllAsNoTracking()
+                    .Where(c => c.Id == id)
+                    .SelectMany(c => c.Products))
+                .ToListAsync();
 
         public async Task<IEnumerable<CategoryListingResponseModel>> GetAllAsync()
             => await this.Mapper

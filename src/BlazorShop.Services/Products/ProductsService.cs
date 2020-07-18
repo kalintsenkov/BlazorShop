@@ -96,13 +96,6 @@
                 .ProjectTo<ProductListingResponseModel>(this.AllAsNoTracking())
                 .ToListAsync();
 
-        public async Task<IEnumerable<ProductListingResponseModel>> GetAllByCategoryIdAsync(int categoryId)
-            => await this.Mapper
-                .ProjectTo<ProductListingResponseModel>(this
-                    .AllAsNoTracking()
-                    .Where(p => p.CategoryId == categoryId))
-                .ToListAsync();
-
         private async Task<Product> GetByIdAsync(int id)
             => await this
                 .All()

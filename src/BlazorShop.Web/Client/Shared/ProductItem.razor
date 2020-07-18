@@ -7,12 +7,12 @@
         </a>
         <div class="product-actions">
             <a @onclick="() => AddToWishlist(Product.Id)"
-               @onclick:preventDefault
-               href="#"
-               class="product-add-to-wishlist"
-               data-toggle="tooltip"
-               data-placement="bottom"
-               title="Add to wishlist">
+                @onclick:preventDefault
+                href="#"
+                class="product-add-to-wishlist"
+                data-toggle="tooltip"
+                data-placement="bottom"
+                title="Add to wishlist">
                 <i class="fa fa-heart"></i>
             </a>
         </div>
@@ -30,9 +30,9 @@
         </h3>
         <span class="price">
             @*<del>
-                        TODO: Add out of stock
-                        <span>$388.00</span>
-                </del>*@
+                    TODO: Add out of stock
+                    <span>$388.00</span>
+            </del>*@
             <ins>
                 <span class="ammount">$@Product.Price</span>
             </ins>

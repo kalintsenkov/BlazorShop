@@ -60,7 +60,7 @@ else
                             <div class="nav-cart mobile-cart hidden-lg hidden-md">
                                 <div class="nav-cart-outer">
                                     <div class="nav-cart-inner">
-                                        <a href="#" class="nav-cart-icon">0</a>
+                                        <a href="/cart" class="nav-cart-icon">0</a>
                                     </div>
                                 </div>
                             </div>
@@ -121,13 +121,17 @@ else
                                     </li>
 
                                     <li class="dropdown">
-                                        <a href="#">Categories</a>
+                                        <a @onclick:preventDefault href="#">Categories</a>
                                         <i class="fa fa-angle-down dropdown-toggle" data-toggle="dropdown"></i>
                                         <ul class="dropdown-menu">
 
                                             @foreach (var category in categories)
                                             {
-                                                <li><a href="/products/@category.Id">@category.Name</a></li>
+                                                <li>
+                                                    <a href="/categories/@category.Name.ToLower()/@category.Id">
+                                                        @category.Name
+                                                    </a>
+                                                </li>
                                             }
 
                                         </ul>

@@ -26,10 +26,6 @@
         public async Task<ActionResult<ProductDetailsResponseModel>> Details(int id)
             => await this.productsService.DetailsAsync(id);
 
-        [HttpGet(nameof(ByCategory) + PathSeparator + Id)]
-        public async Task<IEnumerable<ProductListingResponseModel>> ByCategory(int id)
-            => await this.productsService.GetAllByCategoryIdAsync(id);
-
         [HttpPost]
         [Authorize(Roles = AdministratorRole)]
         public async Task<ActionResult> Create(ProductRequestModel model)

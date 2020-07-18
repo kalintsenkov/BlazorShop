@@ -29,7 +29,5 @@
         Task<ProductDetailsResponseModel> DetailsAsync(int id);
 
         Task<IEnumerable<ProductListingResponseModel>> GetAllAsync();
-
-        Task<IEnumerable<ProductListingResponseModel>> GetAllByCategoryIdAsync(int categoryId);
     }
 }

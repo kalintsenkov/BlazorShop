@@ -88,7 +88,7 @@ else
                     <div class="product_meta">
                         <span class="sku">Quantity: @product.Quantity</span>
                         <span class="posted_in">
-                            Category: <a href="/categories/@product.CategoryId">@product.CategoryName</a>
+                            Category: <a href="/categories/@product.CategoryName.ToLower()/@product.CategoryId">@product.CategoryName</a>
                         </span>
                     </div>
 

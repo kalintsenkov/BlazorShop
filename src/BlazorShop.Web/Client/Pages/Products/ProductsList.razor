@@ -1,5 +1,5 @@
 ﻿@page "/products"
-@page "/products/{CategoryId:int}"
+@page "/categories/{CategoryName}/{CategoryId:int}"
 
 @if (categories == null || products == null)
 {
@@ -28,11 +28,11 @@ else
                             @foreach (var product in this.products)
                             {
                                 <Animate Animation="Animations.ZoomIn" Duration="TimeSpan.FromSeconds(0.5)">
-                                    
+
                                     <div class="col-md-4 col-xs-6">
-                                        
+
                                         <ProductItem Product="product" />
-                                    
+
                                     </div>
 
                                 </Animate>
@@ -59,6 +59,7 @@ else
     private CategoryListingResponseModel[] categories;
 
     [Parameter] public int CategoryId { get; set; }
+    [Parameter] public string CategoryName { get; set; }
 
     protected override async Task OnParametersSetAsync() => await this.LoadData();
 
@@ -66,9 +67,11 @@ else
 
     private async Task LoadData()
     {
-        var requestUri = this.CategoryId == 0 ? "api/products" : $"api/products/ByCategory/{this.CategoryId}";
+        var requestUrl = this.CategoryId == 0 || string.IsNullOrEmpty(this.CategoryName)
+            ? "api/products"
+            : $"api/categories/{this.CategoryId}";
 
-        this.products = await this.Http.GetFromJsonAsync<ProductListingResponseModel[]>(requestUri);
+        this.products = await this.Http.GetFromJsonAsync<ProductListingResponseModel[]>(requestUrl);
         this.categories = await this.Http.GetFromJsonAsync<CategoryListingResponseModel[]>("api/categories");
     }
 }

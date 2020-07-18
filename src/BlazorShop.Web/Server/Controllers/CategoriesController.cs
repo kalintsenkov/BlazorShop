@@ -8,6 +8,7 @@
 
     using Services.Categories;
     using Models.Categories;
+    using Models.Products;
 
     using static Common.Constants;
 
@@ -15,12 +16,16 @@
     {
         private readonly ICategoriesService categoriesService;
 
-        public CategoriesController(ICategoriesService categoriesService) 
+        public CategoriesController(ICategoriesService categoriesService)
             => this.categoriesService = categoriesService;
 
         [HttpGet]
         public async Task<IEnumerable<CategoryListingResponseModel>> All()
             => await this.categoriesService.GetAllAsync();
+
+        [HttpGet(Id)]
+        public async Task<IEnumerable<ProductListingResponseModel>> Details(int id)
+            => await this.categoriesService.DetailsAsync(id);
 
         [HttpPost]
         [Authorize(Roles = AdministratorRole)]

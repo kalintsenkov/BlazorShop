@@ -8,6 +8,7 @@
     using Microsoft.AspNetCore.Components.Authorization;
     using Microsoft.AspNetCore.Components.WebAssembly.Hosting;
     using Microsoft.Extensions.DependencyInjection;
+
     using Services;
 
     public static class WebAssemblyHostBuilderExtensions
@@ -22,9 +23,9 @@
         {
             builder
                 .Services
+                .AddAuthorizationCore()
                 .AddBlazoredToast()
                 .AddBlazoredLocalStorage()
-                .AddAuthorizationCore()
                 .AddScoped<ApiAuthenticationStateProvider>()
                 .AddScoped<AuthenticationStateProvider, ApiAuthenticationStateProvider>()
                 .AddTransient<IAuthService, AuthService>()
