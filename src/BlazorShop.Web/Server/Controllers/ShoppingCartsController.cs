@@ -25,12 +25,11 @@
                 .ByUserIdAsync(this.User.GetId());
 
         [HttpPost(Id)]
-        public async Task<ActionResult> Add(int id, ShoppingCartRequestModel model)
-        {
-            await this.shoppingCartService.AddAsync(id, model.Quantity, this.User.GetId());
-
-            return Ok();
-        }
+        public async Task<ActionResult> Add(int id, ShoppingCartRequestModel model) 
+            => await this
+                .shoppingCartService
+                .AddAsync(id, model.Quantity, this.User.GetId())
+                .ToActionResult();
 
         [HttpPut(Id)]
         public async Task<ActionResult> Update(int id, ShoppingCartRequestModel model)

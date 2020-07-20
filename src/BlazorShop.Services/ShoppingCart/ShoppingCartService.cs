@@ -19,7 +19,7 @@
         {
         }
 
-        public async Task AddAsync(int productId, int quantity, string userId)
+        public async Task<Result> AddAsync(int productId, int quantity, string userId)
         {
             var shoppingCart = new ShoppingCart
             {
@@ -30,6 +30,8 @@
 
             await this.Data.AddAsync(shoppingCart);
             await this.Data.SaveChangesAsync();
+
+            return Result.Success;
         }
 
         public async Task<Result> UpdateAsync(int productId, int quantity, string userId)

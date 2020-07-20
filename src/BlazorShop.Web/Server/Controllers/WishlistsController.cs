@@ -26,14 +26,13 @@
 
         [HttpPost(Id)]
         public async Task<ActionResult> Add(int id)
-        {
-            await this.wishlistService.AddAsync(id, this.User.GetId());
-
-            return Ok();
-        }
+            => await this
+                .wishlistService
+                .AddAsync(id, this.User.GetId())
+                .ToActionResult();
 
         [HttpDelete(Id)]
-        public async Task<ActionResult> Remove(int id) 
+        public async Task<ActionResult> Remove(int id)
             => await this
                 .wishlistService
                 .RemoveAsync(id, this.User.GetId())

@@ -8,7 +8,7 @@
 
     public interface IWishlistService
     {
-        Task AddAsync(int productId, string userId);
+        Task<Result> AddAsync(int productId, string userId);
 
         Task<Result> RemoveAsync(int productId, string userId);
 

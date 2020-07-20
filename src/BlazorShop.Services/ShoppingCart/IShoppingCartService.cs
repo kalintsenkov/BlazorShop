@@ -8,7 +8,7 @@
 
     public interface IShoppingCartService
     {
-        Task AddAsync(int productId, int quantity, string userId);
+        Task<Result> AddAsync(int productId, int quantity, string userId);
 
         Task<Result> UpdateAsync(int productId, int quantity, string userId);
 

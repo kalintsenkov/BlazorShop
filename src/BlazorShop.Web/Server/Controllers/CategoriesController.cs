@@ -36,7 +36,9 @@
         [Authorize(Roles = AdministratorRole)]
         public async Task<ActionResult> Create(CategoriesRequestModel model)
         {
-            var id = await this.categoriesService.CreateAsync(model.Name);
+            var id = await this
+                .categoriesService
+                .CreateAsync(model.Name);
 
             return Created(nameof(this.Create), id);
         }

@@ -19,7 +19,7 @@
         {
         }
 
-        public async Task AddAsync(int productId, string userId)
+        public async Task<Result> AddAsync(int productId, string userId)
         {
             var wishlist = await this.GetByProductIdAndUserIdAsync(productId, userId);
 
@@ -40,6 +40,8 @@
             }
 
             await this.Data.SaveChangesAsync();
+
+            return Result.Success;
         }
 
         public async Task<Result> RemoveAsync(int productId, string userId)
