@@ -9,8 +9,8 @@
     {
         Task<string> PurchaseAsync(int deliveryAddressId, string userId);
 
-        Task<OrderDetailsResponseModel> DetailsAsync(string id);
+        Task<OrdersDetailsResponseModel> DetailsAsync(string id);
 
-        Task<IEnumerable<OrderListingResponseModel>> GetAllByUserIdAsync(string userId);
+        Task<IEnumerable<OrdersListingResponseModel>> ByUserIdAsync(string userId);
     }
 }

@@ -9,6 +9,7 @@
 
     using Data;
     using Data.Models;
+    using Models;
     using Models.Products;
 
     public class WishlistService : BaseService<Wishlist>, IWishlistService
@@ -21,6 +22,7 @@
         public async Task AddAsync(int productId, string userId)
         {
             var wishlist = await this.GetByProductIdAndUserIdAsync(productId, userId);
+
             if (wishlist == null)
             {
                 wishlist = new Wishlist
@@ -40,24 +42,25 @@
             await this.Data.SaveChangesAsync();
         }
 
-        public async Task<bool> RemoveAsync(int productId, string userId)
+        public async Task<Result> RemoveAsync(int productId, string userId)
         {
             var wishlist = await this.GetByProductIdAndUserIdAsync(productId, userId);
+
             if (wishlist == null)
             {
-                return false;
+                return "This user cannot delete products from this wishlist.";
             }
 
             this.Data.Remove(wishlist);
 
             await this.Data.SaveChangesAsync();
 
-            return true;
+            return Result.Success;
         }
 
-        public async Task<IEnumerable<ProductListingResponseModel>> GetByUserIdAsync(string userId)
+        public async Task<IEnumerable<ProductsListingResponseModel>> ByUserIdAsync(string userId)
             => await this.Mapper
-                .ProjectTo<ProductListingResponseModel>(this
+                .ProjectTo<ProductsListingResponseModel>(this
                     .AllByUserId(userId)
                     .AsNoTracking()
                     .Select(w => w.Product))

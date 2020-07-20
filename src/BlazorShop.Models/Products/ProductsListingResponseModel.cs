@@ -3,7 +3,7 @@
     using Common.Mapping;
     using Data.Models;
 
-    public class ProductListingResponseModel : IMapFrom<Product>
+    public class ProductsListingResponseModel : IMapFrom<Product>
     {
         public int Id { get; set; }
 

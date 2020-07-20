@@ -3,16 +3,17 @@
     using System.Collections.Generic;
     using System.Threading.Tasks;
 
+    using Models;
     using Models.ShoppingCarts;
 
     public interface IShoppingCartService
     {
         Task AddAsync(int productId, int quantity, string userId);
 
-        Task<bool> UpdateAsync(int productId, int quantity, string userId);
+        Task<Result> UpdateAsync(int productId, int quantity, string userId);
 
-        Task<bool> RemoveAsync(int productId, string userId);
+        Task<Result> RemoveAsync(int productId, string userId);
 
-        Task<IEnumerable<ShoppingCartProductsResponseModel>> GetByUserIdAsync(string userId);
+        Task<IEnumerable<ShoppingCartProductsResponseModel>> ByUserIdAsync(string userId);
     }
 }

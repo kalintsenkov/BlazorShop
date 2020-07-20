@@ -3,19 +3,20 @@
     using System.Collections.Generic;
     using System.Threading.Tasks;
 
+    using Models;
     using Models.Products;
 
     public interface IProductsService
     {
         Task<int> CreateAsync(
-            string name, 
-            string description, 
-            string imageSource, 
-            int quantity, 
-            decimal price, 
+            string name,
+            string description,
+            string imageSource,
+            int quantity,
+            decimal price,
             int categoryId);
 
-        Task<bool> UpdateAsync(
+        Task<Result> UpdateAsync(
             int id,
             string name,
             string description,
@@ -24,10 +25,10 @@
             decimal price,
             int categoryId);
 
-        Task<bool> DeleteAsync(int id);
+        Task<Result> DeleteAsync(int id);
 
-        Task<ProductDetailsResponseModel> DetailsAsync(int id);
+        Task<ProductsDetailsResponseModel> DetailsAsync(int id);
 
-        Task<IEnumerable<ProductListingResponseModel>> GetAllAsync();
+        Task<IEnumerable<ProductsListingResponseModel>> AllAsync(int page = 1);
     }
 }

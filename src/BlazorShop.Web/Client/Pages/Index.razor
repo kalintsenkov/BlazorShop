@@ -32,10 +32,10 @@ else
 }
 
 @code {
-    private ProductListingResponseModel[] products;
+    private ProductsListingResponseModel[] products;
 
     protected override async Task OnInitializedAsync()
     {
-        this.products = await this.Http.GetFromJsonAsync<ProductListingResponseModel[]>("api/products");
+        this.products = await this.Http.GetFromJsonAsync<ProductsListingResponseModel[]>("api/products");
     }
 }

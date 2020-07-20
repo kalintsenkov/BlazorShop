@@ -6,9 +6,10 @@
     using Microsoft.AspNetCore.Authorization;
     using Microsoft.AspNetCore.Mvc;
 
-    using Services.Categories;
+    using Infrastructure.Extensions;
     using Models.Categories;
     using Models.Products;
+    using Services.Categories;
 
     using static Common.Constants;
 
@@ -20,16 +21,20 @@
             => this.categoriesService = categoriesService;
 
         [HttpGet]
-        public async Task<IEnumerable<CategoryListingResponseModel>> All()
-            => await this.categoriesService.GetAllAsync();
+        public async Task<IEnumerable<CategoriesListingResponseModel>> All()
+            => await this
+                .categoriesService
+                .AllAsync();
 
         [HttpGet(Id)]
-        public async Task<IEnumerable<ProductListingResponseModel>> Details(int id)
-            => await this.categoriesService.DetailsAsync(id);
+        public async Task<IEnumerable<ProductsListingResponseModel>> Details(int id)
+            => await this
+                .categoriesService
+                .DetailsAsync(id);
 
         [HttpPost]
         [Authorize(Roles = AdministratorRole)]
-        public async Task<ActionResult> Create(CategoryRequestModel model)
+        public async Task<ActionResult> Create(CategoriesRequestModel model)
         {
             var id = await this.categoriesService.CreateAsync(model.Name);
 
@@ -38,28 +43,18 @@
 
         [HttpPut(Id)]
         [Authorize(Roles = AdministratorRole)]
-        public async Task<ActionResult> Update(int id, CategoryRequestModel model)
-        {
-            var updated = await this.categoriesService.UpdateAsync(id, model.Name);
-            if (!updated)
-            {
-                return BadRequest();
-            }
-
-            return Ok();
-        }
+        public async Task<ActionResult> Update(int id, CategoriesRequestModel model)
+            => await this
+                .categoriesService
+                .UpdateAsync(id, model.Name)
+                .ToActionResult();
 
         [HttpDelete(Id)]
         [Authorize(Roles = AdministratorRole)]
         public async Task<ActionResult> Delete(int id)
-        {
-            var deleted = await this.categoriesService.DeleteAsync(id);
-            if (!deleted)
-            {
-                return BadRequest();
-            }
-
-            return Ok();
-        }
+            => await this
+                .categoriesService
+                .DeleteAsync(id)
+                .ToActionResult();
     }
 }

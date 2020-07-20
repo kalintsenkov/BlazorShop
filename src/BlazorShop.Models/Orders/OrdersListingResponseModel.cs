@@ -7,7 +7,7 @@
     using Common.Mapping;
     using Data.Models;
 
-    public class OrderListingResponseModel : IMapFrom<Order>, IMapExplicitly
+    public class OrdersListingResponseModel : IMapFrom<Order>, IMapExplicitly
     {
         public string Id { get; set; }
 
@@ -19,7 +19,7 @@
 
         public virtual void RegisterMappings(IProfileExpression profile)
             => profile
-                .CreateMap<Order, OrderListingResponseModel>()
+                .CreateMap<Order, OrdersListingResponseModel>()
                 .ForMember(m => m.CreatedOn, m => m
                     .MapFrom(o => o.CreatedOn.ToString(CultureInfo.InvariantCulture)));
     }

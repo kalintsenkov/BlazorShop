@@ -19,11 +19,13 @@
             => this.addressesService = addressesService;
 
         [HttpGet]
-        public async Task<IEnumerable<AddressListingResponseModel>> All()
-            => await this.addressesService.GetAllByUserIdAsync(this.User.GetId());
+        public async Task<IEnumerable<AddressesListingResponseModel>> All()
+            => await this
+                .addressesService
+                .ByUserIdAsync(this.User.GetId());
 
         [HttpPost]
-        public async Task<ActionResult> Create(AddressRequestModel model)
+        public async Task<ActionResult> Create(AddressesRequestModel model)
         {
             var id = await this.addressesService.CreateAsync(
                 model.Country,
@@ -39,14 +41,9 @@
 
         [HttpDelete(Id)]
         public async Task<ActionResult> Delete(int id)
-        {
-            var deleted = await this.addressesService.DeleteAsync(id);
-            if (!deleted)
-            {
-                return BadRequest();
-            }
-
-            return Ok();
-        }
+            => await this
+                .addressesService
+                .DeleteAsync(id, this.User.GetId())
+                .ToActionResult();
     }
 }

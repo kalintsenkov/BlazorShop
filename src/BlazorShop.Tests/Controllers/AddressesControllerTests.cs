@@ -31,7 +31,7 @@
                     .WithData(AddressTestData.GetAddresses(count)))
                 .Calling(c => c.All())
                 .ShouldReturn()
-                .ResultOfType<IEnumerable<AddressListingResponseModel>>(result => result
+                .ResultOfType<IEnumerable<AddressesListingResponseModel>>(result => result
                     .Passing(addressListing => addressListing
                         .Count()
                         .ShouldBe(count)));
@@ -39,7 +39,7 @@
         [Fact]
         public void CreateShouldHaveRestrictionsForHttpPostOnly()
             => MyController<AddressesController>
-                .Calling(c => c.Create(With.Empty<AddressRequestModel>()))
+                .Calling(c => c.Create(With.Empty<AddressesRequestModel>()))
                 .ShouldHave()
                 .ActionAttributes(attrs => attrs
                     .RestrictingForHttpMethod(HttpMethod.Post));
@@ -58,7 +58,7 @@
             => MyController<AddressesController>
                 .Instance(instance => instance
                     .WithUser())
-                .Calling(c => c.Create(new AddressRequestModel
+                .Calling(c => c.Create(new AddressesRequestModel
                 {
                     Country = country,
                     State = state,
@@ -76,7 +76,7 @@
         [Fact]
         public void CreateShouldHaveInvalidModelStateWhenRequestModelIsInvalid()
             => MyController<AddressesController>
-                .Calling(c => c.Create(new AddressRequestModel()))
+                .Calling(c => c.Create(new AddressesRequestModel()))
                 .ShouldHave()
                 .InvalidModelState();
 

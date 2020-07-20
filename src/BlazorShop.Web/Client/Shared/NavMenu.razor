@@ -169,8 +169,8 @@ else
 }
 
 @code {
-    private CategoryListingResponseModel[] categories;
+    private CategoriesListingResponseModel[] categories;
 
     protected override async Task OnInitializedAsync()
-        => this.categories = await this.Http.GetFromJsonAsync<CategoryListingResponseModel[]>("api/categories");
+        => this.categories = await this.Http.GetFromJsonAsync<CategoriesListingResponseModel[]>("api/categories");
 }

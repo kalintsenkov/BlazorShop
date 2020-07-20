@@ -5,7 +5,7 @@
     using static ErrorMessages;
     using static Data.ModelConstants.Common;
 
-    public class CategoryRequestModel
+    public class CategoriesRequestModel
     {
         [Required]
         [StringLength(

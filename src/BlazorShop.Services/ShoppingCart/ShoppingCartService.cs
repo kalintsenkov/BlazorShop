@@ -9,6 +9,7 @@
 
     using Data;
     using Data.Models;
+    using Models;
     using Models.ShoppingCarts;
 
     public class ShoppingCartService : BaseService<ShoppingCart>, IShoppingCartService
@@ -31,37 +32,39 @@
             await this.Data.SaveChangesAsync();
         }
 
-        public async Task<bool> UpdateAsync(int productId, int quantity, string userId)
+        public async Task<Result> UpdateAsync(int productId, int quantity, string userId)
         {
             var shoppingCart = await this.GetByProductIdAndUserIdAsync(productId, userId);
+
             if (shoppingCart == null)
             {
-                return false;
+                return "This user cannot edit this shopping cart.";
             }
 
             shoppingCart.Quantity = quantity;
 
             await this.Data.SaveChangesAsync();
 
-            return true;
+            return Result.Success;
         }
 
-        public async Task<bool> RemoveAsync(int productId, string userId)
+        public async Task<Result> RemoveAsync(int productId, string userId)
         {
             var shoppingCart = await this.GetByProductIdAndUserIdAsync(productId, userId);
+
             if (shoppingCart == null)
             {
-                return false;
+                return "This user cannot delete products from this shopping cart.";
             }
 
             this.Data.Remove(shoppingCart);
 
             await this.Data.SaveChangesAsync();
 
-            return true;
+            return Result.Success;
         }
 
-        public async Task<IEnumerable<ShoppingCartProductsResponseModel>> GetByUserIdAsync(string userId)
+        public async Task<IEnumerable<ShoppingCartProductsResponseModel>> ByUserIdAsync(string userId)
             => await this.Mapper
                 .ProjectTo<ShoppingCartProductsResponseModel>(this
                     .AllByUserId(userId)

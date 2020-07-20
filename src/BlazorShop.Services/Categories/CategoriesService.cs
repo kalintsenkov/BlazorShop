@@ -9,6 +9,7 @@
 
     using Data;
     using Data.Models;
+    using Models;
     using Models.Categories;
     using Models.Products;
 
@@ -29,9 +30,10 @@
             return category.Id;
         }
 
-        public async Task<bool> UpdateAsync(int id, string name)
+        public async Task<Result> UpdateAsync(int id, string name)
         {
             var category = await this.GetByIdAsync(id);
+
             if (category == null)
             {
                 return false;
@@ -44,9 +46,10 @@
             return true;
         }
 
-        public async Task<bool> DeleteAsync(int id)
+        public async Task<Result> DeleteAsync(int id)
         {
             var category = await this.GetByIdAsync(id);
+
             if (category == null)
             {
                 return false;
@@ -59,17 +62,17 @@
             return true;
         }
 
-        public async Task<IEnumerable<ProductListingResponseModel>> DetailsAsync(int id)
+        public async Task<IEnumerable<ProductsListingResponseModel>> DetailsAsync(int id)
             => await this.Mapper
-                .ProjectTo<ProductListingResponseModel>(this
+                .ProjectTo<ProductsListingResponseModel>(this
                     .AllAsNoTracking()
                     .Where(c => c.Id == id)
                     .SelectMany(c => c.Products))
                 .ToListAsync();
 
-        public async Task<IEnumerable<CategoryListingResponseModel>> GetAllAsync()
+        public async Task<IEnumerable<CategoriesListingResponseModel>> AllAsync()
             => await this.Mapper
-                .ProjectTo<CategoryListingResponseModel>(this.AllAsNoTracking())
+                .ProjectTo<CategoriesListingResponseModel>(this.AllAsNoTracking())
                 .ToListAsync();
 
         private async Task<Category> GetByIdAsync(int id)

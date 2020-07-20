@@ -3,6 +3,7 @@
     using System.Collections.Generic;
     using System.Threading.Tasks;
 
+    using Models;
     using Models.Addresses;
 
     public interface IAddressesService
@@ -16,8 +17,8 @@
             string phoneNumber,
             string userId);
 
-        Task<bool> DeleteAsync(int id);
+        Task<Result> DeleteAsync(int id, string userId);
 
-        Task<IEnumerable<AddressListingResponseModel>> GetAllByUserIdAsync(string userId);
+        Task<IEnumerable<AddressesListingResponseModel>> ByUserIdAsync(string userId);
     }
 }

@@ -19,17 +19,23 @@
             => this.ordersService = ordersService;
 
         [HttpGet]
-        public async Task<IEnumerable<OrderListingResponseModel>> All()
-            => await this.ordersService.GetAllByUserIdAsync(this.User.GetId());
+        public async Task<IEnumerable<OrdersListingResponseModel>> All()
+            => await this
+                .ordersService
+                .ByUserIdAsync(this.User.GetId());
 
         [HttpGet(Id)]
-        public async Task<ActionResult<OrderDetailsResponseModel>> Details(string id)
-            => await this.ordersService.DetailsAsync(id);
+        public async Task<ActionResult<OrdersDetailsResponseModel>> Details(string id)
+            => await this
+                .ordersService
+                .DetailsAsync(id);
 
         [HttpPost]
         public async Task<ActionResult> Purchase([FromBody] int addressId)
         {
-            var id = await this.ordersService.PurchaseAsync(addressId, this.User.GetId());
+            var id = await this
+                .ordersService
+                .PurchaseAsync(addressId, this.User.GetId());
 
             return Created(nameof(this.Purchase), id);
         }

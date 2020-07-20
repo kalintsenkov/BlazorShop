@@ -9,6 +9,7 @@
 
     using Data;
     using Data.Models;
+    using Models;
     using Models.Addresses;
 
     public class AddressesService : BaseService<Address>, IAddressesService
@@ -44,24 +45,28 @@
             return address.Id;
         }
 
-        public async Task<bool> DeleteAsync(int id)
+        public async Task<Result> DeleteAsync(int id, string userId)
         {
-            var address = await this.Data.Addresses.FindAsync(id);
+            var address = await this
+                .All()
+                .Where(a => a.Id == id && a.UserId == userId)
+                .FirstOrDefaultAsync();
+
             if (address == null)
             {
-                return false;
+                return "This user cannot delete this address.";
             }
 
             this.Data.Remove(address);
 
             await this.Data.SaveChangesAsync();
 
-            return true;
+            return Result.Success;
         }
 
-        public async Task<IEnumerable<AddressListingResponseModel>> GetAllByUserIdAsync(string userId)
+        public async Task<IEnumerable<AddressesListingResponseModel>> ByUserIdAsync(string userId)
             => await this.Mapper
-                .ProjectTo<AddressListingResponseModel>(this
+                .ProjectTo<AddressesListingResponseModel>(this
                     .AllAsNoTracking()
                     .Where(u => u.UserId == userId))
                 .ToListAsync();

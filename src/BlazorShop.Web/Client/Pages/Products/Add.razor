@@ -65,16 +65,16 @@ else
 }
 
 @code {
-    private readonly ProductRequestModel model = new ProductRequestModel();
+    private readonly ProductsRequestModel model = new ProductsRequestModel();
 
-    private CategoryListingResponseModel[] categories;
+    private CategoriesListingResponseModel[] categories;
 
     protected override async Task OnInitializedAsync()
     {
         var token = await this.LocalStorage.GetItemAsync<string>("authToken");
         this.Http.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
 
-        this.categories = await this.Http.GetFromJsonAsync<CategoryListingResponseModel[]>("api/categories");
+        this.categories = await this.Http.GetFromJsonAsync<CategoriesListingResponseModel[]>("api/categories");
     }
 
     private async Task SubmitAsync()

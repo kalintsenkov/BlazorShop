@@ -53,16 +53,16 @@
             return order.Id;
         }
 
-        public async Task<OrderDetailsResponseModel> DetailsAsync(string id)
+        public async Task<OrdersDetailsResponseModel> DetailsAsync(string id)
             => await this.Mapper
-                .ProjectTo<OrderDetailsResponseModel>(this
+                .ProjectTo<OrdersDetailsResponseModel>(this
                     .AllAsNoTracking()
                     .Where(o => o.Id == id))
                 .FirstOrDefaultAsync();
 
-        public async Task<IEnumerable<OrderListingResponseModel>> GetAllByUserIdAsync(string userId)
+        public async Task<IEnumerable<OrdersListingResponseModel>> ByUserIdAsync(string userId)
             => await this.Mapper
-                .ProjectTo<OrderListingResponseModel>(this
+                .ProjectTo<OrdersListingResponseModel>(this
                     .AllAsNoTracking()
                     .Where(o => o.UserId == userId))
                 .ToListAsync();

@@ -9,10 +9,13 @@
 
     using Data;
     using Data.Models;
+    using Models;
     using Models.Products;
 
     public class ProductsService : BaseService<Product>, IProductsService
     {
+        private const int ProductsPerPage = 12;
+
         public ProductsService(ApplicationDbContext db, IMapper mapper)
             : base(db, mapper)
         {
@@ -42,7 +45,7 @@
             return product.Id;
         }
 
-        public async Task<bool> UpdateAsync(
+        public async Task<Result> UpdateAsync(
             int id,
             string name,
             string description,
@@ -52,6 +55,7 @@
             int categoryId)
         {
             var product = await this.GetByIdAsync(id);
+
             if (product == null)
             {
                 return false;
@@ -69,9 +73,10 @@
             return true;
         }
 
-        public async Task<bool> DeleteAsync(int id)
+        public async Task<Result> DeleteAsync(int id)
         {
             var product = await this.GetByIdAsync(id);
+
             if (product == null)
             {
                 return false;
@@ -84,16 +89,20 @@
             return true;
         }
 
-        public async Task<ProductDetailsResponseModel> DetailsAsync(int id)
+        public async Task<ProductsDetailsResponseModel> DetailsAsync(int id)
             => await this.Mapper
-                .ProjectTo<ProductDetailsResponseModel>(this
+                .ProjectTo<ProductsDetailsResponseModel>(this
                     .AllAsNoTracking()
                     .Where(p => p.Id == id))
                 .FirstOrDefaultAsync();
 
-        public async Task<IEnumerable<ProductListingResponseModel>> GetAllAsync()
+        public async Task<IEnumerable<ProductsListingResponseModel>> AllAsync(
+            int page = 1)
             => await this.Mapper
-                .ProjectTo<ProductListingResponseModel>(this.AllAsNoTracking())
+                .ProjectTo<ProductsListingResponseModel>(this
+                    .AllAsNoTracking()
+                    .Skip((page - 1) * ProductsPerPage)
+                    .Take(ProductsPerPage))
                 .ToListAsync();
 
         private async Task<Product> GetByIdAsync(int id)

@@ -7,13 +7,13 @@
     using Data.Models;
     using Products;
 
-    public class OrderDetailsResponseModel : OrderListingResponseModel
+    public class OrdersDetailsResponseModel : OrdersListingResponseModel
     {
-        public IEnumerable<ProductListingResponseModel> Products { get; set; }
+        public IEnumerable<ProductsListingResponseModel> Products { get; set; }
 
         public override void RegisterMappings(IProfileExpression profile)
             => profile
-                .CreateMap<OrderProduct, ProductListingResponseModel>()
+                .CreateMap<OrderProduct, ProductsListingResponseModel>()
                 .ForMember(m => m.Id, m => m.MapFrom(op => op.Product.Id))
                 .ForMember(m => m.Name, m => m.MapFrom(op => op.Product.Name))
                 .ForMember(m => m.ImageSource, m => m.MapFrom(op => op.Product.ImageSource))

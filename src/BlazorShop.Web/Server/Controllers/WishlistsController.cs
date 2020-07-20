@@ -19,8 +19,10 @@
             => this.wishlistService = wishlistsService;
 
         [HttpGet]
-        public async Task<IEnumerable<ProductListingResponseModel>> All()
-            => await this.wishlistService.GetByUserIdAsync(this.User.GetId());
+        public async Task<IEnumerable<ProductsListingResponseModel>> All()
+            => await this
+                .wishlistService
+                .ByUserIdAsync(this.User.GetId());
 
         [HttpPost(Id)]
         public async Task<ActionResult> Add(int id)
@@ -31,15 +33,10 @@
         }
 
         [HttpDelete(Id)]
-        public async Task<ActionResult> Remove(int id)
-        {
-            var removed = await this.wishlistService.RemoveAsync(id, this.User.GetId());
-            if (!removed)
-            {
-                return BadRequest();
-            }
-
-            return Ok();
-        }
+        public async Task<ActionResult> Remove(int id) 
+            => await this
+                .wishlistService
+                .RemoveAsync(id, this.User.GetId())
+                .ToActionResult();
     }
 }

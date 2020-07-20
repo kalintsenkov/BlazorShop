@@ -86,7 +86,7 @@ else
 }
 
 @code {
-    private OrderDetailsResponseModel order;
+    private OrdersDetailsResponseModel order;
 
     [Parameter] public string Id { get; set; }
 
@@ -95,6 +95,6 @@ else
         var token = await this.LocalStorage.GetItemAsync<string>("authToken");
         this.Http.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
 
-        this.order = await this.Http.GetFromJsonAsync<OrderDetailsResponseModel>($"api/orders/{this.Id}");
+        this.order = await this.Http.GetFromJsonAsync<OrdersDetailsResponseModel>($"api/orders/{this.Id}");
     }
 }

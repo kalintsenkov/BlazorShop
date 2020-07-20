@@ -91,7 +91,7 @@
                 phoneNumber,
                 TestUser.Identifier);
 
-            await this.addressesService.DeleteAsync(id);
+            await this.addressesService.DeleteAsync(id, TestUser.Identifier);
 
             this.Data.Addresses.Count().ShouldBe(0);
         }
@@ -110,11 +110,11 @@
 
             var addressesListingResponseModels = await this
                 .addressesService
-                .GetAllByUserIdAsync(TestUser.Identifier);
+                .ByUserIdAsync(TestUser.Identifier);
 
             this.Data.Addresses.Count().ShouldBe(3);
 
-            addressesListingResponseModels.ShouldBeOfType<List<AddressListingResponseModel>>();
+            addressesListingResponseModels.ShouldBeOfType<List<AddressesListingResponseModel>>();
         }
     }
 }
