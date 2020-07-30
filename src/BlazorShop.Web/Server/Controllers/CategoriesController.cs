@@ -22,23 +22,17 @@
 
         [HttpGet]
         public async Task<IEnumerable<CategoriesListingResponseModel>> All()
-            => await this
-                .categoriesService
-                .AllAsync();
+            => await this.categoriesService.AllAsync();
 
         [HttpGet(Id)]
         public async Task<IEnumerable<ProductsListingResponseModel>> Details(int id)
-            => await this
-                .categoriesService
-                .DetailsAsync(id);
+            => await this.categoriesService.DetailsAsync(id);
 
         [HttpPost]
         [Authorize(Roles = AdministratorRole)]
         public async Task<ActionResult> Create(CategoriesRequestModel model)
         {
-            var id = await this
-                .categoriesService
-                .CreateAsync(model.Name);
+            var id = await this.categoriesService.CreateAsync(model.Name);
 
             return Created(nameof(this.Create), id);
         }
@@ -46,16 +40,14 @@
         [HttpPut(Id)]
         [Authorize(Roles = AdministratorRole)]
         public async Task<ActionResult> Update(int id, CategoriesRequestModel model)
-            => await this
-                .categoriesService
+            => await this.categoriesService
                 .UpdateAsync(id, model.Name)
                 .ToActionResult();
 
         [HttpDelete(Id)]
         [Authorize(Roles = AdministratorRole)]
         public async Task<ActionResult> Delete(int id)
-            => await this
-                .categoriesService
+            => await this.categoriesService
                 .DeleteAsync(id)
                 .ToActionResult();
     }

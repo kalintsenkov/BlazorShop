@@ -20,15 +20,11 @@
 
         [HttpGet]
         public async Task<IEnumerable<OrdersListingResponseModel>> All()
-            => await this
-                .ordersService
-                .ByUserIdAsync(this.User.GetId());
+            => await this.ordersService.ByUserIdAsync(this.User.GetId());
 
         [HttpGet(Id)]
         public async Task<ActionResult<OrdersDetailsResponseModel>> Details(string id)
-            => await this
-                .ordersService
-                .DetailsAsync(id);
+            => await this.ordersService.DetailsAsync(id);
 
         [HttpPost]
         public async Task<ActionResult> Purchase([FromBody] int addressId)

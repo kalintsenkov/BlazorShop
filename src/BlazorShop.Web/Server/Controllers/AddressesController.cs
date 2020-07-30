@@ -20,9 +20,7 @@
 
         [HttpGet]
         public async Task<IEnumerable<AddressesListingResponseModel>> All()
-            => await this
-                .addressesService
-                .ByUserIdAsync(this.User.GetId());
+            => await this.addressesService.ByUserIdAsync(this.User.GetId());
 
         [HttpPost]
         public async Task<ActionResult> Create(AddressesRequestModel model)
@@ -41,8 +39,7 @@
 
         [HttpDelete(Id)]
         public async Task<ActionResult> Delete(int id)
-            => await this
-                .addressesService
+            => await this.addressesService
                 .DeleteAsync(id, this.User.GetId())
                 .ToActionResult();
     }

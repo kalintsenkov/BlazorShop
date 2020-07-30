@@ -21,15 +21,11 @@
 
         [HttpGet]
         public async Task<IEnumerable<ProductsListingResponseModel>> All(int page = 1)
-            => await this
-                .productsService
-                .AllAsync(page);
+            => await this.productsService.AllAsync(page);
 
         [HttpGet(Id)]
         public async Task<ActionResult<ProductsDetailsResponseModel>> Details(int id)
-            => await this
-                .productsService
-                .DetailsAsync(id);
+            => await this.productsService.DetailsAsync(id);
 
         [HttpPost]
         [Authorize(Roles = AdministratorRole)]
@@ -49,8 +45,7 @@
         [HttpPut(Id)]
         [Authorize(Roles = AdministratorRole)]
         public async Task<ActionResult> Update(int id, ProductsRequestModel model)
-            => await this
-                .productsService
+            => await this.productsService
                 .UpdateAsync(
                     id,
                     model.Name,
@@ -64,8 +59,7 @@
         [HttpDelete(Id)]
         [Authorize(Roles = AdministratorRole)]
         public async Task<ActionResult> Delete(int id)
-            => await this
-                .productsService
+            => await this.productsService
                 .DeleteAsync(id)
                 .ToActionResult();
     }

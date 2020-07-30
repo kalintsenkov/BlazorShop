@@ -18,23 +18,20 @@
 
         [HttpPost(nameof(Register))]
         public async Task<ActionResult> Register(RegisterRequestModel model)
-            => await this
-                .identityService
+            => await this.identityService
                 .RegisterAsync(model)
                 .ToActionResult();
 
         [HttpPost(nameof(Login))]
         public async Task<ActionResult<LoginResponseModel>> Login(LoginRequestModel model)
-            => await this
-                .identityService
+            => await this.identityService
                 .LoginAsync(model)
                 .ToActionResult();
 
         [HttpPut(nameof(ChangePassword))]
         [Authorize]
         public async Task<ActionResult> ChangePassword(ChangePasswordRequestModel model)
-            => await this
-                .identityService
+            => await this.identityService
                 .ChangePasswordAsync(new ChangePasswordRequestModel
                 {
                     UserId = this.User.GetId(),

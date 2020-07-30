@@ -20,28 +20,23 @@
 
         [HttpGet]
         public async Task<IEnumerable<ShoppingCartProductsResponseModel>> All()
-            => await this
-                .shoppingCartService
-                .ByUserIdAsync(this.User.GetId());
+            => await this.shoppingCartService.ByUserIdAsync(this.User.GetId());
 
         [HttpPost(Id)]
         public async Task<ActionResult> Add(int id, ShoppingCartRequestModel model) 
-            => await this
-                .shoppingCartService
+            => await this.shoppingCartService
                 .AddAsync(id, model.Quantity, this.User.GetId())
                 .ToActionResult();
 
         [HttpPut(Id)]
         public async Task<ActionResult> Update(int id, ShoppingCartRequestModel model)
-            => await this
-                .shoppingCartService
+            => await this.shoppingCartService
                 .UpdateAsync(id, model.Quantity, this.User.GetId())
                 .ToActionResult();
 
         [HttpDelete(Id)]
         public async Task<ActionResult> Remove(int id)
-            => await this
-                .shoppingCartService
+            => await this.shoppingCartService
                 .RemoveAsync(id, this.User.GetId())
                 .ToActionResult();
     }
