@@ -74,8 +74,8 @@
                 .FirstOrDefaultAsync(w => w.ProductId == productId);
 
         private IQueryable<Wishlist> AllByUserId(string userId, bool withDeleted = false)
-            => !withDeleted
-                ? this.All().Where(w => w.UserId == userId && !w.IsDeleted)
-                : this.All().Where(w => w.UserId == userId);
+            => withDeleted
+                ? this.All().Where(w => w.UserId == userId)
+                : this.All().Where(w => w.UserId == userId && !w.IsDeleted);
     }
 }

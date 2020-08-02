@@ -17,6 +17,8 @@
 
         public int Quantity { get; set; }
 
+        public int StockQuantity { get; set; }
+
         public void RegisterMappings(IProfileExpression profile)
             => profile
                 .CreateMap<ShoppingCart, ShoppingCartProductsResponseModel>()
@@ -24,6 +26,7 @@
                 .ForMember(m => m.Name, m => m.MapFrom(c => c.Product.Name))
                 .ForMember(m => m.Price, m => m.MapFrom(c => c.Product.Price))
                 .ForMember(m => m.ImageSource, m => m.MapFrom(c => c.Product.ImageSource))
-                .ForMember(m => m.Quantity, m => m.MapFrom(c => c.Quantity));
+                .ForMember(m => m.Quantity, m => m.MapFrom(c => c.Quantity))
+                .ForMember(m => m.StockQuantity, m => m.MapFrom(c => c.Product.Quantity));
     }
 }

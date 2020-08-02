@@ -55,9 +55,9 @@ else
                                         </td>
                                         <td class="product-quantity">
                                             <div class="quantity buttons_added">
-                                                <input type="button" value="-" class="minus" />
+                                                <input @onclick="() => DecrementQuantity(product.Id, product.Quantity)" type="button" value="-" class="minus" />
                                                 <input type="number" value="@product.Quantity" title="Qty" class="input-text qty text" />
-                                                <input type="button" value="+" class="plus" />
+                                                <input @onclick="() => IncrementQuantity(product.Id, product.Quantity, product.StockQuantity)" type="button" value="+" class="plus" />
                                             </div>
                                         </td>
                                         <td class="product-subtotal">
@@ -144,6 +144,8 @@ else
 }
 
 @code {
+    private readonly ShoppingCartRequestModel model = new ShoppingCartRequestModel();
+
     private decimal totalPrice;
     private ShoppingCartProductsResponseModel[] cartProducts;
 
@@ -165,5 +167,31 @@ else
     {
         this.cartProducts = await this.Http.GetFromJsonAsync<ShoppingCartProductsResponseModel[]>("api/shoppingcarts");
         this.totalPrice = this.cartProducts.Sum(p => p.Price * p.Quantity);
+    }
+
+    private async Task IncrementQuantity(int productId, int quantity, int stockQuantity)
+    {
+        this.model.Quantity = quantity;
+
+        if (this.model.Quantity + 1 <= stockQuantity)
+        {
+            this.model.Quantity++;
+
+            await this.Http.PutAsJsonAsync($"api/shoppingcarts/{productId}", model);
+            await this.LoadDataAsync();
+        }
+    }
+
+    private async Task DecrementQuantity(int productId, int quantity)
+    {
+        this.model.Quantity = quantity;
+
+        if (this.model.Quantity - 1 > 0)
+        {
+            this.model.Quantity--;
+
+            await this.Http.PutAsJsonAsync($"api/shoppingcarts/{productId}", model);
+            await this.LoadDataAsync();
+        }
     }
 }
