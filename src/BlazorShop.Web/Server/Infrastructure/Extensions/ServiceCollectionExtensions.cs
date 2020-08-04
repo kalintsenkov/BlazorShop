@@ -17,6 +17,7 @@
     using Services.Identity;
     using Services.Orders;
     using Services.Products;
+    using Services.Search;
     using Services.ShoppingCart;
     using Services.Wishlist;
 
@@ -93,6 +94,7 @@
                 .AddTransient<IJwtGeneratorService, JwtGeneratorService>()
                 .AddTransient<IOrdersService, OrdersService>()
                 .AddTransient<IProductsService, ProductsService>()
+                .AddTransient<ISearchService, SearchService>()
                 .AddTransient<IShoppingCartService, ShoppingCartService>()
                 .AddTransient<IWishlistService, WishlistService>();
 
