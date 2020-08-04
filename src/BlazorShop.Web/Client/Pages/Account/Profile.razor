@@ -1,11 +1,12 @@
 ﻿@page "/account/profile"
 @attribute [Authorize]
+@inject IToastService ToastService
 
 <section class="page-title text-center">
     <div class="container relative clearfix">
         <div class="title-holder">
             <div class="title-text">
-                <h1 class="uppercase">My Account</h1>
+                <h1 class="uppercase">My Profile</h1>
             </div>
         </div>
     </div>
@@ -22,9 +23,6 @@
                     <li class="woocommerce-MyAccount-navigation-link woocommerce-MyAccount-navigation-link--orders">
                         <a href="#">Orders</a>
                     </li>
-                    <li class="woocommerce-MyAccount-navigation-link woocommerce-MyAccount-navigation-link--downloads">
-                        <a href="#">Downloads</a>
-                    </li>
                     <li class="woocommerce-MyAccount-navigation-link woocommerce-MyAccount-navigation-link--edit-address">
                         <a href="#">Addresses</a>
                     </li>
@@ -32,64 +30,72 @@
                         <a href="#">Account details</a>
                     </li>
                     <li class="woocommerce-MyAccount-navigation-link woocommerce-MyAccount-navigation-link--customer-logout">
-                        <a href="#">Logout</a>
+                        <Logout />
                     </li>
                 </ul>
             </nav>
 
             <div class="woocommerce-MyAccount-content">
-                <form class="woocommerce-EditAccountForm edit-account">
+                <EditForm Model="model" OnValidSubmit="SubmitAsync" class="woocommerce-EditAccountForm edit-account">
 
-                    <p class="woocommerce-form-row woocommerce-form-row--first form-row form-row-first">
-                        <label for="account_first_name">
-                            First name&nbsp;<span class="required">*</span>
-                        </label>
-                        <input type="text" class="woocommerce-Input woocommerce-Input--text input-text" name="account_first_name" id="account_first_name" autocomplete="off" />
-                    </p>
+                    <ErrorsList ShowErrors="showErrors" Errors="errors" />
+                    <DataAnnotationsValidator />
+                    <ValidationSummary />
 
-                    <p class="woocommerce-form-row woocommerce-form-row--last form-row form-row-last">
-                        <label for="account_last_name">
-                            Last name&nbsp;<span class="required">*</span>
-                        </label>
-                        <input type="text" class="woocommerce-Input woocommerce-Input--text input-text" name="account_last_name" id="account_last_name" autocomplete="family-name" />
-                    </p>
+                    @*<p class="woocommerce-form-row woocommerce-form-row--first form-row form-row-first">
+                            <label for="account_first_name">
+                                First name&nbsp;<span class="required">*</span>
+                            </label>
+                            <input type="text" class="woocommerce-Input woocommerce-Input--text input-text" name="account_first_name" id="account_first_name" autocomplete="off" />
+                        </p>
 
-                    <div class="clear"></div>
+                        <p class="woocommerce-form-row woocommerce-form-row--last form-row form-row-last">
+                            <label for="account_last_name">
+                                Last name&nbsp;<span class="required">*</span>
+                            </label>
+                            <input type="text" class="woocommerce-Input woocommerce-Input--text input-text" name="account_last_name" id="account_last_name" autocomplete="family-name" />
+                        </p>
 
-                    <p class="woocommerce-form-row woocommerce-form-row--wide form-row form-row-wide">
-                        <label for="account_display_name">
-                            Display name&nbsp;<span class="required">*</span>
-                        </label>
-                        <input type="text" class="woocommerce-Input woocommerce-Input--text input-text" name="account_display_name" id="account_display_name" />
-                        <span><em>This will be how your name will be displayed in the account section and in reviews</em></span>
-                    </p>
+                        <div class="clear"></div>
 
-                    <div class="clear"></div>
+                        <p class="woocommerce-form-row woocommerce-form-row--wide form-row form-row-wide">
+                            <label for="account_display_name">
+                                Display name&nbsp;<span class="required">*</span>
+                            </label>
+                            <input type="text" class="woocommerce-Input woocommerce-Input--text input-text" name="account_display_name" id="account_display_name" />
+                            <span><em>This will be how your name will be displayed in the account section and in reviews</em></span>
+                        </p>
 
-                    <p class="woocommerce-form-row woocommerce-form-row--wide form-row form-row-wide">
-                        <label for="account_email">
-                            Email address&nbsp;<span class="required">*</span>
-                        </label>
-                        <input type="email" class="woocommerce-Input woocommerce-Input--email input-text" name="account_email" id="account_email" autocomplete="email" />
-                    </p>
+                        <div class="clear"></div>
 
-                    <div class="clear"></div>
+                        <p class="woocommerce-form-row woocommerce-form-row--wide form-row form-row-wide">
+                            <label for="account_email">
+                                Email address&nbsp;<span class="required">*</span>
+                            </label>
+                            <input type="email" class="woocommerce-Input woocommerce-Input--email input-text" name="account_email" id="account_email" autocomplete="email" />
+                        </p>
+
+                        <div class="clear"></div>*@
 
                     <fieldset>
                         <legend class="heading uppercase mb-30">Password change</legend>
 
                         <p class="woocommerce-form-row woocommerce-form-row--wide form-row form-row-wide">
                             <label for="password_current">Current password (leave blank to leave unchanged)</label>
-                            <span class="password-input"><input type="password" class="woocommerce-Input woocommerce-Input--password input-text" name="password_current" id="password_current" autocomplete="off"></span>
+                            <span class="password-input">
+                                <InputText @bind-Value="model.Password" type="password" class="woocommerce-Input woocommerce-Input--password input-text" name="password_current" id="password_current" autocomplete="off" />
+                            </span>
                         </p>
                         <p class="woocommerce-form-row woocommerce-form-row--wide form-row form-row-wide">
                             <label for="password_1">New password (leave blank to leave unchanged)</label>
-                            <span class="password-input"><input type="password" class="woocommerce-Input woocommerce-Input--password input-text" name="password_1" id="password_1" autocomplete="off"></span>
+                            <span class="password-input">
+                                <InputText @bind-Value="model.NewPassword" type="password" class="woocommerce-Input woocommerce-Input--password input-text" name="password_1" id="password_1" autocomplete="off" />
+                            </span>
                         </p>
                         <p class="woocommerce-form-row woocommerce-form-row--wide form-row form-row-wide">
                             <label for="password_2">Confirm new password</label>
                             <span class="password-input">
-                                <input type="password" class="woocommerce-Input woocommerce-Input--password input-text" name="password_2" id="password_2" autocomplete="off" />
+                                <InputText @bind-Value="model.ConfirmNewPassword" type="password" class="woocommerce-Input woocommerce-Input--password input-text" name="password_2" id="password_2" autocomplete="off" />
                             </span>
                         </p>
                     </fieldset>
@@ -102,7 +108,7 @@
 
                     <div class="clear"></div>
 
-                </form>
+                </EditForm>
             </div>
 
         </div>
@@ -110,4 +116,33 @@
 </section>
 
 @code {
+    private readonly ChangePasswordRequestModel model = new ChangePasswordRequestModel();
+
+    private bool showErrors;
+    private IEnumerable<string> errors;
+
+    private async Task SubmitAsync()
+    {
+        var token = await this.LocalStorage.GetItemAsync<string>("authToken");
+        this.Http.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
+
+        var response = await this.Http.PutAsJsonAsync("api/identity/changepassword", this.model);
+
+        if (response.IsSuccessStatusCode)
+        {
+            this.showErrors = false;
+
+            this.model.Password = null;
+            this.model.NewPassword = null;
+            this.model.ConfirmNewPassword = null;
+
+            this.NavigationManager.NavigateTo("/account/profile");
+            this.ToastService.ShowSuccess("Your password has been changed successfully!");
+        }
+        else
+        {
+            this.errors = await response.Content.ReadFromJsonAsync<string[]>();
+            this.showErrors = true;
+        }
+    }
 }

@@ -28,15 +28,16 @@
                 .LoginAsync(model)
                 .ToActionResult();
 
-        [HttpPut(nameof(ChangePassword))]
         [Authorize]
+        [HttpPut(nameof(ChangePassword))]
         public async Task<ActionResult> ChangePassword(ChangePasswordRequestModel model)
             => await this.identityService
                 .ChangePasswordAsync(new ChangePasswordRequestModel
                 {
                     UserId = this.User.GetId(),
                     Password = model.Password,
-                    NewPassword = model.NewPassword
+                    NewPassword = model.NewPassword,
+                    ConfirmNewPassword = model.ConfirmNewPassword
                 })
                 .ToActionResult();
     }

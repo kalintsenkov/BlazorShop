@@ -6,7 +6,6 @@
 
     public class ChangePasswordRequestModel
     {
-        [Required]
         public string UserId { get; set; }
 
         [Required]
@@ -18,5 +17,11 @@
         [MinLength(MinPasswordLength)]
         [DataType(DataType.Password)]
         public string NewPassword { get; set; }
+
+        [Required]
+        [MinLength(MinPasswordLength)]
+        [DataType(DataType.Password)]
+        [Compare(nameof(NewPassword))]
+        public string ConfirmNewPassword { get; set; }
     }
 }

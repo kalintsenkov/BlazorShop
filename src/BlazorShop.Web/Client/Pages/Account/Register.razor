@@ -16,7 +16,7 @@
             <div class="col-md-4"></div>
 
             <div class="col-md-4">
-                <EditForm Model="model" OnValidSubmit="Submit" class="login">
+                <EditForm Model="model" OnValidSubmit="SubmitAsync" class="login">
 
                     <ErrorsList ShowErrors="showErrors" Errors="errors" />
                     <DataAnnotationsValidator />
@@ -86,7 +86,7 @@
     private bool showErrors;
     private IEnumerable<string> errors;
 
-    private async Task Submit()
+    private async Task SubmitAsync()
     {
         var result = await this.AuthService.Register(model);
 
