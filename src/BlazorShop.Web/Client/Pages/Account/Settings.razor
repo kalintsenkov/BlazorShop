@@ -1,0 +1,112 @@
+﻿@page "/account/settings"
+@attribute [Authorize]
+@inject IToastService ToastService
+
+@if (model == null)
+{
+    <LoadingScreen />
+}
+else
+{
+    <section class="page-title text-center">
+        <div class="container relative clearfix">
+            <div class="title-holder">
+                <div class="title-text">
+                    <h1 class="uppercase">Account Settings</h1>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="section-wrap woocommerce-account pt-0 pb-60">
+        <div class="container">
+            <div class="woocommerce">
+                <nav class="woocommerce-MyAccount-navigation">
+                    <ul>
+                        <li class="woocommerce-MyAccount-navigation-link woocommerce-MyAccount-navigation-link--orders">
+                            <a href="#">Orders</a>
+                        </li>
+                        <li class="woocommerce-MyAccount-navigation-link woocommerce-MyAccount-navigation-link--edit-address">
+                            <a href="#">Addresses</a>
+                        </li>
+                        <li class="woocommerce-MyAccount-navigation-link woocommerce-MyAccount-navigation-link--edit-account is-active">
+                            <a href="/account/settings">Account Settings</a>
+                        </li>
+                        <li class="woocommerce-MyAccount-navigation-link woocommerce-MyAccount-navigation-link--edit-account">
+                            <a href="/account/changepassword">Change Password</a>
+                        </li>
+                        <li class="woocommerce-MyAccount-navigation-link woocommerce-MyAccount-navigation-link--customer-logout">
+                            <Logout />
+                        </li>
+                    </ul>
+                </nav>
+
+                <div class="woocommerce-MyAccount-content">
+                    <form class="woocommerce-EditAccountForm edit-account">
+
+                        @*<ErrorsList ShowErrors="showErrors" Errors="errors" />*@
+                        @*<DataAnnotationsValidator />
+                        <ValidationSummary />*@
+
+                        <p class="woocommerce-form-row woocommerce-form-row--first form-row form-row-first">
+                            <label for="account_first_name">
+                                First name&nbsp;<span class="required">*</span>
+                            </label>
+                            <input type="text" class="woocommerce-Input woocommerce-Input--text input-text" name="account_first_name" id="account_first_name" autocomplete="off" />
+                        </p>
+
+                        <p class="woocommerce-form-row woocommerce-form-row--last form-row form-row-last">
+                            <label for="account_last_name">
+                                Last name&nbsp;<span class="required">*</span>
+                            </label>
+                            <input type="text" class="woocommerce-Input woocommerce-Input--text input-text" name="account_last_name" id="account_last_name" autocomplete="family-name" />
+                        </p>
+
+                        <div class="clear"></div>
+
+                        <p class="woocommerce-form-row woocommerce-form-row--wide form-row form-row-wide">
+                            <label for="account_display_name">
+                                Username&nbsp;<span class="required">*</span>
+                            </label>
+                            <input @bind="model.Username" type="text" class="woocommerce-Input woocommerce-Input--text input-text" name="account_display_name" id="account_display_name" />
+                            <span><em>This will be how your name will be displayed in the account section and in reviews</em></span>
+                        </p>
+
+                        <div class="clear"></div>
+
+                        <p class="woocommerce-form-row woocommerce-form-row--wide form-row form-row-wide">
+                            <label for="account_email">
+                                Email address&nbsp;<span class="required">*</span>
+                            </label>
+                            <input type="email" class="woocommerce-Input woocommerce-Input--email input-text" name="account_email" id="account_email" autocomplete="email" />
+                        </p>
+
+                        <div class="clear"></div>
+
+                        <p>
+                            <button type="submit" class="btn btn-lg woocommerce-Button button" name="save_account_details" value="Save changes">
+                                Save changes
+                            </button>
+                        </p>
+
+                        <div class="clear"></div>
+
+                    </form>
+                </div>
+
+            </div>
+        </div>
+    </section>
+}
+
+@code {
+    private readonly ChangeSettingsRequestModel model = new ChangeSettingsRequestModel();
+
+    protected override async Task OnInitializedAsync()
+    {
+        var state = await this.AuthState.GetAuthenticationStateAsync();
+        var user = state.User.Identity;
+
+        model.Username = user.Name;
+    }
+}

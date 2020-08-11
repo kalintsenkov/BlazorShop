@@ -7,7 +7,7 @@
 
     using BlazorShop.Data.Models;
 
-    public static class AddressTestData
+    public static class AddressesTestData
     {
         public static List<Address> GetAddresses(int count, bool sameUser = true)
         {

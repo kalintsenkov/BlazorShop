@@ -102,7 +102,7 @@
             await this
                 .Data
                 .Addresses
-                .AddRangeAsync(AddressTestData.GetAddresses(3));
+                .AddRangeAsync(AddressesTestData.GetAddresses(3));
 
             await this
                 .Data

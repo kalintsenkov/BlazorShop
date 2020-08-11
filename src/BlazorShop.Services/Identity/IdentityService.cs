@@ -62,6 +62,27 @@
             return new LoginResponseModel { Token = token };
         }
 
+        public async Task<Result> ChangeSettingsAsync(ChangeSettingsRequestModel model)
+        {
+            var user = await this.userManager.FindByIdAsync(model.UserId);
+            if (user == null)
+            {
+                return InvalidErrorMessage;
+            }
+
+            user.UserName = model.Username;
+            user.FirstName = model.FirstName;
+            user.LastName = model.LastName;
+
+            var identityResult = await this.userManager.UpdateAsync(user);
+
+            var errors = identityResult.Errors.Select(e => e.Description);
+
+            return identityResult.Succeeded
+                ? Result.Success
+                : Result.Failure(errors);
+        }
+
         public async Task<Result> ChangePasswordAsync(ChangePasswordRequestModel model)
         {
             var user = await this.userManager.FindByIdAsync(model.UserId);

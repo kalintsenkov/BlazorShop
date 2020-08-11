@@ -28,7 +28,7 @@
             => MyController<AddressesController>
                 .Instance(instance => instance
                     .WithUser()
-                    .WithData(AddressTestData.GetAddresses(count)))
+                    .WithData(AddressesTestData.GetAddresses(count)))
                 .Calling(c => c.All())
                 .ShouldReturn()
                 .ResultOfType<IEnumerable<AddressesListingResponseModel>>(result => result
@@ -46,8 +46,6 @@
 
         [Theory]
         [InlineData("Country 1", "State 1", "City 1", "Test description 1", "1000", "0888888888")]
-        [InlineData("Country 2", "State 2", "City 2", "Test description 2", "2000", "0888888888")]
-        [InlineData("Country 3", "State 3", "City 3", "Test description 3", "3000", "0888888888")]
         public void CreateShouldReturnCreatedResultWhenValidModelState(
             string country,
             string state,
@@ -91,12 +89,11 @@
         [Theory]
         [InlineData(1)]
         [InlineData(2)]
-        [InlineData(3)]
         public void DeleteShouldReturnOkResultWhenAddressDeleted(int id)
             => MyController<AddressesController>
                 .Instance(instance => instance
                     .WithUser()
-                    .WithData(AddressTestData.GetAddresses(3)))
+                    .WithData(AddressesTestData.GetAddresses(3)))
                 .Calling(c => c.Delete(id))
                 .ShouldReturn()
                 .Ok();

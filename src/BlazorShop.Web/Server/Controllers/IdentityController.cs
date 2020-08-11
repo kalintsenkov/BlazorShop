@@ -29,6 +29,19 @@
                 .ToActionResult();
 
         [Authorize]
+        [HttpPut(nameof(ChangeSettings))]
+        public async Task<ActionResult> ChangeSettings(ChangeSettingsRequestModel model)
+            => await this.identityService
+                .ChangeSettingsAsync(new ChangeSettingsRequestModel
+                {
+                    UserId = this.User.GetId(),
+                    Username = model.Username,
+                    FirstName = model.FirstName,
+                    LastName = model.LastName
+                })
+                .ToActionResult();
+
+        [Authorize]
         [HttpPut(nameof(ChangePassword))]
         public async Task<ActionResult> ChangePassword(ChangePasswordRequestModel model)
             => await this.identityService
