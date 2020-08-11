@@ -64,7 +64,7 @@
 
         public async Task<Result> ChangeSettingsAsync(ChangeSettingsRequestModel model)
         {
-            var user = await this.userManager.FindByIdAsync(model.UserId);
+            var user = await this.userManager.FindByNameAsync(model.Username);
             if (user == null)
             {
                 return InvalidErrorMessage;

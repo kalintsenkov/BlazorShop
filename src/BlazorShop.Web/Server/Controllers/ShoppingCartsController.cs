@@ -7,8 +7,8 @@
     using Microsoft.AspNetCore.Mvc;
 
     using Infrastructure.Extensions;
-    using Services.ShoppingCart;
     using Models.ShoppingCarts;
+    using Services.ShoppingCart;
 
     [Authorize]
     public class ShoppingCartsController : ApiController

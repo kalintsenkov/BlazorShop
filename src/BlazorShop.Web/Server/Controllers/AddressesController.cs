@@ -7,8 +7,8 @@
     using Microsoft.AspNetCore.Mvc;
 
     using Infrastructure.Extensions;
-    using Services.Addresses;
     using Models.Addresses;
+    using Services.Addresses;
 
     [Authorize]
     public class AddressesController : ApiController

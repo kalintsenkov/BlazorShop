@@ -7,8 +7,8 @@
     using Microsoft.AspNetCore.Mvc;
 
     using Infrastructure.Extensions;
-    using Services.Wishlist;
     using Models.Products;
+    using Services.Wishlist;
 
     [Authorize]
     public class WishlistsController : ApiController

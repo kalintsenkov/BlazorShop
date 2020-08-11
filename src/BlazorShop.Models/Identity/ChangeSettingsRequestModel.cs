@@ -7,8 +7,6 @@
 
     public class ChangeSettingsRequestModel
     {
-        public string UserId { get; set; }
-
         [Required]
         [StringLength(
             MaxNameLength,

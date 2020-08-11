@@ -7,8 +7,8 @@
     using Microsoft.AspNetCore.Mvc;
 
     using Infrastructure.Extensions;
-    using Services.Orders;
     using Models.Orders;
+    using Services.Orders;
 
     [Authorize]
     public class OrdersController : ApiController

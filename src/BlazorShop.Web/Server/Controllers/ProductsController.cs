@@ -45,8 +45,7 @@
         [HttpPut(Id)]
         [Authorize(Roles = AdministratorRole)]
         public async Task<ActionResult> Update(int id, ProductsRequestModel model)
-            => await this.productsService
-                .UpdateAsync(
+            => await this.productsService.UpdateAsync(
                     id,
                     model.Name,
                     model.Description,
