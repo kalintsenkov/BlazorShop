@@ -107,6 +107,6 @@ else
         var state = await this.AuthState.GetAuthenticationStateAsync();
         var user = state.User.Identity;
 
-        model.Username = user.Name;
+        this.model.Username = user.Name;
     }
 }

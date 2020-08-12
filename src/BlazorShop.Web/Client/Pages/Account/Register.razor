@@ -92,13 +92,13 @@
 
         if (result.Succeeded)
         {
-            this.NavigationManager.NavigateTo("account/login");
+            this.NavigationManager.NavigateTo("/account/login");
             this.ToastService.ShowSuccess("You have been successfully registered.\nPlease login.");
         }
         else
         {
-            errors = result.Errors;
-            showErrors = true;
+            this.errors = result.Errors;
+            this.showErrors = true;
         }
     }
 }

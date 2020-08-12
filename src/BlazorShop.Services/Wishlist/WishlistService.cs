@@ -19,7 +19,7 @@
         {
         }
 
-        public async Task<Result> AddAsync(int productId, string userId)
+        public async Task<Result> AddProductAsync(int productId, string userId)
         {
             var wishlist = await this.GetByProductIdAndUserIdAsync(productId, userId);
 
@@ -35,8 +35,8 @@
             }
             else
             {
-                wishlist.IsDeleted = false;
                 wishlist.DeletedOn = null;
+                wishlist.IsDeleted = false;
             }
 
             await this.Data.SaveChangesAsync();
@@ -44,7 +44,7 @@
             return Result.Success;
         }
 
-        public async Task<Result> RemoveAsync(int productId, string userId)
+        public async Task<Result> RemoveProductAsync(int productId, string userId)
         {
             var wishlist = await this.GetByProductIdAndUserIdAsync(productId, userId);
 

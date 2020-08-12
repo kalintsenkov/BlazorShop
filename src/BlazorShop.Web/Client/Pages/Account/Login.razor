@@ -18,7 +18,7 @@
             <div class="col-md-4">
                 <EditForm Model="model" OnValidSubmit="SubmitAsync" class="login">
 
-                    <ErrorsList ShowErrors="showErrors" Errors="errors"/>
+                    <ErrorsList ShowErrors="showErrors" Errors="errors" />
                     <DataAnnotationsValidator />
                     <ValidationSummary />
 
@@ -64,8 +64,8 @@
         }
         else
         {
-            errors = result.Errors;
-            showErrors = true;
+            this.errors = result.Errors;
+            this.showErrors = true;
         }
     }
 }

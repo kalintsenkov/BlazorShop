@@ -39,9 +39,14 @@
 @code {
     private readonly ShoppingCartRequestModel model = new ShoppingCartRequestModel();
 
-    [Parameter] public int ProductId { get; set; }
-    [Parameter] public string ProductName { get; set; }
-    [Parameter] public int ProductQuantity { get; set; }
+    [Parameter]
+    public int ProductId { get; set; }
+
+    [Parameter] 
+    public string ProductName { get; set; }
+
+    [Parameter] 
+    public int ProductQuantity { get; set; }
 
     protected override async Task OnInitializedAsync()
     {

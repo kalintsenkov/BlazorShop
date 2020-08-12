@@ -7,6 +7,8 @@
 
     public interface ISearchService
     {
-        Task<IEnumerable<ProductsListingResponseModel>> Products(string query);
+        Task<IEnumerable<ProductsListingResponseModel>> Products(
+            string query, 
+            int page = 1);
     }
 }

@@ -11,34 +11,34 @@
 
     public class IdentityController : ApiController
     {
-        private readonly IIdentityService identityService;
+        private readonly IIdentityService identity;
 
-        public IdentityController(IIdentityService identityService)
-            => this.identityService = identityService;
+        public IdentityController(IIdentityService identity)
+            => this.identity = identity;
 
         [HttpPost(nameof(Register))]
         public async Task<ActionResult> Register(RegisterRequestModel model)
-            => await this.identityService
+            => await this.identity
                 .RegisterAsync(model)
                 .ToActionResult();
 
         [HttpPost(nameof(Login))]
         public async Task<ActionResult<LoginResponseModel>> Login(LoginRequestModel model)
-            => await this.identityService
+            => await this.identity
                 .LoginAsync(model)
                 .ToActionResult();
 
         [Authorize]
         [HttpPut(nameof(ChangeSettings))]
         public async Task<ActionResult> ChangeSettings(ChangeSettingsRequestModel model)
-            => await this.identityService
+            => await this.identity
                 .ChangeSettingsAsync(model)
                 .ToActionResult();
 
         [Authorize]
         [HttpPut(nameof(ChangePassword))]
         public async Task<ActionResult> ChangePassword(ChangePasswordRequestModel model)
-            => await this.identityService
+            => await this.identity
                 .ChangePasswordAsync(new ChangePasswordRequestModel
                 {
                     UserId = this.User.GetId(),

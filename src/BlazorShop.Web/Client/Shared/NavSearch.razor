@@ -1,0 +1,17 @@
+﻿<div class="nav-search hidden-sm hidden-xs">
+    <EditForm Model="searchModel" OnValidSubmit="Search" method="get">
+        <InputText @bind-Value="searchModel.Query" type="search" class="form-control" placeholder="Search" />
+        <button type="submit" class="search-button">
+            <i class="fas fa-search"></i>
+        </button>
+    </EditForm>
+</div>
+
+@code {
+    private readonly SearchRequestModel searchModel = new SearchRequestModel();
+
+    private void Search()
+    {
+        this.NavigationManager.NavigateTo($"/products/{this.searchModel.Query}/1");
+    }
+}

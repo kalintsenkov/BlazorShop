@@ -15,24 +15,24 @@
 
     public class CategoriesController : ApiController
     {
-        private readonly ICategoriesService categoriesService;
+        private readonly ICategoriesService categories;
 
-        public CategoriesController(ICategoriesService categoriesService)
-            => this.categoriesService = categoriesService;
+        public CategoriesController(ICategoriesService categories)
+            => this.categories = categories;
 
         [HttpGet]
         public async Task<IEnumerable<CategoriesListingResponseModel>> All()
-            => await this.categoriesService.AllAsync();
+            => await this.categories.AllAsync();
 
         [HttpGet(Id)]
         public async Task<IEnumerable<ProductsListingResponseModel>> Details(int id)
-            => await this.categoriesService.DetailsAsync(id);
+            => await this.categories.DetailsAsync(id);
 
         [HttpPost]
         [Authorize(Roles = AdministratorRole)]
         public async Task<ActionResult> Create(CategoriesRequestModel model)
         {
-            var id = await this.categoriesService.CreateAsync(model.Name);
+            var id = await this.categories.CreateAsync(model.Name);
 
             return Created(nameof(this.Create), id);
         }
@@ -40,14 +40,14 @@
         [HttpPut(Id)]
         [Authorize(Roles = AdministratorRole)]
         public async Task<ActionResult> Update(int id, CategoriesRequestModel model)
-            => await this.categoriesService
+            => await this.categories
                 .UpdateAsync(id, model.Name)
                 .ToActionResult();
 
         [HttpDelete(Id)]
         [Authorize(Roles = AdministratorRole)]
         public async Task<ActionResult> Delete(int id)
-            => await this.categoriesService
+            => await this.categories
                 .DeleteAsync(id)
                 .ToActionResult();
     }

@@ -19,7 +19,7 @@
         {
         }
 
-        public async Task<Result> AddAsync(int productId, int quantity, string userId)
+        public async Task<Result> AddProductAsync(int productId, int quantity, string userId)
         {
             var shoppingCart = new ShoppingCart
             {
@@ -34,7 +34,7 @@
             return Result.Success;
         }
 
-        public async Task<Result> UpdateAsync(int productId, int quantity, string userId)
+        public async Task<Result> UpdateProductAsync(int productId, int quantity, string userId)
         {
             var shoppingCart = await this.GetByProductIdAndUserIdAsync(productId, userId);
 
@@ -50,7 +50,7 @@
             return Result.Success;
         }
 
-        public async Task<Result> RemoveAsync(int productId, string userId)
+        public async Task<Result> RemoveProductAsync(int productId, string userId)
         {
             var shoppingCart = await this.GetByProductIdAndUserIdAsync(productId, userId);
 

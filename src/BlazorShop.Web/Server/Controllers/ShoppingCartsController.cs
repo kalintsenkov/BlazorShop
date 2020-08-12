@@ -13,31 +13,35 @@
     [Authorize]
     public class ShoppingCartsController : ApiController
     {
-        private readonly IShoppingCartService shoppingCartService;
+        private readonly IShoppingCartService shoppingCart;
 
-        public ShoppingCartsController(IShoppingCartService shoppingCartService)
-            => this.shoppingCartService = shoppingCartService;
+        public ShoppingCartsController(IShoppingCartService shoppingCart)
+            => this.shoppingCart = shoppingCart;
 
         [HttpGet]
-        public async Task<IEnumerable<ShoppingCartProductsResponseModel>> All()
-            => await this.shoppingCartService.ByUserIdAsync(this.User.GetId());
+        public async Task<IEnumerable<ShoppingCartProductsResponseModel>> ByUser()
+            => await this.shoppingCart.ByUserIdAsync(this.User.GetId());
 
         [HttpPost(Id)]
-        public async Task<ActionResult> Add(int id, ShoppingCartRequestModel model) 
-            => await this.shoppingCartService
-                .AddAsync(id, model.Quantity, this.User.GetId())
+        public async Task<ActionResult> AddProduct(
+            int id,
+            ShoppingCartRequestModel model)
+            => await this.shoppingCart
+                .AddProductAsync(id, model.Quantity, this.User.GetId())
                 .ToActionResult();
 
         [HttpPut(Id)]
-        public async Task<ActionResult> Update(int id, ShoppingCartRequestModel model)
-            => await this.shoppingCartService
-                .UpdateAsync(id, model.Quantity, this.User.GetId())
+        public async Task<ActionResult> UpdateProduct(
+            int id,
+            ShoppingCartRequestModel model)
+            => await this.shoppingCart
+                .UpdateProductAsync(id, model.Quantity, this.User.GetId())
                 .ToActionResult();
 
         [HttpDelete(Id)]
-        public async Task<ActionResult> Remove(int id)
-            => await this.shoppingCartService
-                .RemoveAsync(id, this.User.GetId())
+        public async Task<ActionResult> RemoveProduct(int id)
+            => await this.shoppingCart
+                .RemoveProductAsync(id, this.User.GetId())
                 .ToActionResult();
     }
 }

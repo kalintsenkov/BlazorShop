@@ -10,13 +10,15 @@
 
     public class SearchController : ApiController
     {
-        private readonly ISearchService searchService;
+        private readonly ISearchService search;
 
-        public SearchController(ISearchService searchService)
-            => this.searchService = searchService;
+        public SearchController(ISearchService search)
+            => this.search = search;
 
         [HttpGet(nameof(Products))]
-        public async Task<IEnumerable<ProductsListingResponseModel>> Products(string query)
-            => await this.searchService.Products(query);
+        public async Task<IEnumerable<ProductsListingResponseModel>> Products(
+            string query,
+            int page = 1)
+            => await this.search.Products(query, page);
     }
 }

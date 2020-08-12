@@ -13,25 +13,25 @@
     [Authorize]
     public class WishlistsController : ApiController
     {
-        private readonly IWishlistService wishlistService;
+        private readonly IWishlistService wishlist;
 
-        public WishlistsController(IWishlistService wishlistsService)
-            => this.wishlistService = wishlistsService;
+        public WishlistsController(IWishlistService wishlist)
+            => this.wishlist = wishlist;
 
         [HttpGet]
-        public async Task<IEnumerable<ProductsListingResponseModel>> All()
-            => await this.wishlistService.ByUserIdAsync(this.User.GetId());
+        public async Task<IEnumerable<ProductsListingResponseModel>> ByUser()
+            => await this.wishlist.ByUserIdAsync(this.User.GetId());
 
         [HttpPost(Id)]
-        public async Task<ActionResult> Add(int id)
-            => await this.wishlistService
-                .AddAsync(id, this.User.GetId())
+        public async Task<ActionResult> AddProduct(int id)
+            => await this.wishlist
+                .AddProductAsync(id, this.User.GetId())
                 .ToActionResult();
 
         [HttpDelete(Id)]
-        public async Task<ActionResult> Remove(int id)
-            => await this.wishlistService
-                .RemoveAsync(id, this.User.GetId())
+        public async Task<ActionResult> RemoveProduct(int id)
+            => await this.wishlist
+                .RemoveProductAsync(id, this.User.GetId())
                 .ToActionResult();
     }
 }

@@ -8,9 +8,9 @@
 
     public interface IWishlistService
     {
-        Task<Result> AddAsync(int productId, string userId);
+        Task<Result> AddProductAsync(int productId, string userId);
 
-        Task<Result> RemoveAsync(int productId, string userId);
+        Task<Result> RemoveProductAsync(int productId, string userId);
 
         Task<IEnumerable<ProductsListingResponseModel>> ByUserIdAsync(string userId);
     }

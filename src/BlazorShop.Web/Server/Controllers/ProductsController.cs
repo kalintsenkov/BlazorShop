@@ -14,24 +14,24 @@
 
     public class ProductsController : ApiController
     {
-        private readonly IProductsService productsService;
+        private readonly IProductsService products;
 
-        public ProductsController(IProductsService productsService)
-            => this.productsService = productsService;
+        public ProductsController(IProductsService products) 
+            => this.products = products;
 
         [HttpGet]
         public async Task<IEnumerable<ProductsListingResponseModel>> All(int page = 1)
-            => await this.productsService.AllAsync(page);
+            => await this.products.AllAsync(page);
 
         [HttpGet(Id)]
         public async Task<ActionResult<ProductsDetailsResponseModel>> Details(int id)
-            => await this.productsService.DetailsAsync(id);
+            => await this.products.DetailsAsync(id);
 
         [HttpPost]
         [Authorize(Roles = AdministratorRole)]
         public async Task<ActionResult> Create(ProductsRequestModel model)
         {
-            var id = await this.productsService.CreateAsync(
+            var id = await this.products.CreateAsync(
                 model.Name,
                 model.Description,
                 model.ImageSource,
@@ -45,7 +45,7 @@
         [HttpPut(Id)]
         [Authorize(Roles = AdministratorRole)]
         public async Task<ActionResult> Update(int id, ProductsRequestModel model)
-            => await this.productsService.UpdateAsync(
+            => await this.products.UpdateAsync(
                     id,
                     model.Name,
                     model.Description,
@@ -58,7 +58,7 @@
         [HttpDelete(Id)]
         [Authorize(Roles = AdministratorRole)]
         public async Task<ActionResult> Delete(int id)
-            => await this.productsService
+            => await this.products
                 .DeleteAsync(id)
                 .ToActionResult();
     }

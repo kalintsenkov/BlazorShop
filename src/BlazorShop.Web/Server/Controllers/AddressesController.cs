@@ -13,19 +13,19 @@
     [Authorize]
     public class AddressesController : ApiController
     {
-        private readonly IAddressesService addressesService;
+        private readonly IAddressesService addresses;
 
-        public AddressesController(IAddressesService addressesService)
-            => this.addressesService = addressesService;
+        public AddressesController(IAddressesService addresses)
+            => this.addresses = addresses;
 
         [HttpGet]
-        public async Task<IEnumerable<AddressesListingResponseModel>> All()
-            => await this.addressesService.ByUserIdAsync(this.User.GetId());
+        public async Task<IEnumerable<AddressesListingResponseModel>> ByUser()
+            => await this.addresses.ByUserIdAsync(this.User.GetId());
 
         [HttpPost]
         public async Task<ActionResult> Create(AddressesRequestModel model)
         {
-            var id = await this.addressesService.CreateAsync(
+            var id = await this.addresses.CreateAsync(
                 model.Country,
                 model.State,
                 model.City,
@@ -39,7 +39,7 @@
 
         [HttpDelete(Id)]
         public async Task<ActionResult> Delete(int id)
-            => await this.addressesService
+            => await this.addresses
                 .DeleteAsync(id, this.User.GetId())
                 .ToActionResult();
     }

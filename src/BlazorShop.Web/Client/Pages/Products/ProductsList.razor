@@ -1,4 +1,6 @@
 ﻿@page "/products"
+@page "/products/{PageNumber:int}"
+@page "/products/{SearchQuery}/{PageNumber:int}"
 @page "/categories/{CategoryName}/{CategoryId:int}"
 
 @if (categories == null || products == null)
@@ -28,13 +30,11 @@ else
                             @foreach (var product in this.products)
                             {
                                 <Animate Animation="Animations.ZoomIn" Duration="TimeSpan.FromSeconds(0.5)">
-
                                     <div class="col-md-4 col-xs-6">
 
                                         <ProductItem Product="product" />
 
                                     </div>
-
                                 </Animate>
                             }
 
@@ -58,8 +58,17 @@ else
     private ProductsListingResponseModel[] products;
     private CategoriesListingResponseModel[] categories;
 
-    [Parameter] public int CategoryId { get; set; }
-    [Parameter] public string CategoryName { get; set; }
+    [Parameter]
+    public int PageNumber { get; set; } = 1;
+
+    [Parameter]
+    public string SearchQuery { get; set; } = string.Empty;
+
+    [Parameter]
+    public int CategoryId { get; set; }
+
+    [Parameter]
+    public string CategoryName { get; set; }
 
     protected override async Task OnParametersSetAsync() => await this.LoadData();
 
@@ -67,9 +76,21 @@ else
 
     private async Task LoadData()
     {
-        var requestUrl = this.CategoryId == 0 || string.IsNullOrEmpty(this.CategoryName)
-            ? "api/products"
-            : $"api/categories/{this.CategoryId}";
+        var requestUrl = "api/products";
+
+        if (string.IsNullOrWhiteSpace(this.SearchQuery))
+        {
+            requestUrl = this.PageNumber > 1 ? $"api/products?page={this.PageNumber}" : "api/products";
+        }
+        else
+        {
+            requestUrl = $"api/search/products?query={this.SearchQuery}&page={this.PageNumber}";
+        }
+
+        if (this.CategoryId != 0 && !string.IsNullOrEmpty(this.CategoryName))
+        {
+            requestUrl = $"api/categories/{this.CategoryId}";
+        }
 
         this.products = await this.Http.GetFromJsonAsync<ProductsListingResponseModel[]>(requestUrl);
         this.categories = await this.Http.GetFromJsonAsync<CategoriesListingResponseModel[]>("api/categories");

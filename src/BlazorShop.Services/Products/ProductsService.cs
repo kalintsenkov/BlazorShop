@@ -12,10 +12,10 @@
     using Models;
     using Models.Products;
 
+    using static Common.Constants;
+
     public class ProductsService : BaseService<Product>, IProductsService
     {
-        private const int ProductsPerPage = 12;
-
         public ProductsService(ApplicationDbContext db, IMapper mapper)
             : base(db, mapper)
         {
