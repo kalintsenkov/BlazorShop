@@ -130,8 +130,11 @@ else
 @code {
     private ProductsDetailsResponseModel product;
 
-    [Parameter] public int Id { get; set; }
-    [Parameter] public string ProductName { get; set; }
+    [Parameter] 
+    public int Id { get; set; }
+
+    [Parameter] 
+    public string ProductName { get; set; }
 
     protected override async Task OnInitializedAsync()
     {
@@ -143,7 +146,7 @@ else
         var token = await this.LocalStorage.GetItemAsync<string>("authToken");
         this.Http.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
 
-        bool confirmed = await this.JsRuntime.InvokeAsync<bool>("confirm", "Are you sure you want to delete this item?");
+        var confirmed = await this.JsRuntime.InvokeAsync<bool>("confirm", "Are you sure you want to delete this item?");
 
         if (confirmed)
         {

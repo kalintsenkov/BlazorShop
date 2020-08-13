@@ -33,11 +33,14 @@
         {
             var response = await this.httpClient.PostAsJsonAsync("api/identity/register", model);
 
-            var errors = await response.Content.ReadFromJsonAsync<string[]>();
+            if (!response.IsSuccessStatusCode)
+            {
+                var errors = await response.Content.ReadFromJsonAsync<string[]>();
 
-            return response.IsSuccessStatusCode
-                ? Result.Success
-                : Result.Failure(errors);
+                return Result.Failure(errors);
+            }
+
+            return Result.Success;
         }
 
         public async Task<Result> Login(LoginRequestModel model)
@@ -62,7 +65,7 @@
 
             await this.localStorage.SetItemAsync("authToken", token);
 
-            ((ApiAuthenticationStateProvider)this.authenticationStateProvider).MarkUserAsAuthenticated(model.Username);
+            ((ApiAuthenticationStateProvider)this.authenticationStateProvider).MarkUserAsAuthenticated(model.Email);
 
             this.httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
 

@@ -7,12 +7,7 @@
 
     public class ChangeSettingsRequestModel
     {
-        [Required]
-        [StringLength(
-            MaxNameLength,
-            ErrorMessage = StringLengthErrorMessage,
-            MinimumLength = MinNameLength)]
-        public string Username { get; set; }
+        public string UserId { get; set; }
 
         [Required]
         [StringLength(

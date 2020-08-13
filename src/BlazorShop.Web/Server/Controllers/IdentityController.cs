@@ -32,7 +32,12 @@
         [HttpPut(nameof(ChangeSettings))]
         public async Task<ActionResult> ChangeSettings(ChangeSettingsRequestModel model)
             => await this.identity
-                .ChangeSettingsAsync(model)
+                .ChangeSettingsAsync(new ChangeSettingsRequestModel
+                {
+                    UserId = this.User.GetId(),
+                    FirstName = model.FirstName,
+                    LastName = model.LastName
+                })
                 .ToActionResult();
 
         [Authorize]

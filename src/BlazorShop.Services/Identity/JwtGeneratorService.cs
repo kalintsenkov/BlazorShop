@@ -22,7 +22,7 @@
         private readonly ApplicationSettings applicationSettings;
 
         public JwtGeneratorService(
-            UserManager<ApplicationUser> userManager, 
+            UserManager<ApplicationUser> userManager,
             IOptions<ApplicationSettings> applicationSettings)
         {
             this.userManager = userManager;
@@ -34,7 +34,9 @@
             var claims = new List<Claim>
             {
                 new Claim(ClaimTypes.NameIdentifier, user.Id),
-                new Claim(ClaimTypes.Name, user.UserName)
+                new Claim(ClaimTypes.Email, user.Email),
+                new Claim(ClaimTypes.Name, user.FirstName),
+                new Claim(ClaimTypes.Surname, user.LastName)
             };
 
             var isAdministrator = await this.userManager.IsInRoleAsync(user, AdministratorRole);
@@ -50,7 +52,7 @@
                 claims: claims,
                 expires: DateTime.UtcNow.AddDays(7),
                 signingCredentials: new SigningCredentials(
-                    new SymmetricSecurityKey(secret), 
+                    new SymmetricSecurityKey(secret),
                     SecurityAlgorithms.HmacSha256));
 
             var tokenHandler = new JwtSecurityTokenHandler();

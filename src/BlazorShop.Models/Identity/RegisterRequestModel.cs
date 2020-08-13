@@ -9,17 +9,6 @@
     public class RegisterRequestModel
     {
         [Required]
-        [EmailAddress]
-        public string Email { get; set; }
-
-        [Required]
-        [StringLength(
-            MaxNameLength,
-            ErrorMessage = StringLengthErrorMessage,
-            MinimumLength = MinNameLength)]
-        public string Username { get; set; }
-
-        [Required]
         [StringLength(
             MaxNameLength,
             ErrorMessage = StringLengthErrorMessage,
@@ -32,6 +21,10 @@
             ErrorMessage = StringLengthErrorMessage,
             MinimumLength = MinNameLength)]
         public string LastName { get; set; }
+
+        [Required]
+        [EmailAddress]
+        public string Email { get; set; }
 
         [Required]
         [MinLength(MinPasswordLength)]

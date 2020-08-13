@@ -11,7 +11,7 @@
 
     public class IdentityService : IIdentityService
     {
-        private const string InvalidErrorMessage = "Invalid username or password.";
+        private const string InvalidErrorMessage = "Invalid email or password.";
 
         private readonly UserManager<ApplicationUser> userManager;
         private readonly IJwtGeneratorService jwtGenerator;
@@ -28,10 +28,10 @@
         {
             var user = new ApplicationUser
             {
-                Email = model.Email,
-                UserName = model.Username,
                 FirstName = model.FirstName,
-                LastName = model.LastName
+                LastName = model.LastName,
+                Email = model.Email,
+                UserName = model.Email
             };
 
             var identityResult = await this.userManager.CreateAsync(user, model.Password);
@@ -45,7 +45,7 @@
 
         public async Task<Result<LoginResponseModel>> LoginAsync(LoginRequestModel model)
         {
-            var user = await this.userManager.FindByNameAsync(model.Username);
+            var user = await this.userManager.FindByEmailAsync(model.Email);
             if (user == null)
             {
                 return InvalidErrorMessage;
@@ -64,13 +64,12 @@
 
         public async Task<Result> ChangeSettingsAsync(ChangeSettingsRequestModel model)
         {
-            var user = await this.userManager.FindByNameAsync(model.Username);
+            var user = await this.userManager.FindByIdAsync(model.UserId);
             if (user == null)
             {
                 return InvalidErrorMessage;
             }
 
-            user.UserName = model.Username;
             user.FirstName = model.FirstName;
             user.LastName = model.LastName;
 
