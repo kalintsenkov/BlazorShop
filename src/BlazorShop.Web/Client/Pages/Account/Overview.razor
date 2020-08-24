@@ -1,0 +1,130 @@
+﻿@page "/account/overview"
+@attribute [Authorize]
+
+@if (orders == null)
+{
+    <LoadingScreen />
+}
+else
+{
+    <section class="section-content padding-y">
+        <div class="container">
+
+            <div class="row">
+
+                <AccountSidebar />
+
+                <main class="col-md-9">
+
+                    <article class="card mb-3">
+                        <div class="card-body">
+
+                            <figure class="icontext">
+                                <div class="text">
+                                    <strong> @firstName @lastName </strong>
+                                    <br />
+                                    @email
+                                    <br />
+                                    <a href="#">Edit</a>
+                                </div>
+                            </figure>
+                            <hr>
+                            <p>
+                                <i class="fa fa-map-marker text-muted"></i> &nbsp; My address:
+                                <br />
+                                Tashkent city, Street name, Building 123, House 321 &nbsp
+                                <a href="#" class="btn-link"> Edit</a>
+                            </p>
+
+                            <article class="card-group">
+                                <figure class="card bg">
+                                    <div class="p-3">
+                                        <h5 class="card-title">@orders.Length</h5>
+                                        <span>Orders</span>
+                                    </div>
+                                </figure>
+                                <figure class="card bg">
+                                    <div class="p-3">
+                                        <h5 class="card-title">5</h5>
+                                        <span>Wishlists</span>
+                                    </div>
+                                </figure>
+                                <figure class="card bg">
+                                    <div class="p-3">
+                                        <h5 class="card-title">12</h5>
+                                        <span>Awaiting delivery</span>
+                                    </div>
+                                </figure>
+                                <figure class="card bg">
+                                    <div class="p-3">
+                                        <h5 class="card-title">50</h5>
+                                        <span>Delivered items</span>
+                                    </div>
+                                </figure>
+                            </article>
+
+                        </div>
+                    </article>
+
+                    <article class="card  mb-3">
+                        <div class="card-body">
+                            <h5 class="card-title mb-4">Recent orders </h5>
+
+                            <div class="row">
+
+                                @foreach (var order in orders)
+                                {
+                                    <div class="col-md-6">
+                                        <figure class="itemside  mb-3">
+                                            <div class="aside">
+                                                <img src="images/items/1.jpg" class="border img-sm">
+                                            </div>
+                                            <figcaption class="info">
+                                                <time class="text-muted"><i class="fa fa-calendar-alt"></i> @order.CreatedOn </time>
+                                                <p> @order </p>
+                                                <span class="text-success">Sent</span>
+                                            </figcaption>
+                                        </figure>
+                                    </div>
+                                }
+
+                            </div>
+
+                            <a href="/orders" class="btn btn-outline-primary"> See all orders  </a>
+                        </div>
+                    </article>
+
+                </main>
+            </div>
+
+        </div>
+    </section>
+}
+
+@code {
+    private OrdersListingResponseModel[] orders;
+
+    private string email;
+    private string firstName;
+    private string lastName;
+
+    protected override async Task OnInitializedAsync()
+    {
+        await this.LoadDataAsync();
+    }
+
+    private async Task LoadDataAsync()
+    {
+        var token = await this.LocalStorage.GetItemAsync<string>("authToken");
+        this.Http.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
+
+        this.orders = await this.Http.GetFromJsonAsync<OrdersListingResponseModel[]>("api/orders");
+
+        var state = await this.AuthState.GetAuthenticationStateAsync();
+        var user = state.User;
+
+        this.email = user.GetEmail();
+        this.firstName = user.GetFirstName();
+        this.lastName = user.GetLastName();
+    }
+}

@@ -1,75 +1,46 @@
 ﻿@page "/account/register"
-@inject IToastService ToastService
 
-<section class="page-title text-center">
-    <div class="container relative clearfix">
-        <div class="title-holder">
-            <div class="title-text">
-                <h1 class="uppercase">Register</h1>
-            </div>
-        </div>
+<section class="section-content padding-y">
+
+    <div class="card mx-auto" style="max-width:520px; margin-top:40px;">
+        <article class="card-body">
+            <header class="mb-4"><h4 class="card-title">Register</h4></header>
+            <EditForm Model="model" OnValidSubmit="SubmitAsync">
+
+                <ErrorsList ShowErrors="showErrors" Errors="errors" />
+                <DataAnnotationsValidator />
+                <ValidationSummary />
+
+                <div class="form-group">
+                    <label>First name</label>
+                    <InputText @bind-Value="model.FirstName" type="text" class="form-control" placeholder="Enter your first name" />
+                </div>
+                <div class="form-group">
+                    <label>Last name</label>
+                    <InputText @bind-Value="model.LastName" type="text" class="form-control" placeholder="Enter your last name" />
+                </div>
+                <div class="form-group">
+                    <label>E-mail</label>
+                    <InputText @bind-Value="model.Email" type="email" class="form-control" placeholder="Enter your e-mail" />
+                </div>
+                <div class="form-group">
+                    <label>Password</label>
+                    <InputText @bind-Value="model.Password" class="form-control" type="password" placeholder="Enter your password" />
+                </div>
+                <div class="form-group">
+                    <label>Confirrm password</label>
+                    <InputText @bind-Value="model.ConfirmPassword" class="form-control" type="password" placeholder="Confirm your password" />
+                </div>
+                <div class="form-group">
+                    <button type="submit" class="btn btn-primary btn-block"> Register </button>
+                </div>
+            </EditForm>
+        </article>
     </div>
-</section>
-<section class="section-wrap login-register pt-0 pb-40">
-    <div class="container">
-        <div class="row">
-            <div class="col-md-4"></div>
 
-            <div class="col-md-4">
-                <EditForm Model="model" OnValidSubmit="SubmitAsync" class="login">
+    <p class="text-center mt-4">Have an account? <a href="/account/login">Log In</a></p>
+    <br /><br />
 
-                    <ErrorsList ShowErrors="showErrors" Errors="errors" />
-                    <DataAnnotationsValidator />
-                    <ValidationSummary />
-
-                    <p class="form-row form-row-wide">
-                        <label>
-                            first name
-                            <abbr class="required" title="Required">*</abbr>
-                        </label>
-                        <InputText @bind-Value="model.FirstName" type="text" class="form-control" placeholder="First name" />
-                    </p>
-
-                    <p class="form-row form-row-wide">
-                        <label>
-                            last name
-                            <abbr class="required" title="Required">*</abbr>
-                        </label>
-                        <InputText @bind-Value="model.LastName" type="text" class="form-control" placeholder="Last name" />
-                    </p>
-
-                    <p class="form-row form-row-wide">
-                        <label>
-                            email
-                            <abbr class="required" title="Required">*</abbr>
-                        </label>
-                        <InputText @bind-Value="model.Email" type="email" class="form-control" placeholder="Email" />
-                    </p>
-
-                    <p class="form-row form-row-wide">
-                        <label>
-                            password
-                            <abbr class="required" title="Required">*</abbr>
-                        </label>
-                        <InputText @bind-Value="model.Password" type="password" class="form-control" placeholder="Password" />
-                    </p>
-
-                    <p class="form-row form-row-wide">
-                        <label>
-                            confirm password
-                            <abbr class="required" title="Required. Should match with password">*</abbr>
-                        </label>
-                        <InputText @bind-Value="model.ConfirmPassword" type="password" class="form-control" placeholder="Confrim Password" />
-                    </p>
-
-                    <button type="submit" class="btn"> Register </button>
-
-                </EditForm>
-            </div>
-
-            <div class="col-md-4"></div>
-        </div>
-    </div>
 </section>
 
 @code {
@@ -85,7 +56,6 @@
         if (result.Succeeded)
         {
             this.NavigationManager.NavigateTo("/account/login");
-            this.ToastService.ShowSuccess("You have been successfully registered.\nPlease login.");
         }
         else
         {

@@ -4,160 +4,81 @@
 }
 else
 {
-    <header class="nav-type-1">
-
-        <div class="top-bar hidden-sm hidden-xs">
+    <header class="section-header">
+        <section class="navbar-light border-bottom">
             <div class="container">
-                <div class="top-bar-line">
-                    <div class="row">
-                        <div class="top-bar-links">
-                            <ul class="col-sm-6 top-bar-acc">
-                                <AuthorizeView>
-                                    <Authorized>
-                                        <li class="top-bar-link"><a href="/account/settings">My Account</a></li>
-                                        <li class="top-bar-link"><a href="/wishlist">My Wishlist</a></li>
-                                        <li class="top-bar-link"><Logout /></li>
-                                    </Authorized>
-                                    <NotAuthorized>
-                                        <li class="top-bar-link"><a href="/account/login">Login</a></li>
-                                        <li class="top-bar-link"><a href="/account/register">Register</a></li>
-                                    </NotAuthorized>
-                                </AuthorizeView>
-                                <li class="top-bar-link"><a href="/contact">Contact</a></li>
-                            </ul>
+                <nav class="d-flex align-items-center flex-column flex-md-row">
+                    <ul class="nav mr-md-auto">
+                        <li><a href="#" class="nav-link px-2"> <i class="fab fa-facebook"></i> </a></li>
+                        <li><a href="#" class="nav-link px-2"> <i class="fab fa-instagram"></i> </a></li>
+                        <li><a href="#" class="nav-link px-2"> <i class="fab fa-twitter"></i> </a></li>
+                    </ul>
 
-                            <ul class="col-sm-6 text-right top-bar-currency-language">
-                                <li>
-                                    <div class="social-icons">
-                                        <a href="#"><i class="fab fa-facebook-f"></i></a>
-                                        <a href="#"><i class="fab fa-google-plus-g"></i></a>
-                                        <a href="#"><i class="fab fa-linkedin-in"></i></a>
-                                    </div>
-                                </li>
-                            </ul>
+                    <ul class="nav ">
+                        <AuthorizeView>
+                            <Authorized>
+                                <li class="nav-item"><a href="/account/overview" class="nav-link">  <i class="fa fa-user-circle"></i> My Account </a></li>
+                                <li class="nav-item"><a href="/wishlist" class="nav-link">  <i class="fa fa-heart"></i> Wishlist </a></li>
+                                <NavCart />
+                                <Logout />
+                            </Authorized>
+                            <NotAuthorized>
+                                <li class="nav-item"><a href="/account/login" class="nav-link">  Login </a></li>
+                                <li class="nav-item"><a href="/account/register" class="nav-link">  Register </a></li>
+                            </NotAuthorized>
+                        </AuthorizeView>
 
-                        </div>
-                    </div>
-                </div>
-
+                    </ul>
+                </nav>
             </div>
-        </div>
+        </section>
 
-        <nav class="navbar navbar-static-top">
-            <div class="navigation" id="sticky-nav">
-                <div class="container relative">
+        <section class="border-bottom">
+            <nav class="navbar navbar-main  navbar-expand-lg navbar-light">
+                <div class="container">
+                    <a class="navbar-brand" href="/"><img src="./images/logo.png" class="logo"></a>
+                    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#main_nav2" aria-controls="main_nav" aria-expanded="false" aria-label="Toggle navigation">
+                        <span class="navbar-toggler-icon"></span>
+                    </button>
 
-                    <div class="row">
-
-                        <div class="navbar-header">
-                            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navbar-collapse">
-                                <span class="sr-only">Toggle navigation</span>
-                                <span class="icon-bar"></span>
-                                <span class="icon-bar"></span>
-                                <span class="icon-bar"></span>
-                            </button>
-
-                            <div class="nav-cart mobile-cart hidden-lg hidden-md">
-                                <div class="nav-cart-outer">
-                                    <div class="nav-cart-inner">
-                                        <a href="/cart" class="nav-cart-icon">0</a>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="header-wrap">
-                            <div class="header-wrap-holder">
-
-                                <NavSearch />
-
-                                <div class="logo-container">
-                                    <div class="logo-wrap text-center">
-                                        <a href="/">
-                                            <img class="logo" src="img/logo.png" alt="logo">
+                    <div class="collapse navbar-collapse" id="main_nav2">
+                        <ul class="navbar-nav mr-auto">
+                            <li class="nav-item">
+                                <a class="nav-link pl-0" href="/"> <strong>Home</strong> </a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="/wishlist">Wishlist</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="/products">Products</a>
+                            </li>
+                            <li class="nav-item dropdown">
+                                <a @onclick:preventDefault
+                                   class="nav-link dropdown-toggle"
+                                   href=""
+                                   data-toggle="dropdown"
+                                   aria-haspopup="true"
+                                   aria-expanded="false">
+                                    Categories
+                                </a>
+                                <div class="dropdown-menu">
+                                    @foreach (var category in categories)
+                                    {
+                                        <a class="dropdown-item"
+                                           href="/categories/@category.Name.ToLower()/@category.Id">
+                                            @category.Name
                                         </a>
-                                    </div>
+                                    }
                                 </div>
+                            </li>
+                        </ul>
 
-                                <AuthorizeView>
-                                    <Authorized>
-                                        <NavCart />
-                                    </Authorized>
-                                    <NotAuthorized>
-                                        <div class="nav-cart-wrap hidden-sm hidden-xs"></div>
-                                    </NotAuthorized>
-                                </AuthorizeView>
-
-                            </div>
-                        </div>
-
-                        <div class="nav-wrap">
-                            <div class="collapse navbar-collapse" id="navbar-collapse">
-
-                                <ul class="nav navbar-nav">
-
-                                    <li id="mobile-search" class="hidden-lg hidden-md">
-                                        <form method="get" class="mobile-search relative">
-                                            <input type="search" class="form-control" placeholder="Search...">
-                                            <button type="submit" class="search-button">
-                                                <i class="fas fa-search"></i>
-                                            </button>
-                                        </form>
-                                    </li>
-
-                                    <li>
-                                        <a href="/">Home</a>
-                                    </li>
-
-                                    <li>
-                                        <a href="/wishlist">Wishlist</a>
-                                    </li>
-
-                                    <li class="dropdown">
-                                        <a @onclick:preventDefault href="#">Categories</a>
-                                        <i class="fa fa-angle-down dropdown-toggle" data-toggle="dropdown"></i>
-                                        <ul class="dropdown-menu">
-
-                                            @foreach (var category in categories)
-                                            {
-                                                <li>
-                                                    <a href="/categories/@category.Name.ToLower()/@category.Id">
-                                                        @category.Name
-                                                    </a>
-                                                </li>
-                                            }
-
-                                        </ul>
-                                    </li>
-
-                                    <li>
-                                        <a href="/products">Products</a>
-                                    </li>
-
-                                    <li class="mobile-links">
-                                        <ul>
-                                            <AuthorizeView>
-                                                <Authorized>
-                                                    <li><a href="/account/settings">My Account</a></li>
-                                                    <li><a href="/wishlist">My Wishlist</a></li>
-                                                    <li><Logout /></li>
-                                                </Authorized>
-                                                <NotAuthorized>
-                                                    <li><a href="/account/login">Login</a></li>
-                                                    <li><a href="/account/register">Register</a></li>
-                                                </NotAuthorized>
-                                            </AuthorizeView>
-                                        </ul>
-                                    </li>
-
-                                </ul>
-                            </div>
-                        </div>
+                        <NavSearch />
 
                     </div>
                 </div>
-            </div>
-        </nav>
+            </nav>
+        </section>
     </header>
 }
 

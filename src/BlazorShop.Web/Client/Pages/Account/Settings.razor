@@ -1,0 +1,112 @@
+﻿@page "/account/settings"
+@attribute [Authorize]
+
+@if (model == null)
+{
+    <LoadingScreen />
+}
+else
+{
+    @*<section class="page-title text-center">
+            <div class="container relative clearfix">
+                <div class="title-holder">
+                    <div class="title-text">
+                        <h1 class="uppercase">Account Settings</h1>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="section-wrap woocommerce-account pt-0 pb-60">
+            <div class="container">
+                <div class="woocommerce">
+                    <AccountNavigation />
+
+                    <div class="woocommerce-MyAccount-content">
+                        <EditForm Model="model" OnValidSubmit="SubmitAsync" class="woocommerce-EditAccountForm edit-account">
+
+                            <ErrorsList ShowErrors="showErrors" Errors="errors" />
+                            <DataAnnotationsValidator />
+                            <ValidationSummary />
+
+                            <p class="woocommerce-form-row woocommerce-form-row--wide form-row form-row-wide">
+                                <label for="account_email">
+                                    Email address
+                                </label>
+                                <input @bind="email" type="email" class="woocommerce-Input woocommerce-Input--email input-text" name="account_email" id="account_email" autocomplete="email" disabled />
+                            </p>
+
+                            <p class="woocommerce-form-row woocommerce-form-row--first form-row form-row-first">
+                                <label for="account_first_name">
+                                    First name&nbsp;<span class="required">*</span>
+                                </label>
+                                <InputText @bind-Value="model.FirstName" type="text" class="woocommerce-Input woocommerce-Input--text input-text" name="account_first_name" id="account_first_name" autocomplete="off" />
+                            </p>
+
+                            <p class="woocommerce-form-row woocommerce-form-row--last form-row form-row-last">
+                                <label for="account_last_name">
+                                    Last name&nbsp;<span class="required">*</span>
+                                </label>
+                                <InputText @bind-Value="model.LastName" type="text" class="woocommerce-Input woocommerce-Input--text input-text" name="account_last_name" id="account_last_name" autocomplete="family-name" />
+                            </p>
+
+                            <div class="clear"></div>
+
+                            <p>
+                                <button type="submit" class="btn btn-lg woocommerce-Button button" name="save_account_details" value="Save changes">
+                                    Save changes
+                                </button>
+                            </p>
+
+                            <div class="clear"></div>
+
+                        </EditForm>
+                    </div>
+
+                </div>
+            </div>
+        </section>*@
+}
+
+@code {
+    private readonly ChangeSettingsRequestModel model = new ChangeSettingsRequestModel();
+
+    private string email;
+    private bool showErrors;
+    private IEnumerable<string> errors;
+
+    protected override async Task OnInitializedAsync()
+    {
+        await this.LoadDataAsync();
+    }
+
+    private async Task SubmitAsync()
+    {
+        var token = await this.LocalStorage.GetItemAsync<string>("authToken");
+        this.Http.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
+
+        var response = await this.Http.PutAsJsonAsync("api/identity/changesettings", this.model);
+
+        if (response.IsSuccessStatusCode)
+        {
+            this.showErrors = false;
+
+            await this.LoadDataAsync();
+        }
+        else
+        {
+            this.errors = await response.Content.ReadFromJsonAsync<string[]>();
+            this.showErrors = true;
+        }
+    }
+
+    private async Task LoadDataAsync()
+    {
+        var state = await this.AuthState.GetAuthenticationStateAsync();
+        var user = state.User;
+
+        this.email = user.GetEmail();
+        this.model.FirstName = user.GetFirstName();
+        this.model.LastName = user.GetLastName();
+    }
+}

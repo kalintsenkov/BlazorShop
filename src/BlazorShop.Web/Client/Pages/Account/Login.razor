@@ -1,51 +1,36 @@
 ﻿@page "/account/login"
 
-<section class="page-title text-center">
-    <div class="container relative clearfix">
-        <div class="title-holder">
-            <div class="title-text">
-                <h1 class="uppercase">Login</h1>
-            </div>
+<section class="section-conten padding-y" style="min-height:84vh">
+
+    <div class="card mx-auto" style="max-width: 380px; margin-top:100px;">
+        <div class="card-body">
+            <h4 class="card-title mb-4">Login</h4>
+            <EditForm Model="model" OnValidSubmit="SubmitAsync">
+
+                <ErrorsList ShowErrors="showErrors" Errors="errors" />
+                <DataAnnotationsValidator />
+                <ValidationSummary />
+
+                <div class="form-group">
+                    <InputText @bind-Value="model.Email" class="form-control" placeholder="Email" type="email" />
+                </div>
+                <div class="form-group">
+                    <InputText @bind-Value="model.Password" class="form-control" placeholder="Password" type="password" />
+                </div>
+
+                <div class="form-group">
+                    <a href="#" class="float-left">Forgot password?</a>
+                </div>
+                <div class="form-group">
+                    <button type="submit" class="btn btn-primary btn-block"> Login  </button>
+                </div>
+            </EditForm>
         </div>
     </div>
-</section>
 
-<section class="section-wrap login-register pt-0 pb-40">
-    <div class="container">
-        <div class="row">
-            <div class="col-md-4"></div>
+    <p class="text-center mt-4">Don't have account? <a href="/account/register">Create one now</a></p>
+    <br /><br />
 
-            <div class="col-md-4">
-                <EditForm Model="model" OnValidSubmit="SubmitAsync" class="login">
-
-                    <ErrorsList ShowErrors="showErrors" Errors="errors" />
-                    <DataAnnotationsValidator />
-                    <ValidationSummary />
-
-                    <p class="form-row form-row-wide">
-                        <label>
-                            email
-                            <abbr class="required" title="Required">*</abbr>
-                        </label>
-                        <InputText class="form-control" placeholder="Email" type="email" @bind-Value="model.Email" />
-                    </p>
-
-                    <p class="form-row form-row-wide">
-                        <label>
-                            password
-                            <abbr class="required" title="Required">*</abbr>
-                        </label>
-                        <InputText class="form-control" placeholder="Password" type="password" @bind-Value="model.Password" />
-                    </p>
-
-                    <button type="submit" class="btn"> Login </button>
-
-                </EditForm>
-            </div>
-
-            <div class="col-md-4"></div>
-        </div>
-    </div>
 </section>
 
 @code {

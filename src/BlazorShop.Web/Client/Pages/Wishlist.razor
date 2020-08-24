@@ -7,82 +7,49 @@
 }
 else
 {
-    <section class="page-title text-center">
-        <div class="container relative clearfix">
-            <div class="title-holder">
-                <div class="title-text">
-                    <h1 class="uppercase">Wishlist</h1>
-                </div>
-            </div>
-        </div>
-    </section>
+    <section class="section-content padding-y bg">
+        <div class="container">
+            <article class="card">
+                <header class="card-header"> My wishlist </header>
+                <div class="card-body">
 
-    <section class="section-wrap shopping-cart pt-0">
-        <div class="container relative">
-            <div class="row">
+                    <div class="row">
 
-                <div class="col-md-12">
-                    <div class="table-wrap mb-30">
-                        <table class="shop_table cart table">
-                            <thead>
-                                <tr>
-                                    <th class="product-name" colspan="2">Product</th>
-                                    <th class="product-price">Price</th>
-                                    <th class="product-stock">Stock</th>
-                                </tr>
-                            </thead>
-                            <tbody>
+                        @foreach (var product in products)
+                        {
+                            <div class="col-md-4">
+                                <figure class="itemside mb-4">
+                                    <div class="aside">
+                                        <a href="products/@product.Id/@product.Name">
+                                            <img src="@product.ImageSource" class="border img-md" />
+                                        </a>
+                                    </div>
+                                    <figcaption class="info">
+                                        <a href="products/@product.Id/@product.Name" class="title">@product.Name</a>
+                                        <p class="price mb-2">$@product.Price</p>
+                                        <a href="#"
+                                           @onclick="() => OnSubmitAsync(product.Id)"
+                                           @onclick:preventDefault
+                                           class="btn btn-primary btn-sm">
+                                            Add to cart
+                                        </a>
+                                        <a href="#"
+                                           @onclick="() => OnRemoveAsync(product.Id)"
+                                           @onclick:preventDefault
+                                           class="btn btn-danger btn-sm"
+                                           data-toggle="tooltip"
+                                           title="Remove from wishlist">
+                                            <i class="fa fa-times"></i>
+                                        </a>
+                                    </figcaption>
+                                </figure>
+                            </div>
+                        }
 
-                                @foreach (var product in products)
-                                {
-                                    <tr class="cart_item">
-                                        <td class="product-thumbnail">
-                                            <a href="products/@product.Id/@product.Name">
-                                                <img src="@product.ImageSource" alt="">
-                                            </a>
-                                        </td>
-                                        <td class="product-name">
-                                            <a href="products/@product.Id/@product.Name">@product.Name</a>
-                                            <ul>
-                                                <li>Size: XL</li>
-                                                <li>Color: White</li>
-                                            </ul>
-                                        </td>
-                                        <td class="product-price">
-                                            <span class="amount">$@product.Price</span>
-                                        </td>
-                                        <td class="product-stock">
-                                            @{ var stock = product.Quantity > 0 ? "In stock" : "Out of stock"; }
-                                            <span>@stock</span>
-                                        </td>
-
-                                        <td class="product-purchase">
-                                            <a href=""
-                                               @onclick="() => OnSubmitAsync(product.Id)"
-                                               @onclick:preventDefault
-                                               class="btn btn-color btn-sm add-to-cart">
-                                                <span>Add to Cart</span>
-                                            </a>
-                                        </td>
-                                        <td class="product-remove">
-                                            <a href=""
-                                               @onclick="() => OnRemoveAsync(product.Id)"
-                                               @onclick:preventDefault
-                                               class="remove"
-                                               title="Remove this item">
-                                                <i class="fas fa-times"></i>
-                                            </a>
-                                        </td>
-                                    </tr>
-                                }
-
-                            </tbody>
-                        </table>
                     </div>
 
                 </div>
-            </div>
-
+            </article>
         </div>
     </section>
 }
@@ -118,4 +85,4 @@ else
     {
         this.products = await this.Http.GetFromJsonAsync<ProductsListingResponseModel[]>("api/wishlists");
     }
-} 
+}

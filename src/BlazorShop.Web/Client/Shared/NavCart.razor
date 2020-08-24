@@ -7,67 +7,15 @@
 }
 else
 {
-    <div class="nav-cart-wrap hidden-sm hidden-xs">
-        <div class="nav-cart right">
-            <div class="nav-cart-outer">
-                <div class="nav-cart-inner">
-                    <a href="/cart" class="nav-cart-icon">@cartProducts.Length</a>
-                </div>
-            </div>
-            <div class="nav-cart-container">
-                <div class="nav-cart-items">
-
-                    @foreach (var product in cartProducts)
-                    {
-                        <div class="nav-cart-item clearfix">
-                            <div class="nav-cart-img">
-                                <a href="/products/@product.Id/@product.Name">
-                                    <img src="@product.ImageSource" alt="" width="60">
-                                </a>
-                            </div>
-                            <div class="nav-cart-title">
-                                <a href="/products/@product.Id/@product.Name">
-                                    @product.Name
-                                </a>
-                                <div class="nav-cart-price">
-                                    <span>@product.Quantity x</span>
-                                    <span>@product.Price</span>
-                                </div>
-                            </div>
-                            <div class="nav-cart-remove">
-                                <a href="#"
-                                   @onclick="() => OnRemoveAsync(product.Id)"
-                                   @onclick:preventDefault>
-                                    <i class="fas fa-times"></i>
-                                </a>
-                            </div>
-                        </div>
-                    }
-
-                </div>
-
-                <div class="nav-cart-summary">
-                    <span>Cart Subtotal</span>
-                    <span class="total-price">$@this.totalPrice</span>
-                </div>
-
-                <div class="nav-cart-actions mt-20">
-                    <a href="/cart" class="btn btn-md btn-dark"><span>View Cart</span></a>
-                    <a href="/checkout" class="btn btn-md btn-color mt-10"><span>Proceed to Checkout</span></a>
-                </div>
-            </div>
-        </div>
-        <div class="menu-cart-amount right">
-            <span>
-                Cart /
-                <a href="/cart"> $@this.totalPrice</a>
-            </span>
-        </div>
-    </div>
+    <li class="nav-item">
+        <a href="/cart" class="nav-link">
+            <i class="fa fa-shopping-cart"></i> My Cart
+            <span class="badge badge-pill badge-danger">@cartProducts.Length</span>
+        </a>
+    </li>
 }
 
 @code {
-    private decimal totalPrice;
     private ShoppingCartProductsResponseModel[] cartProducts;
 
     protected override async Task OnInitializedAsync()
@@ -75,18 +23,6 @@ else
         var token = await this.LocalStorage.GetItemAsync<string>("authToken");
         this.Http.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
 
-        await this.LoadDataAsync();
-    }
-
-    private async Task OnRemoveAsync(int productId)
-    {
-        await this.Http.DeleteAsync($"api/shoppingcarts/{productId}");
-        await this.LoadDataAsync();
-    }
-
-    private async Task LoadDataAsync()
-    {
         this.cartProducts = await this.Http.GetFromJsonAsync<ShoppingCartProductsResponseModel[]>("api/shoppingcarts");
-        this.totalPrice = this.cartProducts.Sum(p => p.Price * p.Quantity);
     }
 }

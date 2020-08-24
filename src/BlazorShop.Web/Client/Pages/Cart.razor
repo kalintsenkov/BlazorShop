@@ -7,135 +7,129 @@
 }
 else
 {
-    <section class="page-title text-center">
-        <div class="container relative clearfix">
-            <div class="title-holder">
-                <div class="title-text">
-                    <h1 class="uppercase">Shopping Cart</h1>
-                </div>
-            </div>
+    <section class="section-pagetop bg">
+        <div class="container">
+            <h2 class="title-page">Shopping cart</h2>
         </div>
     </section>
-    <section class="section-wrap shopping-cart pt-0">
-        <div class="container relative">
-            <div class="row">
 
-                <div class="col-md-12">
-                    <div class="table-wrap mb-30">
-                        <table class="shop_table cart table">
-                            <thead>
-                                <tr>
-                                    <th class="product-name" colspan="2">Product</th>
-                                    <th class="product-price">Price</th>
-                                    <th class="product-quantity">Quantity</th>
-                                    <th class="product-subtotal">Total</th>
+    <section class="section-content padding-y">
+        <div class="container">
+
+            <div class="row">
+                <main class="col-md-9">
+                    <div class="card">
+
+                        <table class="table table-borderless table-shopping-cart">
+                            <thead class="text-muted">
+                                <tr class="small text-uppercase">
+                                    <th scope="col">Product</th>
+                                    <th scope="col" width="120">Quantity</th>
+                                    <th scope="col" width="120">Price</th>
+                                    <th scope="col" class="text-right" width="200"> </th>
                                 </tr>
                             </thead>
                             <tbody>
-
                                 @foreach (var product in cartProducts)
                                 {
-                                    <tr class="cart_item">
-                                        <td class="product-thumbnail">
-                                            <a href="/products/@product.Id/@product.Name">
-                                                <img src="@product.ImageSource" alt="" width="87">
-                                            </a>
+                                    <tr>
+                                        <td>
+                                            <figure class="itemside">
+                                                <div class="aside"><img src="@product.ImageSource" class="img-sm"></div>
+                                                <figcaption class="info">
+                                                    <a href="#" class="title text-dark">@product.Name</a>
+                                                    <p class="text-muted small">Size: XL, Color: blue, <br> Brand: Gucci</p>
+                                                </figcaption>
+                                            </figure>
                                         </td>
-                                        <td class="product-name">
-                                            <a href="/products/@product.Id/@product.Name">
-                                                @product.Name
-                                            </a>
-                                            <ul>
-                                                <li>Size: XL</li>
-                                                <li>Color: White</li>
-                                            </ul>
-                                        </td>
-                                        <td class="product-price">
-                                            <span class="amount">$@product.Price</span>
-                                        </td>
-                                        <td class="product-quantity">
-                                            <div class="quantity buttons_added">
-                                                <input @onclick="() => DecrementQuantity(product.Id, product.Quantity)" type="button" value="-" class="minus" />
-                                                <input type="number" value="@product.Quantity" title="Qty" class="input-text qty text" />
-                                                <input @onclick="() => IncrementQuantity(product.Id, product.Quantity, product.StockQuantity)" type="button" value="+" class="plus" />
+                                        <td>
+                                            <div class="input-group input-spinner">
+                                                <div class="input-group-prepend">
+                                                    <button @onclick="() => DecrementQuantity(product.Id, product.Quantity)" class="btn btn-light" type="button" id="button-minus"> &minus; </button>
+                                                </div>
+                                                <input value="@product.Quantity" type="text" class="form-control" />
+                                                <div class="input-group-append">
+                                                    <button @onclick="() => IncrementQuantity(product.Id, product.Quantity, product.StockQuantity)" class="btn btn-light" type="button" id="button-plus"> + </button>
+                                                </div>
                                             </div>
                                         </td>
-                                        <td class="product-subtotal">
-                                            <span class="amount">$@(product.Price * product.Quantity)</span>
+                                        <td>
+                                            <div class="price-wrap">
+                                                <var class="price">$@(product.Price * product.Quantity)</var>
+                                                <small class="text-muted"> $@product.Price each </small>
+                                            </div>
                                         </td>
-                                        <td class="product-remove">
-                                            <a href="#"
-                                               class="remove"
-                                               title="Remove this item"
-                                               @onclick="() => OnRemoveAsync(product.Id)"
-                                               @onclick:preventDefault>
-                                                <i class="fas fa-times"></i>
+                                        <td class="text-right">
+                                            <a @onclick="() => OnRemoveAsync(product.Id)"
+                                               @onclick:preventDefault
+                                               href="#"
+                                               class="btn btn-light">
+                                                <i class="fa fa-trash"></i>
                                             </a>
                                         </td>
                                     </tr>
                                 }
-
                             </tbody>
                         </table>
-                    </div>
 
-                    <div class="row mb-50">
-
-                        <div class="col-md-5 col-sm-12"></div>
-
-                        <div class="col-md-7">
-                            <div class="actions right">
-
-                                <div class="wc-proceed-to-checkout">
-                                    <a href="/checkout" class="btn btn-md btn-color">
-                                        <span>proceed to checkout</span>
-                                    </a>
-                                </div>
-
-                            </div>
+                        <div class="card-body border-top">
+                            <a href="/checkout" class="btn btn-primary float-md-right"> Make Purchase <i class="fa fa-chevron-right"></i> </a>
+                            <a href="/products" class="btn btn-light"> <i class="fa fa-chevron-left"></i> Continue shopping </a>
                         </div>
-
                     </div>
 
-                </div>
-            </div>
-
-            <div class="row">
-
-                <div class="col-md-6 shipping-calculator-form"></div>
-
-                <div class="col-md-4 col-md-offset-2">
-                    <div class="cart_totals">
-                        <h2 class="heading relative heading-small uppercase mb-30">Cart Totals</h2>
-
-                        <table class="table shop_table">
-                            <tbody>
-                                <tr class="cart-subtotal">
-                                    <th>Cart Subtotal</th>
-                                    <td>
-                                        <span class="amount">$@totalPrice</span>
-                                    </td>
-                                </tr>
-                                <tr class="shipping">
-                                    <th>Shipping</th>
-                                    <td>
-                                        <span>Free Shipping</span>
-                                    </td>
-                                </tr>
-                                <tr class="order-total">
-                                    <th><strong>Order Total</strong></th>
-                                    <td>
-                                        <strong><span class="amount">$@totalPrice</span></strong>
-                                    </td>
-                                </tr>
-                            </tbody>
-                        </table>
-
+                    <div class="alert alert-success mt-3">
+                        <p class="icontext"><i class="icon text-success fa fa-truck"></i> Free Delivery within 1-2 weeks</p>
                     </div>
-                </div>
 
+                </main>
+                <aside class="col-md-3">
+                    <div class="card">
+                        <div class="card-body">
+                            <dl class="dlist-align">
+                                <dt>Total price:</dt>
+                                <dd class="text-right">$@totalPrice</dd>
+                            </dl>
+                            <dl class="dlist-align">
+                                <dt>Discount:</dt>
+                                <dd class="text-right">$0</dd>
+                            </dl>
+                            <dl class="dlist-align">
+                                <dt>Total:</dt>
+                                <dd class="text-right  h5"><strong>$@totalPrice</strong></dd>
+                            </dl>
+                            <hr>
+                            <p class="text-center mb-3">
+                                <img src="images/misc/payments.png" height="26">
+                            </p>
+
+                        </div>
+                    </div>
+                </aside>
             </div>
 
+        </div>
+    </section>
+
+    <section class="section-name bg padding-y">
+        <div class="container">
+            <h6>Payment and refund policy</h6>
+            <p>
+                Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
+                tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
+                quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo
+                consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse
+                cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non
+                proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+            </p>
+            <p>
+                Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
+                tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
+                quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo
+                consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse
+                cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non
+                proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+            </p>
 
         </div>
     </section>

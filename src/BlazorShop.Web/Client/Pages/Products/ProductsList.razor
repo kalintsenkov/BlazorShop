@@ -9,47 +9,73 @@
 }
 else
 {
-    <section class="section-wrap pt-70 pb-40 catalogue">
-        <div class="container relative">
+    <section class="section-content padding-y">
+        <div class="container">
+
             <div class="row">
-                <div class="col-md-9 catalogue-col right mb-50">
 
-                    <div class="shop-filter">
-                        <p class="result-count">Showing: 1-12 of @products.Length results</p>
-                        <AuthorizeView Roles="@Constants.AdministratorRole">
-                            <a href="/products/add" class="btn btn-sm btn-color ecommerce-ordering">
-                                <span>add product</span>
-                            </a>
-                        </AuthorizeView>
-                    </div>
+                <Sidebar Categories="categories" />
 
-                    <div class="shop-catalogue grid-view left">
+                <main class="col-md-9">
 
-                        <div class="row row-10 items-grid">
-
-                            @foreach (var product in this.products)
-                            {
-                                <Animate Animation="Animations.ZoomIn" Duration="TimeSpan.FromSeconds(0.5)">
-                                    <div class="col-md-4 col-xs-6">
-
-                                        <ProductItem Product="product" />
-
-                                    </div>
-                                </Animate>
-                            }
-
+                    <header class="border-bottom mb-4 pb-3">
+                        <div class="form-inline">
+                            <span class="mr-md-auto">@products.Length Items found </span>
+                            <select class="mr-2 form-control">
+                                <option>Latest items</option>
+                                <option>Trending</option>
+                                <option>Most Popular</option>
+                                <option>Cheapest</option>
+                            </select>
+                            <div class="btn-group">
+                                <a href="#" class="btn btn-outline-secondary" data-toggle="tooltip" title="List view">
+                                    <i class="fa fa-bars"></i>
+                                </a>
+                                <a href="#" class="btn  btn-outline-secondary active" data-toggle="tooltip" title="Grid view">
+                                    <i class="fa fa-th"></i>
+                                </a>
+                            </div>
                         </div>
-                    </div>
+                    </header>
 
-                    <div class="clear"></div>
+                    <div class="row">
+
+                        @foreach (var product in this.products)
+                        {
+                            <div class="col-md-4">
+                                <figure class="card card-product-grid">
+                                    <div class="img-wrap">
+                                        @*<span class="badge badge-danger"> NEW </span>*@
+                                        <img src="@product.ImageSource">
+                                        <a class="btn-overlay" href="/products/@product.Id/@product.Name">
+                                            <i class="fa fa-search-plus"></i>
+                                            Quick view
+                                        </a>
+                                    </div>
+                                    <figcaption class="info-wrap">
+                                        <div class="fix-height">
+                                            <a href="/products/@product.Id/@product.Name" class="title">
+                                                @product.Name
+                                            </a>
+                                            <div class="price-wrap mt-2">
+                                                <span class="price">$@product.Price</span>
+                                                @*<del class="price-old">$1980</del>*@
+                                            </div>
+                                        </div>
+                                        <a href="#" class="btn btn-block btn-primary">Add to cart </a>
+                                    </figcaption>
+                                </figure>
+                            </div>
+                        }
+
+                    </div>
 
                     <Pagination />
 
-                </div>
-
-                <CategoriesSidebar Categories="categories" />
+                </main>
 
             </div>
+
         </div>
     </section>
 }

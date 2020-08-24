@@ -1,0 +1,25 @@
+.menu-category{ margin:0; padding:0;
+	li{ position: relative; display: block; border-bottom: 1px solid $border-color;}
+	li:last-child{ border-bottom:0; }
+	a{ color:$dark;  }
+	> li > a {	display: block; padding:10px 18px; 	} 
+
+	.submenu{ display:none; margin:0; padding:0; box-shadow:5px 5px 15px rgba(#000, .2);
+		z-index:20;  position:absolute; 
+		li { list-style:none; }
+		left: 100%; top:0; width:250px;  background: #fff; 
+		li a{ padding:10px 16px; display: block;}
+	}
+
+	li:hover{
+		background:$gray-100; transition: all 0.3s;
+	}
+	li:hover .submenu{
+		display:block; margin-left:0px; 
+	}
+
+	.has-submenu{
+		> a:after{ content:"\203A"; font-size: 24px; color:#999; line-height: 18px; font-weight: bold; float:right; }
+	}
+
+} //.menu-side

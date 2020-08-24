@@ -1,5 +1,4 @@
 ﻿@page "/products/{Id:int}/{ProductName}"
-@inject IToastService ToastService
 @inject IJSRuntime JsRuntime
 
 @if (product == null)
@@ -8,121 +7,52 @@
 }
 else
 {
-    <section class="section-wrap single-product">
-        <div class="container relative">
+    <section class="section-content padding-y bg">
+        <div class="container">
+            <div class="card">
+                <div class="row no-gutters">
+                    <aside class="col-md-6">
+                        <article class="gallery-wrap">
+                            <div class="img-big-wrap">
+                                <a href="#"><img src="@product.ImageSource"></a>
+                            </div>
+                            <div class="thumbs-wrap">
+                                <a href="#" class="item-thumb"> <img src="../images/items/12-1.jpg"></a>
+                                <a href="#" class="item-thumb"> <img src="../images/items/12-2.jpg"></a>
+                                <a href="#" class="item-thumb"> <img src="../images/items/12.jpg"></a>
+                                <a href="#" class="item-thumb"> <img src="../images/items/4.jpg"></a>
+                            </div>
+                        </article>
+                    </aside>
+                    <main class="col-md-6 border-left">
+                        <article class="content-body">
 
-            <div class="row">
+                            <h2 class="title">@product.Name</h2>
 
-                <div class="col-sm-6 col-xs-12 mb-60">
-
-                    <div class="flickity flickity-slider-wrap mfp-hover" id="gallery-main">
-
-                        <div class="gallery-cell">
-                            <a href="#" class="lightbox-img">
-                                <img src="@product.ImageSource" alt="@product.Name-img" />
-                                <i class="fas fa-expand-alt"></i>
-                            </a>
-                        </div>
-
-                    </div>
-
-                </div>
-
-                <div class="col-sm-6 col-xs-12 product-description-wrap">
-
-                    <h1 class="product-title">@product.Name</h1>
-                    <span class="price">
-                        <ins>
-                            <span class="ammount">$@product.Price</span>
-                        </ins>
-                    </span>
-                    <p class="product-description" style="white-space: pre-wrap;">@product.Description</p>
-
-                    <div class="select-options">
-                        <div class="row row-20">
-                            <div class="col-sm-6">
-                                <select class="color-select">
-                                    <option selected>Select color</option>
-                                    <option value="white">white</option>
-                                    <option value="grey">grey</option>
-                                    <option value="black">black</option>
-                                    <option value="green">green</option>
-                                    <option value="blue">blue</option>
-                                </select>
+                            <div class="mb-3">
+                                <var class="price h4">$@product.Price</var>
                             </div>
 
-                            <div class="col-sm-6">
-                                <select class="size-options">
-                                    <option selected>Select size</option>
-                                    <option value="XS">XS</option>
-                                    <option value="S">S</option>
-                                    <option value="M">M</option>
-                                    <option value="L">L</option>
-                                    <option value="XL">XL</option>
-                                </select>
-                            </div>
-                        </div>
-                    </div>
+                            <p>@product.Description</p>
 
-                    <AddToCartForm ProductId="@product.Id"
-                                   ProductName="@product.Name"
-                                   ProductQuantity="@product.Quantity" />
+                            <dl class="row">
+                                <dt class="col-sm-3">Brand</dt>
+                                <dd class="col-sm-9">Odsy-1000</dd>
 
-                    <AuthorizeView Roles="@Constants.AdministratorRole">
-                        <div class="product_meta">
-                            <div class="icon-add-to-wishlist left">
-                                <a href="/products/update/@product.Id">
-                                    <i class="fa fa-pen"></i>
-                                </a>
-                            </div>
-                            &nbsp;
-                            <div class="icon-add-to-wishlist left">
-                                <a href=""
-                                   @onclick:preventDefault
-                                   @onclick="() => OnDeleteAsync()">
-                                    <i class="fa fa-trash"></i>
-                                </a>
-                            </div>
-                        </div>
-                    </AuthorizeView>
+                                <dt class="col-sm-3">Color</dt>
+                                <dd class="col-sm-9">Brown</dd>
 
-                    <div class="product_meta">
-                        <span class="sku">Quantity: @product.Quantity</span>
-                        <span class="posted_in">
-                            Category: <a href="/categories/@product.CategoryName.ToLower()/@product.CategoryId">@product.CategoryName</a>
-                        </span>
-                    </div>
+                                <dt class="col-sm-3">Category</dt>
+                                <dd class="col-sm-9">@product.CategoryName</dd>
+                            </dl>
 
-                    <div class="socials-share clearfix">
-                        <div class="social-icons rounded">
-                            <a href="#"><i class="fab fa-facebook-f"></i></a>
-                            <a href="#"><i class="fab fa-instagram"></i></a>
-                        </div>
-                    </div>
+                            <hr />
+
+                            <AddToCartForm ProductId="@product.Id" ProductQuantity="@product.Quantity" />
+                        </article>
+                    </main>
                 </div>
             </div>
-
-            <div class="row">
-                <div class="col-md-12">
-                    <div class="tabs tabs-bb">
-                        <ul class="nav nav-tabs">
-                            <li class="active">
-                                <a href="#tab-description" data-toggle="tab">Description</a>
-                            </li>
-                        </ul>
-
-                        <div class="tab-content">
-
-                            <div class="tab-pane fade in active" id="tab-description">
-                                <p style="white-space: pre-wrap;">@product.Description</p>
-                            </div>
-
-                        </div>
-
-                    </div>
-                </div>
-            </div>
-
         </div>
     </section>
 }
@@ -130,10 +60,10 @@ else
 @code {
     private ProductsDetailsResponseModel product;
 
-    [Parameter] 
+    [Parameter]
     public int Id { get; set; }
 
-    [Parameter] 
+    [Parameter]
     public string ProductName { get; set; }
 
     protected override async Task OnInitializedAsync()
@@ -155,7 +85,6 @@ else
             if (response.IsSuccessStatusCode)
             {
                 this.NavigationManager.NavigateTo("/products");
-                this.ToastService.ShowSuccess($"Successfully deleted {this.ProductName}!", "Deleted!");
             }
         }
     }

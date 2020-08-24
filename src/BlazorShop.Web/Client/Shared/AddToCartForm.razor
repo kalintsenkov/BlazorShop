@@ -1,40 +1,54 @@
-﻿@inject IToastService ToastService
-@inject ILocalStorageService LocalStorage
+﻿@inject ILocalStorageService LocalStorage
 
-<ul class="product-actions clearfix">
-
+<div class="form-row">
     <EditForm Model="model" OnValidSubmit="() => OnSubmitAsync(ProductId)">
 
         <DataAnnotationsValidator />
         <ValidationSummary />
 
-        <li>
-            <button type="submit"
-                    class="btn btn-color btn-lg add-to-cart left"
-                    style="width: 192.19px; height: 50px; font-size: 15px; padding: 0 38px">
-                <span>Add to Cart</span>
-            </button>
-        </li>
-        <li>
-            <div class="icon-add-to-wishlist left">
-                <a href=""
-                   @onclick="() => AddToWishlist(ProductId)"
-                   @onclick:preventDefault>
-                    <i class="fa fa-heart"></i>
-                </a>
+        <div class="form-group col-md flex-grow-0">
+            <label>Quantity</label>
+            <div class="input-group mb-3 input-spinner">
+                <div class="input-group-prepend">
+                    <button @onclick="DecrementQuantity" class="btn btn-light" type="button" id="button-minus"> &minus; </button>
+                </div>
+                <input @bind-value="model.Quantity" type="text" class="form-control">
+                <div class="input-group-append">
+                    <button @onclick="IncrementQuantity" class="btn btn-light" type="button" id="button-plus"> + </button>
+                </div>
             </div>
-        </li>
-        <li>
-            <div class="quantity buttons_added">
-                <input @onclick="DecrementQuantity" type="button" value="-" class="minus" />
-                <input @bind-value="model.Quantity" type="number" class="input-text qty text" />
-                <input @onclick="IncrementQuantity" type="button" value="+" class="plus" />
-            </div>
-        </li>
+        </div>
+        <div class="form-group col-md">
+            <label>Select size</label>
+            <div class="mt-1">
 
+                <label class="custom-control custom-radio custom-control-inline">
+                    <input type="radio" name="select_size" checked="" class="custom-control-input">
+                    <div class="custom-control-label">Small</div>
+                </label>
+
+                <label class="custom-control custom-radio custom-control-inline">
+                    <input type="radio" name="select_size" class="custom-control-input">
+                    <div class="custom-control-label">Medium</div>
+                </label>
+
+                <label class="custom-control custom-radio custom-control-inline">
+                    <input type="radio" name="select_size" class="custom-control-input">
+                    <div class="custom-control-label">Large</div>
+                </label>
+
+            </div>
+        </div>
+
+        <button type="submit" class="btn  btn-primary"> <span class="text">Add to cart</span> <i class="fas fa-shopping-cart"></i>  </button>
+        <a @onclick="() => AddToWishlist(ProductId)"
+           @onclick:preventDefault
+           href="#"
+           class="btn  btn-light">
+            <i class="fas fa-heart"></i>
+        </a>
     </EditForm>
-
-</ul>
+</div>
 
 @code {
     private readonly ShoppingCartRequestModel model = new ShoppingCartRequestModel();
@@ -42,10 +56,7 @@
     [Parameter]
     public int ProductId { get; set; }
 
-    [Parameter] 
-    public string ProductName { get; set; }
-
-    [Parameter] 
+    [Parameter]
     public int ProductQuantity { get; set; }
 
     protected override async Task OnInitializedAsync()
@@ -63,7 +74,6 @@
     private async Task AddToWishlist(int id)
     {
         await this.Http.PostAsJsonAsync($"api/wishlists/{id}", id);
-        this.ToastService.ShowSuccess($"Successfully added {this.ProductName} to your wishlist.", "Congratulations!");
     }
 
     private void IncrementQuantity()

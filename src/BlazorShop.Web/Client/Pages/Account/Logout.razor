@@ -1,13 +1,12 @@
-﻿@inject IToastService ToastService
-@attribute [Authorize]
+﻿@attribute [Authorize]
 
-<a href="/" @onclick="Submit">Logout</a>
+<li class="nav-item">
+    <a class="nav-link" href="/" @onclick="Submit"> <i class="fas fa-sign-out-alt"></i> Log out</a>
+</li>
 
 @code {
     private async Task Submit()
     {
         await this.AuthService.Logout();
-
-        this.ToastService.ShowSuccess("You have been successfully logged out!");
     }
 }

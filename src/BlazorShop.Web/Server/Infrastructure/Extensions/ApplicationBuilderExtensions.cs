@@ -68,6 +68,8 @@
 
             var adminUser = new ApplicationUser
             {
+                FirstName = "Admin",
+                LastName = "Admin",
                 Email = "admin@blazorshop.com",
                 UserName = "admin@blazorshop.com",
                 SecurityStamp = "RandomSecurityStamp"

@@ -6,27 +6,95 @@
 }
 else
 {
-    <section class="section-wrap new-arrivals pb-40">
-        <div class="container">
+    <section class="section-intro">
 
-            <div class="row heading-row">
-                <div class="col-md-12 text-center">
-                    <h2 class="heading uppercase"><small>New Arrivals</small></h2>
+        <div class="intro-banner-wrap">
+            <img src="images/banners/1.jpg" class="w-100 img-fluid">
+        </div>
+
+    </section>
+
+    <section class="section-specials padding-y border-bottom">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-4">
+                    <figure class="itemside">
+                        <div class="aside">
+                            <span class="icon-sm rounded-circle bg-primary">
+                                <i class="fa fa-money-bill-alt white"></i>
+                            </span>
+                        </div>
+                        <figcaption class="info">
+                            <h6 class="title">Reasonable prices</h6>
+                            <p class="text-muted">
+                                Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
+                                tempor incididunt ut labor
+                            </p>
+                        </figcaption>
+                    </figure>
+                </div>
+                <div class="col-md-4">
+                    <figure class="itemside">
+                        <div class="aside">
+                            <span class="icon-sm rounded-circle bg-danger">
+                                <i class="fa fa-comment-dots white"></i>
+                            </span>
+                        </div>
+                        <figcaption class="info">
+                            <h6 class="title">Customer support 24/7 </h6>
+                            <p class="text-muted">
+                                Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
+                                tempor incididunt ut labor
+                            </p>
+                        </figcaption>
+                    </figure>
+                </div>
+                <div class="col-md-4">
+                    <figure class="itemside">
+                        <div class="aside">
+                            <span class="icon-sm rounded-circle bg-success">
+                                <i class="fa fa-truck white"></i>
+                            </span>
+                        </div>
+                        <figcaption class="info">
+                            <h6 class="title">Quick delivery</h6>
+                            <p class="text-muted">
+                                Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
+                                tempor incididunt ut labor
+                            </p>
+                        </figcaption>
+                    </figure>
                 </div>
             </div>
 
-            <div class="row row-10">
+        </div>
+    </section>
+
+    <section class="section-name  padding-y-sm">
+        <div class="container">
+
+            <header class="section-heading">
+                <a href="/products" class="btn btn-outline-primary float-right">See all</a>
+                <h3 class="section-title">Popular products</h3>
+            </header>
+
+            <div class="row">
 
                 @foreach (var product in products)
                 {
-                    <div class="col-md-3 col-xs-6">
-
-                        <ProductItem Product="product" />
-
+                    <div class="col-md-3">
+                        <div class="card card-product-grid">
+                            <a href="#" class="img-wrap"> <img src="@product.ImageSource"> </a>
+                            <figcaption class="info-wrap">
+                                <a href="#" class="title">@product.Name</a>
+                                <div class="price mt-1">$@product.Price</div>
+                            </figcaption>
+                        </div>
                     </div>
                 }
 
             </div>
+
         </div>
     </section>
 }

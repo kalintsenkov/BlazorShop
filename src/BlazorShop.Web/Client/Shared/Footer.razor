@@ -1,87 +1,53 @@
-﻿<footer class="footer footer-type-1 bg-white">
+﻿<footer class="section-footer border-top">
     <div class="container">
-        <div class="footer-widgets top-bottom-dividers pb-mdm-20">
+        <section class="footer-top padding-y">
             <div class="row">
-
-                <div class="col-md-2 col-sm-4 col-xs-4 col-xxs-12">
-                    <div class="widget footer-links">
-                        <h5 class="widget-title uppercase">Information</h5>
-                        <ul class="list-no-dividers">
-                            <li><a href="#">Our stores</a></li>
-                            <li><a href="#">About us</a></li>
-                            <li><a href="#">Business with us</a></li>
-                            <li><a href="#">Delivery information</a></li>
-                            <li><a href="#">Terms &amp; Conditions</a></li>
-                        </ul>
-                    </div>
-                </div>
-
-                <div class="col-md-2 col-sm-4 col-xs-4 col-xxs-12">
-                    <div class="widget footer-links">
-                        <h5 class="widget-title uppercase">Help</h5>
-                        <ul class="list-no-dividers">
-                            <li><a href="#">Contact us</a></li>
-                            <li><a href="#">Track order</a></li>
-                            <li><a href="#">F.A.Q</a></li>
-                            <li><a href="#">Privacy policy</a></li>
-                            <li><a href="#">Returns</a></li>
-                        </ul>
-                    </div>
-                </div>
-
-                <div class="col-md-2 col-sm-4 col-xs-4 col-xxs-12">
-                    <div class="widget footer-links">
-                        <h5 class="widget-title uppercase">Account</h5>
-                        <ul class="list-no-dividers">
-                            <li><a href="/account/settings">My account</a></li>
-                            <li><a href="/wishlist">Wishlist</a></li>
-                            <li><a href="#">Order history</a></li>
-                            <li><a href="#">Special gifts</a></li>
-                            <li><a href="#">Track order</a></li>
-                        </ul>
-                    </div>
-                </div>
-
-                <div class="col-md-3 col-sm-6 col-xs-12">
-                    <div class="widget">
-                        <h5 class="widget-title uppercase">about us</h5>
-                        <p class="mb-0">@Constants.ProjectName understand consumer needs in uncertain times.</p>
-                    </div>
-                </div>
-
-                <div class="col-md-3 col-sm-6 col-xs-12">
-                    <div class="widget footer-get-in-touch">
-                        <h5 class="widget-title uppercase">Contact</h5>
-                        <address class="footer-address"><span>Address:</span> Sofia, Bulgaria</address>
-                        <p>Phone: <a href="tel:+1-888-1554-456-123">+1-888-1554-456-123</a></p>
-                        <p>Email: <a href="mailto:kalintsenkov3@gmail.com">kalintsenkov3@gmail.com</a></p>
-                        <div class="social-icons rounded mt-20">
-                            <a href="#"><i class="fab fa-facebook-f"></i></a>
-                            <a href="#"><i class="fab fa-google-plus-g"></i></a>
-                            <a href="#"><i class="fab fa-linkedin-in"></i></a>
+                <aside class="col-md-4">
+                    <article class="mr-3">
+                        <img src="./images/logo.png" class="logo-footer">
+                        <p class="mt-3">@Constants.ProjectName understand consumer needs in uncertain times.</p>
+                        <div>
+                            <a class="btn btn-icon btn-light" title="Facebook" target="_blank" href="#"><i class="fab fa-facebook-f"></i></a>
+                            <a class="btn btn-icon btn-light" title="Instagram" target="_blank" href="#"><i class="fab fa-instagram"></i></a>
+                            <a class="btn btn-icon btn-light" title="Youtube" target="_blank" href="#"><i class="fab fa-youtube"></i></a>
+                            <a class="btn btn-icon btn-light" title="Twitter" target="_blank" href="#"><i class="fab fa-twitter"></i></a>
                         </div>
-                    </div>
-                </div>
-
+                    </article>
+                </aside>
+                <aside class="col-sm-3 col-md-2">
+                    <h6 class="title">About</h6>
+                    <ul class="list-unstyled">
+                        <li> <a href="#">About us</a></li>
+                        <li> <a href="#">Services</a></li>
+                        <li> <a href="#">Rules and terms</a></li>
+                        <li> <a href="#">Blogs</a></li>
+                    </ul>
+                </aside>
+                <aside class="col-sm-3 col-md-2">
+                    <h6 class="title">Services</h6>
+                    <ul class="list-unstyled">
+                        <li> <a href="#">Help center</a></li>
+                        <li> <a href="#">Money refund</a></li>
+                        <li> <a href="#">Terms and Policy</a></li>
+                        <li> <a href="#">Open dispute</a></li>
+                    </ul>
+                </aside>
+                <aside class="col-sm-3  col-md-2">
+                    <h6 class="title">For users</h6>
+                    <ul class="list-unstyled">
+                        <li> <a href="#"> Account Settings </a></li>
+                        <li> <a href="#"> My Orders </a></li>
+                        <li> <a href="#"> My Wishlist </a></li>
+                    </ul>
+                </aside>
             </div>
-        </div>
-    </div>
+        </section>
 
-    <div class="bottom-footer bg-white">
-        <div class="container">
-            <div class="row">
-
-                <div class="col-sm-6 copyright sm-text-center">
-                    <span>
-                        &copy; @DateTime.UtcNow.Year @Constants.ProjectName
-                    </span>
-                </div>
-
-                <div class="col-sm-6 col-xs-12 footer-payment-systems text-right sm-text-center mt-sml-10">
-                    <a href="https://github.com/kalintsenkov/BlazorShop" target="_blank"><i class="fab fa-github"></i> Open Source</a>
-                </div>
-
-            </div>
-        </div>
+        <section class="footer-copyright border-top">
+            <p class="float-left text-muted"> &copy; @DateTime.UtcNow.Year @Constants.ProjectName </p>
+            <p target="_blank" class="float-right text-muted">
+                <a href="https://github.com/kalintsenkov/BlazorShop" target="_blank"><i class="fab fa-github"></i> Open Source</a>
+            </p>
+        </section>
     </div>
 </footer>
