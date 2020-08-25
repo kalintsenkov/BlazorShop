@@ -1,53 +1,67 @@
 ﻿<footer class="section-footer border-top">
     <div class="container">
-        <section class="footer-top padding-y">
+        <section class="footer-top  padding-y">
             <div class="row">
-                <aside class="col-md-4">
-                    <article class="mr-3">
-                        <img src="./images/logo.png" class="logo-footer">
-                        <p class="mt-3">@Constants.ProjectName understand consumer needs in uncertain times.</p>
-                        <div>
-                            <a class="btn btn-icon btn-light" title="Facebook" target="_blank" href="#"><i class="fab fa-facebook-f"></i></a>
-                            <a class="btn btn-icon btn-light" title="Instagram" target="_blank" href="#"><i class="fab fa-instagram"></i></a>
-                            <a class="btn btn-icon btn-light" title="Youtube" target="_blank" href="#"><i class="fab fa-youtube"></i></a>
-                            <a class="btn btn-icon btn-light" title="Twitter" target="_blank" href="#"><i class="fab fa-twitter"></i></a>
-                        </div>
+                <aside class="col-md-4 col-12">
+                    <article class="mr-md-4">
+                        <h5 class="title">Contact us</h5>
+                        <ul class="list-icon">
+                            <li> <i class="icon fa fa-map-marker"> </i>542 Fake Street, Sofia, Bulgaria </li>
+                            <li> <i class="icon fa fa-envelope"> </i> admin@blazorshop.com </li>
+                            <li> <i class="icon fa fa-phone"> </i> (800) 060-0730, (800) 060-0730</li>
+                            <li> <i class="icon fa fa-clock"> </i> Mon-Sat 09:00am - 06:00pm </li>
+                        </ul>
                     </article>
                 </aside>
-                <aside class="col-sm-3 col-md-2">
-                    <h6 class="title">About</h6>
+                <aside class="col-md col-6">
+                    <h5 class="title">Information</h5>
                     <ul class="list-unstyled">
                         <li> <a href="#">About us</a></li>
-                        <li> <a href="#">Services</a></li>
+                        <li> <a href="#">Career</a></li>
+                        <li> <a href="#">Find a store</a></li>
                         <li> <a href="#">Rules and terms</a></li>
-                        <li> <a href="#">Blogs</a></li>
                     </ul>
                 </aside>
-                <aside class="col-sm-3 col-md-2">
-                    <h6 class="title">Services</h6>
+                <aside class="col-md col-6">
+                    <h5 class="title">My Account</h5>
                     <ul class="list-unstyled">
-                        <li> <a href="#">Help center</a></li>
-                        <li> <a href="#">Money refund</a></li>
-                        <li> <a href="#">Terms and Policy</a></li>
-                        <li> <a href="#">Open dispute</a></li>
+                        <li> <a href="/account/settings"> Account Settings </a></li>
+                        <li> <a href="/orders"> My Orders </a></li>
+                        <li> <a href="/wishlist"> My Wishlist </a></li>
                     </ul>
                 </aside>
-                <aside class="col-sm-3  col-md-2">
-                    <h6 class="title">For users</h6>
-                    <ul class="list-unstyled">
-                        <li> <a href="#"> Account Settings </a></li>
-                        <li> <a href="#"> My Orders </a></li>
-                        <li> <a href="#"> My Wishlist </a></li>
-                    </ul>
+                <aside class="col-md-4 col-12">
+                    <h5 class="title">Newsletter</h5>
+                    <p> Subscribe to our email newsletter today to receive updates on special offers. </p>
+
+                    <form class="form-inline mb-3">
+                        <input type="text" placeholder="Email" class="form-control" name="">
+                        <button class="btn ml-2 btn-warning"> Subscribe </button>
+                    </form>
+
+                    <p class="text-black-50 mb-2">Follow us on social media</p>
+                    <div>
+                        <a href="#" class="btn btn-icon btn-light"><i class="fab fa-facebook-f"></i></a>
+                        <a href="#" class="btn btn-icon btn-light"><i class="fab fa-twitter"></i></a>
+                        <a href="#" class="btn btn-icon btn-light"><i class="fab fa-instagram"></i></a>
+                        <a href="#" class="btn btn-icon btn-light"><i class="fab fa-youtube"></i></a>
+                    </div>
+
                 </aside>
             </div>
         </section>
 
-        <section class="footer-copyright border-top">
-            <p class="float-left text-muted"> &copy; @DateTime.UtcNow.Year @Constants.ProjectName </p>
-            <p target="_blank" class="float-right text-muted">
-                <a href="https://github.com/kalintsenkov/BlazorShop" target="_blank"><i class="fab fa-github"></i> Open Source</a>
-            </p>
+        <section class="footer-bottom border-top row">
+            <div class="col-md-6">
+                <p class="mb-0">
+                    <a href="">Terms and Conditions</a> |
+                    <a href="">Privacy</a> |
+                    <a href="">Cookies</a>
+                </p>
+            </div>
+            <div class="col-md-6 text-md-right">
+                <a href="https://github.com/kalintsenkov/BlazorShop" target="_blank"><i class="fab fa-github"></i> Open Source </a>
+            </div>
         </section>
     </div>
 </footer>

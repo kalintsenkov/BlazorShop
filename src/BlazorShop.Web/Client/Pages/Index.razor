@@ -84,9 +84,13 @@ else
                 {
                     <div class="col-md-3">
                         <div class="card card-product-grid">
-                            <a href="#" class="img-wrap"> <img src="@product.ImageSource"> </a>
+                            <a href="/products/@product.Id/@product.Name" class="img-wrap">
+                                <img src="@product.ImageSource" />
+                            </a>
                             <figcaption class="info-wrap">
-                                <a href="#" class="title">@product.Name</a>
+                                <a href="/products/@product.Id/@product.Name" class="title">
+                                    @product.Name
+                                </a>
                                 <div class="price mt-1">$@product.Price</div>
                             </figcaption>
                         </div>

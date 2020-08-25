@@ -1,4 +1,5 @@
 ﻿@inject ILocalStorageService LocalStorage
+@inject IJSRuntime JsRuntime
 
 <div class="form-row">
     <EditForm Model="model" OnValidSubmit="() => OnSubmitAsync(ProductId)">
@@ -24,29 +25,48 @@
 
                 <label class="custom-control custom-radio custom-control-inline">
                     <input type="radio" name="select_size" checked="" class="custom-control-input">
-                    <div class="custom-control-label">Small</div>
+                    <span class="custom-control-label">Small</span>
                 </label>
 
                 <label class="custom-control custom-radio custom-control-inline">
                     <input type="radio" name="select_size" class="custom-control-input">
-                    <div class="custom-control-label">Medium</div>
+                    <span class="custom-control-label">Medium</span>
                 </label>
 
                 <label class="custom-control custom-radio custom-control-inline">
                     <input type="radio" name="select_size" class="custom-control-input">
-                    <div class="custom-control-label">Large</div>
+                    <span class="custom-control-label">Large</span>
                 </label>
 
             </div>
         </div>
 
-        <button type="submit" class="btn  btn-primary"> <span class="text">Add to cart</span> <i class="fas fa-shopping-cart"></i>  </button>
+        <button type="submit" class="btn btn-primary">
+            <span class="text">Add to cart</span>
+            <i class="fas fa-shopping-cart"></i>
+        </button>
+
         <a @onclick="() => AddToWishlist(ProductId)"
            @onclick:preventDefault
            href="#"
-           class="btn  btn-light">
+           class="btn btn-light">
             <i class="fas fa-heart"></i>
         </a>
+
+        <AuthorizeView Roles="@Constants.AdministratorRole" Context="Auth">
+            <a href="/products/update/@ProductId"
+               class="btn btn-outline-warning">
+                <i class="fa fa-pen"></i>
+            </a>
+
+            <a @onclick:preventDefault
+               @onclick="() => OnDeleteAsync()"
+               href=""
+               class="btn btn-outline-danger">
+                <i class="fa fa-trash"></i>
+            </a>
+        </AuthorizeView>
+
     </EditForm>
 </div>
 
@@ -74,6 +94,24 @@
     private async Task AddToWishlist(int id)
     {
         await this.Http.PostAsJsonAsync($"api/wishlists/{id}", id);
+    }
+
+    private async Task OnDeleteAsync()
+    {
+        var token = await this.LocalStorage.GetItemAsync<string>("authToken");
+        this.Http.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
+
+        var confirmed = await this.JsRuntime.InvokeAsync<bool>("confirm", "Are you sure you want to delete this item?");
+
+        if (confirmed)
+        {
+            var response = await this.Http.DeleteAsync($"api/products/{this.ProductId}");
+
+            if (response.IsSuccessStatusCode)
+            {
+                this.NavigationManager.NavigateTo("/products");
+            }
+        }
     }
 
     private void IncrementQuantity()

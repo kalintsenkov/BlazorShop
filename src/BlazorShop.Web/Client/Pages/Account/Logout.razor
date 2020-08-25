@@ -1,8 +1,6 @@
 ﻿@attribute [Authorize]
 
-<li class="nav-item">
-    <a class="nav-link" href="/" @onclick="Submit"> <i class="fas fa-sign-out-alt"></i> Log out</a>
-</li>
+<a class="dropdown-item" href="/" @onclick="Submit">Log out</a>
 
 @code {
     private async Task Submit()

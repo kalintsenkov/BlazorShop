@@ -7,12 +7,12 @@
 }
 else
 {
-    <li class="nav-item">
-        <a href="/cart" class="nav-link">
-            <i class="fa fa-shopping-cart"></i> My Cart
-            <span class="badge badge-pill badge-danger">@cartProducts.Length</span>
-        </a>
-    </li>
+    <a href="/cart" class="widget-header mr-3">
+        <div class="icon">
+            <i class="icon-sm rounded-circle border fa fa-shopping-cart"></i>
+            <span class="notify">@cartProducts.Length</span>
+        </div>
+    </a>
 }
 
 @code {
