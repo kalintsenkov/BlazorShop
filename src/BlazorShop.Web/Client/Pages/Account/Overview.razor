@@ -25,7 +25,7 @@ else
                                     <br />
                                     @email
                                     <br />
-                                    <a href="#">Edit</a>
+                                    <a href="/account/settings">Edit</a>
                                 </div>
                             </figure>
                             <hr>
@@ -33,7 +33,7 @@ else
                                 <i class="fa fa-map-marker text-muted"></i> &nbsp; My address:
                                 <br />
                                 Tashkent city, Street name, Building 123, House 321 &nbsp
-                                <a href="#" class="btn-link"> Edit</a>
+                                <a href="/addresses" class="btn-link"> Edit </a>
                             </p>
 
                             <article class="card-group">
@@ -47,18 +47,6 @@ else
                                     <div class="p-3">
                                         <h5 class="card-title">5</h5>
                                         <span>Wishlists</span>
-                                    </div>
-                                </figure>
-                                <figure class="card bg">
-                                    <div class="p-3">
-                                        <h5 class="card-title">12</h5>
-                                        <span>Awaiting delivery</span>
-                                    </div>
-                                </figure>
-                                <figure class="card bg">
-                                    <div class="p-3">
-                                        <h5 class="card-title">50</h5>
-                                        <span>Delivered items</span>
                                     </div>
                                 </figure>
                             </article>
@@ -77,11 +65,11 @@ else
                                     <div class="col-md-6">
                                         <figure class="itemside  mb-3">
                                             <div class="aside">
-                                                <img src="images/items/1.jpg" class="border img-sm">
+                                                <img src="@order.ProductImageSource" class="border img-sm">
                                             </div>
                                             <figcaption class="info">
                                                 <time class="text-muted"><i class="fa fa-calendar-alt"></i> @order.CreatedOn </time>
-                                                <p> @order </p>
+                                                <p> @order.ProductName </p>
                                                 <span class="text-success">Sent</span>
                                             </figcaption>
                                         </figure>

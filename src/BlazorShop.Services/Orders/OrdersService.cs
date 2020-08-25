@@ -64,7 +64,8 @@
             => await this.Mapper
                 .ProjectTo<OrdersListingResponseModel>(this
                     .AllAsNoTracking()
-                    .Where(o => o.UserId == userId))
+                    .Where(o => o.UserId == userId)
+                    .SelectMany(o => o.Products))
                 .ToListAsync();
     }
 }
