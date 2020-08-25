@@ -12,30 +12,32 @@ else
             <article class="card">
                 <header class="card-header"> My wishlist </header>
                 <div class="card-body">
-
                     <div class="row">
-
                         @foreach (var product in products)
                         {
-                            <div class="col-md-4">
-                                <figure class="itemside mb-4">
-                                    <div class="aside">
+                            <div class="col-md-3">
+                                <figure class="card card-product-grid  mb-3">
+                                    <div class="img-wrap">
                                         <a href="products/@product.Id/@product.Name">
-                                            <img src="@product.ImageSource" class="border img-md" />
+                                            <img src="@product.ImageSource" />
                                         </a>
                                     </div>
-                                    <figcaption class="info">
-                                        <a href="products/@product.Id/@product.Name" class="title">@product.Name</a>
+                                    <figcaption class="info-wrap">
+                                        <a href="products/@product.Id/@product.Name" class="title text-truncate">
+                                            @product.Name
+                                        </a>
+
                                         <p class="price mb-2">$@product.Price</p>
-                                        <a href="#"
-                                           @onclick="() => OnSubmitAsync(product.Id)"
+
+                                        <a @onclick="() => OnSubmitAsync(product.Id)"
                                            @onclick:preventDefault
+                                           href="#"
                                            class="btn btn-primary btn-sm">
                                             Add to cart
                                         </a>
-                                        <a href="#"
-                                           @onclick="() => OnRemoveAsync(product.Id)"
+                                        <a @onclick="() => OnRemoveAsync(product.Id)"
                                            @onclick:preventDefault
+                                           href="#"
                                            class="btn btn-danger btn-sm"
                                            data-toggle="tooltip"
                                            title="Remove from wishlist">
@@ -45,9 +47,7 @@ else
                                 </figure>
                             </div>
                         }
-
                     </div>
-
                 </div>
             </article>
         </div>
