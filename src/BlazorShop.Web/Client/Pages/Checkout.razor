@@ -7,154 +7,140 @@
 }
 else
 {
-    <section class="page-title text-center">
-        <div class="container relative clearfix">
-            <div class="title-holder">
-                <div class="title-text">
-                    <h1 class="uppercase">Checkout</h1>
-                </div>
-            </div>
+    <section class="section-pagetop bg">
+        <div class="container">
+            <h2 class="title-page text-center">Checkout</h2>
         </div>
     </section>
 
-    <section class="section-wrap checkout pt-0 pb-50">
-        <div class="container relative">
+    <section class="section-content padding-y bg">
+        <div class="container">
             <div class="row">
 
-                <div class="ecommerce col-xs-12">
+                <aside class="col-md-6">
+                    <div class="card mb-3">
+                        <article class="card-body">
+                            <header class="mb-4">
+                                <h4 class="card-title">Review cart</h4>
+                            </header>
+                            <div class="row">
 
-                    <EditForm Model="address" OnValidSubmit="SubmitAsync">
+                                @foreach (var product in cartProducts)
+                                {
+                                    <div class="col-md-6">
+                                        <figure class="itemside  mb-3">
+                                            <div class="aside">
+                                                <img src="@product.ImageSource" class="border img-xs" />
+                                            </div>
+                                            <figcaption class="info">
+                                                <p> @product.Name </p>
+                                                <span> @product.Quantity x $@product.Price = Total: $@(product.Price * product.Quantity) </span>
+                                            </figcaption>
+                                        </figure>
+                                    </div>
+                                }
 
-                        <div class="col-md-8" id="customer_details">
-                            <div>
-                                <h2 class="heading uppercase mb-30">billing address</h2>
+                            </div>
+                        </article>
+                        <article class="card-body border-top">
+
+                            <dl class="row">
+                                <dt class="col-sm-10">Subtotal: <span class="float-right text-muted">@cartProducts.Length items</span></dt>
+                                <dd class="col-sm-2 text-right"><strong>$@totalPrice</strong></dd>
+
+                                <dt class="col-sm-10">Discount: <span class="float-right text-muted">0%</span></dt>
+                                <dd class="col-sm-2 text-danger text-right"><strong>$0</strong></dd>
+
+                                <dt class="col-sm-10">Delivery charge: <span class="float-right text-muted">Standart Delivery</span></dt>
+                                <dd class="col-sm-2 text-right"><strong>Free</strong></dd>
+
+                                <dt class="col-sm-10">Tax: <span class="float-right text-muted">0%</span></dt>
+                                <dd class="col-sm-2 text-right text-success"><strong>$0</strong></dd>
+
+                                <dt class="col-sm-10">Total:</dt>
+                                <dd class="col-sm-2 text-right"><strong class="h5 text-dark">$@totalPrice</strong></dd>
+                            </dl>
+
+                        </article>
+                    </div>
+                </aside>
+
+                <aside class="col-md-6">
+                    <div class="card mb-4">
+                        <div class="card-body">
+
+                            <h4 class="card-title mb-4">Delivery info</h4>
+                            <EditForm Model="address" OnValidSubmit="SubmitAsync">
 
                                 <DataAnnotationsValidator />
                                 <ValidationSummary />
 
-                                <p class="form-row form-row-first address-field validate-state" id="billing_state_field" data-o_class="form-row form-row-first address-field validate-state">
-                                    <label for="billing_state">County</label>
-                                    <input @bind-value="address.Country" type="text" class="input-text" placeholder="Country" name="billing_state" id="billing_state" />
-                                </p>
-
-                                <p class="form-row form-row-first address-field validate-state" id="billing_state_field" data-o_class="form-row form-row-first address-field validate-state">
-                                    <label for="billing_state">State</label>
-                                    <input @bind-value="address.State" type="text" class="input-text" placeholder="State" name="billing_state" id="billing_state" />
-                                </p>
-
-                                <p class="form-row form-row-wide address-field validate-required" id="billing_city_field" data-o_class="form-row form-row-wide address-field validate-required">
-                                    <label for="billing_city">
-                                        Town / City
-                                        <abbr class="required" title="required">*</abbr>
+                                <div class="form-group">
+                                    <label class="custom-control custom-radio custom-control-inline">
+                                        <input class="custom-control-input" checked="" type="radio" name="gender" value="option1">
+                                        <span class="custom-control-label"> Standart Delivery <br /> Free </span>
                                     </label>
-                                    <input @bind-value="address.City" type="text" class="input-text" placeholder="Town / City" name="billing_city" id="billing_city" />
-                                </p>
-
-                                <p class="form-row form-row-wide address-field validate-required ecommerce-invalid ecommerce-invalid-required-field" id="billing_address_1_field">
-                                    <label for="billing_address_1">
-                                        Address
-                                        <abbr class="required" title="required">*</abbr>
+                                    <label class="custom-control custom-radio custom-control-inline">
+                                        <input class="custom-control-input" type="radio" name="gender" value="option2">
+                                        <span class="custom-control-label"> Express Delivery <br /> $31 </span>
                                     </label>
-                                    <input @bind-value="address.Description" type="text" class="input-text" placeholder="Street address, apartment, suite, unit etc. (optional)" name="billing_address_1" id="billing_address_1" />
-                                </p>
+                                </div>
 
-                                <p class="form-row form-row-wide address-field" id="billing_address_2_field"></p>
-
-                                <p class="form-row form-row-last address-field validate-required validate-postcode ecommerce-invalid ecommerce-invalid-required-field" id="billing_postcode_field" data-o_class="form-row form-row-last address-field validate-required validate-postcode">
-                                    <label for="billing_postcode">
-                                        Postcode
-                                        <abbr class="required" title="required">*</abbr>
-                                    </label>
-                                    <input @bind-value="address.PostalCode" type="text" class="input-text" placeholder="Postcode" name="billing_postcode" id="billing_postcode" />
-                                </p>
-
-                                <p class="form-row form-row-last validate-required validate-phone" id="billing_phone_field">
-                                    <label for="billing_phone">
-                                        Phone
-                                        <abbr class="required" title="required">*</abbr>
-                                    </label>
-                                    <input @bind-value="address.PhoneNumber" type="text" class="input-text" placeholder="Phone" name="billing_phone" id="billing_phone" />
-                                </p>
-
-                                <div class="clear"></div>
-
-                            </div>
-
-                            <div class="clear"></div>
-
-                        </div>
-
-                        <div class="col-md-4">
-                            <div class="order-review-wrap ecommerce-checkout-review-order" id="order_review">
-                                <h2 class="heading uppercase mb-30">Your Order</h2>
-                                <table class="table shop_table ecommerce-checkout-review-order-table">
-                                    <tbody>
-
-                                        @foreach (var product in cartProducts)
-                                        {
-                                            <tr>
-                                                <th>@product.Name<span class="count"> x @product.Quantity</span></th>
-                                                <td>
-                                                    <span class="amount">$@(product.Price * product.Quantity)</span>
-                                                </td>
-                                            </tr>
-                                        }
-
-                                        <tr class="cart-subtotal">
-                                            <th>Cart Subtotal</th>
-                                            <td>
-                                                <span class="amount">$@totalPrice</span>
-                                            </td>
-                                        </tr>
-
-                                        <tr class="shipping">
-                                            <th>Shipping</th>
-                                            <td>
-                                                <span>Free Shipping</span>
-                                            </td>
-                                        </tr>
-
-                                        <tr class="order-total">
-                                            <th><strong>Order Total</strong></th>
-                                            <td>
-                                                <strong><span class="amount">$@totalPrice</span></strong>
-                                            </td>
-                                        </tr>
-                                    </tbody>
-                                </table>
-
-                                <div id="payment" class="ecommerce-checkout-payment">
-                                    <h2 class="heading uppercase mb-30">payment method</h2>
-                                    <ul class="payment_methods methods">
-
-                                        <li class="payment_method_bacs">
-                                            <input id="payment_method_bacs" type="radio" class="input-radio" name="payment_method" value="bacs" checked="checked">
-                                            <label for="payment_method_bacs">Direct Bank Transfer</label>
-                                            <div class="payment_box payment_method_bacs">
-                                                <p>Make your payment directly into our bank account. Please use your Order ID as the payment reference. Your order wont be shipped until the funds have cleared in our account.</p>
-                                            </div>
-                                        </li>
-
-                                        <li class="payment_method_paypal">
-                                            <input id="payment_method_paypal" type="radio" class="input-radio" name="payment_method" value="paypal">
-                                            <label for="payment_method_paypal">PayPal</label>
-                                            <div class="payment_box payment_method_paypal">
-                                                <p>Pay via PayPal: you can pay with your credit card if you don’t have a PayPal account.</p>
-                                            </div>
-                                        </li>
-
-                                    </ul>
-
-                                    <div class="form-row place-order">
-                                        <input type="submit" name="ecommerce_checkout_place_order" class="btn btn-lg" id="place_order" value="Place order">
+                                <div class="form-row">
+                                    <div class="col form-group">
+                                        <label>Email</label>
+                                        <InputText @bind-Value="email" type="email" class="form-control" disabled />
+                                    </div>
+                                    <div class="col form-group">
+                                        <label>Phone</label>
+                                        <InputText @bind-Value="address.PhoneNumber" type="tel" class="form-control" />
                                     </div>
                                 </div>
-                            </div>
+
+                                <div class="form-row">
+                                    <div class="form-group col-md-6">
+                                        <label>Country</label>
+                                        <InputSelect @bind-Value="address.Country" id="inputState" class="form-control">
+                                            <option> Choose...</option>
+                                            <option value="Uzbekistan">Uzbekistan</option>
+                                            <option value="Russia">Russia</option>
+                                            <option value="United States">United States</option>
+                                            <option value="Bulgaria" selected>Bulgaria</option>
+                                            <option value="India">India</option>
+                                            <option value="Afganistan">Afganistan</option>
+                                        </InputSelect>
+                                    </div>
+                                    <div class="form-group col-md-6">
+                                        <label>State</label>
+                                        <InputText @bind-Value="address.State" type="text" class="form-control" />
+                                    </div>
+                                </div>
+
+                                <div class="form-row">
+                                    <div class="col form-group">
+                                        <label>City</label>
+                                        <InputText @bind-Value="address.City" type="text" class="form-control" />
+                                    </div>
+                                    <div class="col form-group">
+                                        <label>Postcode</label>
+                                        <InputText @bind-Value="address.PostalCode" type="text" class="form-control" />
+                                    </div>
+                                </div>
+
+
+                                <div class="form-group">
+                                    <label>Address</label>
+                                    <InputTextArea @bind-Value="address.Description" class="form-control" rows="2"></InputTextArea>
+                                </div>
+
+                                <div class="form-group">
+                                    <button type="submit" class="btn btn-primary btn-block"> Place order </button>
+                                </div>
+
+                            </EditForm>
                         </div>
-
-                    </EditForm>
-
-                </div>
+                    </div>
+                </aside>
 
             </div>
         </div>
@@ -164,6 +150,7 @@ else
 @code {
     private readonly AddressesRequestModel address = new AddressesRequestModel();
 
+    private string email;
     private decimal totalPrice;
     private ShoppingCartProductsResponseModel[] cartProducts;
 
@@ -174,6 +161,11 @@ else
 
         this.cartProducts = await this.Http.GetFromJsonAsync<ShoppingCartProductsResponseModel[]>("api/shoppingcarts");
         this.totalPrice = this.cartProducts.Sum(p => p.Price * p.Quantity);
+
+        var state = await this.AuthState.GetAuthenticationStateAsync();
+        var user = state.User;
+
+        this.email = user.GetEmail();
     }
 
     private async Task SubmitAsync()

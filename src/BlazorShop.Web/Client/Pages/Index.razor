@@ -6,71 +6,80 @@
 }
 else
 {
-    <section class="section-intro">
+    <section class="section-intro padding-y-sm bg">
+        <div class="container">
 
-        <div class="intro-banner-wrap">
-            <img src="images/banners/1.jpg" class="w-100 img-fluid">
+            <div class="intro-banner-wrap">
+                <img src="images/banners/1.jpg" class="img-fluid rounded">
+            </div>
+
         </div>
-
     </section>
 
-    <section class="section-specials padding-y border-bottom">
+    <section class="section-content padding-y-sm bg">
         <div class="container">
+
             <div class="row">
                 <div class="col-md-4">
-                    <figure class="itemside">
-                        <div class="aside">
-                            <span class="icon-sm rounded-circle bg-primary">
-                                <i class="fa fa-money-bill-alt white"></i>
-                            </span>
-                        </div>
-                        <figcaption class="info">
-                            <h6 class="title">Reasonable prices</h6>
-                            <p class="text-muted">
-                                Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
-                                tempor incididunt ut labor
-                            </p>
-                        </figcaption>
-                    </figure>
+                    <article class="card card-body">
+                        <figure class="itemside">
+                            <div class="aside">
+                                <span class="icon-sm rounded-circle bg-primary">
+                                    <i class="fa fa-money-bill-alt white"></i>
+                                </span>
+                            </div>
+                            <figcaption class="info">
+                                <h5 class="title">Reasonable prices</h5>
+                                <p>
+                                    Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
+                                    tempor incididunt ut labor
+                                </p>
+                            </figcaption>
+                        </figure>
+                    </article>
                 </div>
                 <div class="col-md-4">
-                    <figure class="itemside">
-                        <div class="aside">
-                            <span class="icon-sm rounded-circle bg-danger">
-                                <i class="fa fa-comment-dots white"></i>
-                            </span>
-                        </div>
-                        <figcaption class="info">
-                            <h6 class="title">Customer support 24/7 </h6>
-                            <p class="text-muted">
-                                Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
-                                tempor incididunt ut labor
-                            </p>
-                        </figcaption>
-                    </figure>
+                    <article class="card card-body">
+                        <figure class="itemside">
+                            <div class="aside">
+                                <span class="icon-sm rounded-circle bg-secondary">
+                                    <i class="fa fa-comment-dots white"></i>
+                                </span>
+                            </div>
+                            <figcaption class="info">
+                                <h5 class="title">Customer support 24/7 </h5>
+                                <p>
+                                    Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
+                                    tempor incididunt ut labor
+                                </p>
+                            </figcaption>
+                        </figure>
+                    </article>
                 </div>
                 <div class="col-md-4">
-                    <figure class="itemside">
-                        <div class="aside">
-                            <span class="icon-sm rounded-circle bg-success">
-                                <i class="fa fa-truck white"></i>
-                            </span>
-                        </div>
-                        <figcaption class="info">
-                            <h6 class="title">Quick delivery</h6>
-                            <p class="text-muted">
-                                Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
-                                tempor incididunt ut labor
-                            </p>
-                        </figcaption>
-                    </figure>
+                    <article class="card card-body">
+                        <figure class="itemside">
+                            <div class="aside">
+                                <span class="icon-sm rounded-circle bg-success">
+                                    <i class="fa fa-truck white"></i>
+                                </span>
+                            </div>
+                            <figcaption class="info">
+                                <h5 class="title">Quick delivery</h5>
+                                <p>
+                                    Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
+                                    tempor incididunt ut labor
+                                </p>
+                            </figcaption>
+                        </figure>
+                    </article>
                 </div>
             </div>
 
         </div>
     </section>
 
-    <section class="section-name  padding-y-sm">
+    <section class="section-content padding-y-sm bg">
         <div class="container">
 
             <header class="section-heading">
@@ -85,18 +94,30 @@ else
                     <div class="col-md-3">
                         <div class="card card-product-grid">
                             <a href="/products/@product.Id/@product.Name" class="img-wrap">
-                                <img src="@product.ImageSource" />
+                                <img src="@product.ImageSource">
                             </a>
                             <figcaption class="info-wrap">
                                 <a href="/products/@product.Id/@product.Name" class="title">
                                     @product.Name
                                 </a>
+
+                                @*<div class="rating-wrap">
+                                        <ul class="rating-stars">
+                                            <li style="width:80%" class="stars-active">
+                                                <i class="fa fa-star"></i><i class="fa fa-star"></i><i class="fa fa-star"></i><i class="fa fa-star"></i><i class="fa fa-star"></i>
+                                            </li>
+                                            <li>
+                                                <i class="fa fa-star"></i><i class="fa fa-star"></i><i class="fa fa-star"></i><i class="fa fa-star"></i><i class="fa fa-star"></i>
+                                            </li>
+                                        </ul>
+                                        <span class="label-rating text-muted"> 34 reviws</span>
+                                    </div>*@
+
                                 <div class="price mt-1">$@product.Price</div>
                             </figcaption>
                         </div>
                     </div>
                 }
-
             </div>
 
         </div>
