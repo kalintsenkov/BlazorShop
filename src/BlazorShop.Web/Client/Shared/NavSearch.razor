@@ -1,6 +1,6 @@
 ﻿<EditForm Model="searchModel" OnValidSubmit="Search" method="get" class="search">
     <div class="input-group w-100">
-        <InputText @bind-Value="searchModel.Query" type="text" class="form-control" placeholder="Search" />
+        <InputText @bind-Value="searchModel.Query" type="search" class="form-control" placeholder="Search" style="width:55%;" />
         <div class="input-group-append">
             <button class="btn btn-primary" type="submit">
                 <i class="fa fa-search"></i>
