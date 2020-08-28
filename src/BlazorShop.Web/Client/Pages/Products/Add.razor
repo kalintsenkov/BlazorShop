@@ -7,59 +7,69 @@
 }
 else
 {
-    <section class="page-title text-center bg">
-        <div class="container relative clearfix">
-            <div class="title-holder">
-                <div class="title-text">
-                    <h1 class="uppercase">add product</h1>
-                </div>
-            </div>
+    <section class="section-pagetop bg">
+        <div class="container">
+            <h2 class="title-page text-center">Add Product</h2>
         </div>
     </section>
-    <section class="section-wrap">
+
+    <section class="section-content padding-y bg">
         <div class="container">
+            <div class="row">
+                <div class="card mx-auto">
+                    <article class="card-body">
 
-            <EditForm Model="model" OnValidSubmit="SubmitAsync">
+                        <EditForm Model="model" OnValidSubmit="SubmitAsync">
 
-                <DataAnnotationsValidator />
-                <ValidationSummary />
+                            <DataAnnotationsValidator />
+                            <ValidationSummary />
 
-                <div class="row">
-                    <div class="col-md-6">
 
-                        <label>Name</label>
-                        <InputText @bind-Value="model.Name" type="text" />
+                            <div class="form-group">
+                                <label>Name</label>
+                                <InputText @bind-Value="model.Name" type="text" class="form-control" />
+                            </div>
 
-                        <label>Image</label>
-                        <InputText @bind-Value="model.ImageSource" type="url" />
+                            <div class="form-group">
+                                <label>Category</label>
+                                <InputSelectNumber @bind-Value="model.CategoryId" class="form-control">
+                                    @foreach (var category in categories)
+                                    {
+                                        <option value="@category.Id">@category.Name</option>
+                                    }
+                                </InputSelectNumber>
+                            </div>
 
-                        <label>Description</label>
-                        <InputTextArea @bind-Value="model.Description" rows="3" />
+                            <div class="form-row">
+                                <div class="col form-group">
+                                    <label>Price</label>
+                                    <InputNumber @bind-Value="model.Price" type="number" class="form-control" />
+                                </div>
+                                <div class="col form-group">
+                                    <label>Quantity</label>
+                                    <InputNumber @bind-Value="model.Quantity" type="number" class="form-control" />
+                                </div>
+                            </div>
 
-                    </div>
+                            <div class="form-group">
+                                <label>Image</label>
+                                <InputText @bind-Value="model.ImageSource" type="url" class="form-control" />
+                            </div>
 
-                    <div class="col-md-6">
+                            <div class="form-group">
+                                <label>Description</label>
+                                <InputTextArea @bind-Value="model.Description" rows="2" class="form-control"></InputTextArea>
+                            </div>
 
-                        <label>Category</label>
-                        @*TODO: Validate CategoryId*@
-                        <InputSelectNumber @bind-Value="model.CategoryId">
-                            @foreach (var category in categories)
-                            {
-                                <option value="@category.Id">@category.Name</option>
-                            }
-                        </InputSelectNumber>
+                            <div class="form-group">
+                                <button type="submit" class="btn btn-block btn-primary">Add</button>
+                            </div>
 
-                        <label>Price</label>
-                        <InputNumber @bind-Value="model.Price" />
+                        </EditForm>
 
-                        <label>Quantity</label>
-                        <InputNumber @bind-Value="model.Quantity" />
-                    </div>
+                    </article>
                 </div>
-
-                <button type="submit" class="btn btn-lg"> Create </button>
-
-            </EditForm>
+            </div>
         </div>
     </section>
 }
