@@ -1,11 +1,12 @@
 ﻿@inject ILocalStorageService LocalStorage
 @inject IJSRuntime JsRuntime
 
-<div class="form-row">
-    <EditForm Model="model" OnValidSubmit="() => OnSubmitAsync(ProductId)">
+<EditForm Model="model" OnValidSubmit="() => OnSubmitAsync(ProductId)">
 
-        <DataAnnotationsValidator />
-        <ValidationSummary />
+    <DataAnnotationsValidator />
+    <ValidationSummary />
+
+    <div class="form-row">
 
         <div class="form-group col-md flex-grow-0">
             <label>Quantity</label>
@@ -40,35 +41,38 @@
 
             </div>
         </div>
+    </div>
 
-        <button type="submit" class="btn btn-primary">
-            <span class="text">Add to cart</span>
-            <i class="fas fa-shopping-cart"></i>
-        </button>
+    <div class="form-row">
+        <div class="form-group col-md">
+            <button type="submit" class="btn btn-primary">
+                <span class="text">Add to cart</span>
+                <i class="fas fa-shopping-cart"></i>
+            </button>
 
-        <a @onclick="() => AddToWishlist(ProductId)"
-           @onclick:preventDefault
-           href="#"
-           class="btn btn-light">
-            <i class="fas fa-heart"></i>
-        </a>
-
-        <AuthorizeView Roles="@Constants.AdministratorRole" Context="Auth">
-            <a href="/products/update/@ProductId"
-               class="btn btn-outline-warning">
-                <i class="fa fa-pen"></i>
+            <a @onclick="() => AddToWishlist(ProductId)"
+               @onclick:preventDefault
+               href="#"
+               class="btn btn-light">
+                <i class="fas fa-heart"></i>
             </a>
 
-            <a @onclick:preventDefault
-               @onclick="() => OnDeleteAsync()"
-               href=""
-               class="btn btn-outline-danger">
-                <i class="fa fa-trash"></i>
-            </a>
-        </AuthorizeView>
+            <AuthorizeView Roles="@Constants.AdministratorRole" Context="Auth">
+                <a href="/products/update/@ProductId"
+                   class="btn btn-outline-warning">
+                    <i class="fa fa-pen"></i>
+                </a>
 
-    </EditForm>
-</div>
+                <a @onclick:preventDefault
+                   @onclick="() => OnDeleteAsync()"
+                   href=""
+                   class="btn btn-outline-danger">
+                    <i class="fa fa-trash"></i>
+                </a>
+            </AuthorizeView>
+        </div>
+    </div>
+</EditForm>
 
 @code {
     private readonly ShoppingCartRequestModel model = new ShoppingCartRequestModel();
