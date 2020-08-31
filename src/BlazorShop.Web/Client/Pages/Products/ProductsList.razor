@@ -21,54 +21,142 @@ else
                     <header class="border-bottom mb-4 pb-3">
                         <div class="form-inline">
                             <span class="mr-md-auto">@products.Length Items found </span>
-                            <select class="mr-2 form-control">
-                                <option>Latest items</option>
-                                <option>Trending</option>
-                                <option>Most Popular</option>
-                                <option>Cheapest</option>
-                            </select>
+
                             <div class="btn-group">
-                                <a href="#" class="btn btn-outline-secondary" data-toggle="tooltip" title="List view">
-                                    <i class="fa fa-bars"></i>
-                                </a>
-                                <a href="#" class="btn  btn-outline-secondary active" data-toggle="tooltip" title="Grid view">
-                                    <i class="fa fa-th"></i>
-                                </a>
+
+                                @if (ListView)
+                                {
+                                    <a @onclick="ChangeView"
+                                       @onclick:preventDefault
+                                       href="#"
+                                       class="btn btn-outline-secondary active"
+                                       data-toggle="tooltip"
+                                       title="List view">
+                                        <i class="fa fa-bars"></i>
+                                    </a>
+                                    <a @onclick="ChangeView"
+                                       @onclick:preventDefault
+                                       href="#"
+                                       class="btn btn-outline-secondary"
+                                       data-toggle="tooltip"
+                                       title="Grid view">
+                                        <i class="fa fa-th"></i>
+                                    </a>
+                                }
+                                else
+                                {
+                                    <a @onclick="ChangeView"
+                                       @onclick:preventDefault
+                                       href="#"
+                                       class="btn btn-outline-secondary"
+                                       data-toggle="tooltip"
+                                       title="List view">
+                                        <i class="fa fa-bars"></i>
+                                    </a>
+                                    <a @onclick="ChangeView"
+                                       @onclick:preventDefault
+                                       href="#"
+                                       class="btn btn-outline-secondary active"
+                                       data-toggle="tooltip"
+                                       title="Grid view">
+                                        <i class="fa fa-th"></i>
+                                    </a>
+                                }
+
                             </div>
                         </div>
                     </header>
 
-                    <div class="row">
+                    @if (GridView)
+                    {
+                        <div class="row">
 
-                        @foreach (var product in this.products)
+                            @foreach (var product in this.products)
+                            {
+                                <div class="col-md-4">
+                                    <figure class="card card-product-grid">
+                                        <div class="img-wrap">
+                                            <img src="@product.ImageSource">
+                                            <span class="topbar">
+                                                <a @onclick="() => AddToWishlist(product.Id)" 
+                                                   @onclick:preventDefault 
+                                                   href="#" 
+                                                   class="float-right">
+                                                    <i class="fa fa-heart"></i>
+                                                </a>
+                                            </span>
+                                            <a class="btn-overlay" href="/products/@product.Id/@product.Name">
+                                                <i class="fa fa-search-plus"></i>
+                                                Quick view
+                                            </a>
+                                        </div>
+                                        <figcaption class="info-wrap">
+                                            <div class="fix-height">
+                                                <a href="/products/@product.Id/@product.Name" class="title">
+                                                    @product.Name
+                                                </a>
+                                                <div class="price-wrap mt-2">
+                                                    <span class="price">$@product.Price</span>
+                                                    @*<del class="price-old">$1980</del>*@
+                                                </div>
+                                            </div>
+                                            <a href="#" class="btn btn-block btn-primary">Add to cart </a>
+                                        </figcaption>
+                                    </figure>
+                                </div>
+                            }
+
+                        </div>
+                    }
+                    else
+                    {
+                        foreach (var product in this.products)
                         {
-                            <div class="col-md-4">
-                                <figure class="card card-product-grid">
-                                    <div class="img-wrap">
-                                        @*<span class="badge badge-danger"> NEW </span>*@
-                                        <img src="@product.ImageSource">
-                                        <a class="btn-overlay" href="/products/@product.Id/@product.Name">
-                                            <i class="fa fa-search-plus"></i>
-                                            Quick view
+                            <article class="card card-product-list">
+                                <div class="row no-gutters">
+                                    <aside class="col-md-3">
+                                        <a href="/products/@product.Id/@product.Name" class="img-wrap">
+                                            <img src="@product.ImageSource" />
                                         </a>
-                                    </div>
-                                    <figcaption class="info-wrap">
-                                        <div class="fix-height">
-                                            <a href="/products/@product.Id/@product.Name" class="title">
+                                    </aside>
+                                    <div class="col-md-6">
+                                        <div class="info-main">
+                                            <a href="/products/@product.Id/@product.Name" class="h5 title">
                                                 @product.Name
                                             </a>
-                                            <div class="price-wrap mt-2">
-                                                <span class="price">$@product.Price</span>
-                                                @*<del class="price-old">$1980</del>*@
-                                            </div>
-                                        </div>
-                                        <a href="#" class="btn btn-block btn-primary">Add to cart </a>
-                                    </figcaption>
-                                </figure>
-                            </div>
-                        }
 
-                    </div>
+                                            <p> @product.Description </p>
+                                        </div>
+                                    </div>
+                                    <aside class="col-sm-3">
+                                        <div class="info-aside">
+                                            <div class="price-wrap">
+                                                <span class="price h5"> $@product.Price </span>
+                                                @*<del class="price-old"> $198</del>*@
+                                            </div>
+                                            <p class="text-success">Free shipping</p>
+
+                                            <br />
+
+                                            <p>
+                                                <a href="/products/@product.Id/@product.Name"
+                                                   class="btn btn-primary btn-block">
+                                                    Details
+                                                </a>
+                                                <a @onclick="() => AddToWishlist(product.Id)"
+                                                   @onclick:preventDefault
+                                                   href="#"
+                                                   class="btn btn-light btn-block">
+                                                    <i class="fa fa-heart"></i>
+                                                    <span class="text">Add to wishlist</span>
+                                                </a>
+                                            </p>
+                                        </div>
+                                    </aside>
+                                </div>
+                            </article>
+                        }
+                    }
 
                     <Pagination />
 
@@ -85,22 +173,38 @@ else
     private CategoriesListingResponseModel[] categories;
 
     [Parameter]
-    public int PageNumber { get; set; } = 1;
-
-    [Parameter]
-    public string SearchQuery { get; set; } = string.Empty;
-
-    [Parameter]
     public int CategoryId { get; set; }
 
     [Parameter]
     public string CategoryName { get; set; }
 
+    [Parameter]
+    public bool ListView { get; set; } = false;
+
+    [Parameter]
+    public bool GridView { get; set; } = true;
+
+    [Parameter]
+    public int PageNumber { get; set; } = 1;
+
+    [Parameter]
+    public string SearchQuery { get; set; } = string.Empty;
+
     protected override async Task OnParametersSetAsync() => await this.LoadData();
 
     protected override async Task OnInitializedAsync() => await this.LoadData();
 
-    private async Task LoadData()
+    private async Task AddToWishlist(int id)
+    {
+        var token = await this.LocalStorage.GetItemAsync<string>("authToken");
+        this.Http.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
+
+        await this.Http.PostAsJsonAsync($"api/wishlists/{id}", id);
+
+        this.NavigationManager.NavigateTo("/wishlist");
+    }
+
+    private async Task LoadData(bool changeView = false)
     {
         var requestUrl = "api/products";
 
@@ -120,5 +224,16 @@ else
 
         this.products = await this.Http.GetFromJsonAsync<ProductsListingResponseModel[]>(requestUrl);
         this.categories = await this.Http.GetFromJsonAsync<CategoriesListingResponseModel[]>("api/categories");
+
+        if (changeView)
+        {
+            this.ChangeView();
+        }
+    }
+
+    private void ChangeView()
+    {
+        this.ListView = !this.ListView;
+        this.GridView = !this.GridView;
     }
 }
