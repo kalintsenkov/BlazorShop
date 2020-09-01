@@ -129,6 +129,6 @@ else
 
     protected override async Task OnInitializedAsync()
     {
-        this.products = await this.Http.GetFromJsonAsync<ProductsListingResponseModel[]>("api/products");
+        this.products = await this.Http.GetFromJsonAsync<ProductsListingResponseModel[]>("api/search/products");
     }
 }
