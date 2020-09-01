@@ -11,6 +11,8 @@
     using Data.Models;
     using Models;
     using Models.Products;
+    using Specifications;
+    using Specifications.Products;
 
     using static Common.Constants;
 
@@ -93,7 +95,7 @@
             => await this.Mapper
                 .ProjectTo<ProductsDetailsResponseModel>(this
                     .AllAsNoTracking()
-                    .Where(p => p.Id == id))
+                    .Where(this.GetProductSpecification(id)))
                 .FirstOrDefaultAsync();
 
         public async Task<IEnumerable<ProductsListingResponseModel>> AllAsync(
@@ -101,13 +103,16 @@
             => await this.Mapper
                 .ProjectTo<ProductsListingResponseModel>(this
                     .AllAsNoTracking()
-                    .Skip((page - 1) * ProductsPerPage)
-                    .Take(ProductsPerPage))
+                    .Skip((page - 1) * ItemsPerPage)
+                    .Take(ItemsPerPage))
                 .ToListAsync();
 
         private async Task<Product> GetByIdAsync(int id)
             => await this
                 .All()
-                .FirstOrDefaultAsync(p => p.Id == id);
+                .FirstOrDefaultAsync(this.GetProductSpecification(id));
+
+        private Specification<Product> GetProductSpecification(int id)
+            => new ProductByIdSpecification(id);
     }
 }

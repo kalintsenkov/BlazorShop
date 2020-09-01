@@ -4,11 +4,10 @@
     using System.Threading.Tasks;
 
     using Models.Products;
+    using Models.Search;
 
     public interface ISearchService
     {
-        Task<IEnumerable<ProductsListingResponseModel>> Products(
-            string query, 
-            int page = 1);
+        Task<IEnumerable<ProductsListingResponseModel>> Products(SearchRequestModel model);
     }
 }

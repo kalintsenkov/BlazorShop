@@ -1,9 +1,9 @@
 ﻿@page "/products"
-@page "/products/{PageNumber:int}"
-@page "/products/{SearchQuery}/{PageNumber:int}"
-@page "/categories/{CategoryName}/{CategoryId:int}"
+@page "/products/{Page:int}"
+@page "/products/{SearchQuery}"
+@page "/products/{CategoryName}/{CategoryId:int}"
 
-@if (categories == null || products == null)
+@if (products == null)
 {
     <LoadingScreen />
 }
@@ -14,7 +14,7 @@ else
 
             <div class="row">
 
-                <Sidebar Categories="categories" />
+                <Sidebar Page="Page" />
 
                 <main class="col-md-9">
 
@@ -78,9 +78,9 @@ else
                                         <div class="img-wrap">
                                             <img src="@product.ImageSource">
                                             <span class="topbar">
-                                                <a @onclick="() => AddToWishlist(product.Id)" 
-                                                   @onclick:preventDefault 
-                                                   href="#" 
+                                                <a @onclick="() => AddToWishlist(product.Id)"
+                                                   @onclick:preventDefault
+                                                   href="#"
                                                    class="float-right">
                                                     <i class="fa fa-heart"></i>
                                                 </a>
@@ -173,7 +173,16 @@ else
     private CategoriesListingResponseModel[] categories;
 
     [Parameter]
-    public int CategoryId { get; set; }
+    public string SearchQuery { get; set; } = string.Empty;
+
+    [Parameter]
+    public decimal? MinPrice { get; set; }
+
+    [Parameter]
+    public decimal? MaxPrice { get; set; }
+
+    [Parameter]
+    public int? CategoryId { get; set; }
 
     [Parameter]
     public string CategoryName { get; set; }
@@ -185,14 +194,27 @@ else
     public bool GridView { get; set; } = true;
 
     [Parameter]
-    public int PageNumber { get; set; } = 1;
-
-    [Parameter]
-    public string SearchQuery { get; set; } = string.Empty;
+    public int Page { get; set; } = 1;
 
     protected override async Task OnParametersSetAsync() => await this.LoadData();
 
-    protected override async Task OnInitializedAsync() => await this.LoadData();
+    private async Task LoadData()
+    {
+        if (this.Page == 0)
+        {
+            this.Page = 1;
+        }
+
+        var requestUrl = $"api/search/products" +
+                $"?category={this.CategoryId}" +
+                $"&minPrice={this.MinPrice}" +
+                $"&maxPrice={this.MaxPrice}" +
+                $"&query={this.SearchQuery}" +
+                $"&page={this.Page}";
+
+        this.products = await this.Http.GetFromJsonAsync<ProductsListingResponseModel[]>(requestUrl);
+        this.categories = await this.Http.GetFromJsonAsync<CategoriesListingResponseModel[]>("api/categories");
+    }
 
     private async Task AddToWishlist(int id)
     {
@@ -202,33 +224,6 @@ else
         await this.Http.PostAsJsonAsync($"api/wishlists/{id}", id);
 
         this.NavigationManager.NavigateTo("/wishlist");
-    }
-
-    private async Task LoadData(bool changeView = false)
-    {
-        var requestUrl = "api/products";
-
-        if (string.IsNullOrWhiteSpace(this.SearchQuery))
-        {
-            requestUrl = this.PageNumber > 1 ? $"api/products?page={this.PageNumber}" : "api/products";
-        }
-        else
-        {
-            requestUrl = $"api/search/products?query={this.SearchQuery}&page={this.PageNumber}";
-        }
-
-        if (this.CategoryId != 0 && !string.IsNullOrEmpty(this.CategoryName))
-        {
-            requestUrl = $"api/categories/{this.CategoryId}";
-        }
-
-        this.products = await this.Http.GetFromJsonAsync<ProductsListingResponseModel[]>(requestUrl);
-        this.categories = await this.Http.GetFromJsonAsync<CategoriesListingResponseModel[]>("api/categories");
-
-        if (changeView)
-        {
-            this.ChangeView();
-        }
     }
 
     private void ChangeView()

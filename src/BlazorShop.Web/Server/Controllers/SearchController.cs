@@ -6,6 +6,7 @@
     using Microsoft.AspNetCore.Mvc;
 
     using Models.Products;
+    using Models.Search;
     using Services.Search;
 
     public class SearchController : ApiController
@@ -17,8 +18,7 @@
 
         [HttpGet(nameof(Products))]
         public async Task<IEnumerable<ProductsListingResponseModel>> Products(
-            string query,
-            int page = 1)
-            => await this.search.Products(query, page);
+            [FromQuery] SearchRequestModel model)
+            => await this.search.Products(model);
     }
 }

@@ -20,11 +20,13 @@
             => this.products = products;
 
         [HttpGet]
-        public async Task<IEnumerable<ProductsListingResponseModel>> All(int page = 1)
+        public async Task<IEnumerable<ProductsListingResponseModel>> All(
+            int page = 1)
             => await this.products.AllAsync(page);
 
         [HttpGet(Id)]
-        public async Task<ActionResult<ProductsDetailsResponseModel>> Details(int id)
+        public async Task<ActionResult<ProductsDetailsResponseModel>> Details(
+            int id)
             => await this.products.DetailsAsync(id);
 
         [HttpPost]
@@ -44,7 +46,9 @@
 
         [HttpPut(Id)]
         [Authorize(Roles = AdministratorRole)]
-        public async Task<ActionResult> Update(int id, ProductsRequestModel model)
+        public async Task<ActionResult> Update(
+            int id, 
+            ProductsRequestModel model)
             => await this.products
                 .UpdateAsync(
                     id,

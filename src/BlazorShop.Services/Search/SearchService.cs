@@ -10,6 +10,9 @@
     using Data;
     using Data.Models;
     using Models.Products;
+    using Models.Search;
+    using Specifications;
+    using Specifications.Products;
 
     using static Common.Constants;
 
@@ -21,14 +24,19 @@
         }
 
         public async Task<IEnumerable<ProductsListingResponseModel>> Products(
-            string query,
-            int page = 1)
+            SearchRequestModel model)
             => await this.Mapper
                 .ProjectTo<ProductsListingResponseModel>(this
                     .AllAsNoTracking()
-                    .Where(p => p.Name.ToLower().Contains(query.ToLower()))
-                    .Skip((page - 1) * ProductsPerPage)
-                    .Take(ProductsPerPage))
+                    .Where(this.GetProductSpecification(model))
+                    .Skip((model.Page - 1) * ItemsPerPage)
+                    .Take(ItemsPerPage))
                 .ToListAsync();
+
+        private Specification<Product> GetProductSpecification(
+            SearchRequestModel model)
+            => new ProductByNameSpecification(model.Query)
+                .And(new ProductByPriceSpecification(model.MinPrice, model.MaxPrice))
+                .And(new ProductByCategorySpecification(model.Category));
     }
 }
