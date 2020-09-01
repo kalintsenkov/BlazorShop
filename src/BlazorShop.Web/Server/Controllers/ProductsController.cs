@@ -1,6 +1,5 @@
 ﻿namespace BlazorShop.Web.Server.Controllers
 {
-    using System.Collections.Generic;
     using System.Threading.Tasks;
 
     using Microsoft.AspNetCore.Authorization;
@@ -16,13 +15,8 @@
     {
         private readonly IProductsService products;
 
-        public ProductsController(IProductsService products) 
+        public ProductsController(IProductsService products)
             => this.products = products;
-
-        [HttpGet]
-        public async Task<IEnumerable<ProductsListingResponseModel>> All(
-            int page = 1)
-            => await this.products.AllAsync(page);
 
         [HttpGet(Id)]
         public async Task<ActionResult<ProductsDetailsResponseModel>> Details(
@@ -46,9 +40,7 @@
 
         [HttpPut(Id)]
         [Authorize(Roles = AdministratorRole)]
-        public async Task<ActionResult> Update(
-            int id, 
-            ProductsRequestModel model)
+        public async Task<ActionResult> Update(int id, ProductsRequestModel model)
             => await this.products
                 .UpdateAsync(
                     id,

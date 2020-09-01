@@ -170,7 +170,6 @@ else
 
 @code {
     private ProductsListingResponseModel[] products;
-    private CategoriesListingResponseModel[] categories;
 
     [Parameter]
     public string SearchQuery { get; set; } = string.Empty;
@@ -213,7 +212,6 @@ else
                 $"&page={this.Page}";
 
         this.products = await this.Http.GetFromJsonAsync<ProductsListingResponseModel[]>(requestUrl);
-        this.categories = await this.Http.GetFromJsonAsync<CategoriesListingResponseModel[]>("api/categories");
     }
 
     private async Task AddToWishlist(int id)

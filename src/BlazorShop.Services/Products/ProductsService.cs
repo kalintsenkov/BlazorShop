@@ -14,8 +14,6 @@
     using Specifications;
     using Specifications.Products;
 
-    using static Common.Constants;
-
     public class ProductsService : BaseService<Product>, IProductsService
     {
         public ProductsService(ApplicationDbContext db, IMapper mapper)
@@ -97,15 +95,6 @@
                     .AllAsNoTracking()
                     .Where(this.GetProductSpecification(id)))
                 .FirstOrDefaultAsync();
-
-        public async Task<IEnumerable<ProductsListingResponseModel>> AllAsync(
-            int page = 1)
-            => await this.Mapper
-                .ProjectTo<ProductsListingResponseModel>(this
-                    .AllAsNoTracking()
-                    .Skip((page - 1) * ItemsPerPage)
-                    .Take(ItemsPerPage))
-                .ToListAsync();
 
         private async Task<Product> GetByIdAsync(int id)
             => await this
