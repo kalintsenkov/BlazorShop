@@ -6,119 +6,121 @@ else
 {
     <aside class="col-md-3">
 
-        <div class="card mb-3">
-            <div class="card-body">
-                <h5 class="card-title">Search</h5>
+        <EditForm Model="model">
 
-                <div class="input-group">
-                    <input type="text" placeholder="Keyword" class="form-control" />
-                    <span class="input-group-append">
-                        <button class="btn btn-primary">
-                            <i class="fa fa-search"></i>
-                        </button>
-                    </span>
-                </div>
-            </div>
-        </div>
+            <div class="card mb-3">
+                <div class="card-body">
+                    <h5 class="card-title">Search</h5>
 
-        <div class="card">
-
-            <article class="filter-group">
-                <header class="card-header">
-                    <a href="#" data-toggle="collapse" data-target="#collapse_1" aria-expanded="true" class="">
-                        <i class="icon-control fa fa-chevron-down"></i>
-                        <h6 class="title">Categories</h6>
-                    </a>
-                </header>
-                <div class="filter-content collapse show" id="collapse_1">
-                    <div class="card-body">
-
-                        <ul class="list-menu">
-
-                            @foreach (var category in categories)
-                            {
-                                var classActive = string.Empty;
-                                var categoryName = category.Name.ToLower();
-
-                                if (NavigationManager.Uri.Contains("categories"))
-                                {
-                                    var currentCategory = NavigationManager.Uri.Split('/')[4];
-                                    classActive = currentCategory == categoryName ? "active" : string.Empty;
-                                }
-
-                                <li>
-                                    <a class="@classActive"
-                                       href="/products/@category.Name/@category.Id">
-                                        @category.Name
-                                    </a>
-                                </li>
-                            }
-
-                        </ul>
-
+                    <div class="input-group">
+                        <input @bind-value="model.Query" @bind-value:event="oninput" type="text" placeholder="Keyword" class="form-control" />
+                        <span class="input-group-append">
+                            <button class="btn btn-primary">
+                                <i class="fa fa-search"></i>
+                            </button>
+                        </span>
                     </div>
                 </div>
-            </article>
-            <article class="filter-group">
-                <header class="card-header">
-                    <a href="#" data-toggle="collapse" data-target="#collapse_3" aria-expanded="true" class="">
-                        <i class="icon-control fa fa-chevron-down"></i>
-                        <h6 class="title"> Price range </h6>
-                    </a>
-                </header>
-                <div class="filter-content collapse show" id="collapse_3" style="">
-                    <div class="card-body">
-                        <input type="range" class="custom-range" min="0" max="100" />
-                        <div class="form-row">
-                            <div class="form-group col-md-6">
-                                <label>Min</label>
-                                <input class="form-control" placeholder="$0" type="number" />
-                            </div>
-                            <div class="form-group text-right col-md-6">
-                                <label>Max</label>
-                                <input class="form-control" placeholder="$1,0000" type="number" />
+            </div>
+
+            <div class="card">
+
+                <article class="filter-group">
+                    <header class="card-header">
+                        <a href="#" data-toggle="collapse" data-target="#collapse_1" aria-expanded="true" class="">
+                            <i class="icon-control fa fa-chevron-down"></i>
+                            <h6 class="title">Categories</h6>
+                        </a>
+                    </header>
+                    <div class="filter-content collapse show" id="collapse_1">
+                        <div class="card-body">
+
+                            <ul class="list-menu">
+
+                                @foreach (var category in categories)
+                                {
+                                    var classActive = string.Empty;
+                                    var categoryName = category.Name.ToLower();
+
+                                    if (NavigationManager.Uri.Contains("categories"))
+                                    {
+                                        var currentCategory = NavigationManager.Uri.Split('/')[4];
+                                        classActive = currentCategory == categoryName ? "active" : string.Empty;
+                                    }
+
+                                    <li>
+                                        <a class="@classActive"
+                                           href="/@category.Name/@category.Id">
+                                            @category.Name
+                                        </a>
+                                    </li>
+                                }
+
+                            </ul>
+
+                        </div>
+                    </div>
+                </article>
+                <article class="filter-group">
+                    <header class="card-header">
+                        <a href="#" data-toggle="collapse" data-target="#collapse_3" aria-expanded="true" class="">
+                            <i class="icon-control fa fa-chevron-down"></i>
+                            <h6 class="title"> Price range </h6>
+                        </a>
+                    </header>
+                    <div class="filter-content collapse show" id="collapse_3" style="">
+                        <div class="card-body">
+                            <input type="range" class="custom-range" min="0" max="100" />
+                            <div class="form-row">
+                                <div class="form-group col-md-6">
+                                    <label>Min</label>
+                                    <input @bind-value="model.MinPrice" @bind-value:event="oninput" class="form-control" placeholder="$0" type="number" />
+                                </div>
+                                <div class="form-group text-right col-md-6">
+                                    <label>Max</label>
+                                    <input @bind-value="model.MaxPrice" @bind-value:event="oninput" class="form-control" placeholder="$1,0000" type="number" />
+                                </div>
                             </div>
                         </div>
                     </div>
-                </div>
-            </article>
-            <article class="filter-group">
-                <header class="card-header">
-                    <a href="#" data-toggle="collapse" data-target="#collapse_4" aria-expanded="true" class="">
-                        <i class="icon-control fa fa-chevron-down"></i>
-                        <h6 class="title"> Sizes </h6>
-                    </a>
-                </header>
-                <div class="filter-content collapse show" id="collapse_4" style="">
-                    <div class="card-body">
-                        <label class="checkbox-btn">
-                            <input type="checkbox">
-                            <span class="btn btn-light"> XS </span>
-                        </label>
+                </article>
+                <article class="filter-group">
+                    <header class="card-header">
+                        <a href="#" data-toggle="collapse" data-target="#collapse_4" aria-expanded="true" class="">
+                            <i class="icon-control fa fa-chevron-down"></i>
+                            <h6 class="title"> Sizes </h6>
+                        </a>
+                    </header>
+                    <div class="filter-content collapse show" id="collapse_4" style="">
+                        <div class="card-body">
+                            <label class="checkbox-btn">
+                                <input type="checkbox">
+                                <span class="btn btn-light"> XS </span>
+                            </label>
 
-                        <label class="checkbox-btn">
-                            <input type="checkbox">
-                            <span class="btn btn-light"> S </span>
-                        </label>
+                            <label class="checkbox-btn">
+                                <input type="checkbox">
+                                <span class="btn btn-light"> S </span>
+                            </label>
 
-                        <label class="checkbox-btn">
-                            <input type="checkbox">
-                            <span class="btn btn-light"> M </span>
-                        </label>
+                            <label class="checkbox-btn">
+                                <input type="checkbox">
+                                <span class="btn btn-light"> M </span>
+                            </label>
 
-                        <label class="checkbox-btn">
-                            <input type="checkbox">
-                            <span class="btn btn-light"> L </span>
-                        </label>
+                            <label class="checkbox-btn">
+                                <input type="checkbox">
+                                <span class="btn btn-light"> L </span>
+                            </label>
+                        </div>
                     </div>
-                </div>
-            </article>
+                </article>
 
-        </div>
+            </div>
 
+        </EditForm>
     </aside>
 }
-
 
 @code {
     private readonly SearchRequestModel model = new SearchRequestModel();

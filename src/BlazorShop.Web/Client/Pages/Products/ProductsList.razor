@@ -1,7 +1,7 @@
-﻿@page "/products"
+﻿@page "/products/"
 @page "/products/{Page:int}"
-@page "/products/{SearchQuery}"
-@page "/products/{CategoryName}/{CategoryId:int}"
+@page "/products/{SearchQuery}/{Page:int}"
+@page "/{CategoryName}/{CategoryId:int}"
 
 @if (products == null)
 {
@@ -14,7 +14,124 @@ else
 
             <div class="row">
 
-                <Sidebar Page="Page" />
+                <!--Sidebar-->
+                <aside class="col-md-3">
+
+                    <EditForm Model="model" @oninput="() => LoadData(withCategories: false)">
+
+                        <div class="card mb-3">
+                            <div class="card-body">
+                                <h5 class="card-title">Search</h5>
+
+                                <div class="input-group">
+                                    <input @bind-value="SearchQuery" @bind-value:event="oninput" type="text" placeholder="Keyword" class="form-control" />
+                                    <span class="input-group-append">
+                                        <button class="btn btn-primary">
+                                            <i class="fa fa-search"></i>
+                                        </button>
+                                    </span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="card">
+
+                            <article class="filter-group">
+                                <header class="card-header">
+                                    <a href="#" data-toggle="collapse" data-target="#collapse_1" aria-expanded="true" class="">
+                                        <i class="icon-control fa fa-chevron-down"></i>
+                                        <h6 class="title">Categories</h6>
+                                    </a>
+                                </header>
+                                <div class="filter-content collapse show" id="collapse_1">
+                                    <div class="card-body">
+
+                                        <ul class="list-menu">
+
+                                            @foreach (var category in categories)
+                                            {
+                                                var classActive = string.Empty;
+                                                var categoryName = category.Name.ToLower();
+
+                                                if (NavigationManager.Uri.Contains("categories"))
+                                                {
+                                                    var currentCategory = NavigationManager.Uri.Split('/')[4];
+                                                    classActive = currentCategory == categoryName ? "active" : string.Empty;
+                                                }
+
+                                                <li>
+                                                    <a class="@classActive"
+                                                       href="/@category.Name/@category.Id">
+                                                        @category.Name
+                                                    </a>
+                                                </li>
+                                            }
+
+                                        </ul>
+
+                                    </div>
+                                </div>
+                            </article>
+                            <article class="filter-group">
+                                <header class="card-header">
+                                    <a href="#" data-toggle="collapse" data-target="#collapse_3" aria-expanded="true" class="">
+                                        <i class="icon-control fa fa-chevron-down"></i>
+                                        <h6 class="title"> Price range </h6>
+                                    </a>
+                                </header>
+                                <div class="filter-content collapse show" id="collapse_3" style="">
+                                    <div class="card-body">
+                                        <input type="range" class="custom-range" min="0" max="100" />
+                                        <div class="form-row">
+                                            <div class="form-group col-md-6">
+                                                <label>Min</label>
+                                                <input @bind-value="model.MinPrice" @bind-value:event="oninput" class="form-control" placeholder="$0" type="number" />
+                                            </div>
+                                            <div class="form-group text-right col-md-6">
+                                                <label>Max</label>
+                                                <input @bind-value="model.MaxPrice" @bind-value:event="oninput" class="form-control" placeholder="$1,0000" type="number" />
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </article>
+                            <article class="filter-group">
+                                <header class="card-header">
+                                    <a href="#" data-toggle="collapse" data-target="#collapse_4" aria-expanded="true" class="">
+                                        <i class="icon-control fa fa-chevron-down"></i>
+                                        <h6 class="title"> Sizes </h6>
+                                    </a>
+                                </header>
+                                <div class="filter-content collapse show" id="collapse_4" style="">
+                                    <div class="card-body">
+                                        <label class="checkbox-btn">
+                                            <input type="checkbox">
+                                            <span class="btn btn-light"> XS </span>
+                                        </label>
+
+                                        <label class="checkbox-btn">
+                                            <input type="checkbox">
+                                            <span class="btn btn-light"> S </span>
+                                        </label>
+
+                                        <label class="checkbox-btn">
+                                            <input type="checkbox">
+                                            <span class="btn btn-light"> M </span>
+                                        </label>
+
+                                        <label class="checkbox-btn">
+                                            <input type="checkbox">
+                                            <span class="btn btn-light"> L </span>
+                                        </label>
+                                    </div>
+                                </div>
+                            </article>
+
+                        </div>
+
+                    </EditForm>
+                </aside>
+                <!--End Sidebar-->
 
                 <main class="col-md-9">
 
@@ -169,16 +286,13 @@ else
 }
 
 @code {
+    private readonly SearchRequestModel model = new SearchRequestModel();
+
     private ProductsListingResponseModel[] products;
+    private CategoriesListingResponseModel[] categories;
 
     [Parameter]
     public string SearchQuery { get; set; } = string.Empty;
-
-    [Parameter]
-    public decimal? MinPrice { get; set; }
-
-    [Parameter]
-    public decimal? MaxPrice { get; set; }
 
     [Parameter]
     public int? CategoryId { get; set; }
@@ -195,9 +309,11 @@ else
     [Parameter]
     public int Page { get; set; } = 1;
 
-    protected override async Task OnParametersSetAsync() => await this.LoadData();
+    protected override async Task OnInitializedAsync() => await this.LoadData();
 
-    private async Task LoadData()
+    protected override async Task OnParametersSetAsync() => await this.LoadData(withCategories: false);
+
+    private async Task LoadData(bool withCategories = true)
     {
         if (this.Page == 0)
         {
@@ -206,12 +322,17 @@ else
 
         var requestUrl = $"api/search/products" +
                 $"?category={this.CategoryId}" +
-                $"&minPrice={this.MinPrice}" +
-                $"&maxPrice={this.MaxPrice}" +
+                $"&minPrice={this.model.MinPrice}" +
+                $"&maxPrice={this.model.MaxPrice}" +
                 $"&query={this.SearchQuery}" +
                 $"&page={this.Page}";
 
         this.products = await this.Http.GetFromJsonAsync<ProductsListingResponseModel[]>(requestUrl);
+
+        if (withCategories)
+        {
+            this.categories = await this.Http.GetFromJsonAsync<CategoriesListingResponseModel[]>("api/categories");
+        }
     }
 
     private async Task AddToWishlist(int id)
