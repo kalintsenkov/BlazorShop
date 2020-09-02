@@ -30,7 +30,7 @@
 
         public DbSet<ShoppingCart> ShoppingCarts { get; set; }
 
-        public DbSet<Wishlist> Wishlists { get; set; }
+        public DbSet<WishList> WishLists { get; set; }
 
         public override Task<int> SaveChangesAsync(CancellationToken cancellationToken = default)
         {
@@ -48,45 +48,41 @@
         }
 
         private void ApplyAuditInfoRules()
-        {
-            var entries = this.ChangeTracker
+            => this.ChangeTracker
                 .Entries()
                 .Where(e =>
                     e.Entity is IAuditInfo &&
                     (e.State == EntityState.Added ||
-                     e.State == EntityState.Modified));
-
-            foreach (var entry in entries)
-            {
-                var entity = (IAuditInfo)entry.Entity;
-
-                if (entry.State == EntityState.Added)
+                     e.State == EntityState.Modified))
+                .ToList()
+                .ForEach(entry =>
                 {
-                    entity.CreatedOn = DateTime.UtcNow;
-                }
-                else
-                {
-                    entity.ModifiedOn = DateTime.UtcNow;
-                }
-            }
-        }
+                    var entity = (IAuditInfo)entry.Entity;
+
+                    if (entry.State == EntityState.Added)
+                    {
+                        entity.CreatedOn = DateTime.UtcNow;
+                    }
+                    else
+                    {
+                        entity.ModifiedOn = DateTime.UtcNow;
+                    }
+                });
 
         private void ApplyDeletableEntityRules()
-        {
-            var entries = this.ChangeTracker
+            => this.ChangeTracker
                 .Entries()
                 .Where(e =>
                     e.Entity is IDeletableEntity &&
-                    e.State == EntityState.Deleted);
+                    e.State == EntityState.Deleted)
+                .ToList()
+                .ForEach(entry =>
+                {
+                    var entity = (IDeletableEntity)entry.Entity;
 
-            foreach (var entry in entries)
-            {
-                var entity = (IDeletableEntity)entry.Entity;
-
-                entity.IsDeleted = true;
-                entity.DeletedOn = DateTime.UtcNow;
-                entry.State = EntityState.Modified;
-            }
-        }
+                    entity.IsDeleted = true;
+                    entity.DeletedOn = DateTime.UtcNow;
+                    entry.State = EntityState.Modified;
+                });
     }
 }

@@ -5,9 +5,9 @@
 
     using Contracts;
 
-    public class Order : BaseModel<string>
+    public class Order : BaseModel
     {
-        public override string Id { get; set; } = Guid.NewGuid().ToString();
+        public string Id { get; set; } = Guid.NewGuid().ToString();
 
         public string UserId { get; set; }
 

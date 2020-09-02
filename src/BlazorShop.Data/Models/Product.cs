@@ -4,8 +4,10 @@
 
     using Contracts;
 
-    public class Product : BaseDeletableModel<int>
+    public class Product : BaseDeletableModel
     {
+        public int Id { get; set; }
+
         public string Name { get; set; }
 
         public string Description { get; set; }
@@ -20,7 +22,7 @@
 
         public Category Category { get; set; }
 
-        public ICollection<Wishlist> Wishlists { get; } = new HashSet<Wishlist>();
+        public ICollection<WishList> WishLists { get; } = new HashSet<WishList>();
 
         public ICollection<ShoppingCart> ShoppingCarts { get; } = new HashSet<ShoppingCart>();
 

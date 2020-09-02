@@ -8,29 +8,29 @@
 
     using Infrastructure.Extensions;
     using Models.Products;
-    using Services.Wishlist;
+    using Services.WishList;
 
     [Authorize]
-    public class WishlistsController : ApiController
+    public class WishListsController : ApiController
     {
-        private readonly IWishlistService wishlist;
+        private readonly IWishListService wishList;
 
-        public WishlistsController(IWishlistService wishlist)
-            => this.wishlist = wishlist;
+        public WishListsController(IWishListService wishList)
+            => this.wishList = wishList;
 
         [HttpGet]
         public async Task<IEnumerable<ProductsListingResponseModel>> ByUser()
-            => await this.wishlist.ByUserIdAsync(this.User.GetId());
+            => await this.wishList.ByUserIdAsync(this.User.GetId());
 
         [HttpPost(Id)]
         public async Task<ActionResult> AddProduct(int id)
-            => await this.wishlist
+            => await this.wishList
                 .AddProductAsync(id, this.User.GetId())
                 .ToActionResult();
 
         [HttpDelete(Id)]
         public async Task<ActionResult> RemoveProduct(int id)
-            => await this.wishlist
+            => await this.wishList
                 .RemoveProductAsync(id, this.User.GetId())
                 .ToActionResult();
     }

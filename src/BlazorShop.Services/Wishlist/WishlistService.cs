@@ -1,4 +1,4 @@
-﻿namespace BlazorShop.Services.Wishlist
+﻿namespace BlazorShop.Services.WishList
 {
     using System.Collections.Generic;
     using System.Linq;
@@ -12,31 +12,31 @@
     using Models;
     using Models.Products;
 
-    public class WishlistService : BaseService<Wishlist>, IWishlistService
+    public class WishListService : BaseService<WishList>, IWishListService
     {
-        public WishlistService(ApplicationDbContext db, IMapper mapper)
+        public WishListService(ApplicationDbContext db, IMapper mapper)
             : base(db, mapper)
         {
         }
 
         public async Task<Result> AddProductAsync(int productId, string userId)
         {
-            var wishlist = await this.GetByProductIdAndUserIdAsync(productId, userId);
+            var wishList = await this.GetByProductIdAndUserIdAsync(productId, userId);
 
-            if (wishlist == null)
+            if (wishList == null)
             {
-                wishlist = new Wishlist
+                wishList = new WishList
                 {
                     UserId = userId,
                     ProductId = productId
                 };
 
-                await this.Data.AddAsync(wishlist);
+                await this.Data.AddAsync(wishList);
             }
             else
             {
-                wishlist.DeletedOn = null;
-                wishlist.IsDeleted = false;
+                wishList.DeletedOn = null;
+                wishList.IsDeleted = false;
             }
 
             await this.Data.SaveChangesAsync();
@@ -46,14 +46,14 @@
 
         public async Task<Result> RemoveProductAsync(int productId, string userId)
         {
-            var wishlist = await this.GetByProductIdAndUserIdAsync(productId, userId);
+            var wishList = await this.GetByProductIdAndUserIdAsync(productId, userId);
 
-            if (wishlist == null)
+            if (wishList == null)
             {
-                return "This user cannot delete products from this wishlist.";
+                return "This user cannot delete products from this wish list.";
             }
 
-            this.Data.Remove(wishlist);
+            this.Data.Remove(wishList);
 
             await this.Data.SaveChangesAsync();
 
@@ -68,12 +68,12 @@
                     .Select(w => w.Product))
                 .ToListAsync();
 
-        private async Task<Wishlist> GetByProductIdAndUserIdAsync(int productId, string userId)
+        private async Task<WishList> GetByProductIdAndUserIdAsync(int productId, string userId)
             => await this
                 .AllByUserId(userId, withDeleted: true)
                 .FirstOrDefaultAsync(w => w.ProductId == productId);
 
-        private IQueryable<Wishlist> AllByUserId(string userId, bool withDeleted = false)
+        private IQueryable<WishList> AllByUserId(string userId, bool withDeleted = false)
             => withDeleted
                 ? this.All().Where(w => w.UserId == userId)
                 : this.All().Where(w => w.UserId == userId && !w.IsDeleted);
