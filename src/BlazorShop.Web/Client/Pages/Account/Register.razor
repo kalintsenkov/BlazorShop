@@ -57,6 +57,7 @@
 
         if (result.Succeeded)
         {
+            this.ToastService.ShowSuccess("You have successfully registered.\n Please login.", "Congratulations!");
             this.NavigationManager.NavigateTo("/account/login");
         }
         else

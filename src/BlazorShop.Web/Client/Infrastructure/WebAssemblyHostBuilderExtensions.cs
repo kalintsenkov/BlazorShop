@@ -4,6 +4,7 @@
     using System.Net.Http;
 
     using Blazored.LocalStorage;
+    using Blazored.Toast;
     using Microsoft.AspNetCore.Components.Authorization;
     using Microsoft.AspNetCore.Components.WebAssembly.Hosting;
     using Microsoft.Extensions.DependencyInjection;
@@ -23,6 +24,7 @@
             builder
                 .Services
                 .AddAuthorizationCore()
+                .AddBlazoredToast()
                 .AddBlazoredLocalStorage()
                 .AddScoped<ApiAuthenticationStateProvider>()
                 .AddScoped<AuthenticationStateProvider, ApiAuthenticationStateProvider>()

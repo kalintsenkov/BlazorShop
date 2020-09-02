@@ -78,7 +78,10 @@ else
         {
             this.showErrors = false;
 
-            await this.LoadDataAsync();
+            await this.AuthService.Logout();
+
+            this.ToastService.ShowSuccess("Your account settings has been changed successfully.\n Please login.");
+            this.NavigationManager.NavigateTo("/account/login");
         }
         else
         {

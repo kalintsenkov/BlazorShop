@@ -3,6 +3,8 @@
 @using System.Net.Http.Json
 
 @using Blazored.LocalStorage
+@using Blazored.Toast
+@using Blazored.Toast.Services
 @using Microsoft.AspNetCore.Authorization
 @using Microsoft.AspNetCore.Components.Authorization
 @using Microsoft.AspNetCore.Components.Forms
@@ -28,6 +30,7 @@
 
 @inject HttpClient Http
 @inject NavigationManager NavigationManager
+@inject IToastService ToastService
 @inject IAuthService AuthService
 @inject ApiAuthenticationStateProvider AuthState
 @inject ILocalStorageService LocalStorage

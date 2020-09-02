@@ -81,6 +81,9 @@
     public int ProductId { get; set; }
 
     [Parameter]
+    public string ProductName { get; set; }
+
+    [Parameter]
     public int ProductQuantity { get; set; }
 
     protected override async Task OnInitializedAsync()
@@ -98,6 +101,7 @@
     private async Task AddToWishlist(int id)
     {
         await this.Http.PostAsJsonAsync($"api/wishlists/{id}", id);
+        this.ToastService.ShowSuccess($"{this.ProductName} has been added to your wishlist.");
     }
 
     private async Task OnDeleteAsync()
@@ -113,6 +117,7 @@
 
             if (response.IsSuccessStatusCode)
             {
+                this.ToastService.ShowSuccess($"{this.ProductName} has been deleted successfully.");
                 this.NavigationManager.NavigateTo("/products");
             }
         }

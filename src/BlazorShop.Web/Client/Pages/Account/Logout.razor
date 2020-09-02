@@ -3,5 +3,9 @@
 <a class="dropdown-item" href="/" @onclick="Submit">Log out</a>
 
 @code {
-    private async Task Submit() => await this.AuthService.Logout();
+    private async Task Submit()
+    {
+        this.ToastService.ShowSuccess("You have successfully logged out.");
+        await this.AuthService.Logout();
+    }
 }
