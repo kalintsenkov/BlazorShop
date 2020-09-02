@@ -96,10 +96,7 @@ else
     private string firstName;
     private string lastName;
 
-    protected override async Task OnInitializedAsync()
-    {
-        await this.LoadDataAsync();
-    }
+    protected override async Task OnInitializedAsync() => await this.LoadDataAsync();
 
     private async Task LoadDataAsync()
     {

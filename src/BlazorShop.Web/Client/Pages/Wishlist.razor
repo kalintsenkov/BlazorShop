@@ -67,6 +67,9 @@ else
         await this.LoadDataAsync();
     }
 
+    private async Task LoadDataAsync()
+         => this.products = await this.Http.GetFromJsonAsync<ProductsListingResponseModel[]>("api/wishlists");
+
     private async Task OnSubmitAsync(int id)
     {
         this.model.Quantity = 1;
@@ -79,10 +82,5 @@ else
     {
         await this.Http.DeleteAsync($"api/wishlists/{productId}");
         await this.LoadDataAsync();
-    }
-
-    private async Task LoadDataAsync()
-    {
-        this.products = await this.Http.GetFromJsonAsync<ProductsListingResponseModel[]>("api/wishlists");
     }
 }

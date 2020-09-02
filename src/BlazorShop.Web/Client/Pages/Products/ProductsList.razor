@@ -3,7 +3,7 @@
 @page "/products/{SearchQuery}/{Page:int}"
 @page "/{CategoryName}/{CategoryId:int}"
 
-@if (products == null)
+@if (products == null || categories == null)
 {
     <LoadingScreen />
 }
@@ -14,7 +14,6 @@ else
 
             <div class="row">
 
-                <!--Sidebar-->
                 <aside class="col-md-3">
 
                     <EditForm Model="model" @oninput="() => LoadData(withCategories: false)">
@@ -131,7 +130,6 @@ else
 
                     </EditForm>
                 </aside>
-                <!--End Sidebar-->
 
                 <main class="col-md-9">
 

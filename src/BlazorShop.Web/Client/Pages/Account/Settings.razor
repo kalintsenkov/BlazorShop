@@ -65,10 +65,7 @@ else
     private bool showErrors;
     private IEnumerable<string> errors;
 
-    protected override async Task OnInitializedAsync()
-    {
-        await this.LoadDataAsync();
-    }
+    protected override async Task OnInitializedAsync() => await this.LoadDataAsync();
 
     private async Task SubmitAsync()
     {

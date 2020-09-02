@@ -50,8 +50,5 @@
 </aside>
 
 @code {
-    private async Task Submit()
-    {
-        await this.AuthService.Logout();
-    }
+    private async Task Submit() => await this.AuthService.Logout();
 }
