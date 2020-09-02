@@ -80,7 +80,7 @@ else
                                 </header>
                                 <div class="filter-content collapse show" id="collapse_3" style="">
                                     <div class="card-body">
-                                        <input type="range" class="custom-range" min="0" max="100" />
+                                        <input type="range" @bind-value="model.MinPrice" @bind-value:event="oninput" class="custom-range" min="0" max="@model.MaxPrice" />
                                         <div class="form-row">
                                             <div class="form-group col-md-6">
                                                 <label>Min</label>
