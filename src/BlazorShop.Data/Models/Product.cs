@@ -22,7 +22,7 @@
 
         public Category Category { get; set; }
 
-        public ICollection<WishList> WishLists { get; } = new HashSet<WishList>();
+        public ICollection<Wishlist> Wishlists { get; } = new HashSet<Wishlist>();
 
         public ICollection<ShoppingCart> ShoppingCarts { get; } = new HashSet<ShoppingCart>();
 

@@ -5,28 +5,28 @@
 
     using Models;
 
-    internal class WishListConfiguration : IEntityTypeConfiguration<WishList>
+    internal class WishlistConfiguration : IEntityTypeConfiguration<Wishlist>
     {
-        public void Configure(EntityTypeBuilder<WishList> wishList)
+        public void Configure(EntityTypeBuilder<Wishlist> wishlist)
         {
-            wishList
+            wishlist
                 .HasKey(w => new { w.ProductId, w.UserId });
 
-            wishList
+            wishlist
                 .HasOne(w => w.Product)
-                .WithMany(p => p.WishLists)
+                .WithMany(p => p.Wishlists)
                 .HasForeignKey(w => w.ProductId)
                 .OnDelete(DeleteBehavior.Restrict);
 
 
-            wishList
+            wishlist
                 .HasOne(w => w.User)
-                .WithMany(u => u.WishLists)
+                .WithMany(u => u.Wishlists)
                 .HasForeignKey(w => w.UserId)
                 .IsRequired()
                 .OnDelete(DeleteBehavior.Restrict);
 
-            wishList
+            wishlist
                 .HasIndex(w => w.IsDeleted);
         }
     }

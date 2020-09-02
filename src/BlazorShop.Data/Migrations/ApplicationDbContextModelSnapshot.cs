@@ -358,7 +358,7 @@ namespace BlazorShop.Data.Migrations
                     b.ToTable("ShoppingCarts");
                 });
 
-            modelBuilder.Entity("BlazorShop.Data.Models.WishList", b =>
+            modelBuilder.Entity("BlazorShop.Data.Models.Wishlist", b =>
                 {
                     b.Property<int>("ProductId")
                         .HasColumnType("int");
@@ -384,7 +384,7 @@ namespace BlazorShop.Data.Migrations
 
                     b.HasIndex("UserId");
 
-                    b.ToTable("WishLists");
+                    b.ToTable("Wishlists");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
@@ -554,16 +554,16 @@ namespace BlazorShop.Data.Migrations
                         .IsRequired();
                 });
 
-            modelBuilder.Entity("BlazorShop.Data.Models.WishList", b =>
+            modelBuilder.Entity("BlazorShop.Data.Models.Wishlist", b =>
                 {
                     b.HasOne("BlazorShop.Data.Models.Product", "Product")
-                        .WithMany("WishLists")
+                        .WithMany("Wishlists")
                         .HasForeignKey("ProductId")
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
                     b.HasOne("BlazorShop.Data.Models.ApplicationUser", "User")
-                        .WithMany("WishLists")
+                        .WithMany("Wishlists")
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();

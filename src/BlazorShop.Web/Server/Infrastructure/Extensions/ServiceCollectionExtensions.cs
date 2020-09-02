@@ -19,7 +19,7 @@
     using Services.Products;
     using Services.Search;
     using Services.ShoppingCart;
-    using Services.WishList;
+    using Services.Wishlist;
 
     using static Data.ModelConstants.Identity;
 
@@ -96,7 +96,7 @@
                 .AddTransient<IProductsService, ProductsService>()
                 .AddTransient<ISearchService, SearchService>()
                 .AddTransient<IShoppingCartService, ShoppingCartService>()
-                .AddTransient<IWishListService, WishListService>();
+                .AddTransient<IWishlistService, WishlistService>();
 
         public static IServiceCollection AddApiControllers(this IServiceCollection services)
         {

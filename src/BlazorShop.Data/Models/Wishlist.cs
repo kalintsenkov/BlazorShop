@@ -2,7 +2,7 @@
 {
     using Contracts;
 
-    public class WishList : BaseDeletableModel
+    public class Wishlist : BaseDeletableModel
     {
         public int ProductId { get; set; }
 
