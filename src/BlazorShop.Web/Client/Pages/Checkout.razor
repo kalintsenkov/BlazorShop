@@ -78,7 +78,7 @@ else
                                 <div class="form-group">
                                     <label class="custom-control custom-radio custom-control-inline">
                                         <input class="custom-control-input" checked="" type="radio" name="gender" value="option1">
-                                        <span class="custom-control-label"> Standart Delivery <br /> Free </span>
+                                        <span class="custom-control-label"> Standard Delivery <br /> Free </span>
                                     </label>
                                     <label class="custom-control custom-radio custom-control-inline">
                                         <input class="custom-control-input" type="radio" name="gender" value="option2">
@@ -101,13 +101,12 @@ else
                                     <div class="form-group col-md-6">
                                         <label>Country</label>
                                         <InputSelect @bind-Value="address.Country" id="inputState" class="form-control">
-                                            <option> Choose...</option>
                                             <option value="Uzbekistan">Uzbekistan</option>
                                             <option value="Russia">Russia</option>
                                             <option value="United States">United States</option>
-                                            <option value="Bulgaria" selected>Bulgaria</option>
+                                            <option value="Bulgaria" selected="">Bulgaria</option>
                                             <option value="India">India</option>
-                                            <option value="Afganistan">Afganistan</option>
+                                            <option value="Afghanistan">Afghanistan</option>
                                         </InputSelect>
                                     </div>
                                     <div class="form-group col-md-6">
@@ -149,31 +148,35 @@ else
 
 @code {
     private readonly AddressesRequestModel address = new AddressesRequestModel();
+    private readonly OrdersRequestModel order = new OrdersRequestModel();
+
+    private ShoppingCartProductsResponseModel[] cartProducts;
 
     private string email;
     private decimal totalPrice;
-    private ShoppingCartProductsResponseModel[] cartProducts;
 
     protected override async Task OnInitializedAsync()
     {
         var token = await this.LocalStorage.GetItemAsync<string>("authToken");
         this.Http.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
 
-        this.cartProducts = await this.Http.GetFromJsonAsync<ShoppingCartProductsResponseModel[]>("api/shoppingcarts");
-        this.totalPrice = this.cartProducts.Sum(p => p.Price * p.Quantity);
-
         var state = await this.AuthState.GetAuthenticationStateAsync();
         var user = state.User;
 
+        this.cartProducts = await this.Http.GetFromJsonAsync<ShoppingCartProductsResponseModel[]>("api/shoppingcarts");
+
         this.email = user.GetEmail();
+        this.totalPrice = this.cartProducts.Sum(p => p.Price * p.Quantity);
     }
 
     private async Task SubmitAsync()
     {
-        var addressResponse = await this.Http.PostAsJsonAsync("api/addresses", address);
+        var addressResponse = await this.Http.PostAsJsonAsync("api/addresses", this.address);
         var addressId = await addressResponse.Content.ReadFromJsonAsync<int>();
 
-        var orderResponse = await this.Http.PostAsJsonAsync("api/orders", addressId);
+        this.order.AddressId = addressId;
+
+        var orderResponse = await this.Http.PostAsJsonAsync("api/orders", this.order);
         var orderId = await orderResponse.Content.ReadAsStringAsync();
 
         this.NavigationManager.NavigateTo($"/order/{orderId}");
