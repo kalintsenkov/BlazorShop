@@ -9,34 +9,32 @@
 
     using Data;
     using Data.Models;
+    using Identity;
     using Models;
     using Models.Addresses;
 
     public class AddressesService : BaseService<Address>, IAddressesService
     {
-        public AddressesService(ApplicationDbContext data, IMapper mapper)
-            : base(data, mapper)
-        {
-        }
+        private readonly ICurrentUserService currentUser;
 
-        public async Task<int> CreateAsync(
-            string country,
-            string state,
-            string city,
-            string description,
-            string postalCode,
-            string phoneNumber,
-            string userId)
+        public AddressesService(
+            ApplicationDbContext data,
+            IMapper mapper,
+            ICurrentUserService currentUser)
+            : base(data, mapper)
+            => this.currentUser = currentUser;
+
+        public async Task<int> CreateAsync(AddressesRequestModel model)
         {
             var address = new Address
             {
-                Country = country,
-                State = state,
-                City = city,
-                Description = description,
-                PostalCode = postalCode,
-                PhoneNumber = phoneNumber,
-                UserId = userId
+                Country = model.Country,
+                State = model.State,
+                City = model.City,
+                Description = model.Description,
+                PostalCode = model.PostalCode,
+                PhoneNumber = model.PhoneNumber,
+                UserId = this.currentUser.UserId
             };
 
             await this.Data.AddAsync(address);
@@ -45,11 +43,11 @@
             return address.Id;
         }
 
-        public async Task<Result> DeleteAsync(int id, string userId)
+        public async Task<Result> DeleteAsync(int id)
         {
             var address = await this
                 .All()
-                .Where(a => a.Id == id && a.UserId == userId)
+                .Where(a => a.Id == id && a.UserId == this.currentUser.UserId)
                 .FirstOrDefaultAsync();
 
             if (address == null)
@@ -64,11 +62,11 @@
             return Result.Success;
         }
 
-        public async Task<IEnumerable<AddressesListingResponseModel>> ByUserIdAsync(string userId)
+        public async Task<IEnumerable<AddressesListingResponseModel>> ByCurrentUserAsync()
             => await this.Mapper
                 .ProjectTo<AddressesListingResponseModel>(this
                     .AllAsNoTracking()
-                    .Where(u => u.UserId == userId))
+                    .Where(a => a.UserId == this.currentUser.UserId))
                 .ToListAsync();
     }
 }

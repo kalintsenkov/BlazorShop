@@ -20,9 +20,9 @@
         {
         }
 
-        public async Task<int> CreateAsync(string name)
+        public async Task<int> CreateAsync(CategoriesRequestModel model)
         {
-            var category = new Category { Name = name };
+            var category = new Category { Name = model.Name };
 
             await this.Data.AddAsync(category);
             await this.Data.SaveChangesAsync();
@@ -30,7 +30,7 @@
             return category.Id;
         }
 
-        public async Task<Result> UpdateAsync(int id, string name)
+        public async Task<Result> UpdateAsync(int id, CategoriesRequestModel model)
         {
             var category = await this.GetByIdAsync(id);
 
@@ -39,7 +39,7 @@
                 return false;
             }
 
-            category.Name = name;
+            category.Name = model.Name;
 
             await this.Data.SaveChangesAsync();
 
@@ -72,7 +72,8 @@
 
         public async Task<IEnumerable<CategoriesListingResponseModel>> AllAsync()
             => await this.Mapper
-                .ProjectTo<CategoriesListingResponseModel>(this.AllAsNoTracking())
+                .ProjectTo<CategoriesListingResponseModel>(this
+                    .AllAsNoTracking())
                 .ToListAsync();
 
         private async Task<Category> GetByIdAsync(int id)

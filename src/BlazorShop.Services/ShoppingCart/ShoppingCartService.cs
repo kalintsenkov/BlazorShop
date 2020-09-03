@@ -9,21 +9,26 @@
 
     using Data;
     using Data.Models;
+    using Identity;
     using Models;
     using Models.ShoppingCarts;
 
     public class ShoppingCartService : BaseService<ShoppingCart>, IShoppingCartService
     {
-        public ShoppingCartService(ApplicationDbContext db, IMapper mapper)
-            : base(db, mapper)
-        {
-        }
+        private readonly ICurrentUserService currentUser;
 
-        public async Task<Result> AddProductAsync(int productId, int quantity, string userId)
+        public ShoppingCartService(
+            ApplicationDbContext db,
+            IMapper mapper,
+            ICurrentUserService currentUser)
+            : base(db, mapper)
+            => this.currentUser = currentUser;
+
+        public async Task<Result> AddProductAsync(int productId, int quantity)
         {
             var shoppingCart = new ShoppingCart
             {
-                UserId = userId,
+                UserId = this.currentUser.UserId,
                 ProductId = productId,
                 Quantity = quantity
             };
@@ -34,9 +39,9 @@
             return Result.Success;
         }
 
-        public async Task<Result> UpdateProductAsync(int productId, int quantity, string userId)
+        public async Task<Result> UpdateProductAsync(int productId, int quantity)
         {
-            var shoppingCart = await this.GetByProductIdAndUserIdAsync(productId, userId);
+            var shoppingCart = await this.GetByProductIdAndUserIdAsync(productId, this.currentUser.UserId);
 
             if (shoppingCart == null)
             {
@@ -50,9 +55,9 @@
             return Result.Success;
         }
 
-        public async Task<Result> RemoveProductAsync(int productId, string userId)
+        public async Task<Result> RemoveProductAsync(int productId)
         {
-            var shoppingCart = await this.GetByProductIdAndUserIdAsync(productId, userId);
+            var shoppingCart = await this.GetByProductIdAndUserIdAsync(productId, this.currentUser.UserId);
 
             if (shoppingCart == null)
             {
@@ -66,10 +71,10 @@
             return Result.Success;
         }
 
-        public async Task<IEnumerable<ShoppingCartProductsResponseModel>> ByUserIdAsync(string userId)
+        public async Task<IEnumerable<ShoppingCartProductsResponseModel>> ByCurrentUserAsync()
             => await this.Mapper
                 .ProjectTo<ShoppingCartProductsResponseModel>(this
-                    .AllByUserId(userId)
+                    .AllByUserId(this.currentUser.UserId)
                     .AsNoTracking())
                 .ToListAsync();
 

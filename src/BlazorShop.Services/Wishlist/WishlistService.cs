@@ -9,25 +9,30 @@
 
     using Data;
     using Data.Models;
+    using Identity;
     using Models;
     using Models.Products;
 
     public class WishlistService : BaseService<Wishlist>, IWishlistService
     {
-        public WishlistService(ApplicationDbContext db, IMapper mapper)
-            : base(db, mapper)
-        {
-        }
+        private readonly ICurrentUserService currentUser;
 
-        public async Task<Result> AddProductAsync(int productId, string userId)
+        public WishlistService(
+            ApplicationDbContext db,
+            IMapper mapper,
+            ICurrentUserService currentUser)
+            : base(db, mapper)
+            => this.currentUser = currentUser;
+
+        public async Task<Result> AddProductAsync(int productId)
         {
-            var wishlist = await this.GetByProductIdAndUserIdAsync(productId, userId);
+            var wishlist = await this.GetByProductAndUserAsync(productId);
 
             if (wishlist == null)
             {
                 wishlist = new Wishlist
                 {
-                    UserId = userId,
+                    UserId = this.currentUser.UserId,
                     ProductId = productId
                 };
 
@@ -44,9 +49,9 @@
             return Result.Success;
         }
 
-        public async Task<Result> RemoveProductAsync(int productId, string userId)
+        public async Task<Result> RemoveProductAsync(int productId)
         {
-            var wishlist = await this.GetByProductIdAndUserIdAsync(productId, userId);
+            var wishlist = await this.GetByProductAndUserAsync(productId);
 
             if (wishlist == null)
             {
@@ -60,22 +65,22 @@
             return Result.Success;
         }
 
-        public async Task<IEnumerable<ProductsListingResponseModel>> ByUserIdAsync(string userId)
+        public async Task<IEnumerable<ProductsListingResponseModel>> ByCurrentUserAsync()
             => await this.Mapper
                 .ProjectTo<ProductsListingResponseModel>(this
-                    .AllByUserId(userId)
+                    .AllByUser()
                     .AsNoTracking()
                     .Select(w => w.Product))
                 .ToListAsync();
 
-        private async Task<Wishlist> GetByProductIdAndUserIdAsync(int productId, string userId)
+        private async Task<Wishlist> GetByProductAndUserAsync(int productId)
             => await this
-                .AllByUserId(userId, withDeleted: true)
+                .AllByUser(withDeleted: true)
                 .FirstOrDefaultAsync(w => w.ProductId == productId);
 
-        private IQueryable<Wishlist> AllByUserId(string userId, bool withDeleted = false)
+        private IQueryable<Wishlist> AllByUser(bool withDeleted = false)
             => withDeleted
-                ? this.All().Where(w => w.UserId == userId)
-                : this.All().Where(w => w.UserId == userId && !w.IsDeleted);
+                ? this.All().Where(w => w.UserId == this.currentUser.UserId)
+                : this.All().Where(w => w.UserId == this.currentUser.UserId && !w.IsDeleted);
     }
 }

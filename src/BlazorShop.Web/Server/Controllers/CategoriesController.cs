@@ -25,28 +25,32 @@
             => await this.categories.AllAsync();
 
         [HttpGet(Id)]
-        public async Task<IEnumerable<ProductsListingResponseModel>> Details(int id)
+        public async Task<IEnumerable<ProductsListingResponseModel>> Details(
+            int id)
             => await this.categories.DetailsAsync(id);
 
         [HttpPost]
         [Authorize(Roles = AdministratorRole)]
-        public async Task<ActionResult> Create(CategoriesRequestModel model)
+        public async Task<ActionResult> Create(
+            CategoriesRequestModel model)
         {
-            var id = await this.categories.CreateAsync(model.Name);
+            var id = await this.categories.CreateAsync(model);
 
             return Created(nameof(this.Create), id);
         }
 
         [HttpPut(Id)]
         [Authorize(Roles = AdministratorRole)]
-        public async Task<ActionResult> Update(int id, CategoriesRequestModel model)
+        public async Task<ActionResult> Update(
+            int id, CategoriesRequestModel model)
             => await this.categories
-                .UpdateAsync(id, model.Name)
+                .UpdateAsync(id, model)
                 .ToActionResult();
 
         [HttpDelete(Id)]
         [Authorize(Roles = AdministratorRole)]
-        public async Task<ActionResult> Delete(int id)
+        public async Task<ActionResult> Delete(
+            int id)
             => await this.categories
                 .DeleteAsync(id)
                 .ToActionResult();

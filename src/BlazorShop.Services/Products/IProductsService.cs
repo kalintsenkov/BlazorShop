@@ -7,22 +7,9 @@
 
     public interface IProductsService
     {
-        Task<int> CreateAsync(
-            string name,
-            string description,
-            string imageSource,
-            int quantity,
-            decimal price,
-            int categoryId);
+        Task<int> CreateAsync(ProductsRequestModel model);
 
-        Task<Result> UpdateAsync(
-            int id,
-            string name,
-            string description,
-            string imageSource,
-            int quantity,
-            decimal price,
-            int categoryId);
+        Task<Result> UpdateAsync(int id, ProductsRequestModel model);
 
         Task<Result> DeleteAsync(int id);
 

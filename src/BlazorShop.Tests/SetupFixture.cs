@@ -6,6 +6,8 @@
     using Microsoft.EntityFrameworkCore;
 
     using BlazorShop.Data;
+    using BlazorShop.Services.Identity;
+    using Mocks;
     using Web.Server.Infrastructure;
 
     public abstract class SetupFixture : IDisposable
@@ -14,11 +16,14 @@
         {
             this.Data = InitializeDbContext();
             this.Mapper = InitializeAutoMapper();
+            this.CurrentUser = CurrentUserMock.Create;
         }
 
         protected ApplicationDbContext Data { get; }
 
         protected IMapper Mapper { get; }
+
+        protected ICurrentUserService CurrentUser { get; }
 
         public void Dispose() => this.Data?.Dispose();
 

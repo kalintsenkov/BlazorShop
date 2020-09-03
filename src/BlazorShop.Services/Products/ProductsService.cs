@@ -21,22 +21,16 @@
         {
         }
 
-        public async Task<int> CreateAsync(
-            string name,
-            string description,
-            string imageSource,
-            int quantity,
-            decimal price,
-            int categoryId)
+        public async Task<int> CreateAsync(ProductsRequestModel model)
         {
             var product = new Product
             {
-                Name = name,
-                Description = description,
-                ImageSource = imageSource,
-                Quantity = quantity,
-                Price = price,
-                CategoryId = categoryId
+                Name = model.Name,
+                Description = model.Description,
+                ImageSource = model.ImageSource,
+                Quantity = model.Quantity,
+                Price = model.Price,
+                CategoryId = model.CategoryId
             };
 
             await this.Data.AddAsync(product);
@@ -45,14 +39,7 @@
             return product.Id;
         }
 
-        public async Task<Result> UpdateAsync(
-            int id,
-            string name,
-            string description,
-            string imageSource,
-            int quantity,
-            decimal price,
-            int categoryId)
+        public async Task<Result> UpdateAsync(int id, ProductsRequestModel model)
         {
             var product = await this.GetByIdAsync(id);
 
@@ -61,12 +48,12 @@
                 return false;
             }
 
-            product.Name = name;
-            product.Description = description;
-            product.ImageSource = imageSource;
-            product.Quantity = quantity;
-            product.Price = price;
-            product.CategoryId = categoryId;
+            product.Name = model.Name;
+            product.Description = model.Description;
+            product.ImageSource = model.ImageSource;
+            product.Quantity = model.Quantity;
+            product.Price = model.Price;
+            product.CategoryId = model.CategoryId;
 
             await this.Data.SaveChangesAsync();
 

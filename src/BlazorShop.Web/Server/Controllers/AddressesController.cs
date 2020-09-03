@@ -20,27 +20,22 @@
 
         [HttpGet]
         public async Task<IEnumerable<AddressesListingResponseModel>> ByUser()
-            => await this.addresses.ByUserIdAsync(this.User.GetId());
+            => await this.addresses.ByCurrentUserAsync();
 
         [HttpPost]
-        public async Task<ActionResult> Create(AddressesRequestModel model)
+        public async Task<ActionResult> Create(
+            AddressesRequestModel model)
         {
-            var id = await this.addresses.CreateAsync(
-                model.Country,
-                model.State,
-                model.City,
-                model.Description,
-                model.PostalCode,
-                model.PhoneNumber,
-                this.User.GetId());
+            var id = await this.addresses.CreateAsync(model);
 
             return Created(nameof(this.Create), id);
         }
 
         [HttpDelete(Id)]
-        public async Task<ActionResult> Delete(int id)
+        public async Task<ActionResult> Delete(
+            int id)
             => await this.addresses
-                .DeleteAsync(id, this.User.GetId())
+                .DeleteAsync(id)
                 .ToActionResult();
     }
 }

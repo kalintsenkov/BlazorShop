@@ -6,7 +6,6 @@
     using Microsoft.AspNetCore.Authorization;
     using Microsoft.AspNetCore.Mvc;
 
-    using Infrastructure.Extensions;
     using Models.Orders;
     using Services.Orders;
 
@@ -20,18 +19,18 @@
 
         [HttpGet]
         public async Task<IEnumerable<OrdersListingResponseModel>> ByUser()
-            => await this.orders.ByUserIdAsync(this.User.GetId());
+            => await this.orders.ByCurrentUserAsync();
 
         [HttpGet(Id)]
-        public async Task<ActionResult<OrdersDetailsResponseModel>> Details(string id)
+        public async Task<ActionResult<OrdersDetailsResponseModel>> Details(
+            string id)
             => await this.orders.DetailsAsync(id);
 
         [HttpPost]
-        public async Task<ActionResult> Purchase([FromBody] int addressId)
+        public async Task<ActionResult> Purchase(
+            OrdersRequestModel model)
         {
-            var id = await this.orders.PurchaseAsync(
-                addressId,
-                this.User.GetId());
+            var id = await this.orders.PurchaseAsync(model);
 
             return Created(nameof(this.Purchase), id);
         }

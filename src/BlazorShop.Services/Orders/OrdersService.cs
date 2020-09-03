@@ -9,21 +9,28 @@
 
     using Data;
     using Data.Models;
+    using Identity;
     using Models.Orders;
 
     public class OrdersService : BaseService<Order>, IOrdersService
     {
-        public OrdersService(ApplicationDbContext data, IMapper mapper)
-            : base(data, mapper)
-        {
-        }
+        private readonly ICurrentUserService currentUser;
 
-        public async Task<string> PurchaseAsync(int deliveryAddressId, string userId)
+        public OrdersService(
+            ApplicationDbContext data,
+            IMapper mapper,
+            ICurrentUserService currentUser)
+            : base(data, mapper)
+            => this.currentUser = currentUser;
+
+        public async Task<string> PurchaseAsync(OrdersRequestModel model)
         {
+            var userId = this.currentUser.UserId;
+
             var order = new Order
             {
                 UserId = userId,
-                DeliveryAddressId = deliveryAddressId
+                DeliveryAddressId = model.AddressId
             };
 
             await this.Data.AddAsync(order);
@@ -60,11 +67,11 @@
                     .Where(o => o.Id == id))
                 .FirstOrDefaultAsync();
 
-        public async Task<IEnumerable<OrdersListingResponseModel>> ByUserIdAsync(string userId)
+        public async Task<IEnumerable<OrdersListingResponseModel>> ByCurrentUserAsync()
             => await this.Mapper
                 .ProjectTo<OrdersListingResponseModel>(this
                     .AllAsNoTracking()
-                    .Where(o => o.UserId == userId)
+                    .Where(o => o.UserId == this.currentUser.UserId)
                     .SelectMany(o => o.Products))
                 .ToListAsync();
     }

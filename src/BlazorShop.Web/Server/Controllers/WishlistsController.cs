@@ -20,18 +20,20 @@
 
         [HttpGet]
         public async Task<IEnumerable<ProductsListingResponseModel>> ByUser()
-            => await this.wishlist.ByUserIdAsync(this.User.GetId());
+            => await this.wishlist.ByCurrentUserAsync();
 
         [HttpPost(Id)]
-        public async Task<ActionResult> AddProduct(int id)
+        public async Task<ActionResult> AddProduct(
+            int id)
             => await this.wishlist
-                .AddProductAsync(id, this.User.GetId())
+                .AddProductAsync(id)
                 .ToActionResult();
 
         [HttpDelete(Id)]
-        public async Task<ActionResult> RemoveProduct(int id)
+        public async Task<ActionResult> RemoveProduct(
+            int id)
             => await this.wishlist
-                .RemoveProductAsync(id, this.User.GetId())
+                .RemoveProductAsync(id)
                 .ToActionResult();
     }
 }

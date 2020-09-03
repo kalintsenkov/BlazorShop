@@ -90,6 +90,7 @@
             => services
                 .AddTransient<IAddressesService, AddressesService>()
                 .AddTransient<ICategoriesService, CategoriesService>()
+                .AddTransient<ICurrentUserService, CurrentUserService>()
                 .AddTransient<IIdentityService, IdentityService>()
                 .AddTransient<IJwtGeneratorService, JwtGeneratorService>()
                 .AddTransient<IOrdersService, OrdersService>()

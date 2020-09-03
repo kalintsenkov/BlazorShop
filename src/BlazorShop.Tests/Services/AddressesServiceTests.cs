@@ -16,10 +16,13 @@
 
     public class AddressesServiceTests : SetupFixture
     {
-        private readonly IAddressesService addressesService;
+        private readonly IAddressesService addresses;
 
         public AddressesServiceTests() 
-            => this.addressesService = new AddressesService(this.Data, this.Mapper);
+            => this.addresses = new AddressesService(
+                this.Data, 
+                this.Mapper,
+                this.CurrentUser);
 
         [Theory]
         [InlineData("Country 1", "State 1", "City 1", "Test description 1", "1000", "0888888888")]
@@ -33,14 +36,17 @@
             string postalCode,
             string phoneNumber)
         {
-            var id = await this.addressesService.CreateAsync(
-                country,
-                state,
-                city,
-                description,
-                postalCode,
-                phoneNumber,
-                TestUser.Identifier);
+            var model = new AddressesRequestModel
+            {
+                Country = country,
+                State = state,
+                City = city,
+                Description = description,
+                PostalCode = postalCode,
+                PhoneNumber = phoneNumber
+            };
+
+            var id = await this.addresses.CreateAsync(model);
 
             var expected = new Address
             {
@@ -82,16 +88,19 @@
             string postalCode,
             string phoneNumber)
         {
-            var id = await this.addressesService.CreateAsync(
-                country,
-                state,
-                city,
-                description,
-                postalCode,
-                phoneNumber,
-                TestUser.Identifier);
+            var model = new AddressesRequestModel
+            {
+                Country = country,
+                State = state,
+                City = city,
+                Description = description,
+                PostalCode = postalCode,
+                PhoneNumber = phoneNumber
+            };
 
-            await this.addressesService.DeleteAsync(id, TestUser.Identifier);
+            var id = await this.addresses.CreateAsync(model);
+
+            await this.addresses.DeleteAsync(id);
 
             this.Data.Addresses.Count().ShouldBe(0);
         }
@@ -109,8 +118,8 @@
                 .SaveChangesAsync();
 
             var addressesListingResponseModels = await this
-                .addressesService
-                .ByUserIdAsync(TestUser.Identifier);
+                .addresses
+                .ByCurrentUserAsync();
 
             this.Data.Addresses.Count().ShouldBe(3);
 

@@ -15,13 +15,16 @@
 
         private readonly UserManager<ApplicationUser> userManager;
         private readonly IJwtGeneratorService jwtGenerator;
+        private readonly ICurrentUserService currentUser;
 
         public IdentityService(
             UserManager<ApplicationUser> userManager,
-            IJwtGeneratorService jwtGenerator)
+            IJwtGeneratorService jwtGenerator, 
+            ICurrentUserService currentUser)
         {
             this.userManager = userManager;
             this.jwtGenerator = jwtGenerator;
+            this.currentUser = currentUser;
         }
 
         public async Task<Result> RegisterAsync(RegisterRequestModel model)
@@ -64,7 +67,7 @@
 
         public async Task<Result> ChangeSettingsAsync(ChangeSettingsRequestModel model)
         {
-            var user = await this.userManager.FindByIdAsync(model.UserId);
+            var user = await this.userManager.FindByIdAsync(this.currentUser.UserId);
             if (user == null)
             {
                 return InvalidErrorMessage;
@@ -84,7 +87,7 @@
 
         public async Task<Result> ChangePasswordAsync(ChangePasswordRequestModel model)
         {
-            var user = await this.userManager.FindByIdAsync(model.UserId);
+            var user = await this.userManager.FindByIdAsync(this.currentUser.UserId);
             if (user == null)
             {
                 return InvalidErrorMessage;

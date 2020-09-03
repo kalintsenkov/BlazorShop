@@ -9,9 +9,9 @@
 
     public interface ICategoriesService
     {
-        Task<int> CreateAsync(string name);
+        Task<int> CreateAsync(CategoriesRequestModel model);
 
-        Task<Result> UpdateAsync(int id, string name);
+        Task<Result> UpdateAsync(int id, CategoriesRequestModel model);
 
         Task<Result> DeleteAsync(int id);
 

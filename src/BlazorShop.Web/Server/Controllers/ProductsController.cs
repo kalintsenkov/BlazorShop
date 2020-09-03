@@ -25,36 +25,26 @@
 
         [HttpPost]
         [Authorize(Roles = AdministratorRole)]
-        public async Task<ActionResult> Create(ProductsRequestModel model)
+        public async Task<ActionResult> Create(
+            ProductsRequestModel model)
         {
-            var id = await this.products.CreateAsync(
-                model.Name,
-                model.Description,
-                model.ImageSource,
-                model.Quantity,
-                model.Price,
-                model.CategoryId);
+            var id = await this.products.CreateAsync(model);
 
             return Created(nameof(this.Create), id);
         }
 
         [HttpPut(Id)]
         [Authorize(Roles = AdministratorRole)]
-        public async Task<ActionResult> Update(int id, ProductsRequestModel model)
+        public async Task<ActionResult> Update(
+            int id, ProductsRequestModel model)
             => await this.products
-                .UpdateAsync(
-                    id,
-                    model.Name,
-                    model.Description,
-                    model.ImageSource,
-                    model.Quantity,
-                    model.Price,
-                    model.CategoryId)
+                .UpdateAsync(id, model)
                 .ToActionResult();
 
         [HttpDelete(Id)]
         [Authorize(Roles = AdministratorRole)]
-        public async Task<ActionResult> Delete(int id)
+        public async Task<ActionResult> Delete(
+            int id)
             => await this.products
                 .DeleteAsync(id)
                 .ToActionResult();
