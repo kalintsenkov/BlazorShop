@@ -12,6 +12,8 @@
     using Models;
     using Models.Categories;
     using Models.Products;
+    using Specifications;
+    using Specifications.Categories;
 
     public class CategoriesService : BaseService<Category>, ICategoriesService
     {
@@ -62,11 +64,12 @@
             return true;
         }
 
-        public async Task<IEnumerable<ProductsListingResponseModel>> DetailsAsync(int id)
+        public async Task<IEnumerable<ProductsListingResponseModel>> DetailsAsync(
+            int id)
             => await this.Mapper
                 .ProjectTo<ProductsListingResponseModel>(this
                     .AllAsNoTracking()
-                    .Where(c => c.Id == id)
+                    .Where(this.GetCategorySpecification(id))
                     .SelectMany(c => c.Products))
                 .ToListAsync();
 
@@ -76,9 +79,15 @@
                     .AllAsNoTracking())
                 .ToListAsync();
 
-        private async Task<Category> GetByIdAsync(int id)
+        private async Task<Category> GetByIdAsync(
+            int id)
             => await this
                 .All()
-                .FirstOrDefaultAsync(c => c.Id == id);
+                .Where(this.GetCategorySpecification(id))
+                .FirstOrDefaultAsync();
+
+        private Specification<Category> GetCategorySpecification(
+            int id)
+            => new CategoryByIdSpecification(id);
     }
 }

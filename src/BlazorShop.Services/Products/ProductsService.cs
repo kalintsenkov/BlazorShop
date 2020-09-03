@@ -76,19 +76,22 @@
             return true;
         }
 
-        public async Task<ProductsDetailsResponseModel> DetailsAsync(int id)
+        public async Task<ProductsDetailsResponseModel> DetailsAsync(
+            int id)
             => await this.Mapper
                 .ProjectTo<ProductsDetailsResponseModel>(this
                     .AllAsNoTracking()
                     .Where(this.GetProductSpecification(id)))
                 .FirstOrDefaultAsync();
 
-        private async Task<Product> GetByIdAsync(int id)
+        private async Task<Product> GetByIdAsync(
+            int id)
             => await this
                 .All()
                 .FirstOrDefaultAsync(this.GetProductSpecification(id));
 
-        private Specification<Product> GetProductSpecification(int id)
+        private Specification<Product> GetProductSpecification(
+            int id)
             => new ProductByIdSpecification(id);
     }
 }

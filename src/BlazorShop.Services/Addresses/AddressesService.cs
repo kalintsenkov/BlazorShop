@@ -12,6 +12,8 @@
     using Identity;
     using Models;
     using Models.Addresses;
+    using Specifications;
+    using Specifications.Addresses;
 
     public class AddressesService : BaseService<Address>, IAddressesService
     {
@@ -45,9 +47,12 @@
 
         public async Task<Result> DeleteAsync(int id)
         {
+            var specification = this.GetAddressByCurrentUserSpecification()
+                .And(new AddressByIdSpecification(id));
+
             var address = await this
                 .All()
-                .Where(a => a.Id == id && a.UserId == this.currentUser.UserId)
+                .Where(specification)
                 .FirstOrDefaultAsync();
 
             if (address == null)
@@ -66,7 +71,10 @@
             => await this.Mapper
                 .ProjectTo<AddressesListingResponseModel>(this
                     .AllAsNoTracking()
-                    .Where(a => a.UserId == this.currentUser.UserId))
+                    .Where(this.GetAddressByCurrentUserSpecification()))
                 .ToListAsync();
+
+        private Specification<Address> GetAddressByCurrentUserSpecification()
+            => new AddressByUserIdSpecification(this.currentUser.UserId);
     }
 }

@@ -68,17 +68,19 @@
         public async Task<IEnumerable<ProductsListingResponseModel>> ByCurrentUserAsync()
             => await this.Mapper
                 .ProjectTo<ProductsListingResponseModel>(this
-                    .AllByUser()
+                    .AllByCurrentUser()
                     .AsNoTracking()
                     .Select(w => w.Product))
                 .ToListAsync();
 
-        private async Task<Wishlist> GetByProductAndUserAsync(int productId)
+        private async Task<Wishlist> GetByProductAndUserAsync(
+            int productId)
             => await this
-                .AllByUser(withDeleted: true)
+                .AllByCurrentUser(withDeleted: true)
                 .FirstOrDefaultAsync(w => w.ProductId == productId);
 
-        private IQueryable<Wishlist> AllByUser(bool withDeleted = false)
+        private IQueryable<Wishlist> AllByCurrentUser(
+            bool withDeleted = false)
             => withDeleted
                 ? this.All().Where(w => w.UserId == this.currentUser.UserId)
                 : this.All().Where(w => w.UserId == this.currentUser.UserId && !w.IsDeleted);

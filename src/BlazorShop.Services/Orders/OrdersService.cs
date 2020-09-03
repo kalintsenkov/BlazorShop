@@ -60,7 +60,8 @@
             return order.Id;
         }
 
-        public async Task<OrdersDetailsResponseModel> DetailsAsync(string id)
+        public async Task<OrdersDetailsResponseModel> DetailsAsync(
+            string id)
             => await this.Mapper
                 .ProjectTo<OrdersDetailsResponseModel>(this
                     .AllAsNoTracking()

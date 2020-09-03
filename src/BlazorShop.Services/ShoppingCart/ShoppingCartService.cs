@@ -41,7 +41,9 @@
 
         public async Task<Result> UpdateProductAsync(int productId, int quantity)
         {
-            var shoppingCart = await this.GetByProductIdAndUserIdAsync(productId, this.currentUser.UserId);
+            var userId = this.currentUser.UserId;
+
+            var shoppingCart = await this.GetByProductAndUserAsync(productId, userId);
 
             if (shoppingCart == null)
             {
@@ -57,7 +59,9 @@
 
         public async Task<Result> RemoveProductAsync(int productId)
         {
-            var shoppingCart = await this.GetByProductIdAndUserIdAsync(productId, this.currentUser.UserId);
+            var userId = this.currentUser.UserId;
+
+            var shoppingCart = await this.GetByProductAndUserAsync(productId, userId);
 
             if (shoppingCart == null)
             {
@@ -78,12 +82,15 @@
                     .AsNoTracking())
                 .ToListAsync();
 
-        private async Task<ShoppingCart> GetByProductIdAndUserIdAsync(int productId, string userId)
+        private async Task<ShoppingCart> GetByProductAndUserAsync(
+            int productId, 
+            string userId)
             => await this
                 .AllByUserId(userId)
                 .FirstOrDefaultAsync(c => c.ProductId == productId);
 
-        private IQueryable<ShoppingCart> AllByUserId(string userId)
+        private IQueryable<ShoppingCart> AllByUserId(
+            string userId)
             => this
                 .All()
                 .Where(c => c.UserId == userId);
