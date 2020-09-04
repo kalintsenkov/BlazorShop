@@ -65,7 +65,7 @@
             return Result.Success;
         }
 
-        public async Task<IEnumerable<ProductsListingResponseModel>> ByCurrentUserAsync()
+        public async Task<IEnumerable<ProductsListingResponseModel>> MineAsync()
             => await this.Mapper
                 .ProjectTo<ProductsListingResponseModel>(this
                     .AllByCurrentUser()

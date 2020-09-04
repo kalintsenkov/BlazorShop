@@ -18,8 +18,8 @@
             => this.orders = orders;
 
         [HttpGet]
-        public async Task<IEnumerable<OrdersListingResponseModel>> ByUser()
-            => await this.orders.ByCurrentUserAsync();
+        public async Task<IEnumerable<OrdersListingResponseModel>> Mine()
+            => await this.orders.MineAsync();
 
         [HttpGet(Id)]
         public async Task<ActionResult<OrdersDetailsResponseModel>> Details(

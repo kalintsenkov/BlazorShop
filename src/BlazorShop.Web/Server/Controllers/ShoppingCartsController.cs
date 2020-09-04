@@ -19,8 +19,8 @@
             => this.shoppingCart = shoppingCart;
 
         [HttpGet]
-        public async Task<IEnumerable<ShoppingCartProductsResponseModel>> ByUser()
-            => await this.shoppingCart.ByCurrentUserAsync();
+        public async Task<IEnumerable<ShoppingCartProductsResponseModel>> Mine()
+            => await this.shoppingCart.MineAsync();
 
         [HttpPost(Id)]
         public async Task<ActionResult> AddProduct(

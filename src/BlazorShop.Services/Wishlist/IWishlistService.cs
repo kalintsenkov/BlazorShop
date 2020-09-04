@@ -12,6 +12,6 @@
 
         Task<Result> RemoveProductAsync(int productId);
 
-        Task<IEnumerable<ProductsListingResponseModel>> ByCurrentUserAsync();
+        Task<IEnumerable<ProductsListingResponseModel>> MineAsync();
     }
 }

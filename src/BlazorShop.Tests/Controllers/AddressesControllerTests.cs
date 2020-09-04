@@ -24,12 +24,12 @@
         [InlineData(3)]
         [InlineData(9)]
         [InlineData(12)]
-        public void ByUserShouldReturnResultWithCorrectModel(int count)
+        public void MineShouldReturnResultWithCorrectModel(int count)
             => MyController<AddressesController>
                 .Instance(instance => instance
                     .WithUser()
                     .WithData(AddressesTestData.GetAddresses(count)))
-                .Calling(c => c.ByUser())
+                .Calling(c => c.Mine())
                 .ShouldReturn()
                 .ResultOfType<IEnumerable<AddressesListingResponseModel>>(result => result
                     .Passing(addressListing => addressListing

@@ -68,7 +68,7 @@
                     .Where(o => o.Id == id))
                 .FirstOrDefaultAsync();
 
-        public async Task<IEnumerable<OrdersListingResponseModel>> ByCurrentUserAsync()
+        public async Task<IEnumerable<OrdersListingResponseModel>> MineAsync()
             => await this.Mapper
                 .ProjectTo<OrdersListingResponseModel>(this
                     .AllAsNoTracking()

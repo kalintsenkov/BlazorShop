@@ -19,8 +19,8 @@
             => this.addresses = addresses;
 
         [HttpGet]
-        public async Task<IEnumerable<AddressesListingResponseModel>> ByUser()
-            => await this.addresses.ByCurrentUserAsync();
+        public async Task<IEnumerable<AddressesListingResponseModel>> Mine()
+            => await this.addresses.MineAsync();
 
         [HttpPost]
         public async Task<ActionResult> Create(

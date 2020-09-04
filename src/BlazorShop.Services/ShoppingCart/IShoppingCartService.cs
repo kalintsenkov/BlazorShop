@@ -14,6 +14,6 @@
 
         Task<Result> RemoveProductAsync(int productId);
 
-        Task<IEnumerable<ShoppingCartProductsResponseModel>> ByCurrentUserAsync();
+        Task<IEnumerable<ShoppingCartProductsResponseModel>> MineAsync();
     }
 }

@@ -75,7 +75,7 @@
             return Result.Success;
         }
 
-        public async Task<IEnumerable<ShoppingCartProductsResponseModel>> ByCurrentUserAsync()
+        public async Task<IEnumerable<ShoppingCartProductsResponseModel>> MineAsync()
             => await this.Mapper
                 .ProjectTo<ShoppingCartProductsResponseModel>(this
                     .AllByUserId(this.currentUser.UserId)

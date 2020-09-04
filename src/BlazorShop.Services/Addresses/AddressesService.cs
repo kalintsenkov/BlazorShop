@@ -67,7 +67,7 @@
             return Result.Success;
         }
 
-        public async Task<IEnumerable<AddressesListingResponseModel>> ByCurrentUserAsync()
+        public async Task<IEnumerable<AddressesListingResponseModel>> MineAsync()
             => await this.Mapper
                 .ProjectTo<AddressesListingResponseModel>(this
                     .AllAsNoTracking()

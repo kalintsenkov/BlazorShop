@@ -12,6 +12,6 @@
 
         Task<Result> DeleteAsync(int id);
 
-        Task<IEnumerable<AddressesListingResponseModel>> ByCurrentUserAsync();
+        Task<IEnumerable<AddressesListingResponseModel>> MineAsync();
     }
 }

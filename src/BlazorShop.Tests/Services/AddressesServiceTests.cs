@@ -105,25 +105,22 @@
             this.Data.Addresses.Count().ShouldBe(0);
         }
 
-        [Fact]
-        public async Task GetAllByUserIdShouldReturnAllUserAddresses()
+        [Theory]
+        [InlineData(3)]
+        [InlineData(6)]
+        [InlineData(9)]
+        public async Task MineShouldReturnCurrentUserAddresses(int count)
         {
-            await this
-                .Data
-                .Addresses
-                .AddRangeAsync(AddressesTestData.GetAddresses(3));
+            var data = AddressesTestData.GetAddresses(count);
 
-            await this
-                .Data
-                .SaveChangesAsync();
+            await this.Data.Addresses.AddRangeAsync(data);
 
-            var addressesListingResponseModels = await this
-                .addresses
-                .ByCurrentUserAsync();
+            await this.Data.SaveChangesAsync();
 
-            this.Data.Addresses.Count().ShouldBe(3);
+            var actual = await this.addresses.MineAsync();
 
-            addressesListingResponseModels.ShouldBeOfType<List<AddressesListingResponseModel>>();
+            actual.Count().ShouldBe(count);
+            actual.ShouldBeOfType<List<AddressesListingResponseModel>>();
         }
     }
 }

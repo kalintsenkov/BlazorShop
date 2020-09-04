@@ -19,8 +19,8 @@
             => this.wishlist = wishlist;
 
         [HttpGet]
-        public async Task<IEnumerable<ProductsListingResponseModel>> ByUser()
-            => await this.wishlist.ByCurrentUserAsync();
+        public async Task<IEnumerable<ProductsListingResponseModel>> Mine()
+            => await this.wishlist.MineAsync();
 
         [HttpPost(Id)]
         public async Task<ActionResult> AddProduct(

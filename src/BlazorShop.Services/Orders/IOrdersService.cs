@@ -11,6 +11,6 @@
 
         Task<OrdersDetailsResponseModel> DetailsAsync(string id);
 
-        Task<IEnumerable<OrdersListingResponseModel>> ByCurrentUserAsync();
+        Task<IEnumerable<OrdersListingResponseModel>> MineAsync();
     }
 }
