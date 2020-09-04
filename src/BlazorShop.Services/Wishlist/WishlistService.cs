@@ -26,7 +26,9 @@
 
         public async Task<Result> AddProductAsync(int productId)
         {
-            var wishlist = await this.GetByProductAndUserAsync(productId);
+            var userId = this.currentUser.UserId;
+
+            var wishlist = await this.FindByProductAndUserAsync(productId, userId);
 
             if (wishlist == null)
             {
@@ -51,7 +53,9 @@
 
         public async Task<Result> RemoveProductAsync(int productId)
         {
-            var wishlist = await this.GetByProductAndUserAsync(productId);
+            var userId = this.currentUser.UserId;
+
+            var wishlist = await this.FindByProductAndUserAsync(productId, userId);
 
             if (wishlist == null)
             {
@@ -68,21 +72,23 @@
         public async Task<IEnumerable<ProductsListingResponseModel>> MineAsync()
             => await this.Mapper
                 .ProjectTo<ProductsListingResponseModel>(this
-                    .AllByCurrentUser()
+                    .AllByUserId(this.currentUser.UserId)
                     .AsNoTracking()
                     .Select(w => w.Product))
                 .ToListAsync();
 
-        private async Task<Wishlist> GetByProductAndUserAsync(
-            int productId)
+        private async Task<Wishlist> FindByProductAndUserAsync(
+            int productId,
+            string userId)
             => await this
-                .AllByCurrentUser(withDeleted: true)
+                .AllByUserId(userId, withDeleted: true)
                 .FirstOrDefaultAsync(w => w.ProductId == productId);
 
-        private IQueryable<Wishlist> AllByCurrentUser(
+        private IQueryable<Wishlist> AllByUserId(
+            string userId,
             bool withDeleted = false)
             => withDeleted
-                ? this.All().Where(w => w.UserId == this.currentUser.UserId)
-                : this.All().Where(w => w.UserId == this.currentUser.UserId && !w.IsDeleted);
+                ? this.All().Where(w => w.UserId == userId)
+                : this.All().Where(w => w.UserId == userId && !w.IsDeleted);
     }
 }

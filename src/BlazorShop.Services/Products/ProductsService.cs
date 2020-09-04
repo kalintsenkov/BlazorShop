@@ -1,6 +1,5 @@
 ﻿namespace BlazorShop.Services.Products
 {
-    using System.Collections.Generic;
     using System.Linq;
     using System.Threading.Tasks;
 
@@ -41,7 +40,7 @@
 
         public async Task<Result> UpdateAsync(int id, ProductsRequestModel model)
         {
-            var product = await this.GetByIdAsync(id);
+            var product = await this.FindByIdAsync(id);
 
             if (product == null)
             {
@@ -62,7 +61,7 @@
 
         public async Task<Result> DeleteAsync(int id)
         {
-            var product = await this.GetByIdAsync(id);
+            var product = await this.FindByIdAsync(id);
 
             if (product == null)
             {
@@ -84,11 +83,12 @@
                     .Where(this.GetProductSpecification(id)))
                 .FirstOrDefaultAsync();
 
-        private async Task<Product> GetByIdAsync(
+        private async Task<Product> FindByIdAsync(
             int id)
             => await this
                 .All()
-                .FirstOrDefaultAsync(this.GetProductSpecification(id));
+                .Where(this.GetProductSpecification(id))
+                .FirstOrDefaultAsync();
 
         private Specification<Product> GetProductSpecification(
             int id)

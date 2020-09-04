@@ -43,7 +43,7 @@
         {
             var userId = this.currentUser.UserId;
 
-            var shoppingCart = await this.GetByProductAndUserAsync(productId, userId);
+            var shoppingCart = await this.FindByProductAndUserAsync(productId, userId);
 
             if (shoppingCart == null)
             {
@@ -61,7 +61,7 @@
         {
             var userId = this.currentUser.UserId;
 
-            var shoppingCart = await this.GetByProductAndUserAsync(productId, userId);
+            var shoppingCart = await this.FindByProductAndUserAsync(productId, userId);
 
             if (shoppingCart == null)
             {
@@ -82,7 +82,7 @@
                     .AsNoTracking())
                 .ToListAsync();
 
-        private async Task<ShoppingCart> GetByProductAndUserAsync(
+        private async Task<ShoppingCart> FindByProductAndUserAsync(
             int productId, 
             string userId)
             => await this

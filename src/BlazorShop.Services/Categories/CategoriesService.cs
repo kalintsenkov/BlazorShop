@@ -34,7 +34,7 @@
 
         public async Task<Result> UpdateAsync(int id, CategoriesRequestModel model)
         {
-            var category = await this.GetByIdAsync(id);
+            var category = await this.FindByIdAsync(id);
 
             if (category == null)
             {
@@ -50,7 +50,7 @@
 
         public async Task<Result> DeleteAsync(int id)
         {
-            var category = await this.GetByIdAsync(id);
+            var category = await this.FindByIdAsync(id);
 
             if (category == null)
             {
@@ -79,7 +79,7 @@
                     .AllAsNoTracking())
                 .ToListAsync();
 
-        private async Task<Category> GetByIdAsync(
+        private async Task<Category> FindByIdAsync(
             int id)
             => await this
                 .All()
