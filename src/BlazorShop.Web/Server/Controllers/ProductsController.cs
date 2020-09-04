@@ -19,7 +19,7 @@
             => this.products = products;
 
         [HttpGet(Id)]
-        public async Task<ActionResult<ProductsDetailsResponseModel>> Details(
+        public async Task<ProductsDetailsResponseModel> Details(
             int id)
             => await this.products.DetailsAsync(id);
 

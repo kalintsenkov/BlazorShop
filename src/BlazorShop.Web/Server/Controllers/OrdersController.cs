@@ -22,7 +22,7 @@
             => await this.orders.MineAsync();
 
         [HttpGet(Id)]
-        public async Task<ActionResult<OrdersDetailsResponseModel>> Details(
+        public async Task<OrdersDetailsResponseModel> Details(
             string id)
             => await this.orders.DetailsAsync(id);
 
