@@ -26,9 +26,11 @@
 
         public async Task<Result> AddProductAsync(int productId, int quantity)
         {
+            var userId = this.currentUser.UserId;
+
             var shoppingCart = new ShoppingCart
             {
-                UserId = this.currentUser.UserId,
+                UserId = userId,
                 ProductId = productId,
                 Quantity = quantity
             };

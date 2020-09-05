@@ -34,7 +34,7 @@
             {
                 wishlist = new Wishlist
                 {
-                    UserId = this.currentUser.UserId,
+                    UserId = userId,
                     ProductId = productId
                 };
 
