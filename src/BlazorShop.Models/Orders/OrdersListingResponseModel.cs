@@ -2,10 +2,9 @@
 {
     using AutoMapper;
 
-    using Common.Mapping;
     using Data.Models;
 
-    public class OrdersListingResponseModel : OrdersBaseResponseModel, IMapExplicitly
+    public class OrdersListingResponseModel : OrdersBaseResponseModel
     {
         public string ProductName { get; set; }
 
