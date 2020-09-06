@@ -3,6 +3,7 @@
 
 <EditForm Model="model" OnValidSubmit="() => OnSubmitAsync(ProductId)">
 
+    <ErrorsList ShowErrors="showErrors" Errors="errors" />
     <DataAnnotationsValidator />
     <ValidationSummary />
 
@@ -77,6 +78,9 @@
 @code {
     private readonly ShoppingCartRequestModel model = new ShoppingCartRequestModel();
 
+    private bool showErrors;
+    private IEnumerable<string> errors;
+
     [Parameter]
     public int ProductId { get; set; }
 
@@ -94,8 +98,18 @@
 
     private async Task OnSubmitAsync(int id)
     {
-        await this.Http.PostAsJsonAsync($"api/shoppingcarts/{id}", model);
-        this.NavigationManager.NavigateTo("/cart", forceLoad: true);
+        var response = await this.Http.PostAsJsonAsync($"api/shoppingcarts/{id}", model);
+
+        if (!response.IsSuccessStatusCode)
+        {
+            this.errors = await response.Content.ReadFromJsonAsync<string[]>();
+            this.showErrors = true;
+        }
+        else
+        {
+            this.showErrors = false;
+            this.NavigationManager.NavigateTo("/cart", forceLoad: true);
+        }
     }
 
     private async Task AddToWishlist(int id)
@@ -128,6 +142,7 @@
         if (this.model.Quantity < this.ProductQuantity)
         {
             this.model.Quantity++;
+            this.showErrors = false;
         }
     }
 
@@ -136,6 +151,7 @@
         if (this.model.Quantity > 1)
         {
             this.model.Quantity--;
+            this.showErrors = false;
         }
     }
 }

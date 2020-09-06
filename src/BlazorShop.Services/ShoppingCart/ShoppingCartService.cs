@@ -26,9 +26,18 @@
 
         public async Task<Result> AddProductAsync(int productId, int quantity)
         {
+            var productQuantity = await this.GetProductQuantityById(productId);
+
+            if (productQuantity < quantity)
+            {
+                return "There are not enough products in stock.";
+            }
+
             var userId = this.currentUser.UserId;
 
-            var shoppingCart = await this.FindByUserId(userId) ?? new ShoppingCart
+            var shoppingCart = await this.FindByUserId(userId);
+
+            shoppingCart ??= new ShoppingCart
             {
                 UserId = userId
             };
@@ -48,16 +57,23 @@
 
         public async Task<Result> UpdateProductAsync(int productId, int quantity)
         {
+            var productQuantity = await this.GetProductQuantityById(productId);
+
+            if (productQuantity < quantity)
+            {
+                return "There are not enough products in stock.";
+            }
+
             var userId = this.currentUser.UserId;
 
-            var shoppingCart = await this.FindByProductAndUserAsync(productId, userId);
+            var shoppingCartProduct = await this.FindByProductAndUserAsync(productId, userId);
 
-            if (shoppingCart == null)
+            if (shoppingCartProduct == null)
             {
                 return "This user cannot edit this shopping cart.";
             }
 
-            shoppingCart.Quantity = quantity;
+            shoppingCartProduct.Quantity = quantity;
 
             await this.Data.SaveChangesAsync();
 
@@ -68,14 +84,14 @@
         {
             var userId = this.currentUser.UserId;
 
-            var shoppingCart = await this.FindByProductAndUserAsync(productId, userId);
+            var shoppingCartProduct = await this.FindByProductAndUserAsync(productId, userId);
 
-            if (shoppingCart == null)
+            if (shoppingCartProduct == null)
             {
                 return "This user cannot delete products from this shopping cart.";
             }
 
-            this.Data.Remove(shoppingCart);
+            this.Data.Remove(shoppingCartProduct);
 
             await this.Data.SaveChangesAsync();
 
@@ -101,6 +117,13 @@
                 .AllByUserId(userId)
                 .FirstOrDefaultAsync(c => c.ProductId == productId);
 
+        private async Task<ShoppingCart> FindByUserId(
+            string userId)
+            => await this
+                .All()
+                .Where(c => c.UserId == userId)
+                .FirstOrDefaultAsync();
+
         private IQueryable<ShoppingCartProduct> AllByUserId(
             string userId)
             => this
@@ -108,11 +131,13 @@
                 .Where(c => c.UserId == userId)
                 .SelectMany(c => c.Products);
 
-        private async Task<ShoppingCart> FindByUserId(
-            string userId)
+        private async Task<int> GetProductQuantityById(
+            int productId)
             => await this
-                .All()
-                .Where(c => c.UserId == userId)
+                .Data
+                .Products
+                .Where(p => p.Id == productId)
+                .Select(p => p.Quantity)
                 .FirstOrDefaultAsync();
     }
 }
