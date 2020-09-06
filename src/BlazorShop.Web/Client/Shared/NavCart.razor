@@ -1,7 +1,7 @@
 ﻿@inject ILocalStorageService LocalStorage
 @attribute [Authorize]
 
-@if (cartProducts == null)
+@if (cartProductsCount == null)
 {
     <LoadingScreen />
 }
@@ -10,19 +10,19 @@ else
     <a href="/cart" class="widget-header mr-3">
         <div class="icon">
             <i class="icon-sm rounded-circle border fa fa-shopping-cart"></i>
-            <span class="notify">@cartProducts.Length</span>
+            <span class="notify">@cartProductsCount</span>
         </div>
     </a>
 }
 
 @code {
-    private ShoppingCartProductsResponseModel[] cartProducts;
+    private int? cartProductsCount;
 
     protected override async Task OnInitializedAsync()
     {
         var token = await this.LocalStorage.GetItemAsync<string>("authToken");
         this.Http.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
 
-        this.cartProducts = await this.Http.GetFromJsonAsync<ShoppingCartProductsResponseModel[]>("api/shoppingcarts");
+        this.cartProductsCount = await this.Http.GetFromJsonAsync<int>("api/shoppingcarts/count");
     }
 }

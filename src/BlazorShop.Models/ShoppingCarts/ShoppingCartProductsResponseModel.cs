@@ -5,7 +5,7 @@
     using Common.Mapping;
     using Data.Models;
 
-    public class ShoppingCartProductsResponseModel : IMapFrom<ShoppingCart>, IMapExplicitly
+    public class ShoppingCartProductsResponseModel : IMapExplicitly
     {
         public int Id { get; set; }
 
@@ -21,7 +21,7 @@
 
         public void RegisterMappings(IProfileExpression profile)
             => profile
-                .CreateMap<ShoppingCart, ShoppingCartProductsResponseModel>()
+                .CreateMap<ShoppingCartProduct, ShoppingCartProductsResponseModel>()
                 .ForMember(m => m.Id, m => m
                     .MapFrom(c => c.Product.Id))
                 .ForMember(m => m.Name, m => m

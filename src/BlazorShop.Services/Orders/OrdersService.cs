@@ -33,27 +33,25 @@
                 DeliveryAddressId = model.AddressId
             };
 
-            await this.Data.AddAsync(order);
-
-            var shoppingCart = await this
+            var shoppingCartProducts = await this
                 .Data
-                .ShoppingCarts
-                .Where(sc => sc.UserId == userId)
+                .ShoppingCartsProducts
+                .Where(sc => sc.ShoppingCart.UserId == userId)
                 .ToListAsync();
 
-            foreach (var cart in shoppingCart)
+            foreach (var product in shoppingCartProducts)
             {
                 var orderProduct = new OrderProduct
                 {
-                    OrderId = order.Id,
-                    ProductId = cart.ProductId,
-                    Quantity = cart.Quantity
+                    Order = order,
+                    ProductId = product.ProductId,
+                    Quantity = product.Quantity
                 };
 
                 await this.Data.AddAsync(orderProduct);
             }
 
-            this.Data.RemoveRange(shoppingCart);
+            this.Data.RemoveRange(shoppingCartProducts);
 
             await this.Data.SaveChangesAsync();
 

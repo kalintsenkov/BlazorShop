@@ -30,6 +30,8 @@
 
         public DbSet<ShoppingCart> ShoppingCarts { get; set; }
 
+        public DbSet<ShoppingCartProduct> ShoppingCartsProducts { get; set; }
+
         public DbSet<Wishlist> Wishlists { get; set; }
 
         public override Task<int> SaveChangesAsync(CancellationToken cancellationToken = default)

@@ -28,14 +28,19 @@
         {
             var userId = this.currentUser.UserId;
 
-            var shoppingCart = new ShoppingCart
+            var shoppingCart = await this.FindByUserId(userId) ?? new ShoppingCart
             {
-                UserId = userId,
+                UserId = userId
+            };
+
+            var shoppingCartProduct = new ShoppingCartProduct
+            {
+                ShoppingCart = shoppingCart,
                 ProductId = productId,
                 Quantity = quantity
             };
 
-            await this.Data.AddAsync(shoppingCart);
+            await this.Data.AddAsync(shoppingCartProduct);
             await this.Data.SaveChangesAsync();
 
             return Result.Success;
@@ -77,6 +82,11 @@
             return Result.Success;
         }
 
+        public async Task<int> CountAsync()
+            => await this
+                .AllByUserId(this.currentUser.UserId)
+                .CountAsync();
+
         public async Task<IEnumerable<ShoppingCartProductsResponseModel>> MineAsync()
             => await this.Mapper
                 .ProjectTo<ShoppingCartProductsResponseModel>(this
@@ -84,17 +94,25 @@
                     .AsNoTracking())
                 .ToListAsync();
 
-        private async Task<ShoppingCart> FindByProductAndUserAsync(
-            int productId, 
+        private async Task<ShoppingCartProduct> FindByProductAndUserAsync(
+            int productId,
             string userId)
             => await this
                 .AllByUserId(userId)
                 .FirstOrDefaultAsync(c => c.ProductId == productId);
 
-        private IQueryable<ShoppingCart> AllByUserId(
+        private IQueryable<ShoppingCartProduct> AllByUserId(
             string userId)
             => this
                 .All()
-                .Where(c => c.UserId == userId);
+                .Where(c => c.UserId == userId)
+                .SelectMany(c => c.Products);
+
+        private async Task<ShoppingCart> FindByUserId(
+            string userId)
+            => await this
+                .All()
+                .Where(c => c.UserId == userId)
+                .FirstOrDefaultAsync();
     }
 }

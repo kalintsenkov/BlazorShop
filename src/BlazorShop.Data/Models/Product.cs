@@ -24,7 +24,7 @@
 
         public ICollection<Wishlist> Wishlists { get; } = new HashSet<Wishlist>();
 
-        public ICollection<ShoppingCart> ShoppingCarts { get; } = new HashSet<ShoppingCart>();
+        public ICollection<ShoppingCartProduct> ShoppingCarts { get; } = new HashSet<ShoppingCartProduct>();
 
         public ICollection<OrderProduct> Orders { get; } = new HashSet<OrderProduct>();
     }

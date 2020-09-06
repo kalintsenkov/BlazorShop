@@ -14,6 +14,8 @@
 
         Task<Result> RemoveProductAsync(int productId);
 
+        Task<int> CountAsync();
+
         Task<IEnumerable<ShoppingCartProductsResponseModel>> MineAsync();
     }
 }

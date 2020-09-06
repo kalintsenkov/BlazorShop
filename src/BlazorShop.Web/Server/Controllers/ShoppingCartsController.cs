@@ -22,6 +22,10 @@
         public async Task<IEnumerable<ShoppingCartProductsResponseModel>> Mine()
             => await this.shoppingCart.MineAsync();
 
+        [HttpGet(nameof(Count))]
+        public async Task<ActionResult<int>> Count()
+            => await this.shoppingCart.CountAsync();
+
         [HttpPost(Id)]
         public async Task<ActionResult> AddProduct(
             int id, ShoppingCartRequestModel model)
