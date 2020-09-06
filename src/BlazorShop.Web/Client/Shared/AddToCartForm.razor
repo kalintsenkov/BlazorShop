@@ -114,7 +114,7 @@
 
     private async Task AddToWishlist(int id)
     {
-        await this.Http.PostAsJsonAsync($"api/wishlists/{id}", id);
+        await this.WishlistsService.AddProductAsync(id);
         this.ToastService.ShowSuccess($"{this.ProductName} has been added to your wishlist.");
     }
 

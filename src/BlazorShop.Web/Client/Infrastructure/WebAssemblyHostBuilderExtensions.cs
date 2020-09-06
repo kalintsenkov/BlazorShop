@@ -28,7 +28,11 @@
                 .AddBlazoredLocalStorage()
                 .AddScoped<ApiAuthenticationStateProvider>()
                 .AddScoped<AuthenticationStateProvider, ApiAuthenticationStateProvider>()
+                .AddTransient<IApiClient, ApiClient>()
                 .AddTransient<IAuthService, AuthService>()
+                .AddTransient<ICategoriesService, CategoriesService>()
+                .AddTransient<IProductsService, ProductsService>()
+                .AddTransient<IWishlistsService, WishlistService>()
                 .AddTransient(sp => new HttpClient
                 {
                     BaseAddress = new Uri(builder.HostEnvironment.BaseAddress)
