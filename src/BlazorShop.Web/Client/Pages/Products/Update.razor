@@ -83,16 +83,13 @@ else
 
     protected override async Task OnInitializedAsync()
     {
-        var token = await this.LocalStorage.GetItemAsync<string>("authToken");
-        this.Http.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
-
-        this.model = await this.Http.GetFromJsonAsync<ProductsRequestModel>($"api/products/{this.Id}");
-        this.categories = await this.Http.GetFromJsonAsync<CategoriesListingResponseModel[]>("api/categories");
+        this.model = await this.ApiClient.GetJson<ProductsRequestModel>($"api/products/{this.Id}");
+        this.categories = await this.CategoriesService.AllAsync();
     }
 
     private async Task SubmitAsync()
     {
-        await this.Http.PutAsJsonAsync($"api/products/{this.Id}", model);
+        await this.ProductsService.UpdateAsync(this.Id, model);
 
         this.NavigationManager.NavigateTo($"/products/{this.Id}/{model.Name}");
     }

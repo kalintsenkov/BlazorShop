@@ -79,18 +79,12 @@ else
 
     private CategoriesListingResponseModel[] categories;
 
-    protected override async Task OnInitializedAsync()
-    {
-        var token = await this.LocalStorage.GetItemAsync<string>("authToken");
-        this.Http.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
-
-        this.categories = await this.Http.GetFromJsonAsync<CategoriesListingResponseModel[]>("api/categories");
-    }
+    protected override async Task OnInitializedAsync() 
+        => this.categories = await this.CategoriesService.AllAsync();
 
     private async Task SubmitAsync()
     {
-        var response = await this.Http.PostAsJsonAsync("api/products", model);
-        var id = await response.Content.ReadFromJsonAsync<int>();
+        var id = await this.ProductsService.CreateAsync(model);
 
         this.NavigationManager.NavigateTo($"/products/{id}/{model.Name}");
     }

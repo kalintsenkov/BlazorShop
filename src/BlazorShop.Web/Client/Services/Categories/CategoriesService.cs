@@ -1,4 +1,4 @@
-﻿namespace BlazorShop.Web.Client.Services
+﻿namespace BlazorShop.Web.Client.Services.Categories
 {
     using System.Threading.Tasks;
 

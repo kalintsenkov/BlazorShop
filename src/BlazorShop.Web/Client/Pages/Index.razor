@@ -127,6 +127,5 @@ else
 @code {
     private ProductsListingResponseModel[] products;
 
-    protected override async Task OnInitializedAsync() 
-        => this.products = await this.Http.GetFromJsonAsync<ProductsListingResponseModel[]>("api/search/products");
+    protected override async Task OnInitializedAsync() => this.products = await this.SearchService.Products();
 }

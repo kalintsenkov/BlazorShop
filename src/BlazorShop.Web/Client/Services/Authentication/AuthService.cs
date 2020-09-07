@@ -1,4 +1,4 @@
-﻿namespace BlazorShop.Web.Client.Services
+﻿namespace BlazorShop.Web.Client.Services.Authentication
 {
     using System.Net.Http;
     using System.Net.Http.Headers;

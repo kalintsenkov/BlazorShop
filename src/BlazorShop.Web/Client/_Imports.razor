@@ -24,18 +24,27 @@
 @using BlazorShop.Models.ShoppingCarts
 @using BlazorShop.Web.Client.Infrastructure
 @using BlazorShop.Web.Client.Pages.Account
-@using BlazorShop.Web.Client.Pages.Orders
-@using BlazorShop.Web.Client.Pages.Products
-@using BlazorShop.Web.Client.Services
+@using BlazorShop.Web.Client.Services.Addresses
+@using BlazorShop.Web.Client.Services.Authentication
+@using BlazorShop.Web.Client.Services.Categories
+@using BlazorShop.Web.Client.Services.Orders
+@using BlazorShop.Web.Client.Services.Products
+@using BlazorShop.Web.Client.Services.Search
+@using BlazorShop.Web.Client.Services.ShoppingCart
+@using BlazorShop.Web.Client.Services.Wishlists
 @using BlazorShop.Web.Client.Shared
 
 @inject HttpClient Http
 @inject ApiAuthenticationStateProvider AuthState
 @inject NavigationManager NavigationManager
 @inject IToastService ToastService
+@inject ILocalStorageService LocalStorage
 @inject IApiClient ApiClient
+@inject IAddressesService AddressesService
 @inject IAuthService AuthService
 @inject ICategoriesService CategoriesService
+@inject IOrdersService OrdersService
 @inject IProductsService ProductsService
+@inject ISearchService SearchService
+@inject IShoppingCartService ShoppingCartService
 @inject IWishlistsService WishlistsService
-@inject ILocalStorageService LocalStorage

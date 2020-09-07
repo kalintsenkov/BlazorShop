@@ -100,10 +100,7 @@ else
 
     private async Task LoadDataAsync()
     {
-        var token = await this.LocalStorage.GetItemAsync<string>("authToken");
-        this.Http.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
-
-        this.orders = await this.Http.GetFromJsonAsync<OrdersListingResponseModel[]>("api/orders");
+        this.orders = await this.OrdersService.MineAsync();
 
         var state = await this.AuthState.GetAuthenticationStateAsync();
         var user = state.User;

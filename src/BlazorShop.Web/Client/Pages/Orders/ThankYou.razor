@@ -32,11 +32,5 @@ else
     [Parameter]
     public string Id { get; set; }
 
-    protected override async Task OnInitializedAsync()
-    {
-        var token = await this.LocalStorage.GetItemAsync<string>("authToken");
-        this.Http.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
-
-        this.order = await this.Http.GetFromJsonAsync<OrdersDetailsResponseModel>($"api/orders/{this.Id}");
-    }
+    protected override async Task OnInitializedAsync() => this.order = await this.OrdersService.DetailsAsync(this.Id);
 }

@@ -141,24 +141,18 @@ else
     private decimal totalPrice;
     private ShoppingCartProductsResponseModel[] cartProducts;
 
-    protected override async Task OnInitializedAsync()
-    {
-        var token = await this.LocalStorage.GetItemAsync<string>("authToken");
-        this.Http.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
+    protected override async Task OnInitializedAsync() => await this.LoadDataAsync();
 
-        await this.LoadDataAsync();
+    private async Task LoadDataAsync()
+    {
+        this.cartProducts = await this.ShoppingCartService.MineAsync();
+        this.totalPrice = this.cartProducts.Sum(p => p.Price * p.Quantity);
     }
 
     private async Task OnRemoveAsync(int productId)
     {
-        await this.Http.DeleteAsync($"api/shoppingcarts/{productId}");
+        await this.ShoppingCartService.RemoveProductAsync(productId);
         await this.LoadDataAsync();
-    }
-
-    private async Task LoadDataAsync()
-    {
-        this.cartProducts = await this.Http.GetFromJsonAsync<ShoppingCartProductsResponseModel[]>("api/shoppingcarts");
-        this.totalPrice = this.cartProducts.Sum(p => p.Price * p.Quantity);
     }
 
     private async Task IncrementQuantity(int productId, int quantity, int stockQuantity)
@@ -169,7 +163,7 @@ else
         {
             this.model.Quantity++;
 
-            await this.Http.PutAsJsonAsync($"api/shoppingcarts/{productId}", model);
+            await this.ShoppingCartService.UpdateProductAsync(productId, model);
             await this.LoadDataAsync();
         }
     }
@@ -182,7 +176,7 @@ else
         {
             this.model.Quantity--;
 
-            await this.Http.PutAsJsonAsync($"api/shoppingcarts/{productId}", model);
+            await this.ShoppingCartService.UpdateProductAsync(productId, model);
             await this.LoadDataAsync();
         }
     }

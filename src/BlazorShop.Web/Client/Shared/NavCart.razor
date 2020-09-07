@@ -18,11 +18,6 @@ else
 @code {
     private int? cartProductsCount;
 
-    protected override async Task OnInitializedAsync()
-    {
-        var token = await this.LocalStorage.GetItemAsync<string>("authToken");
-        this.Http.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
-
-        this.cartProductsCount = await this.Http.GetFromJsonAsync<int>("api/shoppingcarts/count");
-    }
+    protected override async Task OnInitializedAsync() 
+        => this.cartProductsCount = await this.ShoppingCartService.CountAsync();
 }

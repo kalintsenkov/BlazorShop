@@ -9,7 +9,14 @@
     using Microsoft.AspNetCore.Components.WebAssembly.Hosting;
     using Microsoft.Extensions.DependencyInjection;
 
-    using Services;
+    using Services.Addresses;
+    using Services.Authentication;
+    using Services.Categories;
+    using Services.Orders;
+    using Services.Products;
+    using Services.Search;
+    using Services.ShoppingCart;
+    using Services.Wishlists;
 
     public static class WebAssemblyHostBuilderExtensions
     {
@@ -29,9 +36,13 @@
                 .AddScoped<ApiAuthenticationStateProvider>()
                 .AddScoped<AuthenticationStateProvider, ApiAuthenticationStateProvider>()
                 .AddTransient<IApiClient, ApiClient>()
+                .AddTransient<IAddressesService, AddressesService>()
                 .AddTransient<IAuthService, AuthService>()
                 .AddTransient<ICategoriesService, CategoriesService>()
+                .AddTransient<IOrdersService, OrderService>()
                 .AddTransient<IProductsService, ProductsService>()
+                .AddTransient<ISearchService, SearchService>()
+                .AddTransient<IShoppingCartService, ShoppingCartService>()
                 .AddTransient<IWishlistsService, WishlistService>()
                 .AddTransient(sp => new HttpClient
                 {

@@ -59,28 +59,21 @@ else
 
     private ProductsListingResponseModel[] products;
 
-    protected override async Task OnInitializedAsync()
-    {
-        var token = await this.LocalStorage.GetItemAsync<string>("authToken");
-        this.Http.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
+    protected override async Task OnInitializedAsync() => await this.LoadDataAsync();
 
-        await this.LoadDataAsync();
-    }
-
-    private async Task LoadDataAsync()
-         => this.products = await this.Http.GetFromJsonAsync<ProductsListingResponseModel[]>("api/wishlists");
+    private async Task LoadDataAsync() => this.products = await this.WishlistsService.MineAsync();
 
     private async Task OnSubmitAsync(int id)
     {
         this.model.Quantity = 1;
 
-        await this.Http.PostAsJsonAsync($"api/shoppingcarts/{id}", this.model);
+        await this.ShoppingCartService.AddProductAsync(id, model);
         this.NavigationManager.NavigateTo("/cart", forceLoad: true);
     }
 
     private async Task OnRemoveAsync(int productId)
     {
-        await this.Http.DeleteAsync($"api/wishlists/{productId}");
+        await this.WishlistsService.RemoveProductAsync(productId);
         await this.LoadDataAsync();
     }
 }

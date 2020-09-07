@@ -90,19 +90,13 @@
     [Parameter]
     public int ProductQuantity { get; set; }
 
-    protected override async Task OnInitializedAsync()
-    {
-        var token = await this.LocalStorage.GetItemAsync<string>("authToken");
-        this.Http.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
-    }
-
     private async Task OnSubmitAsync(int id)
     {
-        var response = await this.Http.PostAsJsonAsync($"api/shoppingcarts/{id}", model);
+        var result = await this.ShoppingCartService.AddProductAsync(this.ProductId, model);
 
-        if (!response.IsSuccessStatusCode)
+        if (!result.Succeeded)
         {
-            this.errors = await response.Content.ReadFromJsonAsync<string[]>();
+            this.errors = result.Errors;
             this.showErrors = true;
         }
         else
@@ -120,16 +114,13 @@
 
     private async Task OnDeleteAsync()
     {
-        var token = await this.LocalStorage.GetItemAsync<string>("authToken");
-        this.Http.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
-
         var confirmed = await this.JsRuntime.InvokeAsync<bool>("confirm", "Are you sure you want to delete this item?");
 
         if (confirmed)
         {
-            var response = await this.Http.DeleteAsync($"api/products/{this.ProductId}");
+            var result = await this.ProductsService.DeleteAsync(this.ProductId);
 
-            if (response.IsSuccessStatusCode)
+            if (result.Succeeded)
             {
                 this.ToastService.ShowSuccess($"{this.ProductName} has been deleted successfully.");
                 this.NavigationManager.NavigateTo("/products");

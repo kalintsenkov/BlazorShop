@@ -318,28 +318,21 @@ else
             this.Page = 1;
         }
 
-        var requestUrl = $"api/search/products" +
-                $"?category={this.CategoryId}" +
-                $"&minPrice={this.model.MinPrice}" +
-                $"&maxPrice={this.model.MaxPrice}" +
-                $"&query={this.SearchQuery}" +
-                $"&page={this.Page}";
+        model.Category = this.CategoryId;
+        model.Query = this.SearchQuery;
+        model.Page = this.Page;
 
-        this.products = await this.Http.GetFromJsonAsync<ProductsListingResponseModel[]>(requestUrl);
+        this.products = await this.SearchService.Products(this.model);
 
         if (withCategories)
         {
-            this.categories = await this.Http.GetFromJsonAsync<CategoriesListingResponseModel[]>("api/categories");
+            this.categories = await this.CategoriesService.AllAsync();
         }
     }
 
     private async Task AddToWishlist(int id)
     {
-        var token = await this.LocalStorage.GetItemAsync<string>("authToken");
-        this.Http.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
-
-        await this.Http.PostAsJsonAsync($"api/wishlists/{id}", id);
-
+        await this.WishlistsService.AddProductAsync(id);
         this.NavigationManager.NavigateTo("/wishlist");
     }
 
