@@ -8,7 +8,6 @@
 
     using Infrastructure.Extensions;
     using Models.Categories;
-    using Models.Products;
     using Services.Categories;
 
     using static Common.Constants;
@@ -23,11 +22,6 @@
         [HttpGet]
         public async Task<IEnumerable<CategoriesListingResponseModel>> All()
             => await this.categories.AllAsync();
-
-        [HttpGet(Id)]
-        public async Task<IEnumerable<ProductsListingResponseModel>> Details(
-            int id)
-            => await this.categories.DetailsAsync(id);
 
         [HttpPost]
         [Authorize(Roles = AdministratorRole)]

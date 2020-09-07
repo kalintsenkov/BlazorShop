@@ -15,8 +15,6 @@
 
         Task<Result> DeleteAsync(int id);
 
-        Task<IEnumerable<ProductsListingResponseModel>> DetailsAsync(int id);
-
         Task<IEnumerable<CategoriesListingResponseModel>> AllAsync();
     }
 }
