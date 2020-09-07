@@ -15,6 +15,9 @@
 
     public class ShoppingCartService : BaseService<ShoppingCart>, IShoppingCartService
     {
+        private const string NotEnoughProductsMessage = "There are not enough products in stock.";
+        private const string InvalidErrorMessage = "This user cannot edit this shopping cart.";
+
         private readonly ICurrentUserService currentUser;
 
         public ShoppingCartService(
@@ -30,7 +33,7 @@
 
             if (productQuantity < quantity)
             {
-                return "There are not enough products in stock.";
+                return NotEnoughProductsMessage;
             }
 
             var userId = this.currentUser.UserId;
@@ -61,7 +64,7 @@
 
             if (productQuantity < quantity)
             {
-                return "There are not enough products in stock.";
+                return NotEnoughProductsMessage;
             }
 
             var userId = this.currentUser.UserId;
@@ -70,7 +73,7 @@
 
             if (shoppingCartProduct == null)
             {
-                return "This user cannot edit this shopping cart.";
+                return InvalidErrorMessage;
             }
 
             shoppingCartProduct.Quantity = quantity;
@@ -88,7 +91,7 @@
 
             if (shoppingCartProduct == null)
             {
-                return "This user cannot delete products from this shopping cart.";
+                return InvalidErrorMessage;
             }
 
             this.Data.Remove(shoppingCartProduct);
