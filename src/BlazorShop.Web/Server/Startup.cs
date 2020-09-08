@@ -9,6 +9,7 @@ namespace BlazorShop.Web.Server
     using Microsoft.Extensions.DependencyInjection;
 
     using Infrastructure.Extensions;
+    using Middleware;
 
     public class Startup
     {
@@ -29,6 +30,7 @@ namespace BlazorShop.Web.Server
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
             => app
                 .UseExceptionHandling(env)
+                .UseValidationExceptionHandler()
                 .UseHttpsRedirection()
                 .UseBlazorFrameworkFiles()
                 .UseStaticFiles()
