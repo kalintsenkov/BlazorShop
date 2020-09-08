@@ -1,19 +1,16 @@
 ﻿namespace BlazorShop.Web.Client.Infrastructure
 {
+    using System.Net.Http;
     using System.Threading.Tasks;
-
-    using Models;
 
     public interface IApiClient
     {
-        Task<TResponse> GetJson<TResponse>(string url);
+        Task<TResponse> GetJsonAsync<TResponse>(string url);
 
-        Task<TResponse> PostJson<TRequest, TResponse>(string url, TRequest request);
+        Task<HttpResponseMessage> PostJsonAsync<TRequest>(string url, TRequest request);
 
-        Task<Result> PostJson<TRequest>(string url, TRequest request);
+        Task<HttpResponseMessage> PutJsonAsync<TRequest>(string url, TRequest request);
 
-        Task<Result> PutJson<TRequest>(string url, TRequest request);
-
-        Task<Result> Delete(string url);
+        Task<HttpResponseMessage> DeleteAsync(string url);
     }
 }

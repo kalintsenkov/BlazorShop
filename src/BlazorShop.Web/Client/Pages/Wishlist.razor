@@ -61,19 +61,20 @@ else
 
     protected override async Task OnInitializedAsync() => await this.LoadDataAsync();
 
-    private async Task LoadDataAsync() => this.products = await this.WishlistsService.MineAsync();
+    private async Task LoadDataAsync()
+        => this.products = await this.ApiClient.GetJsonAsync<ProductsListingResponseModel[]>("api/wishlists");
 
     private async Task OnSubmitAsync(int id)
     {
         this.model.Quantity = 1;
 
-        await this.ShoppingCartService.AddProductAsync(id, model);
+        await this.ApiClient.PostJsonAsync($"api/shoppingcarts/{id}", model);
         this.NavigationManager.NavigateTo("/cart", forceLoad: true);
     }
 
-    private async Task OnRemoveAsync(int productId)
+    private async Task OnRemoveAsync(int id)
     {
-        await this.WishlistsService.RemoveProductAsync(productId);
+        await this.ApiClient.DeleteAsync($"api/wishlists/{id}");
         await this.LoadDataAsync();
     }
 }

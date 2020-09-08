@@ -72,5 +72,5 @@ else
     public string ProductName { get; set; }
 
     protected override async Task OnInitializedAsync()
-        => this.product = await this.ProductsService.DetailsAsync(this.Id);
+        => this.product = await this.ApiClient.GetJsonAsync<ProductsDetailsResponseModel>($"api/products/{this.Id}");
 }

@@ -145,13 +145,13 @@ else
 
     private async Task LoadDataAsync()
     {
-        this.cartProducts = await this.ShoppingCartService.MineAsync();
+        this.cartProducts = await this.ApiClient.GetJsonAsync<ShoppingCartProductsResponseModel[]>("api/shoppingcarts");
         this.totalPrice = this.cartProducts.Sum(p => p.Price * p.Quantity);
     }
 
     private async Task OnRemoveAsync(int productId)
     {
-        await this.ShoppingCartService.RemoveProductAsync(productId);
+        await this.ApiClient.DeleteAsync($"api/shoppingcarts/{productId}");
         await this.LoadDataAsync();
     }
 
@@ -163,7 +163,7 @@ else
         {
             this.model.Quantity++;
 
-            await this.ShoppingCartService.UpdateProductAsync(productId, model);
+            await this.ApiClient.PutJsonAsync($"api/shoppingcarts/{productId}", model);
             await this.LoadDataAsync();
         }
     }
@@ -176,7 +176,7 @@ else
         {
             this.model.Quantity--;
 
-            await this.ShoppingCartService.UpdateProductAsync(productId, model);
+            await this.ApiClient.PutJsonAsync($"api/shoppingcarts/{productId}", model);
             await this.LoadDataAsync();
         }
     }

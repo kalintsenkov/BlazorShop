@@ -32,5 +32,6 @@ else
     [Parameter]
     public string Id { get; set; }
 
-    protected override async Task OnInitializedAsync() => this.order = await this.OrdersService.DetailsAsync(this.Id);
+    protected override async Task OnInitializedAsync() 
+        => this.order = await this.ApiClient.GetJsonAsync<OrdersDetailsResponseModel>($"api/orders/{this.Id}");
 }

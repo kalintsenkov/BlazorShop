@@ -158,5 +158,5 @@ else
     private CategoriesListingResponseModel[] categories;
 
     protected override async Task OnInitializedAsync()
-        => this.categories = await this.CategoriesService.AllAsync();
+        => this.categories = await this.ApiClient.GetJsonAsync<CategoriesListingResponseModel[]>("api/categories");
 }

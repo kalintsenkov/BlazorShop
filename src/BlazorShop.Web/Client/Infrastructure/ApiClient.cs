@@ -7,8 +7,6 @@
 
     using Blazored.LocalStorage;
 
-    using Models;
-
     public class ApiClient : IApiClient
     {
         private readonly HttpClient httpClient;
@@ -22,65 +20,37 @@
             this.localStorage = localStorage;
         }
 
-        public async Task<TResponse> GetJson<TResponse>(string url)
+        public async Task<TResponse> GetJsonAsync<TResponse>(string url)
         {
             await this.SetToken();
 
             return await this.httpClient.GetFromJsonAsync<TResponse>(url);
         }
 
-        public async Task<TResponse> PostJson<TRequest, TResponse>(string url, TRequest request)
+        public async Task<HttpResponseMessage> PostJsonAsync<TRequest>(string url, TRequest request)
         {
             await this.SetToken();
 
-            var response = await this.httpClient.PostAsJsonAsync(url, request);
-            var responseObject = await response.Content.ReadFromJsonAsync<TResponse>();
-
-            return responseObject;
+            return await this.httpClient.PostAsJsonAsync(url, request);
         }
 
-        public async Task<Result> PostJson<TRequest>(string url, TRequest request)
+        public async Task<HttpResponseMessage> PutJsonAsync<TRequest>(string url, TRequest request)
         {
             await this.SetToken();
 
-            var response = await this.httpClient.PostAsJsonAsync(url, request);
-
-            return await this.GetResult(response);
+            return await this.httpClient.PutAsJsonAsync(url, request);
         }
 
-        public async Task<Result> PutJson<TRequest>(string url, TRequest request)
+        public async Task<HttpResponseMessage> DeleteAsync(string url)
         {
             await this.SetToken();
 
-            var response = await this.httpClient.PutAsJsonAsync(url, request);
-
-            return await this.GetResult(response);
-        }
-
-        public async Task<Result> Delete(string url)
-        {
-            await this.SetToken();
-
-            var response = await this.httpClient.DeleteAsync(url);
-
-            return await this.GetResult(response);
-        }
-
-        private async Task<Result> GetResult(HttpResponseMessage response)
-        {
-            if (response.IsSuccessStatusCode)
-            {
-                return Result.Success;
-            }
-
-            var errors = await response.Content.ReadFromJsonAsync<string[]>();
-
-            return Result.Failure(errors);
+            return await this.httpClient.DeleteAsync(url);
         }
 
         private async Task SetToken()
         {
-            var token = await this.localStorage.GetItemAsync<string>("authToken");
+            var token = await this.localStorage.GetItemAsStringAsync("authToken");
 
             if (token != null)
             {

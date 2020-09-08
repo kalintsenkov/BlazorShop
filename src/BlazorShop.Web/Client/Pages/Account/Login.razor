@@ -55,6 +55,7 @@
 
         if (result.Succeeded)
         {
+            this.showErrors = false;
             this.ToastService.ShowSuccess("You have successfully logged in");
             this.NavigationManager.NavigateTo("/");
         }

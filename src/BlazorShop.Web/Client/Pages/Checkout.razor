@@ -160,18 +160,21 @@ else
         var state = await this.AuthState.GetAuthenticationStateAsync();
         var user = state.User;
 
+        this.cartProducts = await this.ApiClient.GetJsonAsync<ShoppingCartProductsResponseModel[]>("api/shoppingcarts");
+
         this.email = user.GetEmail();
-        this.cartProducts = await this.ShoppingCartService.MineAsync();
         this.totalPrice = this.cartProducts.Sum(p => p.Price * p.Quantity);
     }
 
     private async Task SubmitAsync()
     {
-        var addressId = await this.AddressesService.CreateAsync(this.address);
+        var addressResponse = await this.ApiClient.PostJsonAsync("api/addresses", this.address);
+        var addressId = await addressResponse.Content.ReadFromJsonAsync<int>();
 
         this.order.AddressId = addressId;
 
-        var orderId = await this.OrdersService.PurchaseAsync(this.order);
+        var orderResponse = await this.ApiClient.PostJsonAsync("api/orders", this.order);
+        var orderId = await orderResponse.Content.ReadAsStringAsync();
 
         this.NavigationManager.NavigateTo($"/order/{orderId}");
     }

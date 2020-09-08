@@ -100,7 +100,7 @@ else
 
     private async Task LoadDataAsync()
     {
-        this.orders = await this.OrdersService.MineAsync();
+        this.orders = await this.ApiClient.GetJsonAsync<OrdersListingResponseModel[]>("api/orders");
 
         var state = await this.AuthState.GetAuthenticationStateAsync();
         var user = state.User;

@@ -79,12 +79,14 @@ else
 
     private CategoriesListingResponseModel[] categories;
 
-    protected override async Task OnInitializedAsync() 
-        => this.categories = await this.CategoriesService.AllAsync();
+    protected override async Task OnInitializedAsync()
+        => this.categories = await this.ApiClient.GetJsonAsync<CategoriesListingResponseModel[]>("api/categories");
 
     private async Task SubmitAsync()
     {
-        var id = await this.ProductsService.CreateAsync(model);
+        var response = await this.ApiClient.PostJsonAsync("api/products", model);
+
+        var id = await response.Content.ReadFromJsonAsync<int>();
 
         this.NavigationManager.NavigateTo($"/products/{id}/{model.Name}");
     }

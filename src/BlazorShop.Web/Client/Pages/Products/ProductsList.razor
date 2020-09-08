@@ -322,17 +322,24 @@ else
         model.Query = this.SearchQuery;
         model.Page = this.Page;
 
-        this.products = await this.SearchService.Products(this.model);
+        var requestUrl = "api/search/products" +
+                $"?category={model.Category}" +
+                $"&minPrice={model.MinPrice}" +
+                $"&maxPrice={model.MaxPrice}" +
+                $"&query={model.Query}" +
+                $"&page={model.Page}";
+
+        this.products = await this.ApiClient.GetJsonAsync<ProductsListingResponseModel[]>(requestUrl);
 
         if (withCategories)
         {
-            this.categories = await this.CategoriesService.AllAsync();
+            this.categories = await this.ApiClient.GetJsonAsync<CategoriesListingResponseModel[]>("api/categories");
         }
     }
 
     private async Task AddToWishlist(int id)
     {
-        await this.WishlistsService.AddProductAsync(id);
+        await this.ApiClient.PostJsonAsync($"api/wishlists/{id}", id);
         this.NavigationManager.NavigateTo("/wishlist");
     }
 
