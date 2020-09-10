@@ -19,10 +19,7 @@
         private readonly IAddressesService addresses;
 
         public AddressesServiceTests() 
-            => this.addresses = new AddressesService(
-                this.Data, 
-                this.Mapper,
-                this.CurrentUser);
+            => this.addresses = new AddressesService(this.Data, this.Mapper);
 
         [Theory]
         [InlineData("Country 1", "State 1", "City 1", "Test description 1", "1000", "0888888888")]
@@ -36,6 +33,8 @@
             string postalCode,
             string phoneNumber)
         {
+            const string userId = TestUser.Identifier;
+
             var model = new AddressesRequestModel
             {
                 Country = country,
@@ -46,7 +45,7 @@
                 PhoneNumber = phoneNumber
             };
 
-            var id = await this.addresses.CreateAsync(model);
+            var id = await this.addresses.CreateAsync(model, userId);
 
             var expected = new Address
             {
@@ -57,13 +56,10 @@
                 Description = description,
                 PostalCode = postalCode,
                 PhoneNumber = phoneNumber,
-                UserId = TestUser.Identifier
+                UserId = userId
             };
 
-            var actual = await this
-                .Data
-                .Addresses
-                .FirstAsync();
+            var actual = await this.Data.Addresses.FirstAsync();
 
             this.Data.Addresses.Count().ShouldBe(1);
 
@@ -88,6 +84,8 @@
             string postalCode,
             string phoneNumber)
         {
+            const string userId = TestUser.Identifier;
+
             var model = new AddressesRequestModel
             {
                 Country = country,
@@ -98,9 +96,9 @@
                 PhoneNumber = phoneNumber
             };
 
-            var id = await this.addresses.CreateAsync(model);
+            var id = await this.addresses.CreateAsync(model, userId);
 
-            await this.addresses.DeleteAsync(id);
+            await this.addresses.DeleteAsync(id, userId);
 
             this.Data.Addresses.Count().ShouldBe(0);
         }
@@ -109,18 +107,17 @@
         [InlineData(3)]
         [InlineData(6)]
         [InlineData(9)]
-        public async Task MineShouldReturnCurrentUserAddresses(int count)
+        public async Task ByUserShouldReturnCurrentUserAddresses(int count)
         {
             var data = AddressesTestData.GetAddresses(count);
 
             await this.Data.Addresses.AddRangeAsync(data);
-
             await this.Data.SaveChangesAsync();
 
-            var actual = await this.addresses.MineAsync();
+            var actual = await this.addresses.ByUserAsync(TestUser.Identifier);
 
             actual.Count().ShouldBe(count);
-            actual.ShouldBeOfType<List<AddressesListingResponseModel>>();
+            actual.ShouldBeAssignableTo<IEnumerable<AddressesListingResponseModel>>();
         }
     }
 }

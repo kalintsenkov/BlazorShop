@@ -7,19 +7,26 @@
     using Microsoft.AspNetCore.Mvc;
 
     using Models.Orders;
+    using Services.Identity;
     using Services.Orders;
 
     [Authorize]
     public class OrdersController : ApiController
     {
         private readonly IOrdersService orders;
+        private readonly ICurrentUserService currentUser;
 
-        public OrdersController(IOrdersService orders)
-            => this.orders = orders;
+        public OrdersController(
+            IOrdersService orders, 
+            ICurrentUserService currentUser)
+        {
+            this.orders = orders;
+            this.currentUser = currentUser;
+        }
 
         [HttpGet]
         public async Task<IEnumerable<OrdersListingResponseModel>> Mine()
-            => await this.orders.MineAsync();
+            => await this.orders.ByUserAsync(this.currentUser.UserId);
 
         [HttpGet(Id)]
         public async Task<OrdersDetailsResponseModel> Details(
@@ -30,7 +37,9 @@
         public async Task<ActionResult> Purchase(
             OrdersRequestModel model)
         {
-            var id = await this.orders.PurchaseAsync(model);
+            var id = await this.orders.PurchaseAsync(
+                model,
+                this.currentUser.UserId);
 
             return Created(nameof(this.Purchase), id);
         }

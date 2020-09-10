@@ -9,25 +9,23 @@
 
     using Data;
     using Data.Models;
-    using Identity;
     using Models;
     using Models.ShoppingCarts;
 
     public class ShoppingCartService : BaseService<ShoppingCart>, IShoppingCartService
     {
-        private const string NotEnoughProductsMessage = "There are not enough products in stock.";
         private const string InvalidErrorMessage = "This user cannot edit this shopping cart.";
+        private const string NotEnoughProductsMessage = "There are not enough products in stock.";
 
-        private readonly ICurrentUserService currentUser;
-
-        public ShoppingCartService(
-            ApplicationDbContext db,
-            IMapper mapper,
-            ICurrentUserService currentUser)
+        public ShoppingCartService(ApplicationDbContext db, IMapper mapper)
             : base(db, mapper)
-            => this.currentUser = currentUser;
+        {
+        }
 
-        public async Task<Result> AddProductAsync(int productId, int quantity)
+        public async Task<Result> AddProductAsync(
+            int productId,
+            int quantity,
+            string userId)
         {
             var productQuantity = await this.GetProductQuantityById(productId);
 
@@ -35,8 +33,6 @@
             {
                 return NotEnoughProductsMessage;
             }
-
-            var userId = this.currentUser.UserId;
 
             var shoppingCart = await this.FindByUserId(userId);
 
@@ -58,7 +54,10 @@
             return Result.Success;
         }
 
-        public async Task<Result> UpdateProductAsync(int productId, int quantity)
+        public async Task<Result> UpdateProductAsync(
+            int productId,
+            int quantity,
+            string userId)
         {
             var productQuantity = await this.GetProductQuantityById(productId);
 
@@ -67,9 +66,9 @@
                 return NotEnoughProductsMessage;
             }
 
-            var userId = this.currentUser.UserId;
-
-            var shoppingCartProduct = await this.FindByProductAndUserAsync(productId, userId);
+            var shoppingCartProduct = await this.FindByProductAndUserAsync(
+                productId, 
+                userId);
 
             if (shoppingCartProduct == null)
             {
@@ -83,11 +82,13 @@
             return Result.Success;
         }
 
-        public async Task<Result> RemoveProductAsync(int productId)
+        public async Task<Result> RemoveProductAsync(
+            int productId, 
+            string userId)
         {
-            var userId = this.currentUser.UserId;
-
-            var shoppingCartProduct = await this.FindByProductAndUserAsync(productId, userId);
+            var shoppingCartProduct = await this.FindByProductAndUserAsync(
+                productId,
+                userId);
 
             if (shoppingCartProduct == null)
             {
@@ -101,15 +102,17 @@
             return Result.Success;
         }
 
-        public async Task<int> CountAsync()
+        public async Task<int> CountAsync(
+            string userId)
             => await this
-                .AllByUserId(this.currentUser.UserId)
+                .AllByUserId(userId)
                 .CountAsync();
 
-        public async Task<IEnumerable<ShoppingCartProductsResponseModel>> MineAsync()
+        public async Task<IEnumerable<ShoppingCartProductsResponseModel>> ByUserAsync(
+            string userId)
             => await this.Mapper
                 .ProjectTo<ShoppingCartProductsResponseModel>(this
-                    .AllByUserId(this.currentUser.UserId)
+                    .AllByUserId(userId)
                     .AsNoTracking())
                 .ToListAsync();
 

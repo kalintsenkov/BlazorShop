@@ -9,22 +9,17 @@
 
     using Data;
     using Data.Models;
-    using Identity;
     using Models;
     using Models.Addresses;
 
     public class AddressesService : BaseService<Address>, IAddressesService
     {
-        private readonly ICurrentUserService currentUser;
-
-        public AddressesService(
-            ApplicationDbContext data,
-            IMapper mapper,
-            ICurrentUserService currentUser)
+        public AddressesService(ApplicationDbContext data, IMapper mapper)
             : base(data, mapper)
-            => this.currentUser = currentUser;
+        {
+        }
 
-        public async Task<int> CreateAsync(AddressesRequestModel model)
+        public async Task<int> CreateAsync(AddressesRequestModel model, string userId)
         {
             var address = new Address
             {
@@ -34,7 +29,7 @@
                 Description = model.Description,
                 PostalCode = model.PostalCode,
                 PhoneNumber = model.PhoneNumber,
-                UserId = this.currentUser.UserId
+                UserId = userId
             };
 
             await this.Data.AddAsync(address);
@@ -43,10 +38,8 @@
             return address.Id;
         }
 
-        public async Task<Result> DeleteAsync(int id)
+        public async Task<Result> DeleteAsync(int id, string userId)
         {
-            var userId = this.currentUser.UserId;
-
             var address = await this
                 .All()
                 .Where(a => a.Id == id && a.UserId == userId)
@@ -64,11 +57,12 @@
             return Result.Success;
         }
 
-        public async Task<IEnumerable<AddressesListingResponseModel>> MineAsync()
+        public async Task<IEnumerable<AddressesListingResponseModel>> ByUserAsync(
+            string userId)
             => await this.Mapper
                 .ProjectTo<AddressesListingResponseModel>(this
                     .AllAsNoTracking()
-                    .Where(a => a.UserId == this.currentUser.UserId))
+                    .Where(a => a.UserId == userId))
                 .ToListAsync();
     }
 }

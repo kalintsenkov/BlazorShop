@@ -9,25 +9,18 @@
 
     using Data;
     using Data.Models;
-    using Identity;
     using Models;
     using Models.Products;
 
     public class WishlistService : BaseService<Wishlist>, IWishlistService
     {
-        private readonly ICurrentUserService currentUser;
-
-        public WishlistService(
-            ApplicationDbContext db,
-            IMapper mapper,
-            ICurrentUserService currentUser)
+        public WishlistService(ApplicationDbContext db, IMapper mapper)
             : base(db, mapper)
-            => this.currentUser = currentUser;
-
-        public async Task<Result> AddProductAsync(int productId)
         {
-            var userId = this.currentUser.UserId;
+        }
 
+        public async Task<Result> AddProductAsync(int productId, string userId)
+        {
             var wishlist = await this.FindByProductAndUserAsync(productId, userId);
 
             if (wishlist == null)
@@ -51,15 +44,13 @@
             return Result.Success;
         }
 
-        public async Task<Result> RemoveProductAsync(int productId)
+        public async Task<Result> RemoveProductAsync(int productId, string userId)
         {
-            var userId = this.currentUser.UserId;
-
             var wishlist = await this.FindByProductAndUserAsync(productId, userId);
 
             if (wishlist == null)
             {
-                return "This user cannot delete products from this wish list.";
+                return "This user cannot delete products from this wishlist.";
             }
 
             this.Data.Remove(wishlist);
@@ -69,10 +60,11 @@
             return Result.Success;
         }
 
-        public async Task<IEnumerable<ProductsListingResponseModel>> MineAsync()
+        public async Task<IEnumerable<ProductsListingResponseModel>> ByUserAsync(
+            string userId)
             => await this.Mapper
                 .ProjectTo<ProductsListingResponseModel>(this
-                    .AllByUserId(this.currentUser.UserId)
+                    .AllByUserId(userId)
                     .AsNoTracking()
                     .Select(w => w.Product))
                 .ToListAsync();

@@ -5,7 +5,6 @@
 
     using Models;
     using Models.Categories;
-    using Models.Products;
 
     public interface ICategoriesService
     {

@@ -8,14 +8,22 @@
 
     public interface IShoppingCartService
     {
-        Task<Result> AddProductAsync(int productId, int quantity);
+        Task<Result> AddProductAsync(
+            int productId,
+            int quantity, 
+            string userId);
 
-        Task<Result> UpdateProductAsync(int productId, int quantity);
+        Task<Result> UpdateProductAsync(
+            int productId,
+            int quantity, 
+            string userId);
 
-        Task<Result> RemoveProductAsync(int productId);
+        Task<Result> RemoveProductAsync(
+            int productId, 
+            string userId);
 
-        Task<int> CountAsync();
+        Task<int> CountAsync(string userId);
 
-        Task<IEnumerable<ShoppingCartProductsResponseModel>> MineAsync();
+        Task<IEnumerable<ShoppingCartProductsResponseModel>> ByUserAsync(string userId);
     }
 }

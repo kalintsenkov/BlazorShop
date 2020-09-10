@@ -8,10 +8,10 @@
 
     public interface IWishlistService
     {
-        Task<Result> AddProductAsync(int productId);
+        Task<Result> AddProductAsync(int productId, string userId);
 
-        Task<Result> RemoveProductAsync(int productId);
+        Task<Result> RemoveProductAsync(int productId, string userId);
 
-        Task<IEnumerable<ProductsListingResponseModel>> MineAsync();
+        Task<IEnumerable<ProductsListingResponseModel>> ByUserAsync(string userId);
     }
 }

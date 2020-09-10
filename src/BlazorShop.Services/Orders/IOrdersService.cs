@@ -7,10 +7,10 @@
 
     public interface IOrdersService
     {
-        Task<string> PurchaseAsync(OrdersRequestModel model);
+        Task<string> PurchaseAsync(OrdersRequestModel model, string userId);
 
         Task<OrdersDetailsResponseModel> DetailsAsync(string id);
 
-        Task<IEnumerable<OrdersListingResponseModel>> MineAsync();
+        Task<IEnumerable<OrdersListingResponseModel>> ByUserAsync(string userId);
     }
 }

@@ -8,10 +8,10 @@
 
     public interface IAddressesService
     {
-        Task<int> CreateAsync(AddressesRequestModel model);
+        Task<int> CreateAsync(AddressesRequestModel model, string userId);
 
-        Task<Result> DeleteAsync(int id);
+        Task<Result> DeleteAsync(int id, string userId);
 
-        Task<IEnumerable<AddressesListingResponseModel>> MineAsync();
+        Task<IEnumerable<AddressesListingResponseModel>> ByUserAsync(string userId);
     }
 }
