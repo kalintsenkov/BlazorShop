@@ -57,12 +57,12 @@ else
 @code {
     private readonly ShoppingCartRequestModel model = new ShoppingCartRequestModel();
 
-    private ProductsListingResponseModel[] products;
+    private WishlistsProductsResponseModel[] products;
 
     protected override async Task OnInitializedAsync() => await this.LoadDataAsync();
 
     private async Task LoadDataAsync()
-        => this.products = await this.ApiClient.GetJsonAsync<ProductsListingResponseModel[]>("api/wishlists");
+        => this.products = await this.ApiClient.GetJsonAsync<WishlistsProductsResponseModel[]>("api/wishlists");
 
     private async Task OnSubmitAsync(int id)
     {

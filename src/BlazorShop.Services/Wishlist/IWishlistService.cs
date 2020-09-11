@@ -4,7 +4,7 @@
     using System.Threading.Tasks;
 
     using Models;
-    using Models.Products;
+    using Models.Wishlists;
 
     public interface IWishlistService
     {
@@ -12,6 +12,6 @@
 
         Task<Result> RemoveProductAsync(int productId, string userId);
 
-        Task<IEnumerable<ProductsListingResponseModel>> ByUserAsync(string userId);
+        Task<IEnumerable<WishlistsProductsResponseModel>> ByUserAsync(string userId);
     }
 }

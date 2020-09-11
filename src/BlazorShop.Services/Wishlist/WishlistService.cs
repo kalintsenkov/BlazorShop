@@ -10,7 +10,7 @@
     using Data;
     using Data.Models;
     using Models;
-    using Models.Products;
+    using Models.Wishlists;
 
     public class WishlistService : BaseService<Wishlist>, IWishlistService
     {
@@ -21,24 +21,22 @@
 
         public async Task<Result> AddProductAsync(int productId, string userId)
         {
-            var wishlist = await this.FindByProductAndUserAsync(productId, userId);
+            var wishlist = await this
+                .All()
+                .FirstOrDefaultAsync(w => w.UserId == userId);
 
-            if (wishlist == null)
+            wishlist ??= new Wishlist
             {
-                wishlist = new Wishlist
-                {
-                    UserId = userId,
-                    ProductId = productId
-                };
+                UserId = userId
+            };
 
-                await this.Data.AddAsync(wishlist);
-            }
-            else
+            var wishlistProduct = new WishlistProduct
             {
-                wishlist.DeletedOn = null;
-                wishlist.IsDeleted = false;
-            }
+                Wishlist = wishlist,
+                ProductId = productId
+            };
 
+            await this.Data.AddAsync(wishlistProduct);
             await this.Data.SaveChangesAsync();
 
             return Result.Success;
@@ -46,41 +44,34 @@
 
         public async Task<Result> RemoveProductAsync(int productId, string userId)
         {
-            var wishlist = await this.FindByProductAndUserAsync(productId, userId);
+            var wishlistProduct = await this
+                .AllByUserId(userId)
+                .FirstOrDefaultAsync(w => w.ProductId == productId);
 
-            if (wishlist == null)
+            if (wishlistProduct == null)
             {
                 return "This user cannot delete products from this wishlist.";
             }
 
-            this.Data.Remove(wishlist);
-
+            this.Data.Remove(wishlistProduct);
             await this.Data.SaveChangesAsync();
 
             return Result.Success;
         }
 
-        public async Task<IEnumerable<ProductsListingResponseModel>> ByUserAsync(
+        public async Task<IEnumerable<WishlistsProductsResponseModel>> ByUserAsync(
             string userId)
             => await this.Mapper
-                .ProjectTo<ProductsListingResponseModel>(this
+                .ProjectTo<WishlistsProductsResponseModel>(this
                     .AllByUserId(userId)
-                    .AsNoTracking()
-                    .Select(w => w.Product))
+                    .AsNoTracking())
                 .ToListAsync();
 
-        private async Task<Wishlist> FindByProductAndUserAsync(
-            int productId,
+        private IQueryable<WishlistProduct> AllByUserId(
             string userId)
-            => await this
-                .AllByUserId(userId, withDeleted: true)
-                .FirstOrDefaultAsync(w => w.ProductId == productId);
-
-        private IQueryable<Wishlist> AllByUserId(
-            string userId,
-            bool withDeleted = false)
-            => withDeleted
-                ? this.All().Where(w => w.UserId == userId)
-                : this.All().Where(w => w.UserId == userId && !w.IsDeleted);
+            => this
+                .All()
+                .Where(w => w.UserId == userId)
+                .SelectMany(w => w.Products);
     }
 }

@@ -7,7 +7,7 @@
     using Microsoft.AspNetCore.Mvc;
 
     using Infrastructure.Extensions;
-    using Models.Products;
+    using Models.Wishlists;
     using Services.Identity;
     using Services.Wishlist;
 
@@ -26,7 +26,7 @@
         }
 
         [HttpGet]
-        public async Task<IEnumerable<ProductsListingResponseModel>> Mine()
+        public async Task<IEnumerable<WishlistsProductsResponseModel>> Mine()
             => await this.wishlist.ByUserAsync(this.currentUser.UserId);
 
         [HttpPost(Id)]

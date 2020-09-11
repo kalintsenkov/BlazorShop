@@ -34,7 +34,9 @@
                 return NotEnoughProductsMessage;
             }
 
-            var shoppingCart = await this.FindByUserId(userId);
+            var shoppingCart = await this
+                .All()
+                .FirstOrDefaultAsync(c => c.UserId == userId);
 
             shoppingCart ??= new ShoppingCart
             {
@@ -67,7 +69,7 @@
             }
 
             var shoppingCartProduct = await this.FindByProductAndUserAsync(
-                productId, 
+                productId,
                 userId);
 
             if (shoppingCartProduct == null)
@@ -83,7 +85,7 @@
         }
 
         public async Task<Result> RemoveProductAsync(
-            int productId, 
+            int productId,
             string userId)
         {
             var shoppingCartProduct = await this.FindByProductAndUserAsync(
@@ -122,13 +124,6 @@
             => await this
                 .AllByUserId(userId)
                 .FirstOrDefaultAsync(c => c.ProductId == productId);
-
-        private async Task<ShoppingCart> FindByUserId(
-            string userId)
-            => await this
-                .All()
-                .Where(c => c.UserId == userId)
-                .FirstOrDefaultAsync();
 
         private IQueryable<ShoppingCartProduct> AllByUserId(
             string userId)

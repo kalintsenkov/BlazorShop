@@ -1,6 +1,8 @@
 ﻿namespace BlazorShop.Data.Models
 {
-    public class ShoppingCartProduct
+    using Contracts;
+
+    public class ShoppingCartProduct : BaseModel
     {
         public int ShoppingCartId { get; set; }
 

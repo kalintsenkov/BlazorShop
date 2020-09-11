@@ -1,6 +1,8 @@
 ﻿namespace BlazorShop.Data.Models
 {
-    public class OrderProduct
+    using Contracts;
+
+    public class OrderProduct : BaseModel
     {
         public string OrderId { get; set; }
 

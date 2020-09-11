@@ -13,7 +13,8 @@
                 .HasOne(sc => sc.User)
                 .WithMany(u => u.ShoppingCarts)
                 .HasForeignKey(sc => sc.UserId)
-                .IsRequired();
+                .IsRequired()
+                .OnDelete(DeleteBehavior.Restrict);
         }
     }
 }

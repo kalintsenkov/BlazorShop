@@ -18,7 +18,7 @@
     {
         private readonly IAddressesService addresses;
 
-        public AddressesServiceTests() 
+        public AddressesServiceTests()
             => this.addresses = new AddressesService(this.Data, this.Mapper);
 
         [Theory]
@@ -45,7 +45,7 @@
                 PhoneNumber = phoneNumber
             };
 
-            var id = await this.addresses.CreateAsync(model, userId);
+            var id = await this.addresses.CreateAsync(userId, model);
 
             var expected = new Address
             {
@@ -96,7 +96,7 @@
                 PhoneNumber = phoneNumber
             };
 
-            var id = await this.addresses.CreateAsync(model, userId);
+            var id = await this.addresses.CreateAsync(userId, model);
 
             await this.addresses.DeleteAsync(id, userId);
 
