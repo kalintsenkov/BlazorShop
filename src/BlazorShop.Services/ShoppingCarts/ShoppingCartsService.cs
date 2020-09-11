@@ -22,14 +22,11 @@
         {
         }
 
-        public async Task<Result> AddProductAsync(
-            int productId,
-            int quantity,
-            string userId)
+        public async Task<Result> AddAsync(string userId, ShoppingCartRequestModel model)
         {
-            var productQuantity = await this.GetProductQuantityById(productId);
+            var productQuantity = await this.GetProductQuantityById(model.ProductId);
 
-            if (productQuantity < quantity)
+            if (productQuantity < model.Quantity)
             {
                 return NotEnoughProductsMessage;
             }
@@ -46,8 +43,8 @@
             var shoppingCartProduct = new ShoppingCartProduct
             {
                 ShoppingCart = shoppingCart,
-                ProductId = productId,
-                Quantity = quantity
+                ProductId = model.ProductId,
+                Quantity = model.Quantity
             };
 
             await this.Data.AddAsync(shoppingCartProduct);
@@ -56,20 +53,19 @@
             return Result.Success;
         }
 
-        public async Task<Result> UpdateProductAsync(
-            int productId,
-            int quantity,
-            string userId)
+        public async Task<Result> UpdateAsync(
+            string userId, 
+            ShoppingCartRequestModel model)
         {
-            var productQuantity = await this.GetProductQuantityById(productId);
+            var productQuantity = await this.GetProductQuantityById(model.ProductId);
 
-            if (productQuantity < quantity)
+            if (productQuantity < model.Quantity)
             {
                 return NotEnoughProductsMessage;
             }
 
             var shoppingCartProduct = await this.FindByProductAndUserAsync(
-                productId,
+                model.ProductId,
                 userId);
 
             if (shoppingCartProduct == null)
@@ -77,19 +73,19 @@
                 return InvalidErrorMessage;
             }
 
-            shoppingCartProduct.Quantity = quantity;
+            shoppingCartProduct.Quantity = model.Quantity;
 
             await this.Data.SaveChangesAsync();
 
             return Result.Success;
         }
 
-        public async Task<Result> RemoveProductAsync(
-            int productId,
-            string userId)
+        public async Task<Result> RemoveAsync(
+            string userId,
+            ShoppingCartRequestModel model)
         {
             var shoppingCartProduct = await this.FindByProductAndUserAsync(
-                productId,
+                model.ProductId,
                 userId);
 
             if (shoppingCartProduct == null)

@@ -19,7 +19,9 @@
         {
         }
 
-        public async Task<int> CreateAsync(string userId, AddressesRequestModel model)
+        public async Task<int> CreateAsync(
+            string userId, 
+            AddressesRequestModel model)
         {
             var address = new Address
             {
@@ -38,7 +40,9 @@
             return address.Id;
         }
 
-        public async Task<Result> DeleteAsync(int id, string userId)
+        public async Task<Result> DeleteAsync(
+            int id, 
+            string userId)
         {
             var address = await this
                 .All()

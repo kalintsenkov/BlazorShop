@@ -23,27 +23,31 @@
         }
 
         [HttpPost(nameof(Register))]
-        public async Task<ActionResult> Register(RegisterRequestModel model)
+        public async Task<ActionResult> Register(
+            RegisterRequestModel model)
             => await this.identity
                 .RegisterAsync(model)
                 .ToActionResult();
 
         [HttpPost(nameof(Login))]
-        public async Task<ActionResult<LoginResponseModel>> Login(LoginRequestModel model)
+        public async Task<ActionResult<LoginResponseModel>> Login(
+            LoginRequestModel model)
             => await this.identity
                 .LoginAsync(model)
                 .ToActionResult();
 
         [Authorize]
         [HttpPut(nameof(ChangeSettings))]
-        public async Task<ActionResult> ChangeSettings(ChangeSettingsRequestModel model)
+        public async Task<ActionResult> ChangeSettings(
+            ChangeSettingsRequestModel model)
             => await this.identity
                 .ChangeSettingsAsync(this.currentUser.UserId, model)
                 .ToActionResult();
 
         [Authorize]
         [HttpPut(nameof(ChangePassword))]
-        public async Task<ActionResult> ChangePassword(ChangePasswordRequestModel model)
+        public async Task<ActionResult> ChangePassword(
+            ChangePasswordRequestModel model)
             => await this.identity
                 .ChangePasswordAsync(this.currentUser.UserId, model)
                 .ToActionResult();

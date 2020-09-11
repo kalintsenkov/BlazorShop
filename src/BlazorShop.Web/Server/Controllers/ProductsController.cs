@@ -21,11 +21,13 @@
 
         [HttpGet(Id)]
         [AllowAnonymous]
-        public async Task<ProductsDetailsResponseModel> Details(int id)
+        public async Task<ProductsDetailsResponseModel> Details(
+            int id)
             => await this.products.DetailsAsync(id);
 
         [HttpPost]
-        public async Task<ActionResult> Create(ProductsRequestModel model)
+        public async Task<ActionResult> Create(
+            ProductsRequestModel model)
         {
             var id = await this.products.CreateAsync(model);
 
@@ -33,13 +35,15 @@
         }
 
         [HttpPut(Id)]
-        public async Task<ActionResult> Update(int id, ProductsRequestModel model)
+        public async Task<ActionResult> Update(
+            int id, ProductsRequestModel model)
             => await this.products
                 .UpdateAsync(id, model)
                 .ToActionResult();
 
         [HttpDelete(Id)]
-        public async Task<ActionResult> Delete(int id)
+        public async Task<ActionResult> Delete(
+            int id)
             => await this.products
                 .DeleteAsync(id)
                 .ToActionResult();

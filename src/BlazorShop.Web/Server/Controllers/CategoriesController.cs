@@ -26,7 +26,8 @@
             => await this.categories.AllAsync();
 
         [HttpPost]
-        public async Task<ActionResult> Create(CategoriesRequestModel model)
+        public async Task<ActionResult> Create(
+            CategoriesRequestModel model)
         {
             var id = await this.categories.CreateAsync(model);
 
@@ -34,13 +35,15 @@
         }
 
         [HttpPut(Id)]
-        public async Task<ActionResult> Update(int id, CategoriesRequestModel model)
+        public async Task<ActionResult> Update(
+            int id, CategoriesRequestModel model)
             => await this.categories
                 .UpdateAsync(id, model)
                 .ToActionResult();
 
         [HttpDelete(Id)]
-        public async Task<ActionResult> Delete(int id)
+        public async Task<ActionResult> Delete(
+            int id)
             => await this.categories
                 .DeleteAsync(id)
                 .ToActionResult();

@@ -41,6 +41,13 @@
             return await this.httpClient.PutAsJsonAsync(url, request);
         }
 
+        public async Task<HttpResponseMessage> DeleteJsonAsync<TRequest>(string url, TRequest request)
+        {
+            await this.SetToken();
+
+            return await this.httpClient.DeleteAsJsonAsync(url, request);
+        }
+
         public async Task<HttpResponseMessage> DeleteAsync(string url)
         {
             await this.SetToken();

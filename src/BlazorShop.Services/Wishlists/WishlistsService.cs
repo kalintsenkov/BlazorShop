@@ -19,7 +19,7 @@
         {
         }
 
-        public async Task<Result> AddProductAsync(int productId, string userId)
+        public async Task<Result> AddAsync(string userId, WishlistsRequestModel model)
         {
             var wishlist = await this
                 .All()
@@ -33,7 +33,7 @@
             var wishlistProduct = new WishlistProduct
             {
                 Wishlist = wishlist,
-                ProductId = productId
+                ProductId = model.ProductId
             };
 
             await this.Data.AddAsync(wishlistProduct);
@@ -42,11 +42,11 @@
             return Result.Success;
         }
 
-        public async Task<Result> RemoveProductAsync(int productId, string userId)
+        public async Task<Result> RemoveAsync(string userId, WishlistsRequestModel model)
         {
             var wishlistProduct = await this
                 .AllByUserId(userId)
-                .FirstOrDefaultAsync(w => w.ProductId == productId);
+                .FirstOrDefaultAsync(w => w.ProductId == model.ProductId);
 
             if (wishlistProduct == null)
             {

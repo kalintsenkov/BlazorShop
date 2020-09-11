@@ -29,16 +29,18 @@
         public async Task<IEnumerable<WishlistsProductsResponseModel>> Mine()
             => await this.wishlists.ByUserAsync(this.currentUser.UserId);
 
-        [HttpPost(Id)]
-        public async Task<ActionResult> AddProduct(int id)
+        [HttpPost]
+        public async Task<ActionResult> Add(
+            WishlistsRequestModel model)
             => await this.wishlists
-                .AddProductAsync(id, this.currentUser.UserId)
+                .AddAsync(this.currentUser.UserId, model)
                 .ToActionResult();
 
-        [HttpDelete(Id)]
-        public async Task<ActionResult> RemoveProduct(int id)
+        [HttpDelete]
+        public async Task<ActionResult> Remove(
+            WishlistsRequestModel model)
             => await this.wishlists
-                .RemoveProductAsync(id, this.currentUser.UserId)
+                .RemoveAsync(this.currentUser.UserId, model)
                 .ToActionResult();
     }
 }

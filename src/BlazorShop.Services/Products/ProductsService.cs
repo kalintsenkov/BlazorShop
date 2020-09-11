@@ -38,7 +38,9 @@
             return product.Id;
         }
 
-        public async Task<Result> UpdateAsync(int id, ProductsRequestModel model)
+        public async Task<Result> UpdateAsync(
+            int id,
+            ProductsRequestModel model)
         {
             var product = await this.FindByIdAsync(id);
 

@@ -1,7 +1,7 @@
 ﻿@inject ILocalStorageService LocalStorage
 @inject IJSRuntime JsRuntime
 
-<EditForm Model="model" OnValidSubmit="() => OnSubmitAsync()">
+<EditForm Model="model" OnValidSubmit="OnSubmitAsync">
 
     <ErrorsList ShowErrors="showErrors" Errors="errors" />
     <DataAnnotationsValidator />
@@ -92,7 +92,9 @@
 
     private async Task OnSubmitAsync()
     {
-        var response = await this.ApiClient.PostJsonAsync($"api/shoppingcarts/{this.ProductId}", model);
+        this.model.ProductId = this.ProductId;
+
+        var response = await this.ApiClient.PostJsonAsync("api/shoppingcarts", this.model);
 
         if (!response.IsSuccessStatusCode)
         {
@@ -124,7 +126,12 @@
 
     private async Task AddToWishlist()
     {
-        await this.ApiClient.PostJsonAsync($"api/wishlists/{this.ProductId}", this.ProductId);
+        var requestModel = new WishlistsRequestModel
+        {
+            ProductId = this.ProductId
+        };
+
+        await this.ApiClient.PostJsonAsync("api/wishlists", requestModel);
         this.ToastService.ShowSuccess($"{this.ProductName} has been added to your wishlist.");
     }
 

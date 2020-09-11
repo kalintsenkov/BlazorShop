@@ -339,7 +339,12 @@ else
 
     private async Task AddToWishlist(int id)
     {
-        await this.ApiClient.PostJsonAsync($"api/wishlists/{id}", id);
+        var wishlistRequest = new WishlistsRequestModel
+        {
+            ProductId = id
+        };
+
+        await this.ApiClient.PostJsonAsync("api/wishlists", wishlistRequest);
         this.NavigationManager.NavigateTo("/wishlist");
     }
 

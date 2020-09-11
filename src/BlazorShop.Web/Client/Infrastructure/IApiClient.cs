@@ -11,6 +11,8 @@
 
         Task<HttpResponseMessage> PutJsonAsync<TRequest>(string url, TRequest request);
 
+        Task<HttpResponseMessage> DeleteJsonAsync<TRequest>(string url, TRequest request);
+
         Task<HttpResponseMessage> DeleteAsync(string url);
     }
 }

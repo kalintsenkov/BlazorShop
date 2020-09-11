@@ -62,7 +62,9 @@
             return new LoginResponseModel { Token = token };
         }
 
-        public async Task<Result> ChangeSettingsAsync(string userId, ChangeSettingsRequestModel model)
+        public async Task<Result> ChangeSettingsAsync(
+            string userId, 
+            ChangeSettingsRequestModel model)
         {
             var user = await this.userManager.FindByIdAsync(userId);
             if (user == null)
@@ -82,7 +84,9 @@
                 : Result.Failure(errors);
         }
 
-        public async Task<Result> ChangePasswordAsync(string userId, ChangePasswordRequestModel model)
+        public async Task<Result> ChangePasswordAsync(
+            string userId,
+            ChangePasswordRequestModel model)
         {
             var user = await this.userManager.FindByIdAsync(userId);
             if (user == null)

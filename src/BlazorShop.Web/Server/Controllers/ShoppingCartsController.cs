@@ -18,7 +18,7 @@
         private readonly ICurrentUserService currentUser;
 
         public ShoppingCartsController(
-            IShoppingCartsService shoppingCarts, 
+            IShoppingCartsService shoppingCarts,
             ICurrentUserService currentUser)
         {
             this.shoppingCarts = shoppingCarts;
@@ -33,22 +33,25 @@
         public async Task<ActionResult<int>> Count()
             => await this.shoppingCarts.CountAsync(this.currentUser.UserId);
 
-        [HttpPost(Id)]
-        public async Task<ActionResult> AddProduct(int id, ShoppingCartRequestModel model)
+        [HttpPost]
+        public async Task<ActionResult> Add(
+            ShoppingCartRequestModel model)
             => await this.shoppingCarts
-                .AddProductAsync(id, model.Quantity, this.currentUser.UserId)
+                .AddAsync(this.currentUser.UserId, model)
                 .ToActionResult();
 
-        [HttpPut(Id)]
-        public async Task<ActionResult> UpdateProduct(int id, ShoppingCartRequestModel model)
+        [HttpPut]
+        public async Task<ActionResult> Update(
+            ShoppingCartRequestModel model)
             => await this.shoppingCarts
-                .UpdateProductAsync(id, model.Quantity, this.currentUser.UserId)
+                .UpdateAsync(this.currentUser.UserId, model)
                 .ToActionResult();
 
-        [HttpDelete(Id)]
-        public async Task<ActionResult> RemoveProduct(int id)
+        [HttpDelete]
+        public async Task<ActionResult> Remove(
+            ShoppingCartRequestModel model)
             => await this.shoppingCarts
-                .RemoveProductAsync(id, this.currentUser.UserId)
+                .RemoveAsync(this.currentUser.UserId, model)
                 .ToActionResult();
     }
 }

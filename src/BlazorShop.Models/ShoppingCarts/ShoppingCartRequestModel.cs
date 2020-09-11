@@ -7,6 +7,8 @@
     public class ShoppingCartRequestModel
     {
         [Required]
+        public int ProductId { get; set; }
+
         [Range(MinQuantity, MaxQuantity)]
         public int Quantity { get; set; } = MinQuantity;
     }

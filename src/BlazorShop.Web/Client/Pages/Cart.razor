@@ -151,32 +151,38 @@ else
 
     private async Task OnRemoveAsync(int productId)
     {
-        await this.ApiClient.DeleteAsync($"api/shoppingcarts/{productId}");
+        this.model.ProductId = productId;
+
+        await this.ApiClient.DeleteJsonAsync("api/shoppingcarts", this.model);
         await this.LoadDataAsync();
     }
 
     private async Task IncrementQuantity(int productId, int quantity, int stockQuantity)
     {
+        this.model.ProductId = productId;
         this.model.Quantity = quantity;
 
-        if (this.model.Quantity + 1 <= stockQuantity)
-        {
-            this.model.Quantity++;
+        model.Quantity = quantity;
 
-            await this.ApiClient.PutJsonAsync($"api/shoppingcarts/{productId}", model);
+        if (model.Quantity + 1 <= stockQuantity)
+        {
+            model.Quantity++;
+
+            await this.ApiClient.PutJsonAsync("api/shoppingcarts", this.model);
             await this.LoadDataAsync();
         }
     }
 
     private async Task DecrementQuantity(int productId, int quantity)
     {
+        this.model.ProductId = productId;
         this.model.Quantity = quantity;
 
-        if (this.model.Quantity - 1 > 0)
+        if (model.Quantity - 1 > 0)
         {
-            this.model.Quantity--;
+            model.Quantity--;
 
-            await this.ApiClient.PutJsonAsync($"api/shoppingcarts/{productId}", model);
+            await this.ApiClient.PutJsonAsync("api/shoppingcarts", this.model);
             await this.LoadDataAsync();
         }
     }

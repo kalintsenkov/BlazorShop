@@ -30,7 +30,8 @@
             => await this.addresses.ByUserAsync(this.currentUser.UserId);
 
         [HttpPost]
-        public async Task<ActionResult> Create(AddressesRequestModel model)
+        public async Task<ActionResult> Create(
+            AddressesRequestModel model)
         {
             var userId = this.currentUser.UserId;
 
@@ -40,7 +41,8 @@
         }
 
         [HttpDelete(Id)]
-        public async Task<ActionResult> Delete(int id)
+        public async Task<ActionResult> Delete(
+            int id)
             => await this.addresses
                 .DeleteAsync(id, this.currentUser.UserId)
                 .ToActionResult();

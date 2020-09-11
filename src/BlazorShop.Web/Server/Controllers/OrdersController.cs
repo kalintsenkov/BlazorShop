@@ -29,11 +29,13 @@
             => await this.orders.ByUserAsync(this.currentUser.UserId);
 
         [HttpGet(Id)]
-        public async Task<OrdersDetailsResponseModel> Details(string id)
+        public async Task<OrdersDetailsResponseModel> Details(
+            string id)
             => await this.orders.DetailsAsync(id);
 
         [HttpPost]
-        public async Task<ActionResult> Purchase(OrdersRequestModel model)
+        public async Task<ActionResult> Purchase(
+            OrdersRequestModel model)
         {
             var userId = this.currentUser.UserId;
 
