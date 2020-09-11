@@ -1,6 +1,6 @@
-﻿namespace BlazorShop.Models.Search
+﻿namespace BlazorShop.Models.Products
 {
-    public class SearchRequestModel
+    public class ProductsSearchRequestModel
     {
         public string Query { get; set; }
 

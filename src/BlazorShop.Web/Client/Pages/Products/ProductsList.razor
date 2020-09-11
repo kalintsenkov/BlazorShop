@@ -284,7 +284,7 @@ else
 }
 
 @code {
-    private readonly SearchRequestModel model = new SearchRequestModel();
+    private readonly ProductsSearchRequestModel model = new ProductsSearchRequestModel();
 
     private ProductsListingResponseModel[] products;
     private CategoriesListingResponseModel[] categories;
@@ -322,7 +322,7 @@ else
         model.Query = this.SearchQuery;
         model.Page = this.Page;
 
-        var requestUrl = "api/search/products" +
+        var requestUrl = "api/products" +
                 $"?category={model.Category}" +
                 $"&minPrice={model.MinPrice}" +
                 $"&maxPrice={model.MaxPrice}" +

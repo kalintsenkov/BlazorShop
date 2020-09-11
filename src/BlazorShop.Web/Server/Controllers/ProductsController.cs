@@ -1,5 +1,6 @@
 ﻿namespace BlazorShop.Web.Server.Controllers
 {
+    using System.Collections.Generic;
     using System.Threading.Tasks;
 
     using Microsoft.AspNetCore.Authorization;
@@ -18,6 +19,12 @@
 
         public ProductsController(IProductsService products)
             => this.products = products;
+
+        [HttpGet]
+        [AllowAnonymous]
+        public async Task<IEnumerable<ProductsListingResponseModel>> Search(
+            [FromQuery] ProductsSearchRequestModel model)
+            => await this.products.SearchAsync(model);
 
         [HttpGet(Id)]
         [AllowAnonymous]

@@ -128,5 +128,5 @@ else
     private ProductsListingResponseModel[] products;
 
     protected override async Task OnInitializedAsync()
-        => this.products = await this.ApiClient.GetJsonAsync<ProductsListingResponseModel[]>("api/search/products");
+        => this.products = await this.ApiClient.GetJsonAsync<ProductsListingResponseModel[]>("api/products");
 }

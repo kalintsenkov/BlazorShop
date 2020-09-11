@@ -1,5 +1,6 @@
 ﻿namespace BlazorShop.Services.Products
 {
+    using System.Collections.Generic;
     using System.Linq;
     using System.Threading.Tasks;
 
@@ -12,6 +13,8 @@
     using Models.Products;
     using Specifications;
     using Specifications.Products;
+
+    using static Common.Constants;
 
     public class ProductsService : BaseService<Product>, IProductsService
     {
@@ -39,8 +42,7 @@
         }
 
         public async Task<Result> UpdateAsync(
-            int id,
-            ProductsRequestModel model)
+            int id, ProductsRequestModel model)
         {
             var product = await this.FindByIdAsync(id);
 
@@ -82,18 +84,30 @@
             => await this.Mapper
                 .ProjectTo<ProductsDetailsResponseModel>(this
                     .AllAsNoTracking()
-                    .Where(this.GetProductSpecification(id)))
+                    .Where(p => p.Id == id))
                 .FirstOrDefaultAsync();
+
+        public async Task<IEnumerable<ProductsListingResponseModel>> SearchAsync(
+            ProductsSearchRequestModel model)
+            => await this.Mapper
+                .ProjectTo<ProductsListingResponseModel>(this
+                    .AllAsNoTracking()
+                    .Where(this.GetProductSpecification(model))
+                    .Skip((model.Page - 1) * ItemsPerPage)
+                    .Take(ItemsPerPage))
+                .ToListAsync();
 
         private async Task<Product> FindByIdAsync(
             int id)
             => await this
                 .All()
-                .Where(this.GetProductSpecification(id))
+                .Where(p => p.Id == id)
                 .FirstOrDefaultAsync();
 
         private Specification<Product> GetProductSpecification(
-            int id)
-            => new ProductByIdSpecification(id);
+            ProductsSearchRequestModel model)
+            => new ProductByNameSpecification(model.Query)
+                .And(new ProductByPriceSpecification(model.MinPrice, model.MaxPrice))
+                .And(new ProductByCategorySpecification(model.Category));
     }
 }

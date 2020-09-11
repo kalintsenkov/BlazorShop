@@ -1,5 +1,6 @@
 ﻿namespace BlazorShop.Services.Products
 {
+    using System.Collections.Generic;
     using System.Threading.Tasks;
 
     using Models;
@@ -14,5 +15,7 @@
         Task<Result> DeleteAsync(int id);
 
         Task<ProductsDetailsResponseModel> DetailsAsync(int id);
+
+        Task<IEnumerable<ProductsListingResponseModel>> SearchAsync(ProductsSearchRequestModel model);
     }
 }
