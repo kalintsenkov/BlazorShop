@@ -41,7 +41,7 @@
         public async Task<ActionResult> ChangeSettings(
             ChangeSettingsRequestModel model)
             => await this.identity
-                .ChangeSettingsAsync(this.currentUser.UserId, model)
+                .ChangeSettingsAsync(model, this.currentUser.UserId)
                 .ToActionResult();
 
         [Authorize]
@@ -49,7 +49,7 @@
         public async Task<ActionResult> ChangePassword(
             ChangePasswordRequestModel model)
             => await this.identity
-                .ChangePasswordAsync(this.currentUser.UserId, model)
+                .ChangePasswordAsync(model, this.currentUser.UserId)
                 .ToActionResult();
     }
 }

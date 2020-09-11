@@ -35,7 +35,7 @@
         {
             var userId = this.currentUser.UserId;
 
-            var id = await this.addresses.CreateAsync(userId, model);
+            var id = await this.addresses.CreateAsync(model, userId);
 
             return Created(nameof(this.Create), id);
         }

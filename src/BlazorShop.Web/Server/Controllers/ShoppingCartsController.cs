@@ -37,21 +37,21 @@
         public async Task<ActionResult> Add(
             ShoppingCartRequestModel model)
             => await this.shoppingCarts
-                .AddAsync(this.currentUser.UserId, model)
+                .AddAsync(model, this.currentUser.UserId)
                 .ToActionResult();
 
         [HttpPut]
         public async Task<ActionResult> Update(
             ShoppingCartRequestModel model)
             => await this.shoppingCarts
-                .UpdateAsync(this.currentUser.UserId, model)
+                .UpdateAsync(model, this.currentUser.UserId)
                 .ToActionResult();
 
         [HttpDelete]
         public async Task<ActionResult> Remove(
             ShoppingCartRequestModel model)
             => await this.shoppingCarts
-                .RemoveAsync(this.currentUser.UserId, model)
+                .RemoveAsync(model, this.currentUser.UserId)
                 .ToActionResult();
     }
 }

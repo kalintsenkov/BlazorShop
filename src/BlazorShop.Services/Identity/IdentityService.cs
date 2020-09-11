@@ -63,8 +63,7 @@
         }
 
         public async Task<Result> ChangeSettingsAsync(
-            string userId, 
-            ChangeSettingsRequestModel model)
+            ChangeSettingsRequestModel model, string userId)
         {
             var user = await this.userManager.FindByIdAsync(userId);
             if (user == null)
@@ -85,8 +84,7 @@
         }
 
         public async Task<Result> ChangePasswordAsync(
-            string userId,
-            ChangePasswordRequestModel model)
+            ChangePasswordRequestModel model, string userId)
         {
             var user = await this.userManager.FindByIdAsync(userId);
             if (user == null)

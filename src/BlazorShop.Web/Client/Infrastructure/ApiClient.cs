@@ -7,6 +7,8 @@
 
     using Blazored.LocalStorage;
 
+    using Extensions;
+
     public class ApiClient : IApiClient
     {
         private readonly HttpClient httpClient;

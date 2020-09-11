@@ -8,7 +8,7 @@
 
     public interface IAddressesService
     {
-        Task<int> CreateAsync(string userId, AddressesRequestModel model);
+        Task<int> CreateAsync(AddressesRequestModel model, string userId);
 
         Task<Result> DeleteAsync(int id, string userId);
 

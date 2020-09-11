@@ -45,7 +45,7 @@
                 PhoneNumber = phoneNumber
             };
 
-            var id = await this.addresses.CreateAsync(userId, model);
+            var id = await this.addresses.CreateAsync(model, userId);
 
             var expected = new Address
             {
@@ -96,7 +96,7 @@
                 PhoneNumber = phoneNumber
             };
 
-            var id = await this.addresses.CreateAsync(userId, model);
+            var id = await this.addresses.CreateAsync(model, userId);
 
             await this.addresses.DeleteAsync(id, userId);
 

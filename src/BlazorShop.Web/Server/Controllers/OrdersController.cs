@@ -39,7 +39,7 @@
         {
             var userId = this.currentUser.UserId;
 
-            var id = await this.orders.PurchaseAsync(userId, model);
+            var id = await this.orders.PurchaseAsync(model, userId);
 
             return Created(nameof(this.Purchase), id);
         }

@@ -11,8 +11,8 @@
 
         Task<Result<LoginResponseModel>> LoginAsync(LoginRequestModel model);
 
-        Task<Result> ChangeSettingsAsync(string userId, ChangeSettingsRequestModel model);
+        Task<Result> ChangeSettingsAsync(ChangeSettingsRequestModel model, string userId);
 
-        Task<Result> ChangePasswordAsync(string userId, ChangePasswordRequestModel model);
+        Task<Result> ChangePasswordAsync(ChangePasswordRequestModel model, string userId);
     }
 }

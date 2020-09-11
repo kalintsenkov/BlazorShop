@@ -1,4 +1,4 @@
-﻿namespace BlazorShop.Web.Client.Infrastructure
+﻿namespace BlazorShop.Web.Client.Infrastructure.Extensions
 {
     using System;
     using System.Net.Http;
