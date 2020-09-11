@@ -1,4 +1,4 @@
-﻿namespace BlazorShop.Services.ShoppingCart
+﻿namespace BlazorShop.Services.ShoppingCarts
 {
     using System.Collections.Generic;
     using System.Linq;
@@ -12,12 +12,12 @@
     using Models;
     using Models.ShoppingCarts;
 
-    public class ShoppingCartService : BaseService<ShoppingCart>, IShoppingCartService
+    public class ShoppingCartsService : BaseService<ShoppingCart>, IShoppingCartsService
     {
         private const string InvalidErrorMessage = "This user cannot edit this shopping cart.";
         private const string NotEnoughProductsMessage = "There are not enough products in stock.";
 
-        public ShoppingCartService(ApplicationDbContext db, IMapper mapper)
+        public ShoppingCartsService(ApplicationDbContext db, IMapper mapper)
             : base(db, mapper)
         {
         }

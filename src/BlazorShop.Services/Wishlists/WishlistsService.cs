@@ -1,4 +1,4 @@
-﻿namespace BlazorShop.Services.Wishlist
+﻿namespace BlazorShop.Services.Wishlists
 {
     using System.Collections.Generic;
     using System.Linq;
@@ -12,9 +12,9 @@
     using Models;
     using Models.Wishlists;
 
-    public class WishlistService : BaseService<Wishlist>, IWishlistService
+    public class WishlistsService : BaseService<Wishlist>, IWishlistsService
     {
-        public WishlistService(ApplicationDbContext db, IMapper mapper)
+        public WishlistsService(ApplicationDbContext db, IMapper mapper)
             : base(db, mapper)
         {
         }

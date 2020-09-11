@@ -9,45 +9,45 @@
     using Infrastructure.Extensions;
     using Models.ShoppingCarts;
     using Services.Identity;
-    using Services.ShoppingCart;
+    using Services.ShoppingCarts;
 
     [Authorize]
     public class ShoppingCartsController : ApiController
     {
-        private readonly IShoppingCartService shoppingCart;
+        private readonly IShoppingCartsService shoppingCarts;
         private readonly ICurrentUserService currentUser;
 
         public ShoppingCartsController(
-            IShoppingCartService shoppingCart, 
+            IShoppingCartsService shoppingCarts, 
             ICurrentUserService currentUser)
         {
-            this.shoppingCart = shoppingCart;
+            this.shoppingCarts = shoppingCarts;
             this.currentUser = currentUser;
         }
 
         [HttpGet]
         public async Task<IEnumerable<ShoppingCartProductsResponseModel>> Mine()
-            => await this.shoppingCart.ByUserAsync(this.currentUser.UserId);
+            => await this.shoppingCarts.ByUserAsync(this.currentUser.UserId);
 
         [HttpGet(nameof(Count))]
         public async Task<ActionResult<int>> Count()
-            => await this.shoppingCart.CountAsync(this.currentUser.UserId);
+            => await this.shoppingCarts.CountAsync(this.currentUser.UserId);
 
         [HttpPost(Id)]
         public async Task<ActionResult> AddProduct(int id, ShoppingCartRequestModel model)
-            => await this.shoppingCart
+            => await this.shoppingCarts
                 .AddProductAsync(id, model.Quantity, this.currentUser.UserId)
                 .ToActionResult();
 
         [HttpPut(Id)]
         public async Task<ActionResult> UpdateProduct(int id, ShoppingCartRequestModel model)
-            => await this.shoppingCart
+            => await this.shoppingCarts
                 .UpdateProductAsync(id, model.Quantity, this.currentUser.UserId)
                 .ToActionResult();
 
         [HttpDelete(Id)]
         public async Task<ActionResult> RemoveProduct(int id)
-            => await this.shoppingCart
+            => await this.shoppingCarts
                 .RemoveProductAsync(id, this.currentUser.UserId)
                 .ToActionResult();
     }
