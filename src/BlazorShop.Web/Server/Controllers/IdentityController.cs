@@ -12,38 +12,40 @@
     public class IdentityController : ApiController
     {
         private readonly IIdentityService identity;
+        private readonly ICurrentUserService currentUser;
 
-        public IdentityController(IIdentityService identity)
-            => this.identity = identity;
+        public IdentityController(
+            IIdentityService identity, 
+            ICurrentUserService currentUser)
+        {
+            this.identity = identity;
+            this.currentUser = currentUser;
+        }
 
         [HttpPost(nameof(Register))]
-        public async Task<ActionResult> Register(
-            RegisterRequestModel model)
+        public async Task<ActionResult> Register(RegisterRequestModel model)
             => await this.identity
                 .RegisterAsync(model)
                 .ToActionResult();
 
         [HttpPost(nameof(Login))]
-        public async Task<ActionResult<LoginResponseModel>> Login(
-            LoginRequestModel model)
+        public async Task<ActionResult<LoginResponseModel>> Login(LoginRequestModel model)
             => await this.identity
                 .LoginAsync(model)
                 .ToActionResult();
 
         [Authorize]
         [HttpPut(nameof(ChangeSettings))]
-        public async Task<ActionResult> ChangeSettings(
-            ChangeSettingsRequestModel model)
+        public async Task<ActionResult> ChangeSettings(ChangeSettingsRequestModel model)
             => await this.identity
-                .ChangeSettingsAsync(model)
+                .ChangeSettingsAsync(this.currentUser.UserId, model)
                 .ToActionResult();
 
         [Authorize]
         [HttpPut(nameof(ChangePassword))]
-        public async Task<ActionResult> ChangePassword(
-            ChangePasswordRequestModel model)
+        public async Task<ActionResult> ChangePassword(ChangePasswordRequestModel model)
             => await this.identity
-                .ChangePasswordAsync(model)
+                .ChangePasswordAsync(this.currentUser.UserId, model)
                 .ToActionResult();
     }
 }

@@ -19,7 +19,7 @@
         {
         }
 
-        public async Task<int> CreateAsync(AddressesRequestModel model, string userId)
+        public async Task<int> CreateAsync(string userId, AddressesRequestModel model)
         {
             var address = new Address
             {

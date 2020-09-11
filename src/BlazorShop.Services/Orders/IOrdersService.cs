@@ -7,7 +7,7 @@
 
     public interface IOrdersService
     {
-        Task<string> PurchaseAsync(OrdersRequestModel model, string userId);
+        Task<string> PurchaseAsync(string userId, OrdersRequestModel model);
 
         Task<OrdersDetailsResponseModel> DetailsAsync(string id);
 

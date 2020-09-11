@@ -17,7 +17,7 @@
         private readonly ICurrentUserService currentUser;
 
         public OrdersController(
-            IOrdersService orders, 
+            IOrdersService orders,
             ICurrentUserService currentUser)
         {
             this.orders = orders;
@@ -29,17 +29,15 @@
             => await this.orders.ByUserAsync(this.currentUser.UserId);
 
         [HttpGet(Id)]
-        public async Task<OrdersDetailsResponseModel> Details(
-            string id)
+        public async Task<OrdersDetailsResponseModel> Details(string id)
             => await this.orders.DetailsAsync(id);
 
         [HttpPost]
-        public async Task<ActionResult> Purchase(
-            OrdersRequestModel model)
+        public async Task<ActionResult> Purchase(OrdersRequestModel model)
         {
-            var id = await this.orders.PurchaseAsync(
-                model,
-                this.currentUser.UserId);
+            var userId = this.currentUser.UserId;
+
+            var id = await this.orders.PurchaseAsync(userId, model);
 
             return Created(nameof(this.Purchase), id);
         }

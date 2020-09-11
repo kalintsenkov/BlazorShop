@@ -34,22 +34,19 @@
             => await this.shoppingCart.CountAsync(this.currentUser.UserId);
 
         [HttpPost(Id)]
-        public async Task<ActionResult> AddProduct(
-            int id, ShoppingCartRequestModel model)
+        public async Task<ActionResult> AddProduct(int id, ShoppingCartRequestModel model)
             => await this.shoppingCart
                 .AddProductAsync(id, model.Quantity, this.currentUser.UserId)
                 .ToActionResult();
 
         [HttpPut(Id)]
-        public async Task<ActionResult> UpdateProduct(
-            int id, ShoppingCartRequestModel model)
+        public async Task<ActionResult> UpdateProduct(int id, ShoppingCartRequestModel model)
             => await this.shoppingCart
                 .UpdateProductAsync(id, model.Quantity, this.currentUser.UserId)
                 .ToActionResult();
 
         [HttpDelete(Id)]
-        public async Task<ActionResult> RemoveProduct(
-            int id)
+        public async Task<ActionResult> RemoveProduct(int id)
             => await this.shoppingCart
                 .RemoveProductAsync(id, this.currentUser.UserId)
                 .ToActionResult();

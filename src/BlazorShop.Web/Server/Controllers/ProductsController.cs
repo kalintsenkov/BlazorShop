@@ -11,6 +11,7 @@
 
     using static Common.Constants;
 
+    [Authorize(Roles = AdministratorRole)]
     public class ProductsController : ApiController
     {
         private readonly IProductsService products;
@@ -19,14 +20,12 @@
             => this.products = products;
 
         [HttpGet(Id)]
-        public async Task<ProductsDetailsResponseModel> Details(
-            int id)
+        [AllowAnonymous]
+        public async Task<ProductsDetailsResponseModel> Details(int id)
             => await this.products.DetailsAsync(id);
 
         [HttpPost]
-        [Authorize(Roles = AdministratorRole)]
-        public async Task<ActionResult> Create(
-            ProductsRequestModel model)
+        public async Task<ActionResult> Create(ProductsRequestModel model)
         {
             var id = await this.products.CreateAsync(model);
 
@@ -34,17 +33,13 @@
         }
 
         [HttpPut(Id)]
-        [Authorize(Roles = AdministratorRole)]
-        public async Task<ActionResult> Update(
-            int id, ProductsRequestModel model)
+        public async Task<ActionResult> Update(int id, ProductsRequestModel model)
             => await this.products
                 .UpdateAsync(id, model)
                 .ToActionResult();
 
         [HttpDelete(Id)]
-        [Authorize(Roles = AdministratorRole)]
-        public async Task<ActionResult> Delete(
-            int id)
+        public async Task<ActionResult> Delete(int id)
             => await this.products
                 .DeleteAsync(id)
                 .ToActionResult();

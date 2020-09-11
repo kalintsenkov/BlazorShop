@@ -18,7 +18,7 @@
         {
         }
 
-        public async Task<string> PurchaseAsync(OrdersRequestModel model, string userId)
+        public async Task<string> PurchaseAsync(string userId, OrdersRequestModel model)
         {
             var order = new Order
             {

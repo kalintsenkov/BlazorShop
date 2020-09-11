@@ -12,6 +12,7 @@
 
     using static Common.Constants;
 
+    [Authorize(Roles = AdministratorRole)]
     public class CategoriesController : ApiController
     {
         private readonly ICategoriesService categories;
@@ -20,13 +21,12 @@
             => this.categories = categories;
 
         [HttpGet]
+        [AllowAnonymous]
         public async Task<IEnumerable<CategoriesListingResponseModel>> All()
             => await this.categories.AllAsync();
 
         [HttpPost]
-        [Authorize(Roles = AdministratorRole)]
-        public async Task<ActionResult> Create(
-            CategoriesRequestModel model)
+        public async Task<ActionResult> Create(CategoriesRequestModel model)
         {
             var id = await this.categories.CreateAsync(model);
 
@@ -34,17 +34,13 @@
         }
 
         [HttpPut(Id)]
-        [Authorize(Roles = AdministratorRole)]
-        public async Task<ActionResult> Update(
-            int id, CategoriesRequestModel model)
+        public async Task<ActionResult> Update(int id, CategoriesRequestModel model)
             => await this.categories
                 .UpdateAsync(id, model)
                 .ToActionResult();
 
         [HttpDelete(Id)]
-        [Authorize(Roles = AdministratorRole)]
-        public async Task<ActionResult> Delete(
-            int id)
+        public async Task<ActionResult> Delete(int id)
             => await this.categories
                 .DeleteAsync(id)
                 .ToActionResult();

@@ -18,7 +18,7 @@
         private readonly ICurrentUserService currentUser;
 
         public AddressesController(
-            IAddressesService addresses, 
+            IAddressesService addresses,
             ICurrentUserService currentUser)
         {
             this.addresses = addresses;
@@ -30,19 +30,17 @@
             => await this.addresses.ByUserAsync(this.currentUser.UserId);
 
         [HttpPost]
-        public async Task<ActionResult> Create(
-            AddressesRequestModel model)
+        public async Task<ActionResult> Create(AddressesRequestModel model)
         {
-            var id = await this.addresses.CreateAsync(
-                model, 
-                this.currentUser.UserId);
+            var userId = this.currentUser.UserId;
+
+            var id = await this.addresses.CreateAsync(userId, model);
 
             return Created(nameof(this.Create), id);
         }
 
         [HttpDelete(Id)]
-        public async Task<ActionResult> Delete(
-            int id)
+        public async Task<ActionResult> Delete(int id)
             => await this.addresses
                 .DeleteAsync(id, this.currentUser.UserId)
                 .ToActionResult();
