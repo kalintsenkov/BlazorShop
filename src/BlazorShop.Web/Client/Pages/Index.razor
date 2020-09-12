@@ -125,8 +125,12 @@ else
 }
 
 @code {
-    private ProductsListingResponseModel[] products;
+    private IEnumerable<ProductsListingResponseModel> products;
 
     protected override async Task OnInitializedAsync()
-        => this.products = await this.ApiClient.GetJsonAsync<ProductsListingResponseModel[]>("api/products");
+    {
+        var response = await this.ApiClient.GetJsonAsync<ProductsSearchResponseModel>("api/products");
+
+        this.products = response.Products;
+    }
 }

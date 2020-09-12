@@ -19,5 +19,5 @@ else
     private int? cartProductsCount;
 
     protected override async Task OnInitializedAsync() 
-        => this.cartProductsCount = await this.ApiClient.GetJsonAsync<int>("api/shoppingcarts/count");
+        => this.cartProductsCount = await this.ApiClient.GetJsonAsync<int>("api/shoppingcarts/total");
 }

@@ -1,6 +1,6 @@
 ﻿namespace BlazorShop.Services.Products
 {
-    using System.Collections.Generic;
+    using System;
     using System.Linq;
     using System.Threading.Tasks;
 
@@ -87,15 +87,33 @@
                     .Where(p => p.Id == id))
                 .FirstOrDefaultAsync();
 
-        public async Task<IEnumerable<ProductsListingResponseModel>> SearchAsync(
+        public async Task<ProductsSearchResponseModel> SearchAsync(
+            ProductsSearchRequestModel model) 
+            => new ProductsSearchResponseModel
+            {
+                Page = model.Page,
+                TotalPages = await this.GetTotalPages(model),
+                Products = await this.Mapper
+                    .ProjectTo<ProductsListingResponseModel>(this
+                        .AllAsNoTracking()
+                        .Where(this.GetProductSpecification(model))
+                        .Skip((model.Page - 1) * ItemsPerPage)
+                        .Take(ItemsPerPage))
+                    .ToListAsync()
+            };
+
+        private async Task<int> GetTotalPages(
             ProductsSearchRequestModel model)
-            => await this.Mapper
-                .ProjectTo<ProductsListingResponseModel>(this
-                    .AllAsNoTracking()
-                    .Where(this.GetProductSpecification(model))
-                    .Skip((model.Page - 1) * ItemsPerPage)
-                    .Take(ItemsPerPage))
-                .ToListAsync();
+        {
+            var specification = this.GetProductSpecification(model);
+
+            var total = await this
+                .AllAsNoTracking()
+                .Where(specification)
+                .CountAsync();
+
+            return (int)Math.Ceiling((double)total / ItemsPerPage);
+        }
 
         private async Task<Product> FindByIdAsync(
             int id)

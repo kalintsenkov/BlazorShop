@@ -14,7 +14,7 @@
 
         Task<Result> RemoveAsync(ShoppingCartRequestModel model, string userId);
 
-        Task<int> CountAsync(string userId);
+        Task<int> TotalByUserAsync(string userId);
 
         Task<IEnumerable<ShoppingCartProductsResponseModel>> ByUserAsync(string userId);
     }

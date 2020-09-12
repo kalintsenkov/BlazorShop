@@ -99,7 +99,7 @@
             return Result.Success;
         }
 
-        public async Task<int> CountAsync(
+        public async Task<int> TotalByUserAsync(
             string userId)
             => await this
                 .AllByUserId(userId)

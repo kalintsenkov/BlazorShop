@@ -22,7 +22,7 @@
 
         [HttpGet]
         [AllowAnonymous]
-        public async Task<IEnumerable<ProductsListingResponseModel>> Search(
+        public async Task<ProductsSearchResponseModel> Search(
             [FromQuery] ProductsSearchRequestModel model)
             => await this.products.SearchAsync(model);
 

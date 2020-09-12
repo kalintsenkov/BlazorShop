@@ -2,6 +2,8 @@
 @page "/products/{Page:int}"
 @page "/products/{SearchQuery}/{Page:int}"
 @page "/{CategoryName}/{CategoryId:int}"
+@page "/{CategoryName}/{CategoryId:int}/{Page:int}"
+@page "/products/{SearchQuery}/{CategoryName}/{CategoryId:int}/{Page:int}"
 
 @if (products == null || categories == null)
 {
@@ -135,7 +137,7 @@ else
 
                     <header class="border-bottom mb-4 pb-3">
                         <div class="form-inline">
-                            <span class="mr-md-auto">@products.Length Items found </span>
+                            <span class="mr-md-auto">@products.Count() Items found </span>
 
                             <div class="btn-group">
 
@@ -273,7 +275,7 @@ else
                         }
                     }
 
-                    <Pagination />
+                    <Pagination SearchResponse="searchResponse" />
 
                 </main>
 
@@ -286,8 +288,9 @@ else
 @code {
     private readonly ProductsSearchRequestModel model = new ProductsSearchRequestModel();
 
-    private ProductsListingResponseModel[] products;
-    private CategoriesListingResponseModel[] categories;
+    private ProductsSearchResponseModel searchResponse;
+    private IEnumerable<ProductsListingResponseModel> products;
+    private IEnumerable<CategoriesListingResponseModel> categories;
 
     [Parameter]
     public string SearchQuery { get; set; } = string.Empty;
@@ -329,11 +332,13 @@ else
                 $"&query={model.Query}" +
                 $"&page={model.Page}";
 
-        this.products = await this.ApiClient.GetJsonAsync<ProductsListingResponseModel[]>(requestUrl);
+        this.searchResponse = await this.ApiClient.GetJsonAsync<ProductsSearchResponseModel>(requestUrl);
+
+        this.products = searchResponse.Products;
 
         if (withCategories)
         {
-            this.categories = await this.ApiClient.GetJsonAsync<CategoriesListingResponseModel[]>("api/categories");
+            this.categories = await this.ApiClient.GetJsonAsync<IEnumerable<CategoriesListingResponseModel>>("api/categories");
         }
     }
 

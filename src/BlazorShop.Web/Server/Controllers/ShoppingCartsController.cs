@@ -29,9 +29,9 @@
         public async Task<IEnumerable<ShoppingCartProductsResponseModel>> Mine()
             => await this.shoppingCarts.ByUserAsync(this.currentUser.UserId);
 
-        [HttpGet(nameof(Count))]
-        public async Task<ActionResult<int>> Count()
-            => await this.shoppingCarts.CountAsync(this.currentUser.UserId);
+        [HttpGet(nameof(Total))]
+        public async Task<ActionResult<int>> Total()
+            => await this.shoppingCarts.TotalByUserAsync(this.currentUser.UserId);
 
         [HttpPost]
         public async Task<ActionResult> Add(
