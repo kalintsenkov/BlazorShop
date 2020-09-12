@@ -37,8 +37,9 @@ else
                                             <figure class="itemside">
                                                 <div class="aside"><img src="@product.ImageSource" class="img-sm"></div>
                                                 <figcaption class="info">
-                                                    <a href="#" class="title text-dark">@product.Name</a>
-                                                    <p class="text-muted small">Size: XL, Color: blue, <br> Brand: Gucci</p>
+                                                    <a href="/products/@product.Id/@product.Name" class="title text-dark">
+                                                        @product.Name
+                                                    </a>
                                                 </figcaption>
                                             </figure>
                                         </td>
@@ -100,7 +101,7 @@ else
                             </dl>
                             <hr>
                             <p class="text-center mb-3">
-                                <img src="images/misc/payments.png" height="26">
+                                <img src="images/misc/payments.png" height="26" />
                             </p>
 
                         </div>

@@ -13,14 +13,8 @@ else
                     <aside class="col-md-6">
                         <article class="gallery-wrap">
                             <div class="img-big-wrap">
-                                <a href="#"><img src="@product.ImageSource"></a>
+                                <a href="#"><img src="@product.ImageSource" /></a>
                             </div>
-                            @*<div class="thumbs-wrap">
-                                    <a href="#" class="item-thumb"> <img src="../images/items/12-1.jpg"></a>
-                                    <a href="#" class="item-thumb"> <img src="../images/items/12-2.jpg"></a>
-                                    <a href="#" class="item-thumb"> <img src="../images/items/12.jpg"></a>
-                                    <a href="#" class="item-thumb"> <img src="../images/items/4.jpg"></a>
-                                </div>*@
                         </article>
                     </aside>
                     <main class="col-md-6 border-left">
@@ -35,19 +29,12 @@ else
                             <p>@product.Description</p>
 
                             <dl class="row">
-                                <dt class="col-sm-3">Brand</dt>
-                                <dd class="col-sm-9">Odsy-1000</dd>
-
-                                <dt class="col-sm-3">Color</dt>
-                                <dd class="col-sm-9">Brown</dd>
 
                                 <dt class="col-sm-3">Category</dt>
                                 <dd class="col-sm-9">@product.CategoryName</dd>
 
-                                <AuthorizeView Roles="@Constants.AdministratorRole">
-                                    <dt class="col-sm-3">Quantity</dt>
-                                    <dd class="col-sm-9">@product.Quantity</dd>
-                                </AuthorizeView>
+                                <dt class="col-sm-3">Quantity</dt>
+                                <dd class="col-sm-9">@product.Quantity</dd>
                             </dl>
 
                             <hr />

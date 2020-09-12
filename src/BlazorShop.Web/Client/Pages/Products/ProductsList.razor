@@ -47,28 +47,32 @@ else
                                 <div class="filter-content collapse show" id="collapse_1">
                                     <div class="card-body">
 
-                                        <ul class="list-menu">
+                                        @foreach (var category in categories)
+                                        {
+                                            var categoryName = category.Name;
+                                            var currentCategory = WebUtility.UrlDecode(NavigationManager.Uri.Split('/')[3]);
 
-                                            @foreach (var category in categories)
-                                            {
-                                                var classActive = string.Empty;
-                                                var categoryName = category.Name.ToLower();
+                                            var isChecked = currentCategory == categoryName;
 
-                                                if (NavigationManager.Uri.Contains("categories"))
-                                                {
-                                                    var currentCategory = NavigationManager.Uri.Split('/')[3];
-                                                    classActive = currentCategory == categoryName ? "active" : string.Empty;
-                                                }
+                                            <a href="/@category.Name/@category.Id" class="text-dark">
+                                                <label class="custom-control custom-radio">
 
-                                                <li>
-                                                    <a class="@classActive"
-                                                       href="/@category.Name/@category.Id">
+                                                    @if (isChecked)
+                                                    {
+                                                        <input type="radio" name="myfilter_radio" class="custom-control-input" checked />
+                                                    }
+                                                    else
+                                                    {
+                                                        <input type="radio" name="myfilter_radio" class="custom-control-input">
+                                                    }
+
+                                                    <span class="custom-control-label">
                                                         @category.Name
-                                                    </a>
-                                                </li>
-                                            }
+                                                    </span>
 
-                                        </ul>
+                                                </label>
+                                            </a>
+                                        }
 
                                     </div>
                                 </div>
@@ -93,37 +97,6 @@ else
                                                 <input @bind-value="model.MaxPrice" @bind-value:event="oninput" class="form-control" placeholder="$1,0000" type="number" />
                                             </div>
                                         </div>
-                                    </div>
-                                </div>
-                            </article>
-                            <article class="filter-group">
-                                <header class="card-header">
-                                    <a href="#" data-toggle="collapse" data-target="#collapse_4" aria-expanded="true" class="">
-                                        <i class="icon-control fa fa-chevron-down"></i>
-                                        <h6 class="title"> Sizes </h6>
-                                    </a>
-                                </header>
-                                <div class="filter-content collapse show" id="collapse_4" style="">
-                                    <div class="card-body">
-                                        <label class="checkbox-btn">
-                                            <input type="checkbox">
-                                            <span class="btn btn-light"> XS </span>
-                                        </label>
-
-                                        <label class="checkbox-btn">
-                                            <input type="checkbox">
-                                            <span class="btn btn-light"> S </span>
-                                        </label>
-
-                                        <label class="checkbox-btn">
-                                            <input type="checkbox">
-                                            <span class="btn btn-light"> M </span>
-                                        </label>
-
-                                        <label class="checkbox-btn">
-                                            <input type="checkbox">
-                                            <span class="btn btn-light"> L </span>
-                                        </label>
                                     </div>
                                 </div>
                             </article>
@@ -193,7 +166,7 @@ else
                                 <div class="col-md-4">
                                     <figure class="card card-product-grid">
                                         <div class="img-wrap">
-                                            <img src="@product.ImageSource">
+                                            <img src="@product.ImageSource" />
                                             <span class="topbar">
                                                 <a @onclick="() => AddToWishlist(product.Id)"
                                                    @onclick:preventDefault
