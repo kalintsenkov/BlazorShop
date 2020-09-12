@@ -1,4 +1,4 @@
-﻿namespace BlazorShop.Services.Specifications
+﻿namespace BlazorShop.Services
 {
     using System;
     using System.Collections.Concurrent;

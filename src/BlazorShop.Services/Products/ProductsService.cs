@@ -12,7 +12,6 @@
     using Models;
     using Models.Products;
     using Specifications;
-    using Specifications.Products;
 
     using static Common.Constants;
 

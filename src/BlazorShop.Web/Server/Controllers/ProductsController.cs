@@ -1,6 +1,5 @@
 ﻿namespace BlazorShop.Web.Server.Controllers
 {
-    using System.Collections.Generic;
     using System.Threading.Tasks;
 
     using Microsoft.AspNetCore.Authorization;

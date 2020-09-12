@@ -1,18 +1,5 @@
 ﻿namespace BlazorShop.Tests.Controllers
 {
-    using System.Collections.Generic;
-    using System.Linq;
-
-    using Common;
-    using MyTested.AspNetCore.Mvc;
-    using Shouldly;
-    using Xunit;
-
-    using Data;
-    using Models.Categories;
-    using Models.Products;
-    using Web.Server.Controllers;
-
     public class CategoriesControllerTests
     {
         //[Theory]

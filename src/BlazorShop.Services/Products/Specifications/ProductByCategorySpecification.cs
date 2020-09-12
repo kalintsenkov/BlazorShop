@@ -1,4 +1,4 @@
-﻿namespace BlazorShop.Services.Specifications.Products
+﻿namespace BlazorShop.Services.Products.Specifications
 {
     using System;
     using System.Linq.Expressions;
