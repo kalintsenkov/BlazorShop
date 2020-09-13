@@ -17,7 +17,7 @@ else
 
                 <aside class="col-md-3">
 
-                    <EditForm Model="model" @oninput="Filter">
+                    <EditForm Model="model" @oninput="() => LoadData(withCategories: false)">
 
                         <div class="card mb-3">
                             <div class="card-body">
@@ -252,10 +252,10 @@ else
                         }
                     }
 
-                    <Pagination Page="@searchResponse.Page" 
-                                TotalPages="@searchResponse.TotalPages" 
-                                SearchQuery="@SearchQuery" 
-                                CategoryId="@CategoryId" 
+                    <Pagination Page="@searchResponse.Page"
+                                TotalPages="@searchResponse.TotalPages"
+                                SearchQuery="@SearchQuery"
+                                CategoryId="@CategoryId"
                                 CategoryName="@CategoryName" />
 
                 </main>
@@ -274,22 +274,22 @@ else
     private IEnumerable<CategoriesListingResponseModel> categories;
 
     [Parameter]
-    public string SearchQuery { get; set; } = string.Empty;
-
-    [Parameter]
     public int? CategoryId { get; set; }
 
     [Parameter]
     public string CategoryName { get; set; }
 
     [Parameter]
+    public string SearchQuery { get; set; } = string.Empty;
+
+    [Parameter]
+    public int Page { get; set; } = 1;
+
+    [Parameter]
     public bool ListView { get; set; } = false;
 
     [Parameter]
     public bool GridView { get; set; } = true;
-
-    [Parameter]
-    public int Page { get; set; } = 1;
 
     protected override async Task OnInitializedAsync() => await this.LoadData();
 
@@ -302,25 +302,26 @@ else
             this.Page = 1;
         }
 
-        model.Category = this.CategoryId;
-        model.Query = this.SearchQuery;
-        model.Page = this.Page;
+        this.model.Category = this.CategoryId;
+        this.model.Query = this.SearchQuery;
+        this.model.Page = this.Page;
 
         var requestUrl = "api/products" +
-            $"?category={model.Category}" +
-            $"&minPrice={model.MinPrice}" +
-            $"&maxPrice={model.MaxPrice}" +
-            $"&query={model.Query}" +
-            $"&page={model.Page}";
+            $"?category={this.model.Category}" +
+            $"&minPrice={this.model.MinPrice}" +
+            $"&maxPrice={this.model.MaxPrice}" +
+            $"&query={this.model.Query}" +
+            $"&page={this.model.Page}";
 
         this.searchResponse = await this.ApiClient.GetJsonAsync<ProductsSearchResponseModel>(requestUrl);
-
-        this.products = searchResponse.Products;
+        this.products = this.searchResponse.Products;
 
         if (withCategories)
         {
             this.categories = await this.ApiClient.GetJsonAsync<IEnumerable<CategoriesListingResponseModel>>("api/categories");
         }
+
+        this.Filter();
     }
 
     private async Task AddToWishlist(int id)
@@ -342,10 +343,6 @@ else
 
     private void Filter()
     {
-        model.Category = this.CategoryId;
-        model.Query = this.SearchQuery;
-        model.Page = this.Page;
-
         if (!string.IsNullOrWhiteSpace(this.model.Query) && string.IsNullOrWhiteSpace(this.CategoryName) && !this.model.Category.HasValue)
         {
             this.NavigationManager.NavigateTo($"/products/search/{this.model.Query}/page/{this.model.Page}");
