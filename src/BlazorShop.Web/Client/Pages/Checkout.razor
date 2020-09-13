@@ -172,6 +172,6 @@ else
         var orderResponse = await this.ApiClient.PostJsonAsync("api/orders", this.order);
         var orderId = await orderResponse.Content.ReadAsStringAsync();
 
-        this.NavigationManager.NavigateTo($"/order/{orderId}");
+        this.NavigationManager.NavigateTo($"/order/confirmed/{orderId}", forceLoad: true);
     }
 }

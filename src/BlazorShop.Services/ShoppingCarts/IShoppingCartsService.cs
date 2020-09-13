@@ -8,13 +8,13 @@
 
     public interface IShoppingCartsService
     {
-        Task<Result> AddAsync(ShoppingCartRequestModel model, string userId);
+        Task<Result> AddProductAsync(ShoppingCartRequestModel model, string userId);
 
-        Task<Result> UpdateAsync(ShoppingCartRequestModel model, string userId);
+        Task<Result> UpdateProductAsync(ShoppingCartRequestModel model, string userId);
 
-        Task<Result> RemoveAsync(ShoppingCartRequestModel model, string userId);
+        Task<Result> RemoveProductAsync(int productId, string userId);
 
-        Task<int> TotalByUserAsync(string userId);
+        Task<int> TotalAsync(string userId);
 
         Task<IEnumerable<ShoppingCartProductsResponseModel>> ByUserAsync(string userId);
     }

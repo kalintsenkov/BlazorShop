@@ -22,7 +22,7 @@
         {
         }
 
-        public async Task<Result> AddAsync(
+        public async Task<Result> AddProductAsync(
             ShoppingCartRequestModel model, string userId)
         {
             var productQuantity = await this.GetProductQuantityById(model.ProductId);
@@ -54,7 +54,7 @@
             return Result.Success;
         }
 
-        public async Task<Result> UpdateAsync(
+        public async Task<Result> UpdateProductAsync(
             ShoppingCartRequestModel model, string userId)
         {
             var productQuantity = await this.GetProductQuantityById(model.ProductId);
@@ -80,11 +80,11 @@
             return Result.Success;
         }
 
-        public async Task<Result> RemoveAsync(
-            ShoppingCartRequestModel model, string userId)
+        public async Task<Result> RemoveProductAsync(
+            int productId, string userId)
         {
             var shoppingCartProduct = await this.FindByProductAndUserAsync(
-                model.ProductId,
+                productId,
                 userId);
 
             if (shoppingCartProduct == null)
@@ -99,7 +99,7 @@
             return Result.Success;
         }
 
-        public async Task<int> TotalByUserAsync(
+        public async Task<int> TotalAsync(
             string userId)
             => await this
                 .AllByUserId(userId)

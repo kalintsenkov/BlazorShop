@@ -60,7 +60,7 @@ else
     protected override async Task OnInitializedAsync() => await this.LoadDataAsync();
 
     private async Task LoadDataAsync()
-        => this.products = await this.ApiClient.GetJsonAsync<IEnumerable<WishlistsProductsResponseModel>>("api/wishlists");
+        => this.products = await this.ApiClient.GetJsonAsync<IEnumerable<WishlistsProductsResponseModel>>("api/Wishlists");
 
     private async Task OnSubmitAsync(int id)
     {
@@ -70,18 +70,13 @@ else
             Quantity = 1
         };
 
-        await this.ApiClient.PostJsonAsync("api/shoppingcarts", cartRequest);
+        await this.ApiClient.PostJsonAsync("api/shoppingcarts/AddProduct", cartRequest);
         this.NavigationManager.NavigateTo("/cart", forceLoad: true);
     }
 
     private async Task OnRemoveAsync(int id)
     {
-        var wishlistRequest = new WishlistsRequestModel
-        {
-            ProductId = id
-        };
-
-        await this.ApiClient.DeleteJsonAsync("api/wishlists", wishlistRequest);
+        await this.ApiClient.DeleteAsync($"api/wishlists/RemoveProduct/{id}");
         await this.LoadDataAsync();
     }
 }

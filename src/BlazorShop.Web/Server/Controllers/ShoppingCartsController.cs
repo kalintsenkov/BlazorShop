@@ -29,29 +29,29 @@
         public async Task<IEnumerable<ShoppingCartProductsResponseModel>> Mine()
             => await this.shoppingCarts.ByUserAsync(this.currentUser.UserId);
 
-        [HttpGet(nameof(Total))]
-        public async Task<ActionResult<int>> Total()
-            => await this.shoppingCarts.TotalByUserAsync(this.currentUser.UserId);
+        [HttpGet(nameof(TotalProducts))]
+        public async Task<ActionResult<int>> TotalProducts()
+            => await this.shoppingCarts.TotalAsync(this.currentUser.UserId);
 
-        [HttpPost]
-        public async Task<ActionResult> Add(
+        [HttpPost(nameof(AddProduct))]
+        public async Task<ActionResult> AddProduct(
             ShoppingCartRequestModel model)
             => await this.shoppingCarts
-                .AddAsync(model, this.currentUser.UserId)
+                .AddProductAsync(model, this.currentUser.UserId)
                 .ToActionResult();
 
-        [HttpPut]
-        public async Task<ActionResult> Update(
+        [HttpPut(nameof(UpdateProduct))]
+        public async Task<ActionResult> UpdateProduct(
             ShoppingCartRequestModel model)
             => await this.shoppingCarts
-                .UpdateAsync(model, this.currentUser.UserId)
+                .UpdateProductAsync(model, this.currentUser.UserId)
                 .ToActionResult();
 
-        [HttpDelete]
-        public async Task<ActionResult> Remove(
-            ShoppingCartRequestModel model)
+        [HttpDelete(nameof(RemoveProduct) + PathSeparator + Id)]
+        public async Task<ActionResult> RemoveProduct(
+            int id)
             => await this.shoppingCarts
-                .RemoveAsync(model, this.currentUser.UserId)
+                .RemoveProductAsync(id, this.currentUser.UserId)
                 .ToActionResult();
     }
 }

@@ -146,16 +146,15 @@ else
 
     private async Task LoadDataAsync()
     {
-        this.cartProducts = await this.ApiClient.GetJsonAsync<IEnumerable<ShoppingCartProductsResponseModel>>("api/shoppingcarts");
+        this.cartProducts = await this.ApiClient.GetJsonAsync<IEnumerable<ShoppingCartProductsResponseModel>>("api/ShoppingCarts");
         this.totalPrice = this.cartProducts.Sum(p => p.Price * p.Quantity);
     }
 
     private async Task OnRemoveAsync(int productId)
     {
-        this.model.ProductId = productId;
+        await this.ApiClient.DeleteAsync($"api/shoppingcarts/RemoveProduct/{productId}");
 
-        await this.ApiClient.DeleteJsonAsync("api/shoppingcarts", this.model);
-        await this.LoadDataAsync();
+        this.NavigationManager.NavigateTo("/cart", forceLoad: true);
     }
 
     private async Task IncrementQuantity(int productId, int quantity, int stockQuantity)
@@ -163,13 +162,11 @@ else
         this.model.ProductId = productId;
         this.model.Quantity = quantity;
 
-        model.Quantity = quantity;
-
-        if (model.Quantity + 1 <= stockQuantity)
+        if (this.model.Quantity + 1 <= stockQuantity)
         {
-            model.Quantity++;
+            this.model.Quantity++;
 
-            await this.ApiClient.PutJsonAsync("api/shoppingcarts", this.model);
+            await this.ApiClient.PutJsonAsync("api/shoppingcarts/UpdateProduct", this.model);
             await this.LoadDataAsync();
         }
     }
@@ -179,11 +176,11 @@ else
         this.model.ProductId = productId;
         this.model.Quantity = quantity;
 
-        if (model.Quantity - 1 > 0)
+        if (this.model.Quantity - 1 > 0)
         {
-            model.Quantity--;
+            this.model.Quantity--;
 
-            await this.ApiClient.PutJsonAsync("api/shoppingcarts", this.model);
+            await this.ApiClient.PutJsonAsync("api/shoppingcarts/UpdateProduct", this.model);
             await this.LoadDataAsync();
         }
     }

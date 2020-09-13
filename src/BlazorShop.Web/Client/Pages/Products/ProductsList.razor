@@ -194,7 +194,12 @@ else
                                                     @*<del class="price-old">$1980</del>*@
                                                 </div>
                                             </div>
-                                            <a href="#" class="btn btn-block btn-primary">Add to cart </a>
+                                            <a @onclick="() => AddToCart(product.Id)"
+                                               @onclick:preventDefault
+                                               href="#"
+                                               class="btn btn-block btn-primary">
+                                                Add to cart
+                                            </a>
                                         </figcaption>
                                     </figure>
                                 </div>
@@ -326,13 +331,20 @@ else
 
     private async Task AddToWishlist(int id)
     {
-        var wishlistRequest = new WishlistsRequestModel
+        await this.ApiClient.PostJsonAsync($"api/wishlists/AddProduct/{id}", id);
+        this.NavigationManager.NavigateTo("/wishlist");
+    }
+
+    private async Task AddToCart(int id)
+    {
+        var cartRequest = new ShoppingCartRequestModel
         {
-            ProductId = id
+            ProductId = id,
+            Quantity = 1
         };
 
-        await this.ApiClient.PostJsonAsync("api/wishlists", wishlistRequest);
-        this.NavigationManager.NavigateTo("/wishlist");
+        await this.ApiClient.PostJsonAsync("api/shoppingcarts/AddProduct", cartRequest);
+        this.NavigationManager.NavigateTo("/cart", forceLoad: true);
     }
 
     private void ChangeView()

@@ -72,7 +72,7 @@
     {
         this.model.ProductId = this.ProductId;
 
-        var response = await this.ApiClient.PostJsonAsync("api/shoppingcarts", this.model);
+        var response = await this.ApiClient.PostJsonAsync("api/shoppingcarts/AddProduct", this.model);
 
         if (!response.IsSuccessStatusCode)
         {
@@ -104,12 +104,7 @@
 
     private async Task AddToWishlist()
     {
-        var requestModel = new WishlistsRequestModel
-        {
-            ProductId = this.ProductId
-        };
-
-        await this.ApiClient.PostJsonAsync("api/wishlists", requestModel);
+        await this.ApiClient.PostJsonAsync($"api/wishlists/AddProduct/{this.ProductId}", this.ProductId);
         this.ToastService.ShowSuccess($"{this.ProductName} has been added to your wishlist.");
     }
 
