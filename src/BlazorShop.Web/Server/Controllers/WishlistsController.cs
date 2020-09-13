@@ -7,8 +7,8 @@
     using Microsoft.AspNetCore.Mvc;
 
     using Infrastructure.Extensions;
+    using Infrastructure.Services;
     using Models.Wishlists;
-    using Services.Identity;
     using Services.Wishlists;
 
     [Authorize]

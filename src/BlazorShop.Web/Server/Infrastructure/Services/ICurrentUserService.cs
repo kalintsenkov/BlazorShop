@@ -1,4 +1,4 @@
-﻿namespace BlazorShop.Services.Identity
+﻿namespace BlazorShop.Web.Server.Infrastructure.Services
 {
     public interface ICurrentUserService
     {

@@ -8,17 +8,18 @@
     using Microsoft.Extensions.DependencyInjection;
     using Microsoft.IdentityModel.Tokens;
 
+    using BlazorShop.Services.Addresses;
+    using BlazorShop.Services.Categories;
+    using BlazorShop.Services.Identity;
+    using BlazorShop.Services.Orders;
+    using BlazorShop.Services.Products;
+    using BlazorShop.Services.ShoppingCarts;
+    using BlazorShop.Services.Wishlists;
     using Data;
     using Data.Models;
     using Filters;
     using Models;
-    using Services.Addresses;
-    using Services.Categories;
-    using Services.Identity;
-    using Services.Orders;
-    using Services.Products;
-    using Services.ShoppingCarts;
-    using Services.Wishlists;
+    using Services;
 
     using static Data.ModelConstants.Identity;
 

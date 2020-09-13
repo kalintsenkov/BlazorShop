@@ -7,8 +7,8 @@
     using Microsoft.AspNetCore.Mvc;
 
     using Infrastructure.Extensions;
+    using Infrastructure.Services;
     using Models.ShoppingCarts;
-    using Services.Identity;
     using Services.ShoppingCarts;
 
     [Authorize]

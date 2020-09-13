@@ -6,6 +6,7 @@
     using Microsoft.AspNetCore.Mvc;
 
     using Infrastructure.Extensions;
+    using Infrastructure.Services;
     using Models.Identity;
     using Services.Identity;
 

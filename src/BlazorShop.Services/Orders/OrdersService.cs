@@ -33,6 +33,8 @@
                 .Where(sc => sc.ShoppingCart.UserId == userId)
                 .ToListAsync();
 
+            var orderProducts = new List<OrderProduct>();
+
             foreach (var product in shoppingCartProducts)
             {
                 var orderProduct = new OrderProduct
@@ -42,11 +44,12 @@
                     Quantity = product.Quantity
                 };
 
-                await this.Data.AddAsync(orderProduct);
+                orderProducts.Add(orderProduct);
             }
 
             this.Data.RemoveRange(shoppingCartProducts);
 
+            await this.Data.AddRangeAsync(orderProducts);
             await this.Data.SaveChangesAsync();
 
             return order.Id;
