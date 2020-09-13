@@ -76,7 +76,7 @@ else
 
 @code {
     private ProductsRequestModel model;
-    private CategoriesListingResponseModel[] categories;
+    private IEnumerable<CategoriesListingResponseModel> categories;
 
     [Parameter]
     public int Id { get; set; }
@@ -84,7 +84,7 @@ else
     protected override async Task OnInitializedAsync()
     {
         this.model = await this.ApiClient.GetJsonAsync<ProductsRequestModel>($"api/products/{this.Id}");
-        this.categories = await this.ApiClient.GetJsonAsync<CategoriesListingResponseModel[]>("api/categories");
+        this.categories = await this.ApiClient.GetJsonAsync<IEnumerable<CategoriesListingResponseModel>>("api/categories");
     }
 
     private async Task SubmitAsync()

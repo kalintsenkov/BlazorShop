@@ -115,7 +115,7 @@ else
                             <a class="nav-link" href="/wishlist">Wishlist</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="/products">Products</a>
+                            <a class="nav-link" href="/products/page/1">Products</a>
                         </li>
                         <li class="nav-item dropdown">
                             <a @onclick:preventDefault
@@ -130,7 +130,7 @@ else
                                 @foreach (var category in categories)
                                 {
                                     <a class="dropdown-item"
-                                       href="/@category.Name/@category.Id">
+                                       href="/products/category/@category.Name/@category.Id">
                                         @category.Name
                                     </a>
                                 }
@@ -155,8 +155,8 @@ else
 }
 
 @code {
-    private CategoriesListingResponseModel[] categories;
+    private IEnumerable<CategoriesListingResponseModel> categories;
 
     protected override async Task OnInitializedAsync()
-        => this.categories = await this.ApiClient.GetJsonAsync<CategoriesListingResponseModel[]>("api/categories");
+        => this.categories = await this.ApiClient.GetJsonAsync<IEnumerable<CategoriesListingResponseModel>>("api/categories");
 }

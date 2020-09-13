@@ -1,5 +1,4 @@
-﻿@inject ILocalStorageService LocalStorage
-@inject IJSRuntime JsRuntime
+﻿@inject IJSRuntime JsRuntime
 
 <EditForm Model="model" OnValidSubmit="OnSubmitAsync">
 
@@ -19,27 +18,6 @@
                 <div class="input-group-append">
                     <button @onclick="IncrementQuantity" class="btn btn-light" type="button" id="button-plus"> + </button>
                 </div>
-            </div>
-        </div>
-        <div class="form-group col-md">
-            <label>Select size</label>
-            <div class="mt-1">
-
-                <label class="custom-control custom-radio custom-control-inline">
-                    <input type="radio" name="select_size" checked="" class="custom-control-input">
-                    <span class="custom-control-label">Small</span>
-                </label>
-
-                <label class="custom-control custom-radio custom-control-inline">
-                    <input type="radio" name="select_size" class="custom-control-input">
-                    <span class="custom-control-label">Medium</span>
-                </label>
-
-                <label class="custom-control custom-radio custom-control-inline">
-                    <input type="radio" name="select_size" class="custom-control-input">
-                    <span class="custom-control-label">Large</span>
-                </label>
-
             </div>
         </div>
     </div>

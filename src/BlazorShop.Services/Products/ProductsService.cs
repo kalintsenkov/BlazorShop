@@ -87,19 +87,27 @@
                 .FirstOrDefaultAsync();
 
         public async Task<ProductsSearchResponseModel> SearchAsync(
-            ProductsSearchRequestModel model) 
-            => new ProductsSearchResponseModel
+            ProductsSearchRequestModel model)
+        {
+            var specification = this.GetProductSpecification(model);
+
+            var products = await this.Mapper
+                .ProjectTo<ProductsListingResponseModel>(this
+                    .AllAsNoTracking()
+                    .Where(specification)
+                    .Skip((model.Page - 1) * ItemsPerPage)
+                    .Take(ItemsPerPage))
+                .ToListAsync();
+
+            var totalPages = await this.GetTotalPages(model);
+
+            return new ProductsSearchResponseModel
             {
+                Products = products,
                 Page = model.Page,
-                TotalPages = await this.GetTotalPages(model),
-                Products = await this.Mapper
-                    .ProjectTo<ProductsListingResponseModel>(this
-                        .AllAsNoTracking()
-                        .Where(this.GetProductSpecification(model))
-                        .Skip((model.Page - 1) * ItemsPerPage)
-                        .Take(ItemsPerPage))
-                    .ToListAsync()
+                TotalPages = totalPages
             };
+        }
 
         private async Task<int> GetTotalPages(
             ProductsSearchRequestModel model)

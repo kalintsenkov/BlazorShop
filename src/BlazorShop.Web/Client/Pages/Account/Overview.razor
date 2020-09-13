@@ -39,7 +39,7 @@ else
                             <article class="card-group">
                                 <figure class="card bg">
                                     <div class="p-3">
-                                        <h5 class="card-title">@orders.Length</h5>
+                                        <h5 class="card-title">@orders.Count()</h5>
                                         <span>Orders</span>
                                     </div>
                                 </figure>
@@ -90,7 +90,7 @@ else
 }
 
 @code {
-    private OrdersListingResponseModel[] orders;
+    private IEnumerable<OrdersListingResponseModel> orders;
 
     private string email;
     private string firstName;
@@ -100,7 +100,7 @@ else
 
     private async Task LoadDataAsync()
     {
-        this.orders = await this.ApiClient.GetJsonAsync<OrdersListingResponseModel[]>("api/orders");
+        this.orders = await this.ApiClient.GetJsonAsync<IEnumerable<OrdersListingResponseModel>>("api/orders");
 
         var state = await this.AuthState.GetAuthenticationStateAsync();
         var user = state.User;

@@ -48,7 +48,7 @@ else
                                                 <div class="input-group-prepend">
                                                     <button @onclick="() => DecrementQuantity(product.Id, product.Quantity)" class="btn btn-light" type="button" id="button-minus"> &minus; </button>
                                                 </div>
-                                                <input value="@product.Quantity" type="text" class="form-control" />
+                                                <input value="@product.Quantity" type="text" class="form-control" readonly />
                                                 <div class="input-group-append">
                                                     <button @onclick="() => IncrementQuantity(product.Id, product.Quantity, product.StockQuantity)" class="btn btn-light" type="button" id="button-plus"> + </button>
                                                 </div>
@@ -140,13 +140,13 @@ else
     private readonly ShoppingCartRequestModel model = new ShoppingCartRequestModel();
 
     private decimal totalPrice;
-    private ShoppingCartProductsResponseModel[] cartProducts;
+    private IEnumerable<ShoppingCartProductsResponseModel> cartProducts;
 
     protected override async Task OnInitializedAsync() => await this.LoadDataAsync();
 
     private async Task LoadDataAsync()
     {
-        this.cartProducts = await this.ApiClient.GetJsonAsync<ShoppingCartProductsResponseModel[]>("api/shoppingcarts");
+        this.cartProducts = await this.ApiClient.GetJsonAsync<IEnumerable<ShoppingCartProductsResponseModel>>("api/shoppingcarts");
         this.totalPrice = this.cartProducts.Sum(p => p.Price * p.Quantity);
     }
 

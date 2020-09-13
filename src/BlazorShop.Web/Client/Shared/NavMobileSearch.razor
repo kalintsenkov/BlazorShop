@@ -12,5 +12,5 @@
 @code {
     private readonly ProductsSearchRequestModel searchModel = new ProductsSearchRequestModel();
 
-    private void Search() => this.NavigationManager.NavigateTo($"/products/{this.searchModel.Query}/1");
+    private void Search() => this.NavigationManager.NavigateTo($"/products/search/{this.searchModel.Query}/page/1");
 }

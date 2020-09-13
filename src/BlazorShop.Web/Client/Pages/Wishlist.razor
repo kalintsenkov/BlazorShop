@@ -55,12 +55,12 @@ else
 }
 
 @code {
-    private WishlistsProductsResponseModel[] products;
+    private IEnumerable<WishlistsProductsResponseModel> products;
 
     protected override async Task OnInitializedAsync() => await this.LoadDataAsync();
 
     private async Task LoadDataAsync()
-        => this.products = await this.ApiClient.GetJsonAsync<WishlistsProductsResponseModel[]>("api/wishlists");
+        => this.products = await this.ApiClient.GetJsonAsync<IEnumerable<WishlistsProductsResponseModel>>("api/wishlists");
 
     private async Task OnSubmitAsync(int id)
     {
