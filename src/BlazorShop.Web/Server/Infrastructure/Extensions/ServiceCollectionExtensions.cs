@@ -16,7 +16,9 @@
     using BlazorShop.Services.ShoppingCarts;
     using BlazorShop.Services.Wishlists;
     using Data;
+    using Data.Contracts;
     using Data.Models;
+    using Data.Seed;
     using Filters;
     using Models;
     using Services;
@@ -88,6 +90,9 @@
 
         public static IServiceCollection AddApplicationServices(this IServiceCollection services)
             => services
+                .AddTransient<IInitializer, ApplicationDbInitializer>()
+                .AddTransient<IInitialData, CategoriesData>()
+                .AddTransient<IInitialData, ProductsData>()
                 .AddTransient<IAddressesService, AddressesService>()
                 .AddTransient<ICategoriesService, CategoriesService>()
                 .AddTransient<ICurrentUserService, CurrentUserService>()

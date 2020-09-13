@@ -6,7 +6,7 @@
     using static Data.ModelConstants.Common;
     using static Data.ModelConstants.Identity;
 
-    public class RegisterRequestModel
+    public class RegisterRequestModel : LoginRequestModel
     {
         [Required]
         [StringLength(
@@ -21,15 +21,6 @@
             ErrorMessage = StringLengthErrorMessage,
             MinimumLength = MinNameLength)]
         public string LastName { get; set; }
-
-        [Required]
-        [EmailAddress]
-        public string Email { get; set; }
-
-        [Required]
-        [MinLength(MinPasswordLength)]
-        [DataType(DataType.Password)]
-        public string Password { get; set; }
 
         [Required]
         [MinLength(MinPasswordLength)]

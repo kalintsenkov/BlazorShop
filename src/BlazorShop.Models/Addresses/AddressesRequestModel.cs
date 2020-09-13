@@ -23,11 +23,13 @@
         public string Description { get; set; }
 
         [Required]
+        [MaxLength(MaxPostalCodeLength)]
         public string PostalCode { get; set; }
 
         [Required]
-        [Phone]
+        [MinLength(MinPhoneNumberLength)]
         [MaxLength(MaxPhoneNumberLength)]
+        [RegularExpression(PhoneNumberRegularExpression)]
         public string PhoneNumber { get; set; }
     }
 }

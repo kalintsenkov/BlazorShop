@@ -38,6 +38,6 @@ namespace BlazorShop.Web.Server
                 .UseAuthentication()
                 .UseAuthorization()
                 .UseEndpoints()
-                .SeedData();
+                .Initialize();
     }
 }
