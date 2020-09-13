@@ -18,7 +18,7 @@
             var modelRegistrations = AppDomain
                 .CurrentDomain
                 .GetAssemblies()
-                .Where(a => a.GetName().Name.StartsWith(ProjectName))
+                .Where(a => a.GetName().Name!.StartsWith(ProjectName))
                 .SelectMany(a => a.GetExportedTypes())
                 .Where(t => t.IsClass && !t.IsAbstract)
                 .Select(t => new
@@ -43,8 +43,11 @@
         }
 
         private Type GetMappingModel(Type type, Type mappingInterface)
-            => type.GetInterfaces()
-                .FirstOrDefault(i => i.IsGenericType && i.GetGenericTypeDefinition() == mappingInterface)
+            => type
+                .GetInterfaces()
+                .FirstOrDefault(i =>
+                    i.IsGenericType &&
+                    i.GetGenericTypeDefinition() == mappingInterface)
                 ?.GetGenericArguments()
                 .First();
     }
