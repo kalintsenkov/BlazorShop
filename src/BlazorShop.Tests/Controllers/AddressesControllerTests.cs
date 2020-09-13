@@ -45,7 +45,7 @@
                     .RestrictingForHttpMethod(HttpMethod.Post));
 
         [Theory]
-        [InlineData("Country 1", "State 1", "City 1", "Test description 1", "1000", "0888888888")]
+        [InlineData("Country 1", "State 1", "City 1", "Test description 1", "1000", "+359888888888")]
         public void CreateShouldReturnCreatedResultWhenValidModelState(
             string country,
             string state,
