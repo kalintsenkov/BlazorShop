@@ -110,7 +110,7 @@
                     City = table.Column<string>(maxLength: 255, nullable: false),
                     Description = table.Column<string>(maxLength: 1000, nullable: false),
                     PostalCode = table.Column<string>(maxLength: 10, nullable: false),
-                    PhoneNumber = table.Column<string>(maxLength: 10, nullable: false),
+                    PhoneNumber = table.Column<string>(maxLength: 20, nullable: false),
                     UserId = table.Column<string>(nullable: false)
                 },
                 constraints: table =>

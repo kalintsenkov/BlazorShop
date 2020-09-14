@@ -35,13 +35,18 @@
 
             var orderProducts = new List<OrderProduct>();
 
-            foreach (var product in shoppingCartProducts)
+            foreach (var shoppingCartProduct in shoppingCartProducts)
             {
+                var productId = shoppingCartProduct.ProductId;
+                var requestQuantity = shoppingCartProduct.Quantity;
+
+                await this.ReduceProductQuantity(productId, requestQuantity);
+
                 var orderProduct = new OrderProduct
                 {
                     Order = order,
-                    ProductId = product.ProductId,
-                    Quantity = product.Quantity
+                    ProductId = productId,
+                    Quantity = requestQuantity
                 };
 
                 orderProducts.Add(orderProduct);
@@ -71,5 +76,16 @@
                     .Where(o => o.UserId == userId)
                     .SelectMany(o => o.Products))
                 .ToListAsync();
+
+        private async Task ReduceProductQuantity(
+            int productId,
+            int requestQuantity)
+        {
+            var product = await this
+                .Data.Products
+                .FindAsync(productId);
+
+            product.Quantity -= requestQuantity;
+        }
     }
 }

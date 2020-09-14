@@ -343,8 +343,17 @@ else
             Quantity = 1
         };
 
-        await this.ApiClient.PostJsonAsync("api/shoppingcarts/AddProduct", cartRequest);
-        this.NavigationManager.NavigateTo("/cart", forceLoad: true);
+        var response = await this.ApiClient.PostJsonAsync("api/shoppingcarts/AddProduct", cartRequest);
+
+        if (!response.IsSuccessStatusCode)
+        {
+            var errors = await response.Content.ReadFromJsonAsync<string[]>();
+            this.ToastService.ShowError(errors.First());
+        }
+        else
+        {
+            this.NavigationManager.NavigateTo("/cart", forceLoad: true);
+        }
     }
 
     private void ChangeView()
