@@ -82,7 +82,8 @@
             int requestQuantity)
         {
             var product = await this
-                .Data.Products
+                .Data
+                .Products
                 .FindAsync(productId);
 
             product.Quantity -= requestQuantity;
