@@ -36,6 +36,14 @@
 
         public DbSet<WishlistProduct> WishlistsProducts { get; set; }
 
+        public override int SaveChanges()
+        {
+            this.ApplyAuditInfoRules();
+            this.ApplyDeletableEntityRules();
+
+            return base.SaveChanges();
+        }
+
         public override Task<int> SaveChangesAsync(CancellationToken cancellationToken = default)
         {
             this.ApplyAuditInfoRules();
