@@ -1,4 +1,4 @@
-﻿namespace BlazorShop.Tests
+﻿namespace BlazorShop.Tests.Common
 {
     using System;
 

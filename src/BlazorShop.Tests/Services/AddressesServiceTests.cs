@@ -4,11 +4,13 @@
     using System.Linq;
     using System.Threading.Tasks;
 
+    using Microsoft.EntityFrameworkCore;
     using MyTested.AspNetCore.Mvc;
     using Shouldly;
     using Xunit;
 
     using BlazorShop.Services.Addresses;
+    using Common;
     using Data;
     using Models.Addresses;
 
@@ -23,7 +25,7 @@
         [InlineData("Country 1", "State 1", "City 1", "Test description 1", "1000", "0888888888")]
         [InlineData("Country 2", "State 2", "City 2", "Test description 2", "2000", "0888888888")]
         [InlineData("Country 3", "State 3", "City 3", "Test description 3", "3000", "0888888888")]
-        public async Task CreateShouldAddRightAddressInDatabase(
+        public async Task CreateShouldWorkCorrectly(
             string country,
             string state,
             string city,
@@ -47,8 +49,6 @@
 
             var address = await this.Data.Addresses.FindAsync(id);
 
-            this.Data.Addresses.Count().ShouldBe(1);
-
             address.Id.ShouldBe(id);
             address.Country.ShouldBe(request.Country);
             address.State.ShouldBe(request.State);
@@ -59,15 +59,39 @@
         }
 
         [Fact]
-        public async Task DeleteShouldDeleteAddressFromDatabase()
+        public async Task DeleteShouldReturnSucceededResultWhenAddressIsDeleted()
         {
-            await this.SeedAddresses(1);
+            await this.AddFakeAddresses(1);
 
             var result = await this.addresses.DeleteAsync(1, TestUser.Identifier);
 
-            this.Data.Addresses.Count().ShouldBe(0);
+            result.Succeeded.ShouldBeTrue();
+        }
+
+        [Fact]
+        public async Task DeleteShouldSetIsDeletedToTrue()
+        {
+            await this.AddFakeAddresses(1);
+
+            var result = await this.addresses.DeleteAsync(1, TestUser.Identifier);
+
+            var address = await this
+                .Data
+                .Addresses
+                .IgnoreQueryFilters()
+                .FirstOrDefaultAsync();
 
             result.Succeeded.ShouldBeTrue();
+            address.ShouldNotBeNull();
+            address.IsDeleted.ShouldBeTrue();
+        }
+
+        [Fact]
+        public async Task DeleteShouldReturnNotSucceededResultWhenAddressIsNotFound()
+        {
+            var result = await this.addresses.DeleteAsync(1, TestUser.Identifier);
+
+            result.Succeeded.ShouldBeFalse();
         }
 
         [Theory]
@@ -76,7 +100,7 @@
         [InlineData(9)]
         public async Task ByUserShouldReturnCurrentUserAddresses(int count)
         {
-            await this.SeedAddresses(count);
+            await this.AddFakeAddresses(count);
 
             var actual = await this.addresses.ByUserAsync(TestUser.Identifier);
 
@@ -84,11 +108,11 @@
             actual.ShouldBeAssignableTo<IEnumerable<AddressesListingResponseModel>>();
         }
 
-        private async Task SeedAddresses(int count)
+        private async Task AddFakeAddresses(int count)
         {
-            var data = AddressesTestData.GetAddresses(count);
+            var fakes = AddressesTestData.GetAddresses(count);
 
-            await this.Data.Addresses.AddRangeAsync(data);
+            await this.Data.AddRangeAsync(fakes);
             await this.Data.SaveChangesAsync();
         }
     }
