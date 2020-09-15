@@ -107,6 +107,13 @@ else
 
                         </div>
 
+                        <a @onclick="Reset"
+                           @onclick:preventDefault
+                           href="#"
+                           class="btn btn-light btn-sm mt-2">
+                            Reset
+                        </a>
+
                     </EditForm>
                 </aside>
 
@@ -366,6 +373,13 @@ else
     {
         this.ListView = !this.ListView;
         this.GridView = !this.GridView;
+    }
+
+    private void Reset()
+    {
+        this.model.MinPrice = null;
+        this.model.MaxPrice = null;
+        this.NavigationManager.NavigateTo("/products/page/1");
     }
 
     private void Filter()
