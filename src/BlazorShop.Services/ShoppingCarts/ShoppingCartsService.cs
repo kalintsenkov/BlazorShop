@@ -25,9 +25,12 @@
         public async Task<Result> AddProductAsync(
             ShoppingCartRequestModel model, string userId)
         {
-            var productQuantity = await this.GetProductQuantityById(model.ProductId);
+            var productId = model.ProductId;
+            var requestQuantity = model.Quantity;
 
-            if (productQuantity < model.Quantity)
+            var productQuantity = await this.GetProductQuantityById(productId);
+
+            if (productQuantity < requestQuantity)
             {
                 return NotEnoughProductsMessage;
             }
@@ -44,8 +47,8 @@
             var shoppingCartProduct = new ShoppingCartProduct
             {
                 ShoppingCart = shoppingCart,
-                ProductId = model.ProductId,
-                Quantity = model.Quantity
+                ProductId = productId,
+                Quantity = requestQuantity
             };
 
             await this.Data.AddAsync(shoppingCartProduct);
@@ -57,15 +60,18 @@
         public async Task<Result> UpdateProductAsync(
             ShoppingCartRequestModel model, string userId)
         {
-            var productQuantity = await this.GetProductQuantityById(model.ProductId);
+            var productId = model.ProductId;
+            var requestQuantity = model.Quantity;
 
-            if (productQuantity < model.Quantity)
+            var productQuantity = await this.GetProductQuantityById(productId);
+
+            if (productQuantity < requestQuantity)
             {
                 return NotEnoughProductsMessage;
             }
 
             var shoppingCartProduct = await this.FindByProductAndUserAsync(
-                model.ProductId,
+                productId,
                 userId);
 
             if (shoppingCartProduct == null)
@@ -73,7 +79,7 @@
                 return InvalidErrorMessage;
             }
 
-            shoppingCartProduct.Quantity = model.Quantity;
+            shoppingCartProduct.Quantity = requestQuantity;
 
             await this.Data.SaveChangesAsync();
 

@@ -40,8 +40,6 @@
                 var productId = shoppingCartProduct.ProductId;
                 var requestQuantity = shoppingCartProduct.Quantity;
 
-                await this.ReduceProductQuantity(productId, requestQuantity);
-
                 var orderProduct = new OrderProduct
                 {
                     Order = order,
@@ -50,6 +48,8 @@
                 };
 
                 orderProducts.Add(orderProduct);
+
+                await this.ReduceProductQuantity(productId, requestQuantity);
             }
 
             this.Data.RemoveRange(shoppingCartProducts);

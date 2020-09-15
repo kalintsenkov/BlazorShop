@@ -21,7 +21,10 @@
 
         public async Task<int> CreateAsync(CategoriesRequestModel model)
         {
-            var category = new Category { Name = model.Name };
+            var category = new Category
+            {
+                Name = model.Name
+            };
 
             await this.Data.AddAsync(category);
             await this.Data.SaveChangesAsync();
@@ -29,7 +32,8 @@
             return category.Id;
         }
 
-        public async Task<Result> UpdateAsync(int id, CategoriesRequestModel model)
+        public async Task<Result> UpdateAsync(
+            int id, CategoriesRequestModel model)
         {
             var category = await this.FindByIdAsync(id);
 
