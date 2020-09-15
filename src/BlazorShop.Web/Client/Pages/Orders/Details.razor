@@ -1,0 +1,81 @@
+﻿@page "/order/details/{Id}"
+@attribute [Authorize]
+
+@if (order == null)
+{
+    <LoadingScreen />
+}
+else
+{
+    <section class="section-pagetop bg">
+        <div class="container">
+            <h2 class="title-page text-center">Order #@Id</h2>
+        </div>
+    </section>
+
+    <section class="section-content padding-y bg">
+        <div class="container">
+
+            <div class="card mb-3">
+                <article class="card-body">
+                    <header class="mb-4">
+                        <h4 class="card-title">Order details</h4>
+                    </header>
+                    <div class="row">
+
+                        @foreach (var product in order.Products)
+                        {
+                            <div class="col-md-6">
+                                <figure class="itemside  mb-3">
+                                    <div class="aside">
+                                        <img src="@product.ImageSource" class="border img-xs" />
+                                    </div>
+                                    <figcaption class="info">
+                                        <p> @product.Name </p>
+                                        <span> @product.Quantity x $@product.Price = Total: $@(product.Price * product.Quantity) </span>
+                                    </figcaption>
+                                </figure>
+                            </div>
+                        }
+
+                    </div>
+                </article>
+                <article class="card-body border-top">
+
+                    <dl class="row">
+                        <dt class="col-sm-10">Created on: </dt>
+                        <dd class="col-sm-2 text-right"><strong>@order.CreatedOn</strong></dd>
+
+                        <dt class="col-sm-10">Subtotal: <span class="float-right text-muted">@order.Products.Count() items</span></dt>
+                        <dd class="col-sm-2 text-right"><strong>$@totalPrice</strong></dd>
+
+                        <dt class="col-sm-10">Discount: <span class="float-right text-muted">0%</span></dt>
+                        <dd class="col-sm-2 text-danger text-right"><strong>$0</strong></dd>
+
+                        <dt class="col-sm-10">Delivery charge: <span class="float-right text-muted">Standard Delivery</span></dt>
+                        <dd class="col-sm-2 text-right"><strong>Free</strong></dd>
+
+                        <dt class="col-sm-10">Total:</dt>
+                        <dd class="col-sm-2 text-right"><strong class="h5 text-dark">$@totalPrice</strong></dd>
+                    </dl>
+
+                </article>
+            </div>
+
+        </div>
+    </section>
+}
+
+@code {
+    private OrdersDetailsResponseModel order;
+    private decimal totalPrice;
+
+    [Parameter]
+    public string Id { get; set; }
+
+    protected override async Task OnInitializedAsync()
+    {
+        this.order = await this.ApiClient.GetJsonAsync<OrdersDetailsResponseModel>($"api/orders/{Id}");
+        this.totalPrice = this.order.Products.Sum(p => p.Price * p.Quantity);
+    }
+}

@@ -64,21 +64,27 @@ else
                                 {
                                     <div class="col-md-6">
                                         <figure class="itemside  mb-3">
+
                                             <div class="aside">
-                                                <img src="@order.ProductImageSource" class="border img-sm">
+                                                <a href="/order/details/@order.Id">
+                                                    <img src="@order.ProductImageSource" class="border img-sm">
+                                                </a>
                                             </div>
                                             <figcaption class="info">
-                                                <time class="text-muted"><i class="fa fa-calendar-alt"></i> @order.CreatedOn </time>
-                                                <p> @order.ProductName </p>
-                                                <span class="text-success">Sent</span>
+                                                <a href="/order/details/@order.Id">
+                                                    <time class="text-muted"><i class="fa fa-calendar-alt"></i> @order.CreatedOn </time>
+                                                    <p class="black"> @order.ProductName </p>
+                                                    <span class="text-success">Sent</span>
+                                                </a>
                                             </figcaption>
+
                                         </figure>
                                     </div>
                                 }
 
                             </div>
 
-                            <a href="/orders" class="btn btn-outline-primary"> See all orders  </a>
+                            <a href="/orders/mine" class="btn btn-outline-primary"> See all orders  </a>
                         </div>
                     </article>
 
@@ -100,13 +106,14 @@ else
 
     private async Task LoadDataAsync()
     {
-        this.orders = await this.ApiClient.GetJsonAsync<IEnumerable<OrdersListingResponseModel>>("api/orders");
-
         var state = await this.AuthState.GetAuthenticationStateAsync();
         var user = state.User;
 
         this.email = user.GetEmail();
         this.firstName = user.GetFirstName();
         this.lastName = user.GetLastName();
+
+        this.orders = await this.ApiClient.GetJsonAsync<IEnumerable<OrdersListingResponseModel>>("api/orders");
+        this.orders = this.orders.Take(4);
     }
 }

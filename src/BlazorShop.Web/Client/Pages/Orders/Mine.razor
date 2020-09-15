@@ -1,0 +1,64 @@
+﻿@page "/orders/mine"
+@attribute [Authorize]
+
+@if (orders == null)
+{
+    <LoadingScreen />
+}
+else
+{
+    <section class="section-content padding-y bg">
+        <div class="container">
+
+            <div class="row">
+
+                <AccountSidebar />
+
+                <main class="col-md-9">
+
+                    <article class="card  mb-3">
+                        <div class="card-body">
+                            <h5 class="card-title mb-4"> My orders </h5>
+
+                            <div class="row">
+
+                                @foreach (var order in orders)
+                                {
+                                    <div class="col-md-6">
+                                        <figure class="itemside  mb-3">
+
+                                            <div class="aside">
+                                                <a href="/order/details/@order.Id">
+                                                    <img src="@order.ProductImageSource" class="border img-sm">
+                                                </a>
+                                            </div>
+                                            <figcaption class="info">
+                                                <a href="/order/details/@order.Id">
+                                                    <time class="text-muted"><i class="fa fa-calendar-alt"></i> @order.CreatedOn </time>
+                                                    <p class="black"> @order.ProductName </p>
+                                                    <span class="text-success">Sent</span>
+                                                </a>
+                                            </figcaption>
+
+                                        </figure>
+                                    </div>
+                                }
+
+                            </div>
+
+                        </div>
+                    </article>
+
+                </main>
+            </div>
+
+        </div>
+    </section>
+}
+
+@code {
+    private IEnumerable<OrdersListingResponseModel> orders;
+
+    protected override async Task OnInitializedAsync()
+        => this.orders = await this.ApiClient.GetJsonAsync<IEnumerable<OrdersListingResponseModel>>("api/orders");
+}

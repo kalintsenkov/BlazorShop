@@ -13,10 +13,10 @@
     using Models.Products;
     using Specifications;
 
-    using static Common.Constants;
-
     public class ProductsService : BaseService<Product>, IProductsService
     {
+        private const int ProductsPerPage = 6;
+
         public ProductsService(ApplicationDbContext db, IMapper mapper)
             : base(db, mapper)
         {
@@ -95,8 +95,8 @@
                 .ProjectTo<ProductsListingResponseModel>(this
                     .AllAsNoTracking()
                     .Where(specification)
-                    .Skip((model.Page - 1) * ItemsPerPage)
-                    .Take(ItemsPerPage))
+                    .Skip((model.Page - 1) * ProductsPerPage)
+                    .Take(ProductsPerPage))
                 .ToListAsync();
 
             var totalPages = await this.GetTotalPages(model);
@@ -119,7 +119,7 @@
                 .Where(specification)
                 .CountAsync();
 
-            return (int)Math.Ceiling((double)total / ItemsPerPage);
+            return (int)Math.Ceiling((double)total / ProductsPerPage);
         }
 
         private async Task<Product> FindByIdAsync(

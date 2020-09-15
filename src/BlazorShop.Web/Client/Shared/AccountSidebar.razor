@@ -4,7 +4,7 @@
         @if (NavigationManager.Uri.Contains("overview"))
         {
             <a class="list-group-item active" href="/account/overview"> Account overview  </a>
-            <a class="list-group-item" href="/orders"> My order history </a>
+            <a class="list-group-item" href="/orders/mine"> My orders </a>
             <a class="list-group-item" href="/addresses"> My addresses </a>
             <a class="list-group-item" href="/account/settings"> Settings </a>
             <a class="list-group-item" href="/account/password"> Change Password </a>
@@ -12,7 +12,7 @@
         else if (NavigationManager.Uri.Contains("orders"))
         {
             <a class="list-group-item" href="/account/overview"> Account overview  </a>
-            <a class="list-group-item active" href="/orders"> My order history </a>
+            <a class="list-group-item active" href="/orders/mine"> My orders </a>
             <a class="list-group-item" href="/addresses"> My addresses </a>
             <a class="list-group-item" href="/account/settings"> Settings </a>
             <a class="list-group-item" href="/account/passsword"> Change Password </a>
@@ -20,7 +20,7 @@
         else if (NavigationManager.Uri.Contains("addresses"))
         {
             <a class="list-group-item" href="/account/overview"> Account overview  </a>
-            <a class="list-group-item" href="/orders"> My order history </a>
+            <a class="list-group-item" href="/orders/mine"> My orders </a>
             <a class="list-group-item active" href="/addresses"> My addresses </a>
             <a class="list-group-item" href="/account/settings"> Settings </a>
             <a class="list-group-item" href="/account/password"> Change Password </a>
@@ -28,7 +28,7 @@
         else if (NavigationManager.Uri.Contains("settings"))
         {
             <a class="list-group-item" href="/account/overview"> Account overview  </a>
-            <a class="list-group-item" href="/orders"> My order history </a>
+            <a class="list-group-item" href="/orders/mine"> My orders </a>
             <a class="list-group-item" href="/addresses"> My addresses </a>
             <a class="list-group-item active" href="/account/settings"> Settings </a>
             <a class="list-group-item" href="/account/password"> Change Password </a>
@@ -36,14 +36,16 @@
         else if (NavigationManager.Uri.Contains("password"))
         {
             <a class="list-group-item" href="/account/overview"> Account overview  </a>
-            <a class="list-group-item" href="/orders"> My order history </a>
+            <a class="list-group-item" href="/orders/mine"> My orders </a>
             <a class="list-group-item" href="/addresses"> My addresses </a>
             <a class="list-group-item" href="/account/settings"> Settings </a>
             <a class="list-group-item active" href="/account/password"> Change Password </a>
         }
 
     </ul>
+
     <br />
+
     <a class="btn btn-light btn-block" href="/" @onclick="Submit">
         <i class="fas fa-sign-out-alt"></i> <span class="text">Log out</span>
     </a>
