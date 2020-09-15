@@ -259,9 +259,8 @@ else
 
                     <Pagination Page="@searchResponse.Page"
                                 TotalPages="@searchResponse.TotalPages"
-                                SearchQuery="@SearchQuery"
-                                CategoryId="@CategoryId"
-                                CategoryName="@CategoryName" />
+                                Radius="2"
+                                SelectedPage="SelectedPage" />
 
                 </main>
 
@@ -299,6 +298,13 @@ else
     protected override async Task OnInitializedAsync() => await this.LoadData();
 
     protected override async Task OnParametersSetAsync() => await this.LoadData(withCategories: false);
+
+    private async Task SelectedPage(int page)
+    {
+        this.Page = page;
+
+        await this.LoadData(withCategories: false);
+    }
 
     private async Task LoadData(bool withCategories = true)
     {

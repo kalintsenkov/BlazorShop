@@ -3,41 +3,12 @@
     <nav class="mt-4" aria-label="Page navigation sample">
         <ul class="pagination">
 
-            @if (Page == 1)
+            @foreach (var link in links)
             {
-                <li class="page-item disabled">
-                    <a class="page-link" href="#">Previous</a>
-                </li>
-            }
-            else
-            {
-                <li class="page-item">
-                    <a @onclick="() => ChangePage(Page - 1)"
-                       @onclick:preventDefault
-                       @onclick:stopPropagation
-                       class="page-link"
-                       href="#">
-                        Previous
-                    </a>
-                </li>
-            }
-
-            @if (Page == TotalPages)
-            {
-                <li class="page-item disabled">
-                    <a class="page-link" href="#">Next</a>
-                </li>
-            }
-            else
-            {
-                <li class="page-item">
-                    <a @onclick="() => ChangePage(Page + 1)"
-                       @onclick:preventDefault
-                       @onclick:stopPropagation
-                       class="page-link"
-                       href="#">
-                        Next
-                    </a>
+                <li @onclick="() => SelectedPageInternal(link)"
+                    style="cursor: pointer;"
+                    class="page-item @(link.Enabled ? null : "disabled") @(link.Active ? "active" : null)">
+                    <span class="page-link">@link.Text</span>
                 </li>
             }
 
@@ -46,38 +17,94 @@
 }
 
 @code {
+    private List<LinkModel> links;
+
     [Parameter]
-    public int Page { get; set; }
+    public int Page { get; set; } = 1;
 
     [Parameter]
     public int TotalPages { get; set; }
 
     [Parameter]
-    public string SearchQuery { get; set; } = string.Empty;
+    public int Radius { get; set; } = 3;
 
     [Parameter]
-    public int? CategoryId { get; set; }
+    public EventCallback<int> SelectedPage { get; set; }
 
-    [Parameter]
-    public string CategoryName { get; set; }
+    protected override void OnParametersSet() => this.LoadPages();
 
-    private void ChangePage(int page)
+    private async Task SelectedPageInternal(LinkModel link)
     {
-        if (!string.IsNullOrWhiteSpace(this.SearchQuery) && string.IsNullOrWhiteSpace(this.CategoryName) && !this.CategoryId.HasValue)
+        if (link.Page == this.Page)
         {
-            this.NavigationManager.NavigateTo($"/products/search/{this.SearchQuery}/page/{page}");
+            return;
         }
-        else if (!string.IsNullOrWhiteSpace(this.SearchQuery) && !string.IsNullOrWhiteSpace(this.CategoryName) && this.CategoryId.HasValue)
+
+        if (!link.Enabled)
         {
-            this.NavigationManager.NavigateTo($"/products/category/{this.CategoryName}/{this.CategoryId}/search/{this.SearchQuery}/page/{page}");
+            return;
         }
-        else if (!string.IsNullOrWhiteSpace(this.CategoryName) && this.CategoryId.HasValue)
+
+        this.Page = link.Page;
+
+        await SelectedPage.InvokeAsync(link.Page);
+    }
+
+    private void LoadPages()
+    {
+        const string previous = "Previous";
+        const string next = "Next";
+
+        var isPreviousPageLinkEnabled = this.Page != 1;
+        var previousPage = this.Page - 1;
+
+        this.links = new List<LinkModel>
+{
+            new LinkModel(previousPage, isPreviousPageLinkEnabled, previous)
+        };
+
+        for (int i = 1; i <= this.TotalPages; i++)
         {
-            this.NavigationManager.NavigateTo($"/products/category/{this.CategoryName}/{this.CategoryId}/page/{page}");
+            if (i >= this.Page - this.Radius && i <= this.Page + this.Radius)
+            {
+                this.links.Add(new LinkModel(i)
+                {
+                    Active = this.Page == i
+                });
+            }
         }
-        else if (string.IsNullOrWhiteSpace(this.SearchQuery) && string.IsNullOrWhiteSpace(this.CategoryName) && !this.CategoryId.HasValue)
+
+        var isNextPageLinkEnabled = this.Page != this.TotalPages;
+        var nextPage = this.Page + 1;
+
+        this.links.Add(new LinkModel(nextPage, isNextPageLinkEnabled, next));
+    }
+
+    private class LinkModel
+    {
+        public LinkModel(int page)
+            : this(page, true)
         {
-            this.NavigationManager.NavigateTo($"/products/page/{page}");
         }
+
+        public LinkModel(int page, bool enabled)
+            : this(page, enabled, page.ToString())
+        {
+        }
+
+        public LinkModel(int page, bool enabled, string text)
+        {
+            this.Page = page;
+            this.Enabled = enabled;
+            this.Text = text;
+        }
+
+        public string Text { get; set; }
+
+        public int Page { get; set; }
+
+        public bool Enabled { get; set; } = true;
+
+        public bool Active { get; set; } = false;
     }
 }
