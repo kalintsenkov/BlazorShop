@@ -31,7 +31,7 @@
 
         public async Task<Result> Register(RegisterRequestModel model)
         {
-            var response = await httpClient.PostAsJsonAsync("api/identity/register", model);
+            var response = await this.httpClient.PostAsJsonAsync("api/identity/register", model);
 
             if (!response.IsSuccessStatusCode)
             {
@@ -45,7 +45,7 @@
 
         public async Task<Result> Login(LoginRequestModel model)
         {
-            var response = await httpClient.PostAsJsonAsync("api/identity/login", model);
+            var response = await this.httpClient.PostAsJsonAsync("api/identity/login", model);
 
             if (!response.IsSuccessStatusCode)
             {
@@ -63,22 +63,22 @@
 
             var token = responseObject.Token;
 
-            await localStorage.SetItemAsync("authToken", token);
+            await this.localStorage.SetItemAsync("authToken", token);
 
-            ((ApiAuthenticationStateProvider)authenticationStateProvider).MarkUserAsAuthenticated(model.Email);
+            ((ApiAuthenticationStateProvider) this.authenticationStateProvider).MarkUserAsAuthenticated(model.Email);
 
-            httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
+            this.httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
 
             return Result.Success;
         }
 
         public async Task Logout()
         {
-            await localStorage.RemoveItemAsync("authToken");
+            await this.localStorage.RemoveItemAsync("authToken");
 
-            ((ApiAuthenticationStateProvider)authenticationStateProvider).MarkUserAsLoggedOut();
+            ((ApiAuthenticationStateProvider) this.authenticationStateProvider).MarkUserAsLoggedOut();
 
-            httpClient.DefaultRequestHeaders.Authorization = null;
+            this.httpClient.DefaultRequestHeaders.Authorization = null;
         }
     }
 }

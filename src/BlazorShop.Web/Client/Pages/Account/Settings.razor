@@ -69,7 +69,7 @@ else
 
     private async Task SubmitAsync()
     {
-        var response = await this.ApiClient.PutJsonAsync("api/identity/changesettings", this.model);
+        var response = await this.Http.PutAsJsonAsync("api/identity/changesettings", this.model);
 
         if (response.IsSuccessStatusCode)
         {

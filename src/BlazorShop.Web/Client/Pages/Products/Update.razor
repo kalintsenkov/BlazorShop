@@ -34,9 +34,16 @@ else
                                 <label>Category</label>
                                 <InputSelectNumber @bind-Value="model.CategoryId" class="form-control">
                                     @foreach (var category in categories)
+                                    {
+                                        if (model.CategoryId == category.Id)
                                         {
-                                        <option value="@category.Id">@category.Name</option>
+                                            <option value="@category.Id" selected="">@category.Name</option>
                                         }
+                                        else
+                                        {
+                                            <option value="@category.Id">@category.Name</option>
+                                        }
+                                    }
                                 </InputSelectNumber>
                             </div>
 
@@ -83,14 +90,16 @@ else
 
     protected override async Task OnInitializedAsync()
     {
-        this.model = await this.ApiClient.GetJsonAsync<ProductsRequestModel>($"api/products/{this.Id}");
-        this.categories = await this.ApiClient.GetJsonAsync<IEnumerable<CategoriesListingResponseModel>>("api/categories");
+        this.model = await this.Http.GetFromJsonAsync<ProductsRequestModel>($"api/products/{this.Id}");
+        this.categories = await this.Http.GetFromJsonAsync<IEnumerable<CategoriesListingResponseModel>>("api/categories");
+
+        Console.WriteLine(this.model.CategoryId);
     }
 
     private async Task SubmitAsync()
     {
-        await ApiClient.PutJsonAsync($"api/products/{this.Id}", model);
+        await this.Http.PutAsJsonAsync($"api/products/{this.Id}", this.model);
 
-        this.NavigationManager.NavigateTo($"/products/{this.Id}/{model.Name}");
+        this.NavigationManager.NavigateTo($"/products/{this.Id}/{this.model.Name}");
     }
 }

@@ -331,12 +331,12 @@ else
             $"&query={this.model.Query}" +
             $"&page={this.model.Page}";
 
-        this.searchResponse = await this.ApiClient.GetJsonAsync<ProductsSearchResponseModel>(requestUrl);
+        this.searchResponse = await this.Http.GetFromJsonAsync<ProductsSearchResponseModel>(requestUrl);
         this.products = this.searchResponse.Products;
 
         if (withCategories)
         {
-            this.categories = await this.ApiClient.GetJsonAsync<IEnumerable<CategoriesListingResponseModel>>("api/categories");
+            this.categories = await this.Http.GetFromJsonAsync<IEnumerable<CategoriesListingResponseModel>>("api/categories");
         }
 
         this.Filter();
@@ -344,7 +344,7 @@ else
 
     private async Task AddToWishlist(int id)
     {
-        await this.ApiClient.PostJsonAsync($"api/wishlists/AddProduct/{id}", id);
+        await this.Http.PostAsJsonAsync($"api/wishlists/AddProduct/{id}", id);
         this.NavigationManager.NavigateTo("/wishlist");
     }
 
@@ -356,7 +356,7 @@ else
             Quantity = 1
         };
 
-        var response = await this.ApiClient.PostJsonAsync("api/shoppingcarts/AddProduct", cartRequest);
+        var response = await this.Http.PostAsJsonAsync("api/shoppingcarts/AddProduct", cartRequest);
 
         if (!response.IsSuccessStatusCode)
         {

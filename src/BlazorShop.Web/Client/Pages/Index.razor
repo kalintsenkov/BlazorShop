@@ -117,7 +117,7 @@ else
 
     protected override async Task OnInitializedAsync()
     {
-        var response = await this.ApiClient.GetJsonAsync<ProductsSearchResponseModel>("api/products");
+        var response = await this.Http.GetFromJsonAsync<ProductsSearchResponseModel>("api/products");
 
         this.products = response.Products;
     }

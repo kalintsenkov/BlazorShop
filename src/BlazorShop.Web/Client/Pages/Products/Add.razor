@@ -80,11 +80,11 @@ else
     private IEnumerable<CategoriesListingResponseModel> categories;
 
     protected override async Task OnInitializedAsync()
-        => this.categories = await this.ApiClient.GetJsonAsync<IEnumerable<CategoriesListingResponseModel>>("api/categories");
+        => this.categories = await this.Http.GetFromJsonAsync<IEnumerable<CategoriesListingResponseModel>>("api/categories");
 
     private async Task SubmitAsync()
     {
-        var response = await this.ApiClient.PostJsonAsync("api/products", model);
+        var response = await this.Http.PostAsJsonAsync("api/products", model);
 
         var id = await response.Content.ReadFromJsonAsync<int>();
 

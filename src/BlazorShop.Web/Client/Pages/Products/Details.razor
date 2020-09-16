@@ -1,4 +1,5 @@
 ﻿@page "/products/{Id:int}/{ProductName}"
+@attribute [Authorize]
 
 @if (product == null)
 {
@@ -59,5 +60,5 @@ else
     public string ProductName { get; set; }
 
     protected override async Task OnInitializedAsync()
-        => this.product = await this.ApiClient.GetJsonAsync<ProductsDetailsResponseModel>($"api/products/{this.Id}");
+        => this.product = await this.Http.GetFromJsonAsync<ProductsDetailsResponseModel>($"api/products/{this.Id}");
 }

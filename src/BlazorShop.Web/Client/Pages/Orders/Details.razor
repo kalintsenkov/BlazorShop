@@ -75,7 +75,7 @@ else
 
     protected override async Task OnInitializedAsync()
     {
-        this.order = await this.ApiClient.GetJsonAsync<OrdersDetailsResponseModel>($"api/orders/{Id}");
+        this.order = await this.Http.GetFromJsonAsync<OrdersDetailsResponseModel>($"api/orders/{Id}");
         this.totalPrice = this.order.Products.Sum(p => p.Price * p.Quantity);
     }
 }

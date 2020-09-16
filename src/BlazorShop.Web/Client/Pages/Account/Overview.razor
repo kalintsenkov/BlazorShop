@@ -113,7 +113,7 @@ else
         this.firstName = user.GetFirstName();
         this.lastName = user.GetLastName();
 
-        this.orders = await this.ApiClient.GetJsonAsync<IEnumerable<OrdersListingResponseModel>>("api/orders");
+        this.orders = await this.Http.GetFromJsonAsync<IEnumerable<OrdersListingResponseModel>>("api/orders");
         this.orders = this.orders.Take(4);
     }
 }

@@ -156,7 +156,7 @@ else
         var state = await this.AuthState.GetAuthenticationStateAsync();
         var user = state.User;
 
-        this.cartProducts = await this.ApiClient.GetJsonAsync<IEnumerable<ShoppingCartProductsResponseModel>>("api/shoppingcarts");
+        this.cartProducts = await this.Http.GetFromJsonAsync<IEnumerable<ShoppingCartProductsResponseModel>>("api/shoppingcarts");
 
         this.email = user.GetEmail();
         this.totalPrice = this.cartProducts.Sum(p => p.Price * p.Quantity);
@@ -164,12 +164,12 @@ else
 
     private async Task SubmitAsync()
     {
-        var addressResponse = await this.ApiClient.PostJsonAsync("api/addresses", this.address);
+        var addressResponse = await this.Http.PostAsJsonAsync("api/addresses", this.address);
         var addressId = await addressResponse.Content.ReadFromJsonAsync<int>();
 
         this.order.AddressId = addressId;
 
-        var orderResponse = await this.ApiClient.PostJsonAsync("api/orders", this.order);
+        var orderResponse = await this.Http.PostAsJsonAsync("api/orders", this.order);
         var orderId = await orderResponse.Content.ReadAsStringAsync();
 
         this.NavigationManager.NavigateTo($"/order/confirmed/{orderId}", forceLoad: true);

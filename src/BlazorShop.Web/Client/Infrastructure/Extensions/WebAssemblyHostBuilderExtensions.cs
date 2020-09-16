@@ -13,9 +13,12 @@
 
     public static class WebAssemblyHostBuilderExtensions
     {
+        private const string ClientName = "BlazorShop.ServerAPI";
+
         public static WebAssemblyHostBuilder AddRootComponents(this WebAssemblyHostBuilder builder)
         {
             builder.RootComponents.Add<App>("app");
+
             return builder;
         }
 
@@ -28,12 +31,15 @@
                 .AddBlazoredLocalStorage()
                 .AddScoped<ApiAuthenticationStateProvider>()
                 .AddScoped<AuthenticationStateProvider, ApiAuthenticationStateProvider>()
-                .AddTransient<IApiClient, ApiClient>()
+                .AddScoped(sp => sp
+                    .GetRequiredService<IHttpClientFactory>()
+                    .CreateClient(ClientName))
                 .AddTransient<IAuthService, AuthService>()
-                .AddTransient(sp => new HttpClient
-                {
-                    BaseAddress = new Uri(builder.HostEnvironment.BaseAddress)
-                });
+                .AddTransient<AuthenticationHeaderHandler>()
+                .AddHttpClient(
+                    ClientName,
+                    client => client.BaseAddress = new Uri(builder.HostEnvironment.BaseAddress))
+                .AddHttpMessageHandler<AuthenticationHeaderHandler>();
 
             return builder;
         }

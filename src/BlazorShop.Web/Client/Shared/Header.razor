@@ -158,5 +158,5 @@ else
     private IEnumerable<CategoriesListingResponseModel> categories;
 
     protected override async Task OnInitializedAsync()
-        => this.categories = await this.ApiClient.GetJsonAsync<IEnumerable<CategoriesListingResponseModel>>("api/categories");
+        => this.categories = await this.Http.GetFromJsonAsync<IEnumerable<CategoriesListingResponseModel>>("api/categories");
 }
