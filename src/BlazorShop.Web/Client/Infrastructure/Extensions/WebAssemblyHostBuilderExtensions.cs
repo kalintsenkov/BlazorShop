@@ -9,7 +9,7 @@
     using Microsoft.AspNetCore.Components.WebAssembly.Hosting;
     using Microsoft.Extensions.DependencyInjection;
 
-    using Services.Authentication;
+    using Services;
 
     public static class WebAssemblyHostBuilderExtensions
     {

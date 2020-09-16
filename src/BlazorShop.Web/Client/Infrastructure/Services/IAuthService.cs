@@ -1,4 +1,4 @@
-﻿namespace BlazorShop.Web.Client.Services.Authentication
+﻿namespace BlazorShop.Web.Client.Infrastructure.Services
 {
     using System.Threading.Tasks;
 
