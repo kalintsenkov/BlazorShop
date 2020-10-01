@@ -278,6 +278,9 @@ else
 }
 
 @code {
+    [CascadingParameter]
+    private Task<AuthenticationState> authenticationStateTask { get; set; }
+
     private readonly ProductsSearchRequestModel model = new ProductsSearchRequestModel();
 
     private ProductsSearchResponseModel searchResponse;
@@ -350,6 +353,13 @@ else
 
     private async Task AddToCart(int id)
     {
+        var user = (await authenticationStateTask).User;
+        if (!user.Identity.IsAuthenticated)
+        {
+            this.NavigationManager.NavigateTo("/account/login");
+            return;
+        }
+		
         var cartRequest = new ShoppingCartRequestModel
         {
             ProductId = id,
