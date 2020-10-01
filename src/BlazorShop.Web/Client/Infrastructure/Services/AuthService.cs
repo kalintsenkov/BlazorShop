@@ -33,14 +33,11 @@
         {
             var response = await this.httpClient.PostAsJsonAsync("api/identity/register", model);
 
-            if (!response.IsSuccessStatusCode)
-            {
-                var errors = await response.Content.ReadFromJsonAsync<string[]>();
+            if (response.IsSuccessStatusCode) return Result.Success;
+            var errors = await response.Content.ReadFromJsonAsync<string[]>();
 
-                return Result.Failure(errors);
-            }
+            return Result.Failure(errors);
 
-            return Result.Success;
         }
 
         public async Task<Result> Login(LoginRequestModel model)

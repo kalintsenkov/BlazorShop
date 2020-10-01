@@ -6,7 +6,7 @@
 
     using Contracts;
 
-    public class ApplicationRole : IdentityRole, IAuditInfo, IDeletableEntity
+    public sealed class ApplicationRole : IdentityRole, IAuditInfo, IDeletableEntity
     {
         public ApplicationRole()
             : this(null)
@@ -15,7 +15,7 @@
 
         public ApplicationRole(string name)
             : base(name)
-            => this.Id = Guid.NewGuid().ToString();
+            => Id = Guid.NewGuid().ToString();
 
         public DateTime CreatedOn { get; set; }
 

@@ -24,7 +24,7 @@
                 .Select(t => new
                 {
                     Type = t,
-                    MapFrom = this.GetMappingModel(t, mapFromType),
+                    MapFrom = GetMappingModel(t, mapFromType),
                     ExplicitMap = t.GetInterfaces()
                         .Where(i => i == explicitMapType)
                         .Select(i => (IMapExplicitly)Activator.CreateInstance(t))
@@ -42,7 +42,7 @@
             }
         }
 
-        private Type GetMappingModel(Type type, Type mappingInterface)
+        private static Type GetMappingModel(Type type, Type mappingInterface)
             => type
                 .GetInterfaces()
                 .FirstOrDefault(i =>

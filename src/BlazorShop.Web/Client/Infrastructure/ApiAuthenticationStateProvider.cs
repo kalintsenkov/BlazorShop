@@ -64,7 +64,7 @@
         {
             var claims = new List<Claim>();
             var payload = jwt.Split('.')[1];
-            var jsonBytes = this.ParseBase64WithoutPadding(payload);
+            var jsonBytes = ParseBase64WithoutPadding(payload);
             var keyValuePairs = JsonSerializer.Deserialize<Dictionary<string, object>>(jsonBytes);
 
             keyValuePairs.TryGetValue(ClaimTypes.Role, out var roles);
@@ -90,7 +90,7 @@
             return claims;
         }
 
-        private byte[] ParseBase64WithoutPadding(string base64)
+        private static byte[] ParseBase64WithoutPadding(string base64)
         {
             switch (base64.Length % 4)
             {
