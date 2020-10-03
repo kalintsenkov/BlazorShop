@@ -17,6 +17,7 @@
     using Filters;
     using Models;
     using Services;
+
     using static Data.ModelConstants.Identity;
 
     public static class ServiceCollectionExtensions
@@ -118,7 +119,9 @@
                 }
             }
 
-            return services.AddTransient<ICurrentUserService, CurrentUserService>();
+            services.AddScoped<ICurrentUserService, CurrentUserService>();
+
+            return services;
         }
 
         public static IServiceCollection AddApiControllers(this IServiceCollection services)

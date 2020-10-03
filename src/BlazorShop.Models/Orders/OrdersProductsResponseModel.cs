@@ -5,7 +5,7 @@
     using Common.Mapping;
     using Data.Models;
 
-    public class OrdersProductsResponseModel : IMapFrom<OrderProduct>, IMapExplicitly
+    public class OrdersProductsResponseModel : IMapFrom<OrderProduct>
     {
         public int Id { get; set; }
 
@@ -17,8 +17,8 @@
 
         public decimal Price { get; set; }
 
-        public void RegisterMappings(IProfileExpression profile)
-            => profile
+        public void Mapping(Profile mapper)
+            => mapper
                 .CreateMap<OrderProduct, OrdersProductsResponseModel>()
                 .ForMember(m => m.Id, m => m
                     .MapFrom(op => op.Product.Id))

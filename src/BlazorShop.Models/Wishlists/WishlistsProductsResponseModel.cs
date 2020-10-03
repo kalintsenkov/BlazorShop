@@ -5,7 +5,7 @@
     using Common.Mapping;
     using Data.Models;
 
-    public class WishlistsProductsResponseModel : IMapFrom<WishlistProduct>, IMapExplicitly
+    public class WishlistsProductsResponseModel : IMapFrom<WishlistProduct>
     {
         public int Id { get; set; }
 
@@ -17,8 +17,8 @@
 
         public decimal Price { get; set; }
 
-        public void RegisterMappings(IProfileExpression profile)
-            => profile
+        public void Mapping(Profile mapper)
+            => mapper
                 .CreateMap<WishlistProduct, WishlistsProductsResponseModel>()
                 .ForMember(m => m.Id, m => m
                     .MapFrom(c => c.Product.Id))

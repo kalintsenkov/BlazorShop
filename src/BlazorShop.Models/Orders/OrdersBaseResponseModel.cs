@@ -7,14 +7,14 @@
     using Common.Mapping;
     using Data.Models;
 
-    public abstract class OrdersBaseResponseModel : IMapFrom<Order>, IMapExplicitly
+    public class OrdersBaseResponseModel : IMapFrom<Order>
     {
         public string Id { get; set; }
 
         public string CreatedOn { get; set; }
 
-        public virtual void RegisterMappings(IProfileExpression profile) 
-            => profile
+        public virtual void Mapping(Profile mapper)
+            => mapper
                 .CreateMap<Order, OrdersDetailsResponseModel>()
                 .ForMember(m => m.Id, m => m
                     .MapFrom(o => o.Id))

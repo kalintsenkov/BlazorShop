@@ -10,8 +10,8 @@
 
         public string ProductImageSource { get; set; }
 
-        public override void RegisterMappings(IProfileExpression profile)
-            => profile
+        public override void Mapping(Profile mapper)
+            => mapper
                 .CreateMap<OrderProduct, OrdersListingResponseModel>()
                 .ForMember(m => m.Id, m => m
                     .MapFrom(op => op.Order.Id))
