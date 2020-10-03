@@ -8,14 +8,14 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace BlazorShop.Data.Migrations
 {
-    [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [DbContext(typeof(BlazorShopDbContext))]
+    partial class BlazorShopDbContextModelSnapshot : ModelSnapshot
     {
         protected override void BuildModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .HasAnnotation("ProductVersion", "3.1.7")
+                .HasAnnotation("ProductVersion", "3.1.8")
                 .HasAnnotation("Relational:MaxIdentifierLength", 128)
                 .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
@@ -81,7 +81,7 @@ namespace BlazorShop.Data.Migrations
                     b.ToTable("Addresses");
                 });
 
-            modelBuilder.Entity("BlazorShop.Data.Models.ApplicationRole", b =>
+            modelBuilder.Entity("BlazorShop.Data.Models.BlazorShopRole", b =>
                 {
                     b.Property<string>("Id")
                         .HasColumnType("nvarchar(450)");
@@ -120,7 +120,7 @@ namespace BlazorShop.Data.Migrations
                     b.ToTable("AspNetRoles");
                 });
 
-            modelBuilder.Entity("BlazorShop.Data.Models.ApplicationUser", b =>
+            modelBuilder.Entity("BlazorShop.Data.Models.BlazorShopUser", b =>
                 {
                     b.Property<string>("Id")
                         .HasColumnType("nvarchar(450)");
@@ -146,6 +146,7 @@ namespace BlazorShop.Data.Migrations
                         .HasColumnType("bit");
 
                     b.Property<string>("FirstName")
+                        .IsRequired()
                         .HasColumnType("nvarchar(50)")
                         .HasMaxLength(50);
 
@@ -153,6 +154,7 @@ namespace BlazorShop.Data.Migrations
                         .HasColumnType("bit");
 
                     b.Property<string>("LastName")
+                        .IsRequired()
                         .HasColumnType("nvarchar(50)")
                         .HasMaxLength(50);
 
@@ -539,7 +541,7 @@ namespace BlazorShop.Data.Migrations
 
             modelBuilder.Entity("BlazorShop.Data.Models.Address", b =>
                 {
-                    b.HasOne("BlazorShop.Data.Models.ApplicationUser", "User")
+                    b.HasOne("BlazorShop.Data.Models.BlazorShopUser", "User")
                         .WithMany("Addresses")
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Restrict)
@@ -554,7 +556,7 @@ namespace BlazorShop.Data.Migrations
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
-                    b.HasOne("BlazorShop.Data.Models.ApplicationUser", "User")
+                    b.HasOne("BlazorShop.Data.Models.BlazorShopUser", "User")
                         .WithMany("Orders")
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Restrict)
@@ -587,7 +589,7 @@ namespace BlazorShop.Data.Migrations
 
             modelBuilder.Entity("BlazorShop.Data.Models.ShoppingCart", b =>
                 {
-                    b.HasOne("BlazorShop.Data.Models.ApplicationUser", "User")
+                    b.HasOne("BlazorShop.Data.Models.BlazorShopUser", "User")
                         .WithMany("ShoppingCarts")
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Restrict)
@@ -611,7 +613,7 @@ namespace BlazorShop.Data.Migrations
 
             modelBuilder.Entity("BlazorShop.Data.Models.Wishlist", b =>
                 {
-                    b.HasOne("BlazorShop.Data.Models.ApplicationUser", "User")
+                    b.HasOne("BlazorShop.Data.Models.BlazorShopUser", "User")
                         .WithMany("Wishlists")
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Restrict)
@@ -635,7 +637,7 @@ namespace BlazorShop.Data.Migrations
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
                 {
-                    b.HasOne("BlazorShop.Data.Models.ApplicationRole", null)
+                    b.HasOne("BlazorShop.Data.Models.BlazorShopRole", null)
                         .WithMany()
                         .HasForeignKey("RoleId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -644,40 +646,40 @@ namespace BlazorShop.Data.Migrations
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserClaim<string>", b =>
                 {
-                    b.HasOne("BlazorShop.Data.Models.ApplicationUser", null)
-                        .WithMany("Claims")
+                    b.HasOne("BlazorShop.Data.Models.BlazorShopUser", null)
+                        .WithMany()
                         .HasForeignKey("UserId")
-                        .OnDelete(DeleteBehavior.Restrict)
+                        .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserLogin<string>", b =>
                 {
-                    b.HasOne("BlazorShop.Data.Models.ApplicationUser", null)
-                        .WithMany("Logins")
+                    b.HasOne("BlazorShop.Data.Models.BlazorShopUser", null)
+                        .WithMany()
                         .HasForeignKey("UserId")
-                        .OnDelete(DeleteBehavior.Restrict)
+                        .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserRole<string>", b =>
                 {
-                    b.HasOne("BlazorShop.Data.Models.ApplicationRole", null)
+                    b.HasOne("BlazorShop.Data.Models.BlazorShopRole", null)
                         .WithMany()
                         .HasForeignKey("RoleId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("BlazorShop.Data.Models.ApplicationUser", null)
-                        .WithMany("Roles")
+                    b.HasOne("BlazorShop.Data.Models.BlazorShopUser", null)
+                        .WithMany()
                         .HasForeignKey("UserId")
-                        .OnDelete(DeleteBehavior.Restrict)
+                        .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserToken<string>", b =>
                 {
-                    b.HasOne("BlazorShop.Data.Models.ApplicationUser", null)
+                    b.HasOne("BlazorShop.Data.Models.BlazorShopUser", null)
                         .WithMany()
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)

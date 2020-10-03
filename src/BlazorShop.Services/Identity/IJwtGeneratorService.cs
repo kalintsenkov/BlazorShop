@@ -6,6 +6,6 @@
 
     public interface IJwtGeneratorService : IService
     {
-        Task<string> GenerateJwtAsync(ApplicationUser user);
+        Task<string> GenerateJwtAsync(BlazorShopUser user);
     }
 }

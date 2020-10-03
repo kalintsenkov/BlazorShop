@@ -35,16 +35,16 @@
             this IServiceCollection services,
             IConfiguration configuration)
             => services
-                .AddDbContext<ApplicationDbContext>(options => options
+                .AddDbContext<BlazorShopDbContext>(options => options
                     .UseSqlServer(configuration.GetDefaultConnectionString()))
                 .AddTransient<IInitialData, CategoriesData>()
                 .AddTransient<IInitialData, ProductsData>()
-                .AddTransient<IInitializer, ApplicationDbInitializer>();
+                .AddTransient<IInitializer, BlazorShopDbInitializer>();
 
         public static IServiceCollection AddIdentity(this IServiceCollection services)
         {
             services
-                .AddIdentity<ApplicationUser, ApplicationRole>(options =>
+                .AddIdentity<BlazorShopUser, BlazorShopRole>(options =>
                 {
                     options.Password.RequiredLength = MinPasswordLength;
                     options.Password.RequireDigit = false;
@@ -53,7 +53,7 @@
                     options.Password.RequireUppercase = false;
                     options.User.RequireUniqueEmail = true;
                 })
-                .AddEntityFrameworkStores<ApplicationDbContext>();
+                .AddEntityFrameworkStores<BlazorShopDbContext>();
 
             return services;
         }

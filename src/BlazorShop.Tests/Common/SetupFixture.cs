@@ -16,19 +16,19 @@
             this.Mapper = InitializeAutoMapper();
         }
 
-        protected ApplicationDbContext Data { get; }
+        protected BlazorShopDbContext Data { get; }
 
         protected IMapper Mapper { get; }
 
         public void Dispose() => this.Data?.Dispose();
 
-        private static ApplicationDbContext InitializeDbContext()
+        private static BlazorShopDbContext InitializeDbContext()
         {
-            var options = new DbContextOptionsBuilder<ApplicationDbContext>()
+            var options = new DbContextOptionsBuilder<BlazorShopDbContext>()
                 .UseInMemoryDatabase(Guid.NewGuid().ToString())
                 .Options;
 
-            return new ApplicationDbContext(options);
+            return new BlazorShopDbContext(options);
         }
 
         private static IMapper InitializeAutoMapper()

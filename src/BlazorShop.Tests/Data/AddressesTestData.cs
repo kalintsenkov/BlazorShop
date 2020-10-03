@@ -11,7 +11,7 @@
     {
         public static List<Address> GetAddresses(int count, bool sameUser = true)
         {
-            var user = new ApplicationUser
+            var user = new BlazorShopUser
             {
                 Id = TestUser.Identifier,
                 UserName = TestUser.Username
@@ -28,7 +28,7 @@
                     Description = $"Description {i}",
                     PostalCode = $"{i}{i}{i}{i}",
                     PhoneNumber = "0888888888",
-                    User = sameUser ? user : new ApplicationUser
+                    User = sameUser ? user : new BlazorShopUser
                     {
                         Id = $"User Id {i}",
                         UserName = $"User {i}"

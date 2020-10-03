@@ -11,9 +11,9 @@
     using Contracts;
     using Models;
 
-    public class ApplicationDbContext : IdentityDbContext<ApplicationUser, ApplicationRole, string>
+    public class BlazorShopDbContext : IdentityDbContext<BlazorShopUser, BlazorShopRole, string>
     {
-        public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options)
+        public BlazorShopDbContext(DbContextOptions<BlazorShopDbContext> options)
             : base(options)
         {
         }

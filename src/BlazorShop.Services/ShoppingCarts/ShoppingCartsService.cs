@@ -17,7 +17,7 @@
         private const string InvalidErrorMessage = "This user cannot edit this shopping cart.";
         private const string NotEnoughProductsMessage = "There are not enough products in stock.";
 
-        public ShoppingCartsService(ApplicationDbContext db, IMapper mapper)
+        public ShoppingCartsService(BlazorShopDbContext db, IMapper mapper)
             : base(db, mapper)
         {
         }

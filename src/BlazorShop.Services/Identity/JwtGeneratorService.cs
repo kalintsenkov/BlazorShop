@@ -18,18 +18,18 @@
 
     public class JwtGeneratorService : IJwtGeneratorService
     {
-        private readonly UserManager<ApplicationUser> userManager;
+        private readonly UserManager<BlazorShopUser> userManager;
         private readonly ApplicationSettings applicationSettings;
 
         public JwtGeneratorService(
-            UserManager<ApplicationUser> userManager,
+            UserManager<BlazorShopUser> userManager,
             IOptions<ApplicationSettings> applicationSettings)
         {
             this.userManager = userManager;
             this.applicationSettings = applicationSettings.Value;
         }
 
-        public async Task<string> GenerateJwtAsync(ApplicationUser user)
+        public async Task<string> GenerateJwtAsync(BlazorShopUser user)
         {
             var claims = new List<Claim>
             {

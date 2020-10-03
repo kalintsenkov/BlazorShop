@@ -10,13 +10,13 @@
     public abstract class BaseService<TEntity>
         where TEntity : class
     {
-        protected BaseService(ApplicationDbContext data, IMapper mapper)
+        protected BaseService(BlazorShopDbContext data, IMapper mapper)
         {
             this.Data = data;
             this.Mapper = mapper;
         }
 
-        protected ApplicationDbContext Data { get; }
+        protected BlazorShopDbContext Data { get; }
 
         protected IMapper Mapper { get; }
 

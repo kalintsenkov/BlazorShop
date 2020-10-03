@@ -14,7 +14,7 @@
 
     public class CategoriesService : BaseService<Category>, ICategoriesService
     {
-        public CategoriesService(ApplicationDbContext db, IMapper mapper)
+        public CategoriesService(BlazorShopDbContext db, IMapper mapper)
             : base(db, mapper)
         {
         }

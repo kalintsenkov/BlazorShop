@@ -7,9 +7,9 @@
 
     using Contracts;
 
-    public class ApplicationUser : IdentityUser, IAuditInfo, IDeletableEntity
+    public class BlazorShopUser : IdentityUser, IAuditInfo, IDeletableEntity
     {
-        public ApplicationUser() => this.Id = Guid.NewGuid().ToString();
+        public BlazorShopUser() => this.Id = Guid.NewGuid().ToString();
 
         public string FirstName { get; set; }
 
@@ -30,11 +30,5 @@
         public ICollection<Wishlist> Wishlists { get; } = new HashSet<Wishlist>();
 
         public ICollection<ShoppingCart> ShoppingCarts { get; } = new HashSet<ShoppingCart>();
-
-        public ICollection<IdentityUserRole<string>> Roles { get; } = new HashSet<IdentityUserRole<string>>();
-
-        public ICollection<IdentityUserClaim<string>> Claims { get; } = new HashSet<IdentityUserClaim<string>>();
-
-        public ICollection<IdentityUserLogin<string>> Logins { get; } = new HashSet<IdentityUserLogin<string>>();
     }
 }

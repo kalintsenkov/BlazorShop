@@ -13,11 +13,11 @@
     {
         private const string InvalidErrorMessage = "Invalid email or password.";
 
-        private readonly UserManager<ApplicationUser> userManager;
+        private readonly UserManager<BlazorShopUser> userManager;
         private readonly IJwtGeneratorService jwtGenerator;
 
         public IdentityService(
-            UserManager<ApplicationUser> userManager,
+            UserManager<BlazorShopUser> userManager,
             IJwtGeneratorService jwtGenerator)
         {
             this.userManager = userManager;
@@ -26,7 +26,7 @@
 
         public async Task<Result> RegisterAsync(RegisterRequestModel model)
         {
-            var user = new ApplicationUser
+            var user = new BlazorShopUser
             {
                 FirstName = model.FirstName,
                 LastName = model.LastName,

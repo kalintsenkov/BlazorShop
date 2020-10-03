@@ -22,7 +22,7 @@
 
         public string UserId { get; set; }
 
-        public ApplicationUser User { get; set; }
+        public BlazorShopUser User { get; set; }
 
         public ICollection<Order> Orders { get; } = new HashSet<Order>();
     }

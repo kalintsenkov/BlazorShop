@@ -14,17 +14,17 @@
 
     using static Common.Constants;
 
-    public class ApplicationDbInitializer : IInitializer
+    public class BlazorShopDbInitializer : IInitializer
     {
-        private readonly ApplicationDbContext db;
-        private readonly UserManager<ApplicationUser> userManager;
-        private readonly RoleManager<ApplicationRole> roleManager;
+        private readonly BlazorShopDbContext db;
+        private readonly UserManager<BlazorShopUser> userManager;
+        private readonly RoleManager<BlazorShopRole> roleManager;
         private readonly IEnumerable<IInitialData> initialDataProviders;
 
-        public ApplicationDbInitializer(
-            ApplicationDbContext db,
-            UserManager<ApplicationUser> userManager,
-            RoleManager<ApplicationRole> roleManager,
+        public BlazorShopDbInitializer(
+            BlazorShopDbContext db,
+            UserManager<BlazorShopUser> userManager,
+            RoleManager<BlazorShopRole> roleManager,
             IEnumerable<IInitialData> initialDataProviders)
         {
             this.db = db;
@@ -66,11 +66,11 @@
                         return;
                     }
 
-                    var adminRole = new ApplicationRole(AdministratorRole);
+                    var adminRole = new BlazorShopRole(AdministratorRole);
 
                     await this.roleManager.CreateAsync(adminRole);
 
-                    var adminUser = new ApplicationUser
+                    var adminUser = new BlazorShopUser
                     {
                         FirstName = "Admin",
                         LastName = "Admin",

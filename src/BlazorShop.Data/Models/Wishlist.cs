@@ -10,7 +10,7 @@
 
         public string UserId { get; set; }
 
-        public ApplicationUser User { get; set; }
+        public BlazorShopUser User { get; set; }
 
         public ICollection<WishlistProduct> Products { get; } = new HashSet<WishlistProduct>();
     }

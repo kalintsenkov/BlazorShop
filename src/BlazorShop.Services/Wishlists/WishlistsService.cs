@@ -14,7 +14,7 @@
 
     public class WishlistsService : BaseService<Wishlist>, IWishlistsService
     {
-        public WishlistsService(ApplicationDbContext db, IMapper mapper)
+        public WishlistsService(BlazorShopDbContext db, IMapper mapper)
             : base(db, mapper)
         {
         }

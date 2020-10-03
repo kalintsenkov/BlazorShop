@@ -14,7 +14,7 @@
 
     public class AddressesService : BaseService<Address>, IAddressesService
     {
-        public AddressesService(ApplicationDbContext data, IMapper mapper)
+        public AddressesService(BlazorShopDbContext data, IMapper mapper)
             : base(data, mapper)
         {
         }

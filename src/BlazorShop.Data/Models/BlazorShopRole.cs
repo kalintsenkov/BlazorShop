@@ -6,14 +6,14 @@
 
     using Contracts;
 
-    public class ApplicationRole : IdentityRole, IAuditInfo, IDeletableEntity
+    public class BlazorShopRole : IdentityRole, IAuditInfo, IDeletableEntity
     {
-        public ApplicationRole()
+        public BlazorShopRole()
             : this(null)
         {
         }
 
-        public ApplicationRole(string name)
+        public BlazorShopRole(string name)
             : base(name)
             => this.Id = Guid.NewGuid().ToString();
 

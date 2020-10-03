@@ -17,7 +17,7 @@
     {
         private const int ProductsPerPage = 6;
 
-        public ProductsService(ApplicationDbContext db, IMapper mapper)
+        public ProductsService(BlazorShopDbContext db, IMapper mapper)
             : base(db, mapper)
         {
         }

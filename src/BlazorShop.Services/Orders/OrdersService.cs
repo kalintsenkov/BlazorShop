@@ -13,7 +13,7 @@
 
     public class OrdersService : BaseService<Order>, IOrdersService
     {
-        public OrdersService(ApplicationDbContext data, IMapper mapper)
+        public OrdersService(BlazorShopDbContext data, IMapper mapper)
             : base(data, mapper)
         {
         }
