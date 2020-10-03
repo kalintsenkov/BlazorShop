@@ -3,10 +3,11 @@
     using System.Collections.Generic;
     using System.Threading.Tasks;
 
+    using Common;
     using Models;
     using Models.ShoppingCarts;
 
-    public interface IShoppingCartsService
+    public interface IShoppingCartsService : IService
     {
         Task<Result> AddProductAsync(ShoppingCartRequestModel model, string userId);
 

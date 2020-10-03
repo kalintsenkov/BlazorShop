@@ -14,7 +14,7 @@
     using Data.Models;
     using Models;
 
-    using static Common.Constants;
+    using static BlazorShop.Common.Constants;
 
     public class JwtGeneratorService : IJwtGeneratorService
     {

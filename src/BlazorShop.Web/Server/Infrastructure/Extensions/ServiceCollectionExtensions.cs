@@ -1,5 +1,6 @@
 ﻿namespace BlazorShop.Web.Server.Infrastructure.Extensions
 {
+    using System.Linq;
     using System.Text;
 
     using Microsoft.AspNetCore.Authentication.JwtBearer;
@@ -8,13 +9,7 @@
     using Microsoft.Extensions.DependencyInjection;
     using Microsoft.IdentityModel.Tokens;
 
-    using BlazorShop.Services.Addresses;
-    using BlazorShop.Services.Categories;
-    using BlazorShop.Services.Identity;
-    using BlazorShop.Services.Orders;
-    using BlazorShop.Services.Products;
-    using BlazorShop.Services.ShoppingCarts;
-    using BlazorShop.Services.Wishlists;
+    using BlazorShop.Services.Common;
     using Data;
     using Data.Contracts;
     using Data.Models;
@@ -22,7 +17,6 @@
     using Filters;
     using Models;
     using Services;
-
     using static Data.ModelConstants.Identity;
 
     public static class ServiceCollectionExtensions
@@ -41,7 +35,10 @@
             IConfiguration configuration)
             => services
                 .AddDbContext<ApplicationDbContext>(options => options
-                    .UseSqlServer(configuration.GetDefaultConnectionString()));
+                    .UseSqlServer(configuration.GetDefaultConnectionString()))
+                .AddTransient<IInitialData, CategoriesData>()
+                .AddTransient<IInitialData, ProductsData>()
+                .AddTransient<IInitializer, ApplicationDbInitializer>();
 
         public static IServiceCollection AddIdentity(this IServiceCollection services)
         {
@@ -89,19 +86,40 @@
         }
 
         public static IServiceCollection AddApplicationServices(this IServiceCollection services)
-            => services
-                .AddTransient<IInitializer, ApplicationDbInitializer>()
-                .AddTransient<IInitialData, CategoriesData>()
-                .AddTransient<IInitialData, ProductsData>()
-                .AddTransient<IAddressesService, AddressesService>()
-                .AddTransient<ICategoriesService, CategoriesService>()
-                .AddTransient<ICurrentUserService, CurrentUserService>()
-                .AddTransient<IIdentityService, IdentityService>()
-                .AddTransient<IJwtGeneratorService, JwtGeneratorService>()
-                .AddTransient<IOrdersService, OrdersService>()
-                .AddTransient<IProductsService, ProductsService>()
-                .AddTransient<IShoppingCartsService, ShoppingCartsService>()
-                .AddTransient<IWishlistsService, WishlistsService>();
+        {
+            var serviceInterfaceType = typeof(IService);
+            var singletonServiceInterfaceType = typeof(ISingletonService);
+            var scopedServiceInterfaceType = typeof(IScopedService);
+
+            var types = serviceInterfaceType
+                .Assembly
+                .GetExportedTypes()
+                .Where(t => t.IsClass && !t.IsAbstract)
+                .Select(t => new
+                {
+                    Service = t.GetInterface($"I{t.Name}"),
+                    Implementation = t
+                })
+                .Where(t => t.Service != null);
+
+            foreach (var type in types)
+            {
+                if (serviceInterfaceType.IsAssignableFrom(type.Service))
+                {
+                    services.AddTransient(type.Service, type.Implementation);
+                }
+                else if (singletonServiceInterfaceType.IsAssignableFrom(type.Service))
+                {
+                    services.AddSingleton(type.Service, type.Implementation);
+                }
+                else if (scopedServiceInterfaceType.IsAssignableFrom(type.Service))
+                {
+                    services.AddScoped(type.Service, type.Implementation);
+                }
+            }
+
+            return services.AddTransient<ICurrentUserService, CurrentUserService>();
+        }
 
         public static IServiceCollection AddApiControllers(this IServiceCollection services)
         {

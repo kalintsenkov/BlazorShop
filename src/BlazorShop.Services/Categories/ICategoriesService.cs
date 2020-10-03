@@ -3,10 +3,11 @@
     using System.Collections.Generic;
     using System.Threading.Tasks;
 
+    using Common;
     using Models;
     using Models.Categories;
 
-    public interface ICategoriesService
+    public interface ICategoriesService : IService
     {
         Task<int> CreateAsync(CategoriesRequestModel model);
 

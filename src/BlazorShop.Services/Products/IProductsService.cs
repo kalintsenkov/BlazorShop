@@ -2,10 +2,11 @@
 {
     using System.Threading.Tasks;
 
+    using Common;
     using Models;
     using Models.Products;
 
-    public interface IProductsService
+    public interface IProductsService : IService
     {
         Task<int> CreateAsync(ProductsRequestModel model);
 

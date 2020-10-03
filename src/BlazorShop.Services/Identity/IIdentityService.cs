@@ -2,10 +2,11 @@
 {
     using System.Threading.Tasks;
 
+    using Common;
     using Models;
     using Models.Identity;
 
-    public interface IIdentityService
+    public interface IIdentityService : IService
     {
         Task<Result> RegisterAsync(RegisterRequestModel model);
 
