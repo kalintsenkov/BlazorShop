@@ -65,17 +65,3 @@ else
         </div>
     </section>
 }
-
-@code {
-    private OrdersDetailsResponseModel order;
-    private decimal totalPrice;
-
-    [Parameter]
-    public string Id { get; set; }
-
-    protected override async Task OnInitializedAsync()
-    {
-        this.order = await this.Http.GetFromJsonAsync<OrdersDetailsResponseModel>($"api/orders/{Id}");
-        this.totalPrice = this.order.Products.Sum(p => p.Price * p.Quantity);
-    }
-}

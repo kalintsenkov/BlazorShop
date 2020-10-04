@@ -22,7 +22,7 @@ else
                             <h4 class="card-title mb-4">Account Settings</h4>
                             <EditForm Model="model" OnValidSubmit="SubmitAsync">
 
-                                <ErrorsList ShowErrors="showErrors" Errors="errors" />
+                                <ErrorsList ShowErrors="ShowErrors" Errors="Errors" />
                                 <DataAnnotationsValidator />
                                 <ValidationSummary />
 
@@ -56,44 +56,4 @@ else
 
         </div>
     </section>
-}
-
-@code {
-    private readonly ChangeSettingsRequestModel model = new ChangeSettingsRequestModel();
-
-    private string email;
-    private bool showErrors;
-    private IEnumerable<string> errors;
-
-    protected override async Task OnInitializedAsync() => await this.LoadDataAsync();
-
-    private async Task SubmitAsync()
-    {
-        var response = await this.Http.PutAsJsonAsync("api/identity/changesettings", this.model);
-
-        if (response.IsSuccessStatusCode)
-        {
-            this.showErrors = false;
-
-            await this.AuthService.Logout();
-
-            this.ToastService.ShowSuccess("Your account settings has been changed successfully.\n Please login.");
-            this.NavigationManager.NavigateTo("/account/login");
-        }
-        else
-        {
-            this.errors = await response.Content.ReadFromJsonAsync<string[]>();
-            this.showErrors = true;
-        }
-    }
-
-    private async Task LoadDataAsync()
-    {
-        var state = await this.AuthState.GetAuthenticationStateAsync();
-        var user = state.User;
-
-        this.email = user.GetEmail();
-        this.model.FirstName = user.GetFirstName();
-        this.model.LastName = user.GetLastName();
-    }
 }

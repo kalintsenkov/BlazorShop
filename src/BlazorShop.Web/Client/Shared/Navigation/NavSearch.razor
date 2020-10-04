@@ -8,9 +8,3 @@
         </div>
     </div>
 </EditForm>
-
-@code {
-    private readonly ProductsSearchRequestModel searchModel = new ProductsSearchRequestModel();
-
-    private void Search() => this.NavigationManager.NavigateTo($"/products/search/{this.searchModel.Query}/page/1");
-}

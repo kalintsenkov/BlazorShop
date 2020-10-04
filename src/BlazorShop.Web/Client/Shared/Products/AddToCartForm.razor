@@ -1,0 +1,52 @@
+﻿<EditForm Model="model" OnValidSubmit="OnSubmitAsync">
+
+    <ErrorsList ShowErrors="ShowErrors" Errors="Errors" />
+    <DataAnnotationsValidator />
+    <ValidationSummary />
+
+    <div class="form-row">
+
+        <div class="form-group col-md flex-grow-0">
+            <label>Quantity</label>
+            <div class="input-group mb-3 input-spinner">
+                <div class="input-group-prepend">
+                    <button @onclick="DecrementQuantity" class="btn btn-light" type="button" id="button-minus"> &minus; </button>
+                </div>
+                <input @bind-value="model.Quantity" type="text" class="form-control" />
+                <div class="input-group-append">
+                    <button @onclick="IncrementQuantity" class="btn btn-light" type="button" id="button-plus"> + </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="form-row">
+        <div class="form-group col-md">
+            <button type="submit" class="btn btn-primary">
+                <span class="text">Add to cart</span>
+                <i class="fas fa-shopping-cart"></i>
+            </button>
+
+            <a @onclick="() => AddToWishlist()"
+               @onclick:preventDefault
+               href="#"
+               class="btn btn-light">
+                <i class="fas fa-heart"></i>
+            </a>
+
+            <AuthorizeView Roles="@Constants.AdministratorRole" Context="Auth">
+                <a href="/products/update/@ProductId"
+                   class="btn btn-outline-warning">
+                    <i class="fa fa-pen"></i>
+                </a>
+
+                <a @onclick:preventDefault
+                   @onclick="() => OnDeleteAsync()"
+                   href=""
+                   class="btn btn-outline-danger">
+                    <i class="fa fa-trash"></i>
+                </a>
+            </AuthorizeView>
+        </div>
+    </div>
+</EditForm>

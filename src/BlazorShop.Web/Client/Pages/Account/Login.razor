@@ -7,14 +7,16 @@
             <h4 class="card-title mb-4">Login</h4>
             <EditForm Model="model" OnValidSubmit="SubmitAsync">
 
-                <ErrorsList ShowErrors="showErrors" Errors="errors" />
+                <ErrorsList ShowErrors="ShowErrors" Errors="Errors" />
                 <DataAnnotationsValidator />
                 <ValidationSummary />
 
                 <div class="form-group">
                     <div class="input-group">
                         <div class="input-group-prepend">
-                            <span class="input-group-text"> <i class="fa fa-envelope"></i> </span>
+                            <span class="input-group-text">
+                                <i class="fa fa-envelope"></i>
+                            </span>
                         </div>
                         <InputText @bind-Value="model.Email" class="form-control" placeholder="Email" type="email" />
                     </div>
@@ -39,30 +41,7 @@
     </div>
 
     <p class="text-center mt-4">Don't have account? <a href="/account/register">Create one now</a></p>
+
     <br /><br />
 
 </section>
-
-@code {
-    private readonly LoginRequestModel model = new LoginRequestModel();
-
-    private bool showErrors;
-    private IEnumerable<string> errors;
-
-    private async Task SubmitAsync()
-    {
-        var result = await this.AuthService.Login(model);
-
-        if (result.Succeeded)
-        {
-            this.showErrors = false;
-            this.ToastService.ShowSuccess("You have successfully logged in");
-            this.NavigationManager.NavigateTo("/");
-        }
-        else
-        {
-            this.errors = result.Errors;
-            this.showErrors = true;
-        }
-    }
-}

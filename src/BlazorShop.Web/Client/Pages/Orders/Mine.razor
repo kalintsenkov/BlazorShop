@@ -1,6 +1,5 @@
 ﻿@page "/orders/mine"
 @attribute [Authorize]
-@inject HttpClient Http
 
 @if (orders == null)
 {
@@ -55,11 +54,4 @@ else
 
         </div>
     </section>
-}
-
-@code {
-    private IEnumerable<OrdersListingResponseModel> orders;
-
-    protected override async Task OnInitializedAsync()
-        => this.orders = await this.Http.GetFromJsonAsync<IEnumerable<OrdersListingResponseModel>>("api/orders");
 }

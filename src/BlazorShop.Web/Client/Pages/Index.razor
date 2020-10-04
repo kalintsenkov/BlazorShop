@@ -111,14 +111,3 @@ else
         </div>
     </section>
 }
-
-@code {
-    private IEnumerable<ProductsListingResponseModel> products;
-
-    protected override async Task OnInitializedAsync()
-    {
-        var response = await this.Http.GetFromJsonAsync<ProductsSearchResponseModel>("api/products");
-
-        this.products = response.Products;
-    }
-}

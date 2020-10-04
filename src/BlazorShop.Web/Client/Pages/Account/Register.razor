@@ -7,7 +7,7 @@
             <header class="mb-4"><h4 class="card-title">Register</h4></header>
             <EditForm Model="model" OnValidSubmit="SubmitAsync">
 
-                <ErrorsList ShowErrors="showErrors" Errors="errors" />
+                <ErrorsList ShowErrors="ShowErrors" Errors="Errors" />
                 <DataAnnotationsValidator />
                 <ValidationSummary />
 
@@ -44,26 +44,3 @@
     <br /><br />
 
 </section>
-
-@code {
-    private readonly RegisterRequestModel model = new RegisterRequestModel();
-
-    private bool showErrors;
-    private IEnumerable<string> errors;
-
-    private async Task SubmitAsync()
-    {
-        var result = await this.AuthService.Register(model);
-
-        if (result.Succeeded)
-        {
-            this.ToastService.ShowSuccess("You have successfully registered.\n Please login.", "Congratulations!");
-            this.NavigationManager.NavigateTo("/account/login");
-        }
-        else
-        {
-            this.errors = result.Errors;
-            this.showErrors = true;
-        }
-    }
-}

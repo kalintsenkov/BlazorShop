@@ -34,9 +34,9 @@ else
                                 <label>Category</label>
                                 <InputSelectNumber @bind-Value="model.CategoryId" class="form-control">
                                     @foreach (var category in categories)
-                                        {
+                                    {
                                         <option value="@category.Id">@category.Name</option>
-                                        }
+                                    }
                                 </InputSelectNumber>
                             </div>
 
@@ -72,22 +72,4 @@ else
             </div>
         </div>
     </section>
-}
-
-@code {
-    private readonly ProductsRequestModel model = new ProductsRequestModel();
-
-    private IEnumerable<CategoriesListingResponseModel> categories;
-
-    protected override async Task OnInitializedAsync()
-        => this.categories = await this.Http.GetFromJsonAsync<IEnumerable<CategoriesListingResponseModel>>("api/categories");
-
-    private async Task SubmitAsync()
-    {
-        var response = await this.Http.PostAsJsonAsync("api/products", model);
-
-        var id = await response.Content.ReadFromJsonAsync<int>();
-
-        this.NavigationManager.NavigateTo($"/products/{id}/{model.Name}");
-    }
 }

@@ -1,5 +1,4 @@
-﻿@inject ILocalStorageService LocalStorage
-@attribute [Authorize]
+﻿@attribute [Authorize]
 
 @if (cartProductsCount == null)
 {
@@ -13,11 +12,4 @@ else
             <span class="notify">@cartProductsCount</span>
         </div>
     </a>
-}
-
-@code {
-    private int? cartProductsCount;
-
-    protected override async Task OnInitializedAsync() 
-        => this.cartProductsCount = await this.Http.GetFromJsonAsync<int>("api/shoppingcarts/TotalProducts");
 }

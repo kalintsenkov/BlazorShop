@@ -80,26 +80,3 @@ else
         </div>
     </section>
 }
-
-@code {
-    private ProductsRequestModel model;
-    private IEnumerable<CategoriesListingResponseModel> categories;
-
-    [Parameter]
-    public int Id { get; set; }
-
-    protected override async Task OnInitializedAsync()
-    {
-        this.model = await this.Http.GetFromJsonAsync<ProductsRequestModel>($"api/products/{this.Id}");
-        this.categories = await this.Http.GetFromJsonAsync<IEnumerable<CategoriesListingResponseModel>>("api/categories");
-
-        Console.WriteLine(this.model.CategoryId);
-    }
-
-    private async Task SubmitAsync()
-    {
-        await this.Http.PutAsJsonAsync($"api/products/{this.Id}", this.model);
-
-        this.NavigationManager.NavigateTo($"/products/{this.Id}/{this.model.Name}");
-    }
-}

@@ -13,13 +13,3 @@
         }
     }
 }
-
-@code {
-    [Parameter]
-    public bool ShowErrors { get; set; }
-
-    [Parameter]
-    public IEnumerable<string> Errors { get; set; }
-
-    private void Reset() => this.ShowErrors = !ShowErrors;
-}
