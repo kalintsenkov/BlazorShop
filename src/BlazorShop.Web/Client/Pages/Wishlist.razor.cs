@@ -13,8 +13,7 @@
 
         protected override async Task OnInitializedAsync() => await this.LoadDataAsync();
 
-        private async Task LoadDataAsync()
-            => this.products = await this.Http.GetFromJsonAsync<IEnumerable<WishlistsProductsResponseModel>>("api/Wishlists");
+        private async Task LoadDataAsync() => this.products = await this.WishlistsService.Mine();
 
         private async Task OnSubmitAsync(int id)
         {
@@ -30,8 +29,12 @@
 
         private async Task OnRemoveAsync(int id)
         {
-            await this.Http.DeleteAsync($"api/wishlists/RemoveProduct/{id}");
-            await this.LoadDataAsync();
+            var result = await this.WishlistsService.RemoveProduct(id);
+
+            if (result.Succeeded)
+            {
+                await this.LoadDataAsync();
+            }
         }
     }
 }

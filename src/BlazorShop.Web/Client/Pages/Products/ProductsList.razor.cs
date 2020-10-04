@@ -72,7 +72,7 @@
 
         private async Task AddToWishlist(int id)
         {
-            await this.Http.PostAsJsonAsync($"api/wishlists/AddProduct/{id}", id);
+            await this.WishlistsService.AddProduct(id);
             this.NavigationManager.NavigateTo("/wishlist");
         }
 

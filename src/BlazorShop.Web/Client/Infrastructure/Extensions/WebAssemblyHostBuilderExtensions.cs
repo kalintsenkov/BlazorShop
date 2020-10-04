@@ -11,6 +11,7 @@
 
     using Services.Authentication;
     using Services.Products;
+    using Services.Wishlists;
 
     public static class WebAssemblyHostBuilderExtensions
     {
@@ -37,6 +38,7 @@
                     .CreateClient(ClientName))
                 .AddTransient<IAuthService, AuthService>()
                 .AddTransient<IProductsService, ProductsService>()
+                .AddTransient<IWishlistsService, WishlistsService>()
                 .AddTransient<AuthenticationHeaderHandler>()
                 .AddHttpClient(
                     ClientName,

@@ -62,13 +62,27 @@
                     this.ToastService.ShowSuccess($"{this.ProductName} has been deleted successfully.");
                     this.NavigationManager.NavigateTo("/products/page/1");
                 }
+                else
+                {
+                    this.Errors = result.Errors;
+                    this.ShowErrors = true;
+                }
             }
         }
 
         private async Task AddToWishlist()
         {
-            await this.Http.PostAsJsonAsync($"api/wishlists/AddProduct/{this.ProductId}", this.ProductId);
-            this.ToastService.ShowSuccess($"{this.ProductName} has been added to your wishlist.");
+            var result = await this.WishlistsService.AddProduct(this.ProductId);
+
+            if (result.Succeeded)
+            {
+                this.ToastService.ShowSuccess($"{this.ProductName} has been added to your wishlist.");
+            }
+            else
+            {
+                this.Errors = result.Errors;
+                this.ShowErrors = true;
+            }
         }
 
         private void IncrementQuantity()
