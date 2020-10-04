@@ -1,7 +1,6 @@
 ﻿namespace BlazorShop.Web.Client.Pages.Products
 {
     using System.Collections.Generic;
-    using System.Net.Http.Json;
     using System.Threading.Tasks;
 
     using Models.Categories;
@@ -14,7 +13,7 @@
         private IEnumerable<CategoriesListingResponseModel> categories;
 
         protected override async Task OnInitializedAsync()
-            => this.categories = await this.Http.GetFromJsonAsync<IEnumerable<CategoriesListingResponseModel>>("api/categories");
+            => this.categories = await this.CategoriesService.All();
 
         private async Task SubmitAsync()
         {
