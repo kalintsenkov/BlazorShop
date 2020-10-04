@@ -64,7 +64,7 @@
 
             if (withCategories)
             {
-                this.categories = await this.Http.GetFromJsonAsync<IEnumerable<CategoriesListingResponseModel>>("api/categories");
+                this.categories = await this.CategoriesService.All();
             }
 
             this.Filter();

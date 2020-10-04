@@ -10,6 +10,7 @@
     using Microsoft.Extensions.DependencyInjection;
 
     using Services.Authentication;
+    using Services.Categories;
     using Services.Products;
     using Services.Wishlists;
 
@@ -37,6 +38,7 @@
                     .GetRequiredService<IHttpClientFactory>()
                     .CreateClient(ClientName))
                 .AddTransient<IAuthService, AuthService>()
+                .AddTransient<ICategoriesService, CategoriesService>()
                 .AddTransient<IProductsService, ProductsService>()
                 .AddTransient<IWishlistsService, WishlistsService>()
                 .AddTransient<AuthenticationHeaderHandler>()
