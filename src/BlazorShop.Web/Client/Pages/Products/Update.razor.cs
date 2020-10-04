@@ -25,9 +25,12 @@
 
         private async Task SubmitAsync()
         {
-            await this.Http.PutAsJsonAsync($"api/products/{this.Id}", this.model);
+            var result = await this.ProductsService.UpdateAsync(this.Id, this.model);
 
-            this.NavigationManager.NavigateTo($"/products/{this.Id}/{this.model.Name}");
+            if (result.Succeeded)
+            {
+                this.NavigationManager.NavigateTo($"/products/{this.Id}/{this.model.Name}");
+            }
         }
     }
 }

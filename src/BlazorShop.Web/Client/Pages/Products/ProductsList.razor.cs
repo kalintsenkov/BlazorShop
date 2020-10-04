@@ -13,7 +13,6 @@
 
     public partial class ProductsList
     {
-
         private readonly ProductsSearchRequestModel model = new ProductsSearchRequestModel();
 
         private ProductsSearchResponseModel searchResponse;
@@ -60,14 +59,7 @@
             this.model.Query = this.SearchQuery;
             this.model.Page = this.Page;
 
-            var requestUrl = "api/products" +
-                $"?category={this.model.Category}" +
-                $"&minPrice={this.model.MinPrice}" +
-                $"&maxPrice={this.model.MaxPrice}" +
-                $"&query={this.model.Query}" +
-                $"&page={this.model.Page}";
-
-            this.searchResponse = await this.Http.GetFromJsonAsync<ProductsSearchResponseModel>(requestUrl);
+            this.searchResponse = await this.ProductsService.SearchAsync(this.model);
             this.products = this.searchResponse.Products;
 
             if (withCategories)

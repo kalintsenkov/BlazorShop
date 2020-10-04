@@ -1,6 +1,5 @@
 ﻿namespace BlazorShop.Web.Client.Pages.Products
 {
-    using System.Net.Http.Json;
     using System.Threading.Tasks;
 
     using Microsoft.AspNetCore.Components;
@@ -18,6 +17,6 @@
         public string ProductName { get; set; }
 
         protected override async Task OnInitializedAsync()
-            => this.product = await this.Http.GetFromJsonAsync<ProductsDetailsResponseModel>($"api/products/{this.Id}");
+            => this.product = await this.ProductsService.DetailsAsync<ProductsDetailsResponseModel>(this.Id);
     }
 }

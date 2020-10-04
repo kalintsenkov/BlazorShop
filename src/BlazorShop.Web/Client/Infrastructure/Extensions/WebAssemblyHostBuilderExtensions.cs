@@ -9,7 +9,8 @@
     using Microsoft.AspNetCore.Components.WebAssembly.Hosting;
     using Microsoft.Extensions.DependencyInjection;
 
-    using Services;
+    using Services.Authentication;
+    using Services.Products;
 
     public static class WebAssemblyHostBuilderExtensions
     {
@@ -35,6 +36,7 @@
                     .GetRequiredService<IHttpClientFactory>()
                     .CreateClient(ClientName))
                 .AddTransient<IAuthService, AuthService>()
+                .AddTransient<IProductsService, ProductsService>()
                 .AddTransient<AuthenticationHeaderHandler>()
                 .AddHttpClient(
                     ClientName,

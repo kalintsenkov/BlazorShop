@@ -1,4 +1,4 @@
-﻿namespace BlazorShop.Web.Client.Infrastructure.Services
+﻿namespace BlazorShop.Web.Client.Infrastructure.Services.Authentication
 {
     using System.Net.Http;
     using System.Net.Http.Headers;
@@ -7,9 +7,9 @@
     using System.Threading.Tasks;
 
     using Blazored.LocalStorage;
-    using Infrastructure;
     using Microsoft.AspNetCore.Components.Authorization;
 
+    using Infrastructure;
     using Models;
     using Models.Identity;
 

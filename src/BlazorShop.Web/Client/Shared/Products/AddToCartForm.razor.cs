@@ -55,9 +55,9 @@
 
             if (confirmed)
             {
-                var response = await this.Http.DeleteAsync($"api/products/{this.ProductId}");
+                var result = await this.ProductsService.DeleteAsync(this.ProductId);
 
-                if (response.IsSuccessStatusCode)
+                if (result.Succeeded)
                 {
                     this.ToastService.ShowSuccess($"{this.ProductName} has been deleted successfully.");
                     this.NavigationManager.NavigateTo("/products/page/1");

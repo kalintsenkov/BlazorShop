@@ -18,9 +18,7 @@
 
         private async Task SubmitAsync()
         {
-            var response = await this.Http.PostAsJsonAsync("api/products", this.model);
-
-            var id = await response.Content.ReadFromJsonAsync<int>();
+            var id = await this.ProductsService.CreateAsync(this.model);
 
             this.NavigationManager.NavigateTo($"/products/{id}/{this.model.Name}");
         }

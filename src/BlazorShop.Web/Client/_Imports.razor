@@ -26,6 +26,8 @@
 @using BlazorShop.Web.Client.Infrastructure
 @using BlazorShop.Web.Client.Infrastructure.Extensions
 @using BlazorShop.Web.Client.Infrastructure.Services
+@using BlazorShop.Web.Client.Infrastructure.Services.Authentication
+@using BlazorShop.Web.Client.Infrastructure.Services.Products
 @using BlazorShop.Web.Client.Pages.Account
 @using BlazorShop.Web.Client.Shared
 @using BlazorShop.Web.Client.Shared.Common
@@ -37,3 +39,4 @@
 @inject HttpClient Http
 @inject IToastService ToastService
 @inject IAuthService AuthService
+@inject IProductsService ProductsService
