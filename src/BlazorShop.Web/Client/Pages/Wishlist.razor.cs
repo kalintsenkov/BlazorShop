@@ -1,7 +1,6 @@
 ﻿namespace BlazorShop.Web.Client.Pages
 {
     using System.Collections.Generic;
-    using System.Net.Http.Json;
     using System.Threading.Tasks;
 
     using Models.ShoppingCarts;
@@ -23,7 +22,8 @@
                 Quantity = 1
             };
 
-            await this.Http.PostAsJsonAsync("api/shoppingcarts/AddProduct", cartRequest);
+            await this.ShoppingCartsService.AddProduct(cartRequest);
+
             this.NavigationManager.NavigateTo("/cart", forceLoad: true);
         }
 
