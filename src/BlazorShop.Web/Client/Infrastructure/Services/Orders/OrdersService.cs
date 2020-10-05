@@ -12,7 +12,7 @@
         private readonly HttpClient http;
 
         private const string OrdersPath = "api/orders";
-        private const string OrdersPathWithSlash = "api/orders/";
+        private const string OrdersPathWithSlash = OrdersPath + "/";
 
         public OrdersService(HttpClient http) => this.http = http;
 

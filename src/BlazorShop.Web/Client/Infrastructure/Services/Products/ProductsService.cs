@@ -4,6 +4,7 @@
     using System.Net.Http.Json;
     using System.Threading.Tasks;
 
+    using Extensions;
     using Models;
     using Models.Products;
 
@@ -12,7 +13,7 @@
         private readonly HttpClient http;
 
         private const string ProductsPath = "api/products";
-        private const string ProductsPathWithSlash = "api/products/";
+        private const string ProductsPathWithSlash = ProductsPath + "/";
         private const string ProductsSearchPath = ProductsPath + "?category={0}&minPrice={1}&maxPrice={2}&query={3}&page={4}";
 
         public ProductsService(HttpClient http) => this.http = http;
@@ -28,20 +29,18 @@
 
         public async Task<Result> UpdateAsync(
             int id, ProductsRequestModel model)
-        {
-            var response = await this.http.PutAsJsonAsync(ProductsPathWithSlash + id, model);
+            => await this.http
+                .PutAsJsonAsync(ProductsPathWithSlash + id, model)
+                .ToResult();
 
-            return response.IsSuccessStatusCode;
-        }
+        public async Task<Result> DeleteAsync(
+            int id)
+            => await this.http
+                .DeleteAsync(ProductsPathWithSlash + id)
+                .ToResult();
 
-        public async Task<Result> DeleteAsync(int id)
-        {
-            var response = await this.http.DeleteAsync(ProductsPathWithSlash + id);
-
-            return response.IsSuccessStatusCode;
-        }
-
-        public async Task<TModel> DetailsAsync<TModel>(int id)
+        public async Task<TModel> DetailsAsync<TModel>(
+            int id)
             where TModel : class
             => await this.http.GetFromJsonAsync<TModel>(ProductsPathWithSlash + id);
 

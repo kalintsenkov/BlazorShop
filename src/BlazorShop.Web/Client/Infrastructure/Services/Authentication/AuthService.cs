@@ -9,6 +9,7 @@
     using Blazored.LocalStorage;
     using Microsoft.AspNetCore.Components.Authorization;
 
+    using Extensions;
     using Infrastructure;
     using Models;
     using Models.Identity;
@@ -18,6 +19,9 @@
         private readonly HttpClient httpClient;
         private readonly ILocalStorageService localStorage;
         private readonly AuthenticationStateProvider authenticationStateProvider;
+
+        private const string LoginPath = "api/identity/login";
+        private const string RegisterPath = "api/identity/register";
 
         public AuthService(
             HttpClient httpClient,
@@ -30,22 +34,13 @@
         }
 
         public async Task<Result> Register(RegisterRequestModel model)
-        {
-            var response = await this.httpClient.PostAsJsonAsync("api/identity/register", model);
-
-            if (!response.IsSuccessStatusCode)
-            {
-                var errors = await response.Content.ReadFromJsonAsync<string[]>();
-
-                return Result.Failure(errors);
-            }
-
-            return Result.Success;
-        }
+            => await this.httpClient
+                .PostAsJsonAsync(RegisterPath, model)
+                .ToResult();
 
         public async Task<Result> Login(LoginRequestModel model)
         {
-            var response = await this.httpClient.PostAsJsonAsync("api/identity/login", model);
+            var response = await this.httpClient.PostAsJsonAsync(LoginPath, model);
 
             if (!response.IsSuccessStatusCode)
             {
@@ -65,7 +60,7 @@
 
             await this.localStorage.SetItemAsync("authToken", token);
 
-            ((ApiAuthenticationStateProvider) this.authenticationStateProvider).MarkUserAsAuthenticated(model.Email);
+            ((ApiAuthenticationStateProvider)this.authenticationStateProvider).MarkUserAsAuthenticated(model.Email);
 
             this.httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
 
@@ -76,7 +71,7 @@
         {
             await this.localStorage.RemoveItemAsync("authToken");
 
-            ((ApiAuthenticationStateProvider) this.authenticationStateProvider).MarkUserAsLoggedOut();
+            ((ApiAuthenticationStateProvider)this.authenticationStateProvider).MarkUserAsLoggedOut();
 
             this.httpClient.DefaultRequestHeaders.Authorization = null;
         }

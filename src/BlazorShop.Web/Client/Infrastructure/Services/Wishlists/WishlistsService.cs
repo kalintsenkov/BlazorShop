@@ -5,6 +5,7 @@
     using System.Net.Http.Json;
     using System.Threading.Tasks;
 
+    using Extensions;
     using Models;
     using Models.Wishlists;
 
@@ -17,22 +18,14 @@
         public WishlistsService(HttpClient http) => this.http = http;
 
         public async Task<Result> AddProduct(int id)
-        {
-            var path = $"{WishlistsPath}/{nameof(this.AddProduct)}/{id}";
-
-            var response = await this.http.PostAsJsonAsync(path, id);
-
-            return response.IsSuccessStatusCode;
-        }
+            => await this.http
+                .PostAsJsonAsync($"{WishlistsPath}/{nameof(this.AddProduct)}/{id}", id)
+                .ToResult();
 
         public async Task<Result> RemoveProduct(int id)
-        {
-            var path = $"{WishlistsPath}/{nameof(this.RemoveProduct)}/{id}";
-
-            var response = await this.http.DeleteAsync(path);
-
-            return response.IsSuccessStatusCode;
-        }
+            => await this.http
+                .DeleteAsync($"{WishlistsPath}/{nameof(this.RemoveProduct)}/{id}")
+                .ToResult();
 
         public async Task<IEnumerable<WishlistsProductsResponseModel>> Mine()
             => await this.http.GetFromJsonAsync<IEnumerable<WishlistsProductsResponseModel>>(WishlistsPath);

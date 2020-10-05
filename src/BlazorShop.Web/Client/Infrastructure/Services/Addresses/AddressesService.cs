@@ -5,6 +5,7 @@
     using System.Net.Http.Json;
     using System.Threading.Tasks;
 
+    using Extensions;
     using Models;
     using Models.Addresses;
 
@@ -26,11 +27,9 @@
         }
 
         public async Task<Result> DeleteAsync(int id)
-        {
-            var response = await this.http.DeleteAsync(AddressesPathWithSlash + id);
-
-            return response.IsSuccessStatusCode;
-        }
+            => await this.http
+                .DeleteAsync(AddressesPathWithSlash + id)
+                .ToResult();
 
         public async Task<IEnumerable<AddressesListingResponseModel>> Mine()
             => await this.http.GetFromJsonAsync<IEnumerable<AddressesListingResponseModel>>(AddressesPath);
