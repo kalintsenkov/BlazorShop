@@ -1,7 +1,6 @@
 ﻿namespace BlazorShop.Web.Client.Pages.Orders
 {
     using System.Collections.Generic;
-    using System.Net.Http.Json;
     using System.Threading.Tasks;
 
     using Models.Orders;
@@ -11,6 +10,6 @@
         private IEnumerable<OrdersListingResponseModel> orders;
 
         protected override async Task OnInitializedAsync()
-            => this.orders = await this.Http.GetFromJsonAsync<IEnumerable<OrdersListingResponseModel>>("api/orders");
+            => this.orders = await this.OrdersService.Mine();
     }
 }

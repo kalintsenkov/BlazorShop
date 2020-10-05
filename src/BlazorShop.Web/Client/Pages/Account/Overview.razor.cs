@@ -2,7 +2,6 @@
 {
     using System.Collections.Generic;
     using System.Linq;
-    using System.Net.Http.Json;
     using System.Threading.Tasks;
 
     using Infrastructure.Extensions;
@@ -27,7 +26,7 @@
             this.firstName = user.GetFirstName();
             this.lastName = user.GetLastName();
 
-            this.orders = await this.Http.GetFromJsonAsync<IEnumerable<OrdersListingResponseModel>>("api/orders");
+            this.orders = await this.OrdersService.Mine();
             this.orders = this.orders.Take(4);
         }
     }

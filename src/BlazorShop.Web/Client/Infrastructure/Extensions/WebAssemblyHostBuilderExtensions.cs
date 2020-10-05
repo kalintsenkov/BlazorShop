@@ -11,6 +11,7 @@
 
     using Services.Authentication;
     using Services.Categories;
+    using Services.Orders;
     using Services.Products;
     using Services.Wishlists;
 
@@ -39,6 +40,7 @@
                     .CreateClient(ClientName))
                 .AddTransient<IAuthService, AuthService>()
                 .AddTransient<ICategoriesService, CategoriesService>()
+                .AddTransient<IOrdersService, OrdersService>()
                 .AddTransient<IProductsService, ProductsService>()
                 .AddTransient<IWishlistsService, WishlistsService>()
                 .AddTransient<AuthenticationHeaderHandler>()

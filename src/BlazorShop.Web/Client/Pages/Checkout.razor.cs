@@ -15,19 +15,18 @@
         private readonly AddressesRequestModel address = new AddressesRequestModel();
         private readonly OrdersRequestModel order = new OrdersRequestModel();
 
-        private IEnumerable<ShoppingCartProductsResponseModel> cartProducts;
-
         private string email;
         private decimal totalPrice;
+        private IEnumerable<ShoppingCartProductsResponseModel> cartProducts;
 
         protected override async Task OnInitializedAsync()
         {
             var state = await this.AuthState.GetAuthenticationStateAsync();
             var user = state.User;
 
-            this.cartProducts = await this.Http.GetFromJsonAsync<IEnumerable<ShoppingCartProductsResponseModel>>("api/shoppingcarts");
-
             this.email = user.GetEmail();
+
+            this.cartProducts = await this.Http.GetFromJsonAsync<IEnumerable<ShoppingCartProductsResponseModel>>("api/shoppingcarts");
             this.totalPrice = this.cartProducts.Sum(p => p.Price * p.Quantity);
         }
 
@@ -38,8 +37,7 @@
 
             this.order.AddressId = addressId;
 
-            var orderResponse = await this.Http.PostAsJsonAsync("api/orders", this.order);
-            var orderId = await orderResponse.Content.ReadAsStringAsync();
+            var orderId = await this.OrdersService.Purchase(this.order);
 
             this.NavigationManager.NavigateTo($"/order/confirmed/{orderId}", forceLoad: true);
         }

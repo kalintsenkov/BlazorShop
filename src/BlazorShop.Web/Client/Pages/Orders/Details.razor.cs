@@ -1,7 +1,6 @@
 ﻿namespace BlazorShop.Web.Client.Pages.Orders
 {
     using System.Linq;
-    using System.Net.Http.Json;
     using System.Threading.Tasks;
 
     using Microsoft.AspNetCore.Components;
@@ -18,8 +17,7 @@
 
         protected override async Task OnInitializedAsync()
         {
-            this.order = await this.Http.GetFromJsonAsync<OrdersDetailsResponseModel>($"api/orders/{this.Id}");
-
+            this.order = await this.OrdersService.Details(this.Id);
             this.totalPrice = this.order.Products.Sum(p => p.Price * p.Quantity);
         }
     }
