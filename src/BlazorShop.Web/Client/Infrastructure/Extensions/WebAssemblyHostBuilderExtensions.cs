@@ -8,7 +8,7 @@
     using Microsoft.AspNetCore.Components.Authorization;
     using Microsoft.AspNetCore.Components.WebAssembly.Hosting;
     using Microsoft.Extensions.DependencyInjection;
-
+    using Services.Addresses;
     using Services.Authentication;
     using Services.Categories;
     using Services.Orders;
@@ -39,6 +39,7 @@
                     .GetRequiredService<IHttpClientFactory>()
                     .CreateClient(ClientName))
                 .AddTransient<IAuthService, AuthService>()
+                .AddTransient<IAddressesService, AddressesService>()
                 .AddTransient<ICategoriesService, CategoriesService>()
                 .AddTransient<IOrdersService, OrdersService>()
                 .AddTransient<IProductsService, ProductsService>()

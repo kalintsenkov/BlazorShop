@@ -27,6 +27,7 @@
 @using BlazorShop.Web.Client.Infrastructure.Extensions
 @using BlazorShop.Web.Client.Infrastructure.Services
 @using BlazorShop.Web.Client.Infrastructure.Services.Authentication
+@using BlazorShop.Web.Client.Infrastructure.Services.Addresses
 @using BlazorShop.Web.Client.Infrastructure.Services.Categories
 @using BlazorShop.Web.Client.Infrastructure.Services.Orders
 @using BlazorShop.Web.Client.Infrastructure.Services.Products
@@ -42,6 +43,7 @@
 @inject HttpClient Http
 @inject IToastService ToastService
 @inject IAuthService AuthService
+@inject IAddressesService AddressesService
 @inject ICategoriesService CategoriesService
 @inject IOrdersService OrdersService
 @inject IProductsService ProductsService

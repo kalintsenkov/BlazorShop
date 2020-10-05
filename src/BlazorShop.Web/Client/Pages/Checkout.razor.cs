@@ -32,8 +32,7 @@
 
         private async Task SubmitAsync()
         {
-            var addressResponse = await this.Http.PostAsJsonAsync("api/addresses", this.address);
-            var addressId = await addressResponse.Content.ReadFromJsonAsync<int>();
+            var addressId = await this.AddressesService.CreateAsync(this.address);
 
             this.order.AddressId = addressId;
 
