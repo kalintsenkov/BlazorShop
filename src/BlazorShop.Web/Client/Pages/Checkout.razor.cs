@@ -2,7 +2,6 @@
 {
     using System.Collections.Generic;
     using System.Linq;
-    using System.Net.Http.Json;
     using System.Threading.Tasks;
 
     using Infrastructure.Extensions;
@@ -26,7 +25,7 @@
 
             this.email = user.GetEmail();
 
-            this.cartProducts = await this.Http.GetFromJsonAsync<IEnumerable<ShoppingCartProductsResponseModel>>("api/shoppingcarts");
+            this.cartProducts = await this.ShoppingCartsService.Mine();
             this.totalPrice = this.cartProducts.Sum(p => p.Price * p.Quantity);
         }
 

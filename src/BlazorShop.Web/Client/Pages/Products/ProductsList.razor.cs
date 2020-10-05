@@ -2,7 +2,6 @@
 {
     using System.Collections.Generic;
     using System.Linq;
-    using System.Net.Http.Json;
     using System.Threading.Tasks;
 
     using Microsoft.AspNetCore.Components;
@@ -84,12 +83,11 @@
                 Quantity = 1
             };
 
-            var response = await this.Http.PostAsJsonAsync("api/shoppingcarts/AddProduct", cartRequest);
+            var result = await this.ShoppingCartsService.AddProduct(cartRequest);
 
-            if (!response.IsSuccessStatusCode)
+            if (!result.Succeeded)
             {
-                var errors = await response.Content.ReadFromJsonAsync<string[]>();
-                this.ToastService.ShowError(errors.First());
+                this.ToastService.ShowError(result.Errors.First());
             }
             else
             {

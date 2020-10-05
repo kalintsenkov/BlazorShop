@@ -8,11 +8,13 @@
     using Microsoft.AspNetCore.Components.Authorization;
     using Microsoft.AspNetCore.Components.WebAssembly.Hosting;
     using Microsoft.Extensions.DependencyInjection;
+
     using Services.Addresses;
     using Services.Authentication;
     using Services.Categories;
     using Services.Orders;
     using Services.Products;
+    using Services.ShoppingCarts;
     using Services.Wishlists;
 
     public static class WebAssemblyHostBuilderExtensions
@@ -43,6 +45,7 @@
                 .AddTransient<ICategoriesService, CategoriesService>()
                 .AddTransient<IOrdersService, OrdersService>()
                 .AddTransient<IProductsService, ProductsService>()
+                .AddTransient<IShoppingCartsService, ShoppingCartsService>()
                 .AddTransient<IWishlistsService, WishlistsService>()
                 .AddTransient<AuthenticationHeaderHandler>()
                 .AddHttpClient(

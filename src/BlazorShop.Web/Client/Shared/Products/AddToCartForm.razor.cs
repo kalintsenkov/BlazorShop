@@ -1,7 +1,6 @@
 ﻿namespace BlazorShop.Web.Client.Shared.Products
 {
     using System.Collections.Generic;
-    using System.Net.Http.Json;
     using System.Threading.Tasks;
 
     using Microsoft.AspNetCore.Components;
@@ -33,11 +32,11 @@
         {
             this.model.ProductId = this.ProductId;
 
-            var response = await this.Http.PostAsJsonAsync("api/shoppingcarts/AddProduct", this.model);
+            var result = await this.ShoppingCartsService.AddProduct(this.model);
 
-            if (!response.IsSuccessStatusCode)
+            if (!result.Succeeded)
             {
-                this.Errors = await response.Content.ReadFromJsonAsync<string[]>();
+                this.Errors = result.Errors;
                 this.ShowErrors = true;
             }
             else

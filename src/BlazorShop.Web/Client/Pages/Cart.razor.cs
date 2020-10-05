@@ -2,7 +2,6 @@
 {
     using System.Collections.Generic;
     using System.Linq;
-    using System.Net.Http.Json;
     using System.Threading.Tasks;
 
     using Models.ShoppingCarts;
@@ -18,13 +17,13 @@
 
         private async Task LoadDataAsync()
         {
-            this.cartProducts = await this.Http.GetFromJsonAsync<IEnumerable<ShoppingCartProductsResponseModel>>("api/ShoppingCarts");
+            this.cartProducts = await this.ShoppingCartsService.Mine();
             this.totalPrice = this.cartProducts.Sum(p => p.Price * p.Quantity);
         }
 
         private async Task OnRemoveAsync(int productId)
         {
-            await this.Http.DeleteAsync($"api/shoppingcarts/RemoveProduct/{productId}");
+            await this.ShoppingCartsService.RemoveProduct(productId);
 
             this.NavigationManager.NavigateTo("/cart", forceLoad: true);
         }
@@ -38,7 +37,7 @@
             {
                 this.model.Quantity++;
 
-                await this.Http.PutAsJsonAsync("api/shoppingcarts/UpdateProduct", this.model);
+                await this.ShoppingCartsService.UpdateProduct(this.model);
                 await this.LoadDataAsync();
             }
         }
@@ -52,7 +51,7 @@
             {
                 this.model.Quantity--;
 
-                await this.Http.PutAsJsonAsync("api/shoppingcarts/UpdateProduct", this.model);
+                await this.ShoppingCartsService.UpdateProduct(this.model);
                 await this.LoadDataAsync();
             }
         }
