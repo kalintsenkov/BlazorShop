@@ -83,6 +83,9 @@
                     };
                 });
 
+            services.AddHttpContextAccessor();
+            services.AddScoped<ICurrentUserService, CurrentUserService>();
+
             return services;
         }
 
@@ -118,8 +121,6 @@
                     services.AddScoped(type.Service, type.Implementation);
                 }
             }
-
-            services.AddScoped<ICurrentUserService, CurrentUserService>();
 
             return services;
         }

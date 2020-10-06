@@ -7,7 +7,6 @@
 
     internal class WishlistProductConfiguration : IEntityTypeConfiguration<WishlistProduct>
     {
-
         public void Configure(EntityTypeBuilder<WishlistProduct> wishlistProduct)
         {
             wishlistProduct

@@ -8,13 +8,11 @@
     internal class ShoppingCartConfiguration : IEntityTypeConfiguration<ShoppingCart>
     {
         public void Configure(EntityTypeBuilder<ShoppingCart> shoppingCart)
-        {
-            shoppingCart
+            => shoppingCart
                 .HasOne(sc => sc.User)
                 .WithMany(u => u.ShoppingCarts)
                 .HasForeignKey(sc => sc.UserId)
                 .IsRequired()
                 .OnDelete(DeleteBehavior.Restrict);
-        }
     }
 }

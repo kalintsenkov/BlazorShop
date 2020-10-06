@@ -8,13 +8,11 @@
     internal class WishlistConfiguration : IEntityTypeConfiguration<Wishlist>
     {
         public void Configure(EntityTypeBuilder<Wishlist> wishlist)
-        {
-            wishlist
+            => wishlist
                 .HasOne(w => w.User)
                 .WithMany(u => u.Wishlists)
                 .HasForeignKey(w => w.UserId)
                 .IsRequired()
                 .OnDelete(DeleteBehavior.Restrict);
-        }
     }
 }
