@@ -3,13 +3,13 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
 VisualStudioVersion = 16.0.30011.22
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BlazorShop.Data", "BlazorShop.Data\BlazorShop.Data.csproj", "{ACEE929A-9C60-48B3-8B38-84908BC17A65}"
-EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BlazorShop.Services", "BlazorShop.Services\BlazorShop.Services.csproj", "{A9EE1DC1-629A-45F6-AEC8-19C11E18C59B}"
-EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BlazorShop.Web.Server", "BlazorShop.Web\Server\BlazorShop.Web.Server.csproj", "{DB65A845-54DF-46BE-A3D2-F5649FDD6D4B}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BlazorShop.Web.Client", "BlazorShop.Web\Client\BlazorShop.Web.Client.csproj", "{F040A063-ED39-45CA-B7F4-83ADB3BF119E}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BlazorShop.Data", "BlazorShop.Data\BlazorShop.Data.csproj", "{ACEE929A-9C60-48B3-8B38-84908BC17A65}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BlazorShop.Services", "BlazorShop.Services\BlazorShop.Services.csproj", "{A9EE1DC1-629A-45F6-AEC8-19C11E18C59B}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "BlazorShop.Web", "BlazorShop.Web", "{AA6D4393-D20E-4AC9-BE03-57578265E4D5}"
 EndProject

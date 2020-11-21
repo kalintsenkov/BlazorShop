@@ -14,12 +14,12 @@ Simple shop application built with Blazor WebAssembly
 
 ## :eyes: Try it out
 
-Make sure you have the [.NET Core SDK](https://www.microsoft.com/net/download/macos) installed on your machine. Then do:
+Make sure you have the [.NET Core 3.1 SDK](https://dotnet.microsoft.com/download) installed on your machine. Then do:
 
 ```
 git clone https://github.com/kalintsenkov/BlazorShop.git
-cd BlazorShop
-dotnet run
+cd BlazorShop/src
+dotnet run --project BlazorShop.Web/Server/BlazorShop.Web.Server.csproj
 ```
 
 ## :construction_worker: Built with
