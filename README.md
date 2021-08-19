@@ -3,14 +3,9 @@ Simple shop application built with Blazor WebAssembly
 
 [![Build Status](https://dev.azure.com/Tsenkow/BlazorShop/_apis/build/status/kalintsenkov.BlazorShop?branchName=master)](https://dev.azure.com/Tsenkow/BlazorShop/_build/latest?definitionId=5&branchName=master) [![Build status](https://ci.appveyor.com/api/projects/status/o2dn2ea00pyqc44g?svg=true)](https://ci.appveyor.com/project/kalintsenkov/blazorshop) [![Build Status](https://travis-ci.org/kalintsenkov/BlazorShop.svg?branch=master)](https://travis-ci.org/kalintsenkov/BlazorShop)
 
-## :boy: Author
+## :boy: Author 
 
-**Kalin Tsenkov**
-
-- Facebook: [@kalin.tsenkow](https://www.facebook.com/kalin.tsenkow/)
-- Instagram: [@kalintsenkov_](https://www.instagram.com/kalintsenkov_/)
-- LinkedIn: [@kalintsenkov](https://www.linkedin.com/in/kalintsenkov/)
-- Github: [@kalintsenkov](https://github.com/kalintsenkov)
+[![Facebook](https://img.shields.io/badge/kalin.tsenkow-%231877F2.svg?style=for-the-badge&logo=Facebook&logoColor=white)](https://www.facebook.com/kalin.tsenkow/) [![Instagram](https://img.shields.io/badge/kalintsenkov-%23E4405F.svg?style=for-the-badge&logo=Instagram&logoColor=white)](https://www.instagram.com/kalintsenkov/) [![LinkedIn](https://img.shields.io/badge/kalintsenkov-%230077B5.svg?style=for-the-badge&logo=linkedin&logoColor=white)](https://www.linkedin.com/in/kalintsenkov/) [![GitHub](https://img.shields.io/badge/kalintsenkov-%23121011.svg?style=for-the-badge&logo=github&logoColor=white)](https://github.com/kalintsenkov)
 
 ## :eyes: Try it out
 
